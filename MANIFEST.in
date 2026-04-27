@@ -1,0 +1,7 @@
+include README.md
+include README.ar.md
+include LICENSE
+include CHANGELOG.md
+recursive-include src/dextra *.py
+recursive-exclude tests *
+recursive-exclude notebooks *

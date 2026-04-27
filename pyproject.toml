@@ -1,0 +1,76 @@
+﻿[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dextra"
+dynamic = ["version"]
+description = "Lightweight exploratory-data-analysis helpers: richer numeric summaries and better default plots on top of pandas, seaborn and plotly."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { file = "LICENSE" }
+authors = [
+  { name = "Ahmed Abd El Tawab", email = "ahmedabdeltawab3740@gmail.com" },
+]
+keywords = ["pandas", "eda", "statistics", "visualization", "plotly", "seaborn"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering",
+  "Topic :: Scientific/Engineering :: Information Analysis",
+  "Topic :: Scientific/Engineering :: Visualization",
+]
+dependencies = [
+  "numpy>=1.23",
+  "pandas>=1.5",
+  "matplotlib>=3.6",
+  "seaborn>=0.12",
+  "plotly>=5.10",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=7.0",
+  "pytest-cov>=4.0",
+  "ruff>=0.4",
+  "build>=1.0",
+  "twine>=4.0",
+]
+notebook = [
+  "jupyter>=1.0",
+  "ipykernel>=6.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/ahmedabdeltawab602-collab/dextra"
+Documentation = "https://github.com/ahmedabdeltawab602-collab/dextra#readme"
+Issues = "https://github.com/ahmedabdeltawab602-collab/dextra/issues"
+Source = "https://github.com/ahmedabdeltawab602-collab/dextra"
+Changelog = "https://github.com/ahmedabdeltawab602-collab/dextra/blob/main/CHANGELOG.md"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.dynamic]
+version = { attr = "dextra._version.__version__" }
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra -q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+ignore = ["E501"]
+
