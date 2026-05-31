@@ -14,14 +14,11 @@ Phase 3 v2: 10 cleaning helpers (3 inspectors + 7 actors, short names).
 from ._utils import DEFAULT_BOX_COLORS
 from ._version import __version__
 from .cleaning import (
-    # Professional underscore-free aliases (polars/tidyverse style)
     audit,
     cast,
     cast_types,
     clean_rep,
-    # v1 long names (kept for backward compat)
     clean_report,
-    # v1 aliases
     cleanrep,
     clip_outliers,
     clipout,
@@ -35,9 +32,7 @@ from .cleaning import (
     fillna_smart,
     handle_missing,
     impute,
-    # v2 actor short aliases
     na_fix,
-    # v2 inspectors (NEW — Stage 3.4)
     na_show,
     nascan,
     out_fix,
@@ -56,36 +51,29 @@ from .cleaning import (
 )
 from .features import (
     aggfeat,
-    # Phase 4 Stage 4.2 - feature engineering
     bin,
     cross,
-    # Phase 4 Stage 4.3 - feature engineering
     dtfeats,
     encode,
-    # Phase 4 Stage 4.4 - pipeline wrapper
     featpipe,
     scale,
-    # Phase 4 Stage 4.1 - feature engineering
     transform,
 )
 from .modeling import (
+    classify,
+    clf,
     reg,
-    # Phase 6 Stage 6.1 - regression baseline
     regress,
 )
 from .plots import boxpl, hister, plot_boxplots, plot_histograms
 from .selection import (
-    # Phase 5 Stage 5.2 - feature selection (Embedded + Wrapper families)
     importance,
     imps,
-    # Phase 5 aliases
     redun,
-    # Phase 5 Stage 5.1 - feature selection (Filter family)
     redundancy,
     relev,
     relevance,
     rfe,
-    # Phase 5 Stage 5.3 - selection pipeline wrapper
     selectpipe,
     selpipe,
 )
@@ -169,7 +157,7 @@ __all__ = [
     # Phase 3 v1 (kept for compat)
     "clean_report", "standardize_columns", "cast_types", "validate_rules",
     "handle_missing", "dedupe", "clip_outliers",
-    # Phase 3 v2 (NEW)
+    # Phase 3 v2
     "na_show", "dup_show", "out_show",
     "na_fix", "dup_fix", "out_fix",
     "rule_check", "type_fix", "col_clean", "col_fix", "clean_rep",
@@ -181,24 +169,20 @@ __all__ = [
     "vif", "imbalance",
     "cleanrep", "stdcols", "cast", "vrules",
     "fillna_smart", "dedup", "clipout",
-    # Professional underscore-free aliases
     "audit", "nascan", "dupscan", "outscan",
     "tidycols", "recast", "impute", "winsor", "verify",
-    # Phase 4 Stage 4.1
+    # Phase 4
     "transform", "scale",
-    # Phase 4 Stage 4.2
     "bin", "encode",
-    # Phase 4 Stage 4.3
     "dtfeats", "cross", "aggfeat",
-    # Phase 4 Stage 4.4
     "featpipe",
-    # Phase 5 Stage 5.1
+    # Phase 5
     "redundancy", "relevance",
-    # Phase 5 Stage 5.2
     "importance", "rfe",
-    # Phase 5 Stage 5.3
     "selectpipe",
     "redun", "relev", "imps", "selpipe",
     # Phase 6 Stage 6.1
     "regress", "reg",
+    # Phase 6 Stage 6.2
+    "classify", "clf",
 ]

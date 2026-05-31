@@ -220,9 +220,9 @@ Three staged deliveries, each tested before the next begins:
 
 | Stage | Function | Family |
 |-------|----------|--------|
-| 6.1 | `regress` (`reg`) | Regression + compare |
-| 6.2 | `classify` (`clf`) | Classification + compare |
-| 6.3 | `cluster` (`clus`) | Clustering + compare (k selection) |
+| 6.1 | `regress` (`reg`) | Regression + compare | ✅ done |
+| 6.2 | `classify` (`clf`) | Classification + compare | ✅ done |
+| 6.3 | `cluster` (`clus`) | Clustering + compare (k selection) | next |
 
 Every public name is underscore-free and short; each has a short alias,
 consistent with Phases 2–5.
@@ -252,3 +252,4 @@ Any function violating any of these is rewritten before shipping.
 | 2026-05-31 | Document created as Phase 6 blueprint. 3 functions confirmed: regress / classify / cluster (+ reg/clf/clus). |
 | 2026-05-31 | Hybrid artifact contract locked (JSON descriptor + fitted estimator). Expanded-baseline compare scope set. 3-stage delivery plan set. |
 | 2026-05-31 | Stage 6.1 (regress) shipped. Return contract formalised (4.7) and verified across 7 scenarios; metrics standardised to {split:{metric}}; folds moved to metadata. |
+| 2026-05-31 | Stage 6.2 (classify) shipped on the same contract: logistic/tree/forest/knn, binary+multiclass, accuracy/F1/ROC-AUC, StratifiedKFold; reused all shared helpers. |

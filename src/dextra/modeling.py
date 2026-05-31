@@ -663,3 +663,461 @@ def _plot_regress_compare(summary, fig_width, fig_height, dpi):
 
 # Short alias (consistent with the rest of dextra).
 reg = regress
+
+
+# ===========================================================================
+# Stage 6.2 -- classify  (instant classification baseline: fit/apply/compare)
+# ===========================================================================
+
+_CLASSIFY_METHODS = ("logistic", "tree", "forest", "knn")
+_VALID_CLASSIFY_METHODS = _CLASSIFY_METHODS + ("compare",)
+# Distance/linear methods benefit from feature standardisation.
+_CLASSIFY_SCALED = ("logistic", "knn")
+
+
+def _json_safe_label(c):
+    """A class label rendered JSON-safe for the params descriptor."""
+    if isinstance(c, (bool, np.bool_)):
+        return bool(c)
+    if isinstance(c, (int, np.integer)):
+        return int(c)
+    if isinstance(c, (float, np.floating)):
+        return float(c)
+    return str(c)
+
+
+def _clean_xy_clf(df, features, y_series, func_name):
+    """Like _clean_xy but the target is NOT coerced to numeric (it is a label)."""
+    X = df[features].apply(pd.to_numeric, errors="coerce")
+    yv = y_series.copy()
+    mask = X.notna().all(axis=1) & yv.notna()
+    X = X.loc[mask]
+    yv = yv.loc[mask]
+    if len(X) < 4:
+        raise ValueError(
+            f"{func_name}: need >= 4 complete (non-NaN) rows after cleaning; "
+            f"got {len(X)}.")
+    return X, yv
+
+
+def _classify_n_classes(y_series, func_name) -> int:
+    """Validate a classification target and return the number of classes."""
+    classes = pd.unique(y_series.dropna())
+    n = len(classes)
+    if n < 2:
+        raise ValueError(
+            f"{func_name}: the target has fewer than 2 classes; nothing to "
+            f"classify.")
+    is_num = (pd.api.types.is_numeric_dtype(y_series)
+              and not pd.api.types.is_bool_dtype(y_series))
+    if is_num and n > 20:
+        raise ValueError(
+            f"{func_name}: the target looks continuous ({n} distinct numeric "
+            f"values). Use regress() for a numeric target.")
+    return int(n)
+
+
+def _classify_cv_folds(cv: int, y_series) -> int:
+    """Clamp folds so StratifiedKFold has >= 1 sample of each class per fold."""
+    counts = y_series.value_counts()
+    min_class = int(counts.min()) if len(counts) else 0
+    if min_class < 2:
+        raise ValueError(
+            "classify: every class needs >= 2 samples for cross-validation; "
+            "the rarest class has fewer.")
+    return int(max(2, min(cv, min_class)))
+
+
+def _classify_estimator(method: str, standardize: bool):
+    from sklearn.pipeline import Pipeline
+    if method == "logistic":
+        from sklearn.linear_model import LogisticRegression
+        est = LogisticRegression(max_iter=2000)
+    elif method == "tree":
+        from sklearn.tree import DecisionTreeClassifier
+        est = DecisionTreeClassifier(random_state=0)
+    elif method == "forest":
+        from sklearn.ensemble import RandomForestClassifier
+        est = RandomForestClassifier(n_estimators=200, random_state=0)
+    elif method == "knn":
+        from sklearn.neighbors import KNeighborsClassifier
+        est = KNeighborsClassifier()
+    else:  # pragma: no cover - guarded by caller
+        raise ValueError(f"classify: unknown method {method!r}")
+    steps = []
+    if standardize:
+        from sklearn.preprocessing import StandardScaler
+        steps.append(("scaler", StandardScaler()))
+    steps.append(("model", est))
+    return Pipeline(steps)
+
+
+def _classify_hyperparams(method: str) -> dict:
+    return {
+        "logistic": {"max_iter": 2000},
+        "tree": {"random_state": 0},
+        "forest": {"n_estimators": 200, "random_state": 0},
+        "knn": {"n_neighbors": 5},
+    }[method]
+
+
+def _clf_cv_metrics(estimator, X, y, cv_folds: int, binary: bool) -> dict:
+    from sklearn.model_selection import StratifiedKFold, cross_validate
+    skf = StratifiedKFold(n_splits=cv_folds, shuffle=True, random_state=0)
+    auc = "roc_auc" if binary else "roc_auc_ovr_weighted"
+    scoring = {"accuracy": "accuracy", "f1": "f1_weighted", "roc_auc": auc}
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        res = cross_validate(estimator, X, y, cv=skf, scoring=scoring,
+                             error_score=np.nan)
+    return {
+        "accuracy": _json_safe_num(np.nanmean(res["test_accuracy"])),
+        "f1": _json_safe_num(np.nanmean(res["test_f1"])),
+        "roc_auc": _json_safe_num(np.nanmean(res["test_roc_auc"])),
+    }
+
+
+def _clf_train_metrics(estimator, X, y, binary: bool) -> dict:
+    from sklearn.metrics import accuracy_score, f1_score
+    y_pred = estimator.predict(X)
+    acc = accuracy_score(y, y_pred)
+    f1 = f1_score(y, y_pred, average="weighted", zero_division=0)
+    auc = None
+    try:
+        from sklearn.metrics import roc_auc_score
+        proba = estimator.predict_proba(X)
+        cls = list(estimator.classes_)
+        if binary:
+            y_bin = (np.asarray(y) == cls[1]).astype(int)
+            auc = roc_auc_score(y_bin, proba[:, 1])
+        else:
+            auc = roc_auc_score(y, proba, multi_class="ovr",
+                                average="weighted", labels=cls)
+    except Exception:
+        auc = None
+    return {"accuracy": _json_safe_num(acc), "f1": _json_safe_num(f1),
+            "roc_auc": _json_safe_num(auc)}
+
+
+def classify(
+    df: pd.DataFrame,
+    y=None,
+    cols: Optional[Sequence[str]] = None,
+    method: str = "forest",
+    *,
+    cv: int = 5,
+    standardize: Optional[bool] = None,
+    params: Optional[dict] = None,
+    return_params: bool = False,
+    show: bool = True,
+    plot: bool = True,
+    return_df: bool = True,
+    return_fig: bool = False,
+    decimals: int = 4,
+    df_name: Optional[str] = None,
+    fig_width: float = 13.0,
+    fig_height: float = 5.0,
+    dpi: int = 110,
+):
+    """Fit an instant, cross-validated classification baseline in one line.
+
+    Mirrors :func:`regress` exactly (fit / apply / compare, hybrid artifact)
+    for a categorical target. In FIT mode the predicted labels are appended as
+    ``"<target>_pred"``; APPLY mode predicts with the saved estimator (no
+    re-fit); COMPARE mode cross-validates every candidate and writes nothing.
+
+    Parameters
+    ----------
+    df : pandas.DataFrame
+        Input data. Never mutated.
+    y : str or array-like
+        The categorical target (a column name, or a Series/array aligned to
+        ``df``). Not needed in apply mode.
+    cols : sequence of str, optional
+        Feature columns. Defaults to every numeric (non-boolean) column except
+        the target. Ignored in apply mode.
+    method : {'logistic', 'tree', 'forest', 'knn', 'compare'}
+        The baseline classifier, or 'compare' to rank them all.
+    cv : int, default 5
+        Stratified cross-validation folds (clamped to the rarest class count).
+    standardize : bool, optional
+        Default: ``True`` for logistic/knn, ``False`` for tree/forest.
+    params, return_params, show, plot, return_df, return_fig, decimals, df_name
+        Standard dextra flags (see :func:`regress`).
+
+    Returns
+    -------
+    pandas.DataFrame
+        The input frame plus a predicted-label column, and -- when requested --
+        the hybrid ``params`` artifact and/or the matplotlib figure.
+
+    Examples
+    --------
+    >>> out, p = dx.classify(df_train, y='churn', method='forest', return_params=True)
+    >>> preds = dx.classify(df_test, params=p)              # apply, no re-fit
+    >>> dx.classify(df_train, y='churn', method='compare')  # rank baselines
+    """
+    if not isinstance(df, pd.DataFrame):
+        raise TypeError(f"'df' must be a pandas DataFrame, got {type(df).__name__}")
+    if df_name is None:
+        df_name = get_variable_name(df, depth=2)
+
+    # ---- APPLY MODE -----------------------------------------------------
+    if params is not None:
+        return _classify_apply(df, params, show, plot, return_df,
+                               return_params, return_fig, decimals, df_name,
+                               fig_width, fig_height, dpi)
+
+    # ---- FIT / COMPARE guards (before importing sklearn) ----------------
+    if method not in _VALID_CLASSIFY_METHODS:
+        raise ValueError(
+            f"classify: 'method' must be one of {_VALID_CLASSIFY_METHODS}, "
+            f"got {method!r}")
+    if method == "compare" and return_params:
+        raise ValueError(
+            "classify: method='compare' fits no single model and writes no "
+            "artifact; call with a concrete method to get params.")
+    if cv < 2:
+        raise ValueError(f"classify: 'cv' must be >= 2, got {cv}")
+
+    name, y_series = _resolve_target(df, y, "classify")
+    _classify_n_classes(y_series, "classify")          # early validation
+    target_name = name if isinstance(y, str) else (name or "target")
+    features = _resolve_features(df, cols, "classify", exclude=[target_name])
+
+    _require_sklearn("classify")
+    X, yv = _clean_xy_clf(df, features, y_series, "classify")
+    n_classes = _classify_n_classes(yv, "classify")
+    binary = (n_classes == 2)
+    cv_folds = _classify_cv_folds(cv, yv)
+
+    if method == "compare":
+        return _classify_compare(df, X, yv, features, target_name, n_classes,
+                                 binary, cv_folds, standardize, show, plot,
+                                 return_df, return_fig, decimals, df_name,
+                                 fig_width, fig_height, dpi)
+
+    use_scaler = (method in _CLASSIFY_SCALED) if standardize is None \
+        else bool(standardize)
+    estimator = _classify_estimator(method, use_scaler)
+    Xa = X.to_numpy(dtype=float)
+    ya = yv.to_numpy()
+    cv_m = _clf_cv_metrics(estimator, Xa, ya, cv_folds, binary)
+    with warnings.catch_warnings():
+        try:
+            from sklearn.exceptions import ConvergenceWarning
+            warnings.simplefilter("ignore", ConvergenceWarning)
+        except Exception:
+            pass
+        estimator.fit(Xa, ya)
+    train_m = _clf_train_metrics(estimator, Xa, ya, binary)
+
+    out = df.copy()
+    out.attrs = dict(df.attrs)
+    pred_col = f"{target_name}_pred"
+    full_X = (df[features].apply(pd.to_numeric, errors="coerce")
+              .fillna(X.mean()).to_numpy(dtype=float))
+    out[pred_col] = pd.Series(estimator.predict(full_X), index=df.index,
+                              name=pred_col)
+
+    params_out = {
+        "function": "classify",
+        "task": "classification",
+        "algorithm": method,
+        "version": __version__,
+        "fit_at": _now_iso(),
+        "features": list(features),
+        "target": target_name,
+        "classes": [_json_safe_label(c) for c in estimator.classes_],
+        "n_classes": int(n_classes),
+        "hyperparams": _classify_hyperparams(method),
+        "metrics": {"train": train_m, "cv": cv_m},
+        "pred_col": pred_col,
+        "metadata": {"n_train": int(len(X)), "n_features": len(features),
+                     "standardize": bool(use_scaler), "cv_folds": cv_folds,
+                     "binary": bool(binary)},
+        "estimator": estimator,
+    }
+
+    kind = "binary" if binary else f"{n_classes}-class"
+    decision = (
+        f"'{method}' classification baseline ({kind}) -- CV accuracy="
+        f"{_fmt_metric(cv_m['accuracy'], decimals)}, F1="
+        f"{_fmt_metric(cv_m['f1'], decimals)}, ROC-AUC="
+        f"{_fmt_metric(cv_m['roc_auc'], decimals)} ({cv_folds}-fold, "
+        f"stratified). Train accuracy={_fmt_metric(train_m['accuracy'], decimals)}. "
+        f"Predicted labels added as '{pred_col}'. "
+        f"Persist with joblib.dump(params['estimator'], ...).")
+
+    _append_audit(out, {
+        "stage": "modeling",
+        "function": "classify",
+        "timestamp": params_out["fit_at"],
+        "mode": "fit",
+        "params": {"method": method, "features": list(features),
+                   "target": target_name, "cv": cv_folds,
+                   "n_classes": int(n_classes)},
+        "decision": decision,
+    })
+
+    summary = _metrics_table(params_out["metrics"])
+    if show:
+        _print_header(f"Classification baseline for: {df_name}  "
+                      f"(method={method}, target={target_name}, mode=fit)")
+        _display(_fmt_table(summary, decimals))
+        print(f"\nDecision: {decision}\n")
+
+    fig = None
+    if plot:
+        fig = _plot_classify(ya, estimator.predict(Xa), list(estimator.classes_),
+                             method, target_name, fig_width, fig_height, dpi)
+    _finalize_figure(fig, return_fig)
+    return _ret_pack(out, params_out, fig, return_df, return_params, return_fig)
+
+
+def _classify_apply(df, params, show, plot, return_df, return_params,
+                    return_fig, decimals, df_name, fig_width, fig_height, dpi):
+    if not isinstance(params, dict) or params.get("function") != "classify":
+        got = (params.get("function") if isinstance(params, dict)
+               else type(params).__name__)
+        raise ValueError(f"params dict is not for 'classify' (function={got!r}).")
+    estimator = params.get("estimator")
+    if estimator is None or not hasattr(estimator, "predict"):
+        raise ValueError(
+            "classify apply: params has no fitted estimator. Re-fit and pass "
+            "the full params (the artifact carries params['estimator']).")
+    features = params["features"]
+    missing = [c for c in features if c not in df.columns]
+    if missing:
+        raise KeyError(
+            f"classify apply failed: params expects feature column(s) "
+            f"{missing} which are not present in this DataFrame.")
+    X = df[features].apply(pd.to_numeric, errors="coerce")
+    if X.isna().any().any():
+        raise ValueError(
+            "classify apply: feature columns contain NaN/non-numeric values. "
+            "Clean / impute (Phase 3) before predicting.")
+    pred_col = params.get("pred_col", f"{params.get('target', 'target')}_pred")
+    out = df.copy()
+    out.attrs = dict(df.attrs)
+    out[pred_col] = pd.Series(estimator.predict(X.to_numpy(dtype=float)),
+                              index=df.index, name=pred_col)
+
+    decision = (f"Applied saved '{params.get('algorithm', '?')}' classifier "
+                f"(fitted {params.get('fit_at', '?')}); predicted {len(out)} "
+                f"row(s) into '{pred_col}' -- no re-fit, leakage-safe.")
+    _append_audit(out, {
+        "stage": "modeling",
+        "function": "classify",
+        "timestamp": _now_iso(),
+        "mode": "apply",
+        "params": {"algorithm": params.get("algorithm"),
+                   "fit_at": params.get("fit_at")},
+        "decision": decision,
+    })
+    if show:
+        _print_header(f"Classification prediction for: {df_name}  "
+                      f"(algorithm={params.get('algorithm')}, mode=apply)")
+        _display(_fmt_table(_metrics_table(params["metrics"]), decimals))
+        print(f"\nDecision: {decision}\n")
+    fig = None
+    _finalize_figure(fig, return_fig)
+    return _ret_pack(out, params, fig, return_df, return_params, return_fig)
+
+
+def _classify_compare(df, X, yv, features, target_name, n_classes, binary,
+                      cv_folds, standardize, show, plot, return_df, return_fig,
+                      decimals, df_name, fig_width, fig_height, dpi):
+    Xa = X.to_numpy(dtype=float)
+    ya = yv.to_numpy()
+    rows = {}
+    for m in _CLASSIFY_METHODS:
+        use_scaler = (m in _CLASSIFY_SCALED) if standardize is None \
+            else bool(standardize)
+        est = _classify_estimator(m, use_scaler)
+        rows[m] = _clf_cv_metrics(est, Xa, ya, cv_folds, binary)
+    summary = pd.DataFrame(
+        {"CV_accuracy": {m: rows[m]["accuracy"] for m in _CLASSIFY_METHODS},
+         "CV_f1": {m: rows[m]["f1"] for m in _CLASSIFY_METHODS},
+         "CV_roc_auc": {m: rows[m]["roc_auc"] for m in _CLASSIFY_METHODS}})
+    summary = summary.sort_values("CV_accuracy", ascending=False)
+    best = summary.index[0]
+    best_acc = summary.loc[best, "CV_accuracy"]
+
+    out = df.copy()
+    out.attrs = dict(df.attrs)
+    kind = "binary" if binary else f"{n_classes}-class"
+    decision = (f"Compared {len(_CLASSIFY_METHODS)} classifiers ({kind}) by "
+                f"{cv_folds}-fold stratified CV; best by accuracy is '{best}' "
+                f"(accuracy={_fmt_metric(best_acc, decimals)}). Nothing written "
+                f"-- choose a method to fit.")
+    _append_audit(out, {
+        "stage": "modeling",
+        "function": "classify",
+        "timestamp": _now_iso(),
+        "mode": "compare",
+        "params": {"candidates": list(_CLASSIFY_METHODS), "cv": cv_folds,
+                   "target": target_name, "n_classes": int(n_classes)},
+        "decision": decision,
+    })
+    if show:
+        _print_header(f"Classification model comparison for: {df_name}  "
+                      f"(target={target_name}, {cv_folds}-fold stratified CV)")
+        _display(_fmt_table(summary, decimals))
+        print(f"\nDecision: {decision}\n")
+    fig = None
+    if plot:
+        fig = _plot_classify_compare(summary, fig_width, fig_height, dpi)
+    _finalize_figure(fig, return_fig)
+    return _ret_pack(out, None, fig, return_df, False, return_fig)
+
+
+def _plot_classify(y_true, y_pred, classes, method, target_name,
+                   fig_width, fig_height, dpi):
+    from sklearn.metrics import confusion_matrix
+    cm = confusion_matrix(y_true, y_pred, labels=classes)
+    cm_norm = cm.astype(float)
+    row_sums = cm_norm.sum(axis=1, keepdims=True)
+    row_sums[row_sums == 0] = 1.0
+    cm_norm = cm_norm / row_sums
+    labs = [str(c) for c in classes]
+    fig, axes = plt.subplots(1, 2, figsize=(fig_width, fig_height), dpi=dpi)
+    fig.suptitle(f"Classification diagnostics -- {method} ({target_name})",
+                 fontsize=13, fontweight="bold")
+    sns.heatmap(cm, annot=True, fmt="d", cmap="Blues", cbar=False,
+                xticklabels=labs, yticklabels=labs, ax=axes[0])
+    axes[0].set_xlabel("predicted")
+    axes[0].set_ylabel("actual")
+    axes[0].set_title("Confusion matrix (counts)")
+    sns.heatmap(cm_norm, annot=True, fmt=".2f", cmap="Greens", cbar=False,
+                vmin=0, vmax=1, xticklabels=labs, yticklabels=labs, ax=axes[1])
+    axes[1].set_xlabel("predicted")
+    axes[1].set_ylabel("actual")
+    axes[1].set_title("Row-normalised (recall per class)")
+    return fig
+
+
+def _plot_classify_compare(summary, fig_width, fig_height, dpi):
+    fig, axes = plt.subplots(1, 2, figsize=(fig_width, fig_height), dpi=dpi)
+    fig.suptitle("Classification baselines -- cross-validated comparison",
+                 fontsize=13, fontweight="bold")
+    order = list(summary.index)
+    acc = [summary.loc[m, "CV_accuracy"] if summary.loc[m, "CV_accuracy"]
+           is not None else 0.0 for m in order]
+    f1 = [summary.loc[m, "CV_f1"] if summary.loc[m, "CV_f1"] is not None
+          else 0.0 for m in order]
+    axes[0].barh(order, acc, color="#2E75B6")
+    axes[0].set_xlabel("CV accuracy (higher is better)")
+    axes[0].set_xlim(0, 1)
+    axes[0].invert_yaxis()
+    axes[0].set_title("Accuracy by algorithm")
+    axes[1].barh(order, f1, color="#2ca02c")
+    axes[1].set_xlabel("CV F1 (weighted)")
+    axes[1].set_xlim(0, 1)
+    axes[1].invert_yaxis()
+    axes[1].set_title("F1 by algorithm")
+    return fig
+
+
+# Short alias (consistent with the rest of dextra).
+clf = classify

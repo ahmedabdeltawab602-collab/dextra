@@ -37,7 +37,7 @@
 | 3  | `cleaning.py`         | 7 cleaning helpers across all 8 DAMA-DMBOK stages: `clean_report`, `standardize_columns`, `cast_types`, `validate_rules`, `handle_missing`, `dedupe`, `clip_outliers`. | ✅ Complete |
 | 4  | `features.py`         | 8 feature-engineering functions: `transform`, `scale`, `bin`, `encode`, `dtfeats`, `cross`, `aggfeat`, `featpipe` — fit/apply framework, leakage-safe, choice-first. | ✅ Complete (8 funcs) |
 | 5  | `selection.py`        | 5 feature-selection functions: `redundancy`, `relevance`, `importance`, `rfe`, `selectpipe` — Filter + Embedded + Wrapper families, fit/apply, leakage-safe. | ✅ Complete (5 funcs) |
-| 6  | `modeling.py`         | `regress`, `classify`, `cluster` — instant baseline models with one call. | 🚧 In progress (6.1 `regress` done) |
+| 6  | `modeling.py`         | `regress`, `classify`, `cluster` — instant baseline models with one call. | 🚧 In progress (6.1 regress + 6.2 classify done) |
 | 7  | `evaluation.py`       | `confusion_report`, `roc_pr`, `residual_analysis`, `learning_curves` — multi-metric evaluation panels. | 📅 Planned |
 | 8  | `timeseries.py`       | `ts_decompose`, `ts_stationarity`, `ts_quick_forecast` — time-series basics. (Optional.)| 📅 Planned |
 | 9  | `report.py`           | `eda_report(df, out="report.html")` — one-call full HTML/PDF report. | 📅 Planned |
@@ -141,3 +141,4 @@ auditing trivial.
 | 2026-05-31 | MODELING_PHILOSOPHY.md authored as Phase 6 blueprint.        |
 | 2026-05-31 | Phase 5.5 consolidation: tests vendored to CI; README/CHANGELOG synced; IMPROVEMENTS #1/#3/#5/#8 applied. |
 | 2026-05-31 | Phase 6 Stage 6.1 delivered: regress (linear/ridge/lasso/tree/forest + compare), hybrid artifact, tests. |
+| 2026-05-31 | Phase 6 Stage 6.2 delivered: classify (logistic/tree/forest/knn + compare), binary+multiclass, accuracy/F1/ROC-AUC, tests. |

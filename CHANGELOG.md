@@ -29,6 +29,9 @@ tagged **0.2.0** (new features, backward-compatible).
   compare) with a hybrid artifact (JSON descriptor + fitted sklearn estimator).
   Edge-case-audited (constant target/feature, NaN propagation, skewed target);
   degenerate-metric formatting hardened (`None`/NaN -> `n/a`). See PHASE6_TEST_MATRIX.md.
+- **Phase 6 Stage 6.2 - `classify`** (alias `clf`) - one-line cross-validated
+  classification baseline (logistic / tree / forest / knn / compare), binary and
+  multiclass, with accuracy / F1 / ROC-AUC and the same hybrid artifact contract.
 - `dx.functions()` - prints every public function with its one-line summary.
 - `describe_numeric(..., ddof=1)` - choose sample (1) or population (0) std/var.
 - `plot_histograms(..., bins='auto')` - bins now default to NumPy's automatic

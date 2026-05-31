@@ -1,12 +1,12 @@
 ﻿**********************
 Windows PowerShell transcript start
-Start time: 20260531141752
+Start time: 20260531154950
 Username: MSI\manim
 RunAs User: MSI\manim
 Configuration Name: 
 Machine: MSI (Microsoft Windows NT 10.0.26200.0)
 Host Application: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File D:\06 PythonProjects\dextra-project\run_validation.ps1
-Process ID: 51960
+Process ID: 15980
 PSVersion: 5.1.26100.8457
 PSEdition: Desktop
 PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.8457
@@ -29,7 +29,7 @@ python 3.13.13 | pandas 3.0.3 | numpy 2.4.5 | scikit-learn 1.8.0
   1. Lint  --  ruff auto-fix then strict check
 ========================================================
 1a) ruff check . --fix  (auto-fixes import order, unused imports, f-strings)
-Found 26 errors (26 fixed, 0 remaining).
+Found 2 errors (2 fixed, 0 remaining).
 
 1b) ruff check .  (strict gate -- must be clean)
 All checks passed!
@@ -38,7 +38,7 @@ All checks passed!
   2. Tests  --  pytest + coverage
 ========================================================
 Running the FULL suite (Phases 1-6 + consolidation + legacy)...
-.......................................................................                                          [100%]
+..........................................................................................                       [100%]
 ================================================== warnings summary ===================================================
 tests/test_legacy_suites.py::test_legacy_suite[test_phase4_stage2]
 tests/test_legacy_suites.py::test_legacy_suite[test_phase4_stage2]
@@ -95,8 +95,9 @@ src\dextra\features.py          1870    516    72%   94, 117, 134, 150, 152, 154
 34, 2840, 2843, 2849, 2852, 2857, 2936, 2946, 3001-3005, 3072-3075, 3079, 3087-3088, 3099, 3123, 3130, 3145, 3149-3150,
 3174-3177, 3181, 3194-3197, 3213-3215, 3219, 3233, 3247-3249, 3263-3270, 3278-3290, 3294-3315, 3319-3333, 3337-3363, 336
 7-3379, 3426, 3433, 3456-3460, 3590, 3644-3645, 3699-3702, 3715-3717, 3722, 3734, 3738, 3782-3785, 3789
-src\dextra\modeling.py           318     47    85%   73-74, 91, 104, 121, 123, 126-127, 135-136, 138, 140, 164, 167, 169
--175, 184, 191, 194, 290, 304-305, 380, 400, 431-432, 520, 532, 606, 645-661
+src\dextra\modeling.py           547     85    84%   73-74, 91, 104, 121, 123, 126-127, 135-136, 138, 140, 164, 167, 169
+-175, 184, 191, 194, 290, 304-305, 380, 400, 431-432, 520, 532, 606, 645-661, 681, 683, 685, 697, 796-797, 861, 881, 910
+-911, 965-968, 986, 997, 1019-1022, 1064-1067, 1070, 1101-1119
 src\dextra\plots.py              183     24    87%   178, 182, 204-210, 288-291, 294, 304, 319-320, 333, 335-336, 393, 3
 97, 415-422, 530, 533, 538
 src\dextra\selection.py          975    188    81%   71-74, 78-79, 91, 104, 118-129, 136-137, 141, 163, 170, 188, 211, 2
@@ -116,9 +117,9 @@ src\dextra\stats_advanced.py    1571    640    59%   37-38, 52, 69, 75-76, 80-81
 51, 2453, 2462, 2510, 2522-2555, 2577, 2579, 2587, 2595, 2616, 2621, 2632-2649, 2681, 2684, 2719, 2725, 2728, 2737, 2741
 , 2743, 2761, 2768, 2778-2801, 2834, 2837, 2847, 2849, 2881, 2892-2925
 ------------------------------------------------------------
-TOTAL                           6366   2075    67%
-Required test coverage of 60% reached. Total coverage: 67.40%
-71 passed, 13 warnings in 17.68s
+TOTAL                           6595   2113    68%
+Required test coverage of 60% reached. Total coverage: 67.96%
+90 passed, 13 warnings in 27.41s
 
 ========================================================
   3. SUMMARY
@@ -131,5 +132,5 @@ Required test coverage of 60% reached. Total coverage: 67.40%
      git add -A; git commit -m "Phase 6.1 + lint clean"; git push --set-upstream origin main
 **********************
 Windows PowerShell transcript end
-End time: 20260531141816
+End time: 20260531155027
 **********************
