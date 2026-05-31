@@ -28,9 +28,9 @@ import warnings
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Mapping, Optional, Sequence, Tuple, Union
 
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 import seaborn as sns
 
 from ._utils import get_variable_name
@@ -184,7 +184,6 @@ def _uniqueness_score(df: pd.DataFrame) -> float:
 def _consistency_score(df: pd.DataFrame) -> float:
     """Heuristic: % of object/string columns that DO NOT contain
     leading/trailing whitespace or mixed case duplicates."""
-    score = 100.0
     obj_cols = [c for c in df.columns if df[c].dtype == object or
                 str(df[c].dtype) == "str"]
     if not obj_cols:
@@ -604,7 +603,7 @@ def standardize_columns(
         if strip_cells:
             stripped = {c: n for c, n in n_cells_stripped_per_col.items() if n > 0}
             if stripped:
-                print(f"\nWhitespace stripped from cells:")
+                print("\nWhitespace stripped from cells:")
                 strip_df = pd.DataFrame(
                     list(stripped.items()),
                     columns=["column", "n_cells_stripped"],
@@ -1059,7 +1058,7 @@ def validate_rules(
         except Exception as e:
             n_v = -1
             pct = float("nan")
-            status = f"ERROR"
+            status = "ERROR"
             desc = f"{desc} | {e}"
             per_rule_mask[name] = pd.Series(False, index=df.index)
 
@@ -1666,7 +1665,7 @@ def dedupe(
         _display(_format_summary(summary, decimals,
                                   int_cols=("value",)))
         if n_removed and len(removed_rows):
-            print(f"\nSample of removed duplicates (showing up to 5):")
+            print("\nSample of removed duplicates (showing up to 5):")
             _display(removed_rows.head(5))
         print(f"\nDecision: {decision}\n")
 
@@ -1904,7 +1903,7 @@ def _plot_clip_outliers(df_before, df_after, cols, per_col_log, action,
     else:
         ax.set_axis_off()
 
-    fig.suptitle(f"Outlier treatment (Stage 5)", fontsize=14, fontweight="bold")
+    fig.suptitle("Outlier treatment (Stage 5)", fontsize=14, fontweight="bold")
     return fig
 
 
@@ -2281,7 +2280,7 @@ def out_show(
     if not outlier_mask_total.any():
         if show:
             _print_header(f"Outlier inspection for: {df_name}  (method={method})")
-            print(f"\nPer-column bounds:")
+            print("\nPer-column bounds:")
             if not col_summary.empty:
                 _display(_format_summary(col_summary, decimals,
                                           int_cols=("n_outliers",)))
@@ -2315,7 +2314,7 @@ def out_show(
 
     if show:
         _print_header(f"Outlier inspection for: {df_name}  (method={method})")
-        print(f"\nPer-column bounds:")
+        print("\nPer-column bounds:")
         _display(_format_summary(col_summary, decimals,
                                   int_cols=("n_outliers",)))
         n_show = min(max_rows_shown, n_outlier_rows)

@@ -75,9 +75,22 @@ addopts = "-ra -q"
 [tool.ruff]
 line-length = 100
 target-version = "py39"
+# Lint the dextra package and its first-class tests only. The course-building
+# scripts, the vendored verification suites, notebooks and backups are not part
+# of the package and follow their own conventions.
+extend-exclude = [
+    "Statistics Course Build",
+    "tests/legacy",
+    "notebooks",
+    "*.bak",
+]
 
 [tool.ruff.lint]
-select = ["E", "F", "W", "I", "B", "UP"]
-ignore = ["E501"]
+select = ["E", "F", "W", "I", "B"]
+# E701/E702: Phases 2-3 deliberately use compact one-line guards
+#   (`if cond: return`, `a; b`) in shipped, tested code; keep the style rather
+#   than rewrite hundreds of lines. B028: warnings.warn stacklevel adds no value
+#   for dextra's user-facing data-quality warnings.
+ignore = ["E501", "E701", "E702", "B028"]
 
 

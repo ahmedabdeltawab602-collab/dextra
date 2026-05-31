@@ -18,19 +18,17 @@ multi-panel figure with a side annotation panel, and prints an English
 
 from __future__ import annotations
 
-from typing import List, Optional, Sequence, Tuple, Union
+from typing import Optional, Sequence, Union
 
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 import seaborn as sns
 from scipy import stats as _sst
 
 from ._utils import (
-    format_value,
     get_variable_name,
     resolve_columns,
-    safe_divide,
     to_numeric_frame,
 )
 
@@ -945,7 +943,6 @@ def simple_linear_regression(
 
     y_pred = m * xa + b
     residuals = ya - y_pred
-    ss_tot = float(((ya - ya.mean()) ** 2).sum())
     ss_res = float((residuals ** 2).sum())
     mse = ss_res / df_resid if df_resid > 0 else float("nan")
     rmse = float(np.sqrt(mse)) if not np.isnan(mse) else float("nan")
@@ -1249,7 +1246,6 @@ def frequency_table(
         df_name = get_variable_name(df, depth=2)
 
     s = df[col].dropna()
-    n_total_valid = len(s)
     n_missing = int(df[col].isna().sum())
     counts = s.value_counts(ascending=ascending)
     if top_n is not None and top_n > 0:
@@ -1434,12 +1430,12 @@ def _plot_cross_tab(observed, expected, row, col, chi2, p, v, strength,
     fig, axes = plt.subplots(1, 2, figsize=(fig_width, fig_height), dpi=dpi)
     sns.heatmap(observed, ax=axes[0], cmap=cmap, annot=True, fmt="d",
                 cbar=False, linewidths=0.5, annot_kws={"fontsize": 9})
-    axes[0].set_title(f"Observed counts", fontsize=12, fontweight="bold")
+    axes[0].set_title("Observed counts", fontsize=12, fontweight="bold")
     axes[0].set_xlabel(col); axes[0].set_ylabel(row)
 
     sns.heatmap(expected, ax=axes[1], cmap=cmap, annot=True, fmt=".1f",
                 cbar=False, linewidths=0.5, annot_kws={"fontsize": 9})
-    axes[1].set_title(f"Expected counts (under H0 of independence)",
+    axes[1].set_title("Expected counts (under H0 of independence)",
                       fontsize=12, fontweight="bold")
     axes[1].set_xlabel(col); axes[1].set_ylabel(row)
 
@@ -2765,7 +2761,7 @@ def vif_scores(
             print(f"\nDecision: no severe multicollinearity, but {n_review} feature(s) "
                   f"in the review zone (VIF 5-{threshold}).\n")
         else:
-            print(f"\nDecision: all features below VIF = 5  --  no multicollinearity concern.\n")
+            print("\nDecision: all features below VIF = 5  --  no multicollinearity concern.\n")
 
     fig = None
     if plot:
@@ -2790,7 +2786,7 @@ def _plot_vif(summary, threshold, fig_width, fig_height, dpi, decimals):
             colors.append("#f7c873")     # amber
         else:
             colors.append("#c73e3e")     # red
-    bars = ax.barh(s.index.astype(str), s.values, color=colors,
+    ax.barh(s.index.astype(str), s.values, color=colors,
                    edgecolor="black", linewidth=0.4)
     ax.axvline(5,         color="gray",  linestyle=":",  linewidth=1.0, label="VIF = 5")
     ax.axvline(threshold, color="red",   linestyle="--", linewidth=1.5,

@@ -14,7 +14,6 @@ from typing import Iterable, List, Optional, Sequence
 import numpy as np
 import pandas as pd
 
-
 # ---------------------------------------------------------------------------
 # Public-ish constants
 # ---------------------------------------------------------------------------

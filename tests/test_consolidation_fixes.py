@@ -1,8 +1,8 @@
 """Tests for the Phase 5.5 consolidation fixes (IMPROVEMENTS.md items)."""
 from __future__ import annotations
 
-import io
 import contextlib
+import io
 
 import numpy as np
 import pandas as pd

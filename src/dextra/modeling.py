@@ -37,9 +37,9 @@ import warnings
 from datetime import datetime, timezone
 from typing import Optional, Sequence
 
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 import seaborn as sns
 
 from ._utils import get_variable_name
@@ -262,7 +262,7 @@ def _effective_cv(cv: int, n: int) -> int:
 
 def _cv_metrics(estimator, X, yv, cv_folds: int) -> dict:
     """K-fold cross-validated regression metrics (the honest estimate)."""
-    from sklearn.model_selection import cross_validate, KFold
+    from sklearn.model_selection import KFold, cross_validate
     kf = KFold(n_splits=cv_folds, shuffle=True, random_state=0)
     scoring = ["r2", "neg_root_mean_squared_error", "neg_mean_absolute_error"]
     with warnings.catch_warnings():
@@ -276,7 +276,7 @@ def _cv_metrics(estimator, X, yv, cv_folds: int) -> dict:
 
 
 def _train_metrics(yv, y_pred) -> dict:
-    from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
+    from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
     rmse = float(np.sqrt(mean_squared_error(yv, y_pred)))
     return {
         "r2": _json_safe_num(r2_score(yv, y_pred)),

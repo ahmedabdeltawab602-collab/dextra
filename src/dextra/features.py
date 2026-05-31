@@ -41,9 +41,9 @@ import warnings
 from datetime import datetime, timezone
 from typing import Optional, Sequence
 
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 import seaborn as sns
 
 from ._utils import get_variable_name
@@ -3195,7 +3195,7 @@ def _aggfeat_compare(df, group, value, show, plot, return_df, return_params,
                 rows.append({"global_stat": np.nan, "n_groups": np.nan,
                              "group_spread": np.nan})
                 continue
-            stat = df[v].groupby(gk).apply(lambda s: _agg_compute(s, a))
+            stat = df[v].groupby(gk).apply(lambda s, a=a: _agg_compute(s, a))
             index.append((v, a))
             rows.append({
                 "global_stat": _agg_compute(df[v], a),

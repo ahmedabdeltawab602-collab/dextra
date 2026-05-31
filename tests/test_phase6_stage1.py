@@ -11,9 +11,9 @@ from __future__ import annotations
 
 import json
 
+import matplotlib
 import numpy as np
 import pandas as pd
-import matplotlib
 import pytest
 
 matplotlib.use("Agg", force=True)

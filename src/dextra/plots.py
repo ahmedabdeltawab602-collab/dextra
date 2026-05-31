@@ -17,16 +17,15 @@ from __future__ import annotations
 import os
 from typing import List, Mapping, Optional, Sequence, Tuple, Union
 
-import numpy as np
-import pandas as pd
-
 # Matplotlib / seaborn are used lazily so importing dextra doesn't open a
 # GUI backend unexpectedly.
 import matplotlib.pyplot as plt
-import seaborn as sns
+import numpy as np
+import pandas as pd
 
 # Plotly imports for the boxplot entry point.
 import plotly.graph_objects as go
+import seaborn as sns
 from plotly.subplots import make_subplots
 
 from ._utils import (
@@ -36,7 +35,6 @@ from ._utils import (
     safe_divide,
     to_numeric_frame,
 )
-
 
 sns.set_style("whitegrid")
 
@@ -249,7 +247,7 @@ def plot_histograms(
 
         lines: List[str] = []
 
-        def _add(label: str, key: str, kind: str) -> None:
+        def _add(label: str, key: str, kind: str, col=col, lines=lines) -> None:
             val = summary.loc[col, key] if key in summary.columns else None
             lines.append(f"{label:<15}: {format_value(val, kind, decimals)}")
 

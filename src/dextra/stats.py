@@ -10,7 +10,7 @@ with earlier versions of *dextra*.
 
 from __future__ import annotations
 
-from typing import List, Optional, Sequence, Union
+from typing import List, Optional, Sequence
 
 import numpy as np
 import pandas as pd
