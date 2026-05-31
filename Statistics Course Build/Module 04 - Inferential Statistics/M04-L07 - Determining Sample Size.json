@@ -1,0 +1,195 @@
+{
+  "id": "M04-L07",
+  "module": 4,
+  "type": "lesson",
+  "title_en": "Determining Sample Size",
+  "title_ar": "تحديد حجم العينة",
+  "objectives_en": [
+    "Identify the four factors that drive required sample size.",
+    "Use the course's sample-size table to plan studies.",
+    "Recognise when you need more data (or fewer assumptions)."
+  ],
+  "objectives_ar": [
+    "تحديد العوامل الأربعة التى تحرّك حجم العينة المطلوب.",
+    "استخدام جدول حجم العينة من الدورة لتخطيط الدراسات.",
+    "إدراك متى تحتاج بيانات أكثر (أو افتراضات أقل)."
+  ],
+  "sources": [
+    "04 Inferential Statistics/Determining Sample Size.mp4",
+    "Slides PDF: page 54",
+    "Glossary: Sample Size"
+  ],
+  "sections": [
+    {
+      "key": "intro",
+      "title_en": "1 · The Universal Question",
+      "title_ar": "1 · السؤال العالمى"
+    },
+    {
+      "key": "definitions",
+      "title_en": "2 · The Four Driving Factors",
+      "title_ar": "2 · العوامل الأربعة المحرّكة"
+    },
+    {
+      "key": "formulas",
+      "title_en": "3 · The Sample-Size Table & Formula",
+      "title_ar": "3 · الجدول والصيغة"
+    },
+    {
+      "key": "example",
+      "title_en": "4 · Worked Example - The Magic 384",
+      "title_ar": "4 · مثال محلول - الرقم السحرى 384"
+    },
+    {
+      "key": "practice",
+      "title_en": "5 · Business Planning Uses",
+      "title_ar": "5 · استخدامات تخطيط الأعمال"
+    },
+    {
+      "key": "traps",
+      "title_en": "6 · Common Traps",
+      "title_ar": "6 · الفخاخ الشائعة"
+    }
+  ],
+  "formulas": [
+    {
+      "id": "F-M04-L07-01",
+      "name_en": "Sample size for proportion",
+      "name_ar": "حجم العينة لنسبة",
+      "expr": "n = Z²·p·(1−p) / E²",
+      "where_en": "Z=critical value (1.96 for 95%), p=estimated proportion, E=margin of error",
+      "where_ar": "Z=القيمة الحرجة (1.96 لـ 95%)، p=النسبة المتوقعة، E=هامش الخطأ",
+      "when_en": "Planning surveys with proportions.",
+      "when_ar": "تخطيط استبيانات بنسب."
+    }
+  ],
+  "examples": [],
+  "memory_aid": [
+    {
+      "en": "Four levers: margin, confidence, variance, rarity. All push n upward.",
+      "ar": "أربعة عوامل: الهامش، الثقة، التباين، الندرة. كلها تدفع n لأعلى."
+    },
+    {
+      "en": "384 = magic number for ±5% margin, 95% confidence, large population.",
+      "ar": "384 = الرقم السحرى لـ ±5%، ثقة 95%، مجتمع كبير."
+    }
+  ],
+  "summary": {
+    "en": "Sample size is the bridge between budget and statistical power. Four factors push it up: tighter margins, higher confidence, higher variance, rarer events. The course's practical table covers the common cases; for unusual outcomes, fall back to formulas like n = Z²·p·(1−p)/E² (proportions) or n = (Z·σ/E)² (means). Plan sample size BEFORE collecting data — not after.",
+    "ar": "حجم العينة هو الجسر بين الميزانية والقوة الإحصائية. أربعة عوامل تدفعه لأعلى: هوامش أضيق، ثقة أعلى، تباين أعلى، أحداث أندر. جدول الدورة العملى يغطى الحالات الشائعة؛ للنتائج الأقل اعتيادية، ارجع إلى الصيغ مثل n = Z²·p·(1−p)/E² (للنسب) أو n = (Z·σ/E)² (للمتوسطات). خطّط للعينة قبل جمع البيانات — لا بعد."
+  },
+  "quiz": [
+    {
+      "id": "M04-L07-Q1",
+      "topic": "M04-L07",
+      "type": "MCQ",
+      "q_en": "Which does NOT increase required sample size?",
+      "q_ar": "أى مما يلى لا يزيد حجم العينة المطلوب؟",
+      "opts_en": [
+        "Tighter margin of error",
+        "Higher confidence level",
+        "Larger sample mean",
+        "Higher population variance"
+      ],
+      "opts_ar": [
+        "هامش خطأ أضيق",
+        "مستوى ثقة أعلى",
+        "متوسط عينة أكبر",
+        "تباين مجتمع أعلى"
+      ],
+      "ans": "C",
+      "exp_en": "Mean's value doesn't affect required size; variance does.",
+      "exp_ar": "قيمة المتوسط لا تؤثر؛ التباين يؤثر.",
+      "formula_used": ""
+    },
+    {
+      "id": "M04-L07-Q2",
+      "topic": "M04-L07",
+      "type": "Calc",
+      "q_en": "Need ±5% margin, 95% confidence, large population. Required n is approximately:",
+      "q_ar": "هامش ±5%، ثقة 95%، مجتمع كبير. n المطلوب تقريباً:",
+      "opts_en": [
+        "50",
+        "384",
+        "1,067",
+        "10,000"
+      ],
+      "opts_ar": [
+        "50",
+        "384",
+        "1,067",
+        "10,000"
+      ],
+      "ans": "B",
+      "exp_en": "The classic '384' from the table.",
+      "exp_ar": "الـ '384' الكلاسيكى من الجدول.",
+      "formula_used": ""
+    },
+    {
+      "id": "M04-L07-Q3",
+      "topic": "M04-L07",
+      "type": "MCQ",
+      "q_en": "For a survey of 5,000 customers with ±3% margin and 95% confidence, sample needed is around:",
+      "q_ar": "استبيان لـ 5,000 عميل بهامش ±3% وثقة 95%، العينة المطلوبة حوالى:",
+      "opts_en": [
+        "384",
+        "880",
+        "1,067",
+        "2,000"
+      ],
+      "opts_ar": [
+        "384",
+        "880",
+        "1,067",
+        "2,000"
+      ],
+      "ans": "B",
+      "exp_en": "From the table: 880 for population of 5,000 at ±3%.",
+      "exp_ar": "من الجدول: 880 لمجتمع 5,000 عند ±3%.",
+      "formula_used": ""
+    },
+    {
+      "id": "M04-L07-Q4",
+      "topic": "M04-L07",
+      "type": "TrueFalse",
+      "q_en": "True or False: A larger sample always means a more accurate estimate, regardless of how the sample was collected.",
+      "q_ar": "صح أم خطأ: عينة أكبر تعنى تقديراً أدق دائماً، بغض النظر عن طريقة الجمع.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "A biased sample of any size gives biased estimates. Random > big.",
+      "exp_ar": "عينة متحيزة بأى حجم تعطى تقديرات متحيزة. العشوائية > الحجم.",
+      "formula_used": ""
+    },
+    {
+      "id": "M04-L07-Q5",
+      "topic": "M04-L07",
+      "type": "MCQ",
+      "q_en": "Detecting a rare event (say 1% rate) accurately requires:",
+      "q_ar": "اكتشاف حدث نادر (نسبة 1%) بدقة يتطلب:",
+      "opts_en": [
+        "Smaller sample",
+        "Larger sample",
+        "Same sample as 50% rate",
+        "No sample"
+      ],
+      "opts_ar": [
+        "عينة أصغر",
+        "عينة أكبر",
+        "نفس عينة الـ 50%",
+        "لا عينة"
+      ],
+      "ans": "B",
+      "exp_en": "Rare events need bigger n to see enough cases.",
+      "exp_ar": "الأحداث النادرة تحتاج n أكبر لرؤية حالات كافية.",
+      "formula_used": ""
+    }
+  ],
+  "created": "2026-05-16"
+}

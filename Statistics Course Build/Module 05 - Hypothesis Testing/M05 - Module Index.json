@@ -1,0 +1,64 @@
+{
+  "id": "M05",
+  "module": 5,
+  "type": "module",
+  "title_en": "Hypothesis Testing",
+  "title_ar": "اختبار الفرضيات",
+  "lessons": [
+    {
+      "id": "M05-L01",
+      "title_en": "Chapter Introduction - Hypothesis Testing",
+      "title_ar": "مقدمة الفصل"
+    },
+    {
+      "id": "M05-L02",
+      "title_en": "The 5 Steps of Hypothesis Testing",
+      "title_ar": "الخمس خطوات"
+    },
+    {
+      "id": "M05-L03",
+      "title_en": "Stating the Hypothesis",
+      "title_ar": "صياغة الفرضيات"
+    },
+    {
+      "id": "M05-L04",
+      "title_en": "Setting the Alpha and Confidence Level",
+      "title_ar": "ضبط ألفا والثقة"
+    },
+    {
+      "id": "M05-L05",
+      "title_en": "Selecting the Hypothesis Test",
+      "title_ar": "اختيار الاختبار"
+    },
+    {
+      "id": "M05-L06",
+      "title_en": "Running a Two-Tailed Hypothesis Test",
+      "title_ar": "تشغيل اختبار ذيلَين"
+    },
+    {
+      "id": "M05-L07",
+      "title_en": "The One-Tailed Test",
+      "title_ar": "اختبار ذيل واحد"
+    },
+    {
+      "id": "M05-L08",
+      "title_en": "Running a One-Tailed Hypothesis Test",
+      "title_ar": "تشغيل اختبار ذيل واحد"
+    },
+    {
+      "id": "M05-L09",
+      "title_en": "Errors in Hypothesis Testing",
+      "title_ar": "الأخطاء فى اختبار الفرضيات"
+    },
+    {
+      "id": "M05-L10",
+      "title_en": "Reporting the Results",
+      "title_ar": "إعداد التقرير"
+    }
+  ],
+  "sources": [
+    "05 Hypothesis Testing/*",
+    "Slides PDF pages 65-80",
+    "Workbook: 04 - Hypothesis Testing.xlsx"
+  ]
+}

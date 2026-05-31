@@ -1,0 +1,143 @@
+STATISTICS FUNDAMENTALS - FORMULA QUICK REFERENCE
+============================================================
+
+[F-M02-L04-01      ]  Classical probability                        
+                    Lesson: M02-L04
+                    Expr:   P = Favorable / Possible
+                    Use:    Symmetric setups: coins, dice, lottery.
+
+[F-M02-L04-02      ]  Frequentist probability                      
+                    Lesson: M02-L04
+                    Expr:   P = Favorable observed / Total observations
+                    Use:    Repeated experiments, large samples.
+
+[F-M02-L04-03      ]  Bayes' theorem                               
+                    Lesson: M02-L04
+                    Expr:   P(A | B) = P(B | A) · P(A) / P(B)
+                    Use:    Have prior knowledge + new evidence.
+
+[F-M03-L02-01      ]  Population mean                              
+                    Lesson: M03-L02
+                    Expr:   μ = (Σ xᵢ) / N
+                    Use:    Have data for entire population.
+
+[F-M03-L02-02      ]  Sample mean                                  
+                    Lesson: M03-L02
+                    Expr:   x̄ = (Σ xᵢ) / n
+                    Use:    Working with a sample (most real cases).
+
+[F-M03-L03-01      ]  Range                                        
+                    Lesson: M03-L03
+                    Expr:   Range = Max − Min
+                    Use:    Quick first look; small data.
+
+[F-M03-L03-02      ]  IQR                                          
+                    Lesson: M03-L03
+                    Expr:   IQR = Q3 − Q1
+                    Use:    Skewed data or outliers present.
+
+[F-M03-L03-03      ]  Outlier fence                                
+                    Lesson: M03-L03
+                    Expr:   Lower: Q1 − 1.5·IQR  ·  Upper: Q3 + 1.5·IQR
+                    Use:    Identifying outliers in skewed data.
+
+[F-M03-L04-01      ]  Population variance                          
+                    Lesson: M03-L04
+                    Expr:   σ² = Σ(xᵢ − μ)² / N
+                    Use:    Whole population available.
+
+[F-M03-L04-02      ]  Sample variance                              
+                    Lesson: M03-L04
+                    Expr:   s² = Σ(xᵢ − x̄)² / (n − 1)
+                    Use:    Working with a sample (most cases).
+
+[F-M03-L04-03      ]  Standard deviation                           
+                    Lesson: M03-L04
+                    Expr:   σ = √σ²    or    s = √s²
+                    Use:    Always - it's the headline measure.
+
+[F-M03-L05-01      ]  Empirical rule                               
+                    Lesson: M03-L05
+                    Expr:   μ ± 1σ ≈ 68%  ·  μ ± 2σ ≈ 95%  ·  μ ± 3σ ≈ 99.7%
+                    Use:    Data is approximately Normal.
+
+[F-M03-L05-02      ]  Z-score                                      
+                    Lesson: M03-L05
+                    Expr:   Z = (x − μ) / σ
+                    Use:    Comparing values across different distributions.
+
+[F-M03-L06-01      ]  Excess kurtosis                              
+                    Lesson: M03-L06
+                    Expr:   Excess kurtosis = Kurtosis − 3
+                    Use:    Comparing tail risk across distributions.
+
+[F-M03-L07-01      ]  Pearson skewness                             
+                    Lesson: M03-L07
+                    Expr:   Skew ≈ 3·(Mean − Median)/σ
+                    Use:    Quick check on skew direction and strength.
+
+[F-M03-L10-01      ]  Pearson correlation r                        
+                    Lesson: M03-L10
+                    Expr:   r = Σ(xᵢ−x̄)(yᵢ−ȳ) / [(n−1)·sₓ·s_y]
+                    Use:    Measuring linear association between two numeric variables.
+
+[F-M03-L11-01      ]  Regression line                              
+                    Lesson: M03-L11
+                    Expr:   Y = m·X + b
+                    Use:    Predicting a numeric outcome from one numeric predictor.
+
+[F-M03-L11-02      ]  Slope                                        
+                    Lesson: M03-L11
+                    Expr:   m = r · (s_y / sₓ)
+                    Use:    Computing slope from correlation and std devs.
+
+[F-M03-L11-03      ]  Intercept                                    
+                    Lesson: M03-L11
+                    Expr:   b = ȳ − m · x̄
+                    Use:    Completes the line equation.
+
+[F-M04-L05-01      ]  Alpha-confidence relation                    
+                    Lesson: M04-L05
+                    Expr:   Confidence = 1 − α
+                    Use:    Setting decision rule before testing.
+
+[F-M04-L07-01      ]  Sample size for proportion                   
+                    Lesson: M04-L07
+                    Expr:   n = Z²·p·(1−p) / E²
+                    Use:    Planning surveys with proportions.
+
+[F-M04-L08-01      ]  Law of Large Numbers                         
+                    Lesson: M04-L08
+                    Expr:   lim (n→∞) x̄ₙ = μ
+                    Use:    Justifying that bigger samples are more reliable.
+
+[F-M04-L09-01      ]  Central Limit Theorem                        
+                    Lesson: M04-L09
+                    Expr:   x̄ ~ N(μ, σ²/n) for large n
+                    Use:    Inference on means with large samples.
+
+[F-M04-L09-02      ]  Standard error of mean                       
+                    Lesson: M04-L09
+                    Expr:   SE = σ / √n
+                    Use:    Building confidence intervals.
+
+[F-M05-L06-01      ]  Two-sample t-statistic                       
+                    Lesson: M05-L06
+                    Expr:   t = (x̄₁ − x̄₂) / √(s₁²/n₁ + s₂²/n₂)
+                    Use:    Comparing means of two independent groups.
+
+[F-M05-L09-01      ]  Type I error rate                            
+                    Lesson: M05-L09
+                    Expr:   α = P(reject H0 | H0 true)
+                    Use:    Always.
+
+[F-M05-L09-02      ]  Type II error rate                           
+                    Lesson: M05-L09
+                    Expr:   β = P(fail to reject H0 | H0 false)
+                    Use:    Power analysis.
+
+[F-M05-L09-03      ]  Power of a test                              
+                    Lesson: M05-L09
+                    Expr:   Power = 1 − β
+                    Use:    Designing experiments.
+

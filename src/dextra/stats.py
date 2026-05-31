@@ -45,7 +45,8 @@ def _display(frame: pd.DataFrame) -> None:
     if _ipy_display is not None:
         _ipy_display(frame)
     else:
-        print(frame.to_string())
+        with pd.option_context("display.max_colwidth", 60):
+            print(frame.to_string())
 
 
 def describe_numeric(
@@ -54,6 +55,7 @@ def describe_numeric(
     decimals: int = 2,
     df_name: Optional[str] = None,
     iqr_multiplier: float = 1.5,
+    ddof: int = 1,
     metrics_as_rows: bool = True,
     show: bool = True,
     return_df: bool = False,
@@ -113,6 +115,8 @@ def describe_numeric(
         raise ValueError(f"'decimals' must be >= 0, got {decimals}")
     if iqr_multiplier <= 0:
         raise ValueError(f"'iqr_multiplier' must be > 0, got {iqr_multiplier}")
+    if ddof < 0:
+        raise ValueError(f"'ddof' must be >= 0, got {ddof}")
 
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
@@ -125,8 +129,8 @@ def describe_numeric(
 
     # Central tendency & dispersion
     mean_ = num_col.mean()
-    std_ = num_col.std()
-    var_ = num_col.var()
+    std_ = num_col.std(ddof=ddof)
+    var_ = num_col.var(ddof=ddof)
     cv_ = safe_divide(std_, mean_.replace(0, np.nan).abs()) * 100
     min_ = num_col.min()
     max_ = num_col.max()
@@ -165,8 +169,13 @@ def describe_numeric(
         s = num_col[c].dropna()
         values = [] if s.empty else s.mode(dropna=True).tolist()
         modes_raw[c] = values
-        if not values:
-            modes_str[c] = ""
+        n_unique_c = s.nunique(dropna=True)
+        if not values or n_unique_c == len(s):
+            # every value unique -> "mode" is meaningless; avoid table blow-up
+            modes_str[c] = "-"
+        elif len(values) > 5:
+            head = " | ".join(f"{x:,.{decimals}f}" for x in values[:5])
+            modes_str[c] = f"{head} | ... ({len(values) - 5} more)"
         else:
             modes_str[c] = " | ".join(f"{x:,.{decimals}f}" for x in values)
 
@@ -206,12 +215,16 @@ def describe_numeric(
         # Cast every value to a display string column-by-column.
         formatted = summary_t.copy()
         for c in formatted.columns:
-            formatted[c] = [
-                format_value(v, "num" if r != "modes" else "mode", decimals)
-                if r != "modes"
-                else format_value(v, "mode", decimals)
-                for r, v in zip(formatted.index, formatted[c])
-            ]
+            new_vals = []
+            for r, v in zip(formatted.index, formatted[c]):
+                if r == "modes":
+                    # modes_str is already a finished, length-capped display
+                    # string; re-formatting it would erase it. Pass it through.
+                    new_vals.append(v if isinstance(v, str)
+                                    else format_value(v, "mode", decimals))
+                else:
+                    new_vals.append(format_value(v, "num", decimals))
+            formatted[c] = new_vals
 
     if not metrics_as_rows:
         formatted = formatted.T

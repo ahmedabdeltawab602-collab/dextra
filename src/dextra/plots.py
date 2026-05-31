@@ -110,7 +110,7 @@ def _summary_frame(
 def plot_histograms(
     df: pd.DataFrame,
     cols: Optional[Sequence[str]] = None,
-    bins: int = 20,
+    bins: Union[int, str] = "auto",
     decimals: int = 2,
     iqr_multiplier: float = 1.5,
     fig_width: float = 17.0,
@@ -174,7 +174,7 @@ def plot_histograms(
     Figure, DataFrame, tuple of (Figure, DataFrame), or None
         Depends on ``return_fig`` and ``return_df``.
     """
-    if bins <= 0:
+    if isinstance(bins, int) and bins <= 0:
         raise ValueError(f"'bins' must be a positive integer, got {bins}")
     if decimals < 0:
         raise ValueError(f"'decimals' must be >= 0, got {decimals}")

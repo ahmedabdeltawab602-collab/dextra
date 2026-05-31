@@ -1,0 +1,182 @@
+{
+  "id": "M05-L10",
+  "module": 5,
+  "type": "lesson",
+  "title_en": "Reporting the Results",
+  "title_ar": "إعداد التقرير",
+  "objectives_en": [
+    "Report a hypothesis test result so a non-statistician can act on it.",
+    "Include sample size, effect size, and uncertainty alongside p.",
+    "Avoid the common reporting pitfalls (and p-hacking temptations)."
+  ],
+  "objectives_ar": [
+    "إعداد تقرير اختبار يفهمه غير المتخصص ويعمل به.",
+    "تضمين حجم العينة وحجم التأثير وعدم اليقين مع p.",
+    "تجنّب أخطاء التقارير الشائعة (وإغراءات التلاعب)."
+  ],
+  "sources": [
+    "05 Hypothesis Testing/Reporting the Results.mp4",
+    "Slides PDF: page 79"
+  ],
+  "sections": [
+    {
+      "key": "intro",
+      "title_en": "1 · Reporting Is Half the Job",
+      "title_ar": "1 · التقرير نصف العمل"
+    },
+    {
+      "key": "definitions",
+      "title_en": "2 · The Reporting Checklist",
+      "title_ar": "2 · قائمة التقرير"
+    },
+    {
+      "key": "example",
+      "title_en": "3 · Worked Example - A Clear Report",
+      "title_ar": "3 · مثال محلول - تقرير واضح"
+    },
+    {
+      "key": "traps",
+      "title_en": "4 · The Four Reporting Sins",
+      "title_ar": "4 · الذنوب الأربعة فى التقارير"
+    },
+    {
+      "key": "practice",
+      "title_en": "5 · Two Reporting Templates",
+      "title_ar": "5 · قالبا تقرير"
+    }
+  ],
+  "formulas": [],
+  "examples": [],
+  "memory_aid": [
+    {
+      "en": "Report: H0/Ha, n, means, test, statistic, p, effect size, CI, decision.",
+      "ar": "اذكر فى التقرير: H0/Ha، n، المتوسطات، الاختبار، الإحصاء، p، حجم التأثير، CI، القرار."
+    },
+    {
+      "en": "Never: remove outliers, add data, or change tests to chase p<0.05.",
+      "ar": "أبداً: لا تحذف متطرفات، لا تضف بيانات، لا تغيّر اختبارات لمطاردة p<0.05."
+    },
+    {
+      "en": "Negative results matter. Report them honestly with sample size and observed effect.",
+      "ar": "النتائج السالبة مهمة. أبلغها بصدق مع حجم العينة والتأثير المرصود."
+    }
+  ],
+  "summary": {
+    "en": "A complete hypothesis-test report contains hypotheses, sample size, observed statistics, test type, test statistic, p-value, EFFECT SIZE, confidence interval, and a clear business decision. Reporting only p — or worse, manipulating data until p < 0.05 — is the heart of the replication crisis. Honest reporting of negative results is just as valuable as positive findings.",
+    "ar": "تقرير اختبار كامل يحوى الفرضيات، حجم العينة، الإحصاءات المرصودة، نوع الاختبار، الإحصاء، قيمة p، حجم التأثير، فاصل الثقة، وقراراً تجارياً واضحاً. تقديم p فقط — أو الأسوأ، التلاعب بالبيانات حتى p < 0.05 — هو لب أزمة عدم تكرار النتائج. التقرير الأمين للنتائج السالبة بنفس قيمة الإيجابية."
+  },
+  "quiz": [
+    {
+      "id": "M05-L10-Q1",
+      "topic": "M05-L10",
+      "type": "MCQ",
+      "q_en": "Which is NOT required in a good hypothesis-test report?",
+      "q_ar": "أى مما يلى ليس مطلوباً فى تقرير جيد؟",
+      "opts_en": [
+        "Sample size n",
+        "p-value",
+        "Effect size and CI",
+        "The analyst's personal opinion"
+      ],
+      "opts_ar": [
+        "حجم العينة",
+        "قيمة p",
+        "حجم التأثير و CI",
+        "رأى المحلل الشخصى"
+      ],
+      "ans": "D",
+      "exp_en": "Personal opinion is not a statistical artefact. Stick to the numbers and the decision.",
+      "exp_ar": "الرأى الشخصى ليس أداة إحصائية. التزم بالأرقام والقرار.",
+      "formula_used": ""
+    },
+    {
+      "id": "M05-L10-Q2",
+      "topic": "M05-L10",
+      "type": "MCQ",
+      "q_en": "A report says only 'p = 0.04'. The biggest missing piece is:",
+      "q_ar": "تقرير يقول فقط 'p = 0.04'. أكبر شىء مفقود:",
+      "opts_en": [
+        "More p-values",
+        "Effect size and sample size for context",
+        "More variables",
+        "Color graphs"
+      ],
+      "opts_ar": [
+        "قيم p أكثر",
+        "حجم التأثير و n للسياق",
+        "متغيرات أكثر",
+        "رسوم ملوّنة"
+      ],
+      "ans": "B",
+      "exp_en": "p alone is meaningless without context.",
+      "exp_ar": "p وحدها لا معنى لها دون سياق.",
+      "formula_used": ""
+    },
+    {
+      "id": "M05-L10-Q3",
+      "topic": "M05-L10",
+      "type": "TrueFalse",
+      "q_en": "True or False: It's acceptable to drop outliers until the p-value crosses 0.05.",
+      "q_ar": "صح أم خطأ: مقبول حذف المتطرفات حتى تعبر p حد 0.05.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "That's p-hacking, the cardinal sin.",
+      "exp_ar": "هذا تلاعب، الذنب الأكبر.",
+      "formula_used": ""
+    },
+    {
+      "id": "M05-L10-Q4",
+      "topic": "M05-L10",
+      "type": "MCQ",
+      "q_en": "A negative result (failed to reject H0) should be:",
+      "q_ar": "نتيجة سالبة (لم نرفض H0) يجب:",
+      "opts_en": [
+        "Hidden",
+        "Reported with sample size and observed effect",
+        "Re-framed as positive",
+        "Discarded"
+      ],
+      "opts_ar": [
+        "إخفاؤها",
+        "تقديمها مع حجم العينة والتأثير المرصود",
+        "إعادة صياغتها كإيجابية",
+        "رميها"
+      ],
+      "ans": "B",
+      "exp_en": "Honest negative reports help the field and your team.",
+      "exp_ar": "التقارير السالبة الأمينة تخدم المجال والفريق.",
+      "formula_used": ""
+    },
+    {
+      "id": "M05-L10-Q5",
+      "topic": "M05-L10",
+      "type": "MCQ",
+      "q_en": "A massive sample finds p < 0.001 but the effect is only +0.05% conversion. The best report:",
+      "q_ar": "عينة ضخمة تجد p < 0.001 لكن التأثير +0.05% تحويل فقط. أفضل تقرير:",
+      "opts_en": [
+        "Declare big win",
+        "Report statistically significant but discuss practical relevance",
+        "Hide the result",
+        "Re-run the test"
+      ],
+      "opts_ar": [
+        "إعلان فوز كبير",
+        "ذو دلالة إحصائية لكن ناقش الأهمية العملية",
+        "إخفاء",
+        "إعادة الاختبار"
+      ],
+      "ans": "B",
+      "exp_en": "Statistical significance ≠ business value. Both deserve mention.",
+      "exp_ar": "الدلالة الإحصائية ≠ القيمة التجارية. كلاهما يستحق الذكر.",
+      "formula_used": ""
+    }
+  ],
+  "created": "2026-05-16"
+}

@@ -1,0 +1,173 @@
+{
+  "id": "M05-L08",
+  "module": 5,
+  "type": "lesson",
+  "title_en": "Running a One-Tailed Hypothesis Test",
+  "title_ar": "تشغيل اختبار فرضيات ذيل واحد",
+  "objectives_en": [
+    "Execute a one-tailed test end-to-end in Excel.",
+    "Read 'p one-tail' from the Excel ToolPak output.",
+    "Write a defensible directional conclusion."
+  ],
+  "objectives_ar": [
+    "تنفيذ اختبار ذيل واحد كامل فى Excel.",
+    "قراءة 'p ذيل واحد' من مخرج Excel ToolPak.",
+    "كتابة استنتاج اتجاهى قابل للدفاع."
+  ],
+  "sources": [
+    "05 Hypothesis Testing/Running a One-Tailed Hypothesis Test.mp4",
+    "Workbook: 04 - Hypothesis Testing.xlsx (One-Tail sheet)"
+  ],
+  "sections": [
+    {
+      "key": "intro",
+      "title_en": "1 · The Directional Question",
+      "title_ar": "1 · السؤال الاتجاهى"
+    },
+    {
+      "key": "example",
+      "title_en": "2 · The Full Five-Step Walk-Through",
+      "title_ar": "2 · المرور الكامل عبر الخمس خطوات"
+    },
+    {
+      "key": "interpret",
+      "title_en": "3 · Reading the Excel Output Carefully",
+      "title_ar": "3 · قراءة مخرج Excel بحرص"
+    },
+    {
+      "key": "practice",
+      "title_en": "4 · Writing the Conclusion",
+      "title_ar": "4 · كتابة الاستنتاج"
+    }
+  ],
+  "formulas": [],
+  "examples": [],
+  "memory_aid": [
+    {
+      "en": "In Excel ToolPak, look at 'P(T<=t) one-tail' for one-tailed tests.",
+      "ar": "فى Excel، انظر إلى 'P(T<=t) one-tail' لاختبارات ذيل واحد."
+    },
+    {
+      "en": "One-tail requires: pre-committed direction + data in that direction.",
+      "ar": "ذيل واحد يتطلب: اتجاه مُلتَزم مسبقاً + بيانات فى ذلك الاتجاه."
+    }
+  ],
+  "summary": {
+    "en": "Running a one-tailed test is the same five-step procedure, but you read 'p one-tail' from the Excel output. The test is more sensitive in the chosen direction — but you cannot retroactively switch directions, and you cannot reject H0 if the data went the opposite way. Conclusions should be directional and use defensible language.",
+    "ar": "تشغيل اختبار ذيل واحد هو نفس الخمس خطوات، لكن تقرأ 'p one-tail' من مخرج Excel. الاختبار أكثر حساسية فى الاتجاه المختار — لكن لا يمكن التبديل بأثر رجعى، ولا يمكن رفض H0 إذا ذهبت البيانات فى الاتجاه المعاكس. الاستنتاجات يجب أن تكون اتجاهية وبلغة قابلة للدفاع."
+  },
+  "quiz": [
+    {
+      "id": "M05-L08-Q1",
+      "topic": "M05-L08",
+      "type": "MCQ",
+      "q_en": "In Excel's t-test ToolPak output, the value to use for a one-tailed test is:",
+      "q_ar": "فى مخرج t-test ToolPak فى Excel، القيمة لاختبار ذيل واحد:",
+      "opts_en": [
+        "t Stat",
+        "df",
+        "P(T<=t) one-tail",
+        "t Critical two-tail"
+      ],
+      "opts_ar": [
+        "t Stat",
+        "df",
+        "P(T<=t) one-tail",
+        "t Critical two-tail"
+      ],
+      "ans": "C",
+      "exp_en": "The one-tail p is labelled exactly so.",
+      "exp_ar": "قيمة p للذيل الواحد مسماة هكذا.",
+      "formula_used": ""
+    },
+    {
+      "id": "M05-L08-Q2",
+      "topic": "M05-L08",
+      "type": "MCQ",
+      "q_en": "One-tail Ha: μ_new > μ_old. Data shows x̄_new < x̄_old by a lot. Decision:",
+      "q_ar": "Ha ذيل واحد: μ_جديد > μ_قديم. البيانات تظهر x̄_جديد < x̄_قديم بكثير. القرار:",
+      "opts_en": [
+        "Reject H0 (huge effect)",
+        "Fail to reject H0 (wrong direction)",
+        "Switch to left-tailed",
+        "Re-run as two-tailed"
+      ],
+      "opts_ar": [
+        "ارفض H0 (تأثير ضخم)",
+        "لا ترفض H0 (اتجاه خاطئ)",
+        "غيّر لذيل أيسر",
+        "أعد كذيلَين"
+      ],
+      "ans": "B",
+      "exp_en": "Wrong direction = cannot reject right-tailed H0, no matter how extreme.",
+      "exp_ar": "اتجاه خاطئ = لا يمكن رفض H0 لذيل أيمن، مهما كان متطرفاً.",
+      "formula_used": ""
+    },
+    {
+      "id": "M05-L08-Q3",
+      "topic": "M05-L08",
+      "type": "TrueFalse",
+      "q_en": "True or False: For a one-tailed test, p (one-tail) is approximately half of p (two-tail).",
+      "q_ar": "صح أم خطأ: لاختبار ذيل واحد، p one-tail ≈ نصف p two-tail.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "A",
+      "exp_en": "Two-tail is symmetric around 0; one-tail is half (in the right direction).",
+      "exp_ar": "ذيلَين متماثل حول 0؛ ذيل واحد نصف (فى الاتجاه الصحيح).",
+      "formula_used": ""
+    },
+    {
+      "id": "M05-L08-Q4",
+      "topic": "M05-L08",
+      "type": "MCQ",
+      "q_en": "A quality engineer wants to test if a new process reduces defect rate below 2%. Test type:",
+      "q_ar": "مهندس جودة يختبر هل عملية جديدة تخفض العيوب تحت 2%. نوع الاختبار:",
+      "opts_en": [
+        "Two-tailed",
+        "Right-tailed",
+        "Left-tailed",
+        "Chi-square"
+      ],
+      "opts_ar": [
+        "ذيلَين",
+        "أيمن",
+        "أيسر",
+        "Chi-square"
+      ],
+      "ans": "C",
+      "exp_en": "'Below' = left-tailed.",
+      "exp_ar": "'تحت' = أيسر.",
+      "formula_used": ""
+    },
+    {
+      "id": "M05-L08-Q5",
+      "topic": "M05-L08",
+      "type": "MCQ",
+      "q_en": "After rejecting H0 in a right-tailed test (Ha: μ > 80, p = 0.01), the best wording is:",
+      "q_ar": "بعد رفض H0 فى ذيل أيمن (Ha: μ > 80, p = 0.01)، أفضل صياغة:",
+      "opts_en": [
+        "μ = 80 is proven false",
+        "We have evidence μ > 80 (p=0.01)",
+        "All means are > 80",
+        "The data are wrong"
+      ],
+      "opts_ar": [
+        "μ=80 مُثبَت خطأها",
+        "لدينا دليل μ > 80 (p=0.01)",
+        "كل المتوسطات > 80",
+        "البيانات خاطئة"
+      ],
+      "ans": "B",
+      "exp_en": "Directional, evidence-based language.",
+      "exp_ar": "لغة اتجاهية مدعومة بالأدلة.",
+      "formula_used": ""
+    }
+  ],
+  "created": "2026-05-16"
+}

@@ -1,0 +1,22 @@
+{
+  "id": "M07",
+  "module": 7,
+  "type": "module",
+  "title_en": "Comprehensive Question Bank",
+  "title_ar": "بنك الأسئلة الشامل",
+  "files": [
+    "M07 - Cover.docx",
+    "M07 - Question Bank (Questions Only).docx",
+    "M07 - Answer Key.docx",
+    "M07 - Question Bank Master.json"
+  ],
+  "total_questions": 205,
+  "breakdown": {
+    "M01": 5,
+    "M02": 35,
+    "M03": 60,
+    "M04": 50,
+    "M05": 50,
+    "M06": 5
+  }
+}

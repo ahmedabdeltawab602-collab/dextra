@@ -1,0 +1,183 @@
+{
+  "id": "M04-L10",
+  "module": 4,
+  "type": "lesson",
+  "title_en": "Controlling for Bias in Sampling",
+  "title_ar": "التحكم فى التحيز فى أخذ العينات",
+  "objectives_en": [
+    "Recognise common types of sampling bias.",
+    "Distinguish representative sampling from random sampling.",
+    "Apply stratified, cluster, and systematic sampling where appropriate."
+  ],
+  "objectives_ar": [
+    "التعرف على أنواع التحيز الشائعة.",
+    "التمييز بين العينة التمثيلية والعشوائية.",
+    "تطبيق المعاينة الطبقية والعنقودية والمنتظمة عند اللزوم."
+  ],
+  "sources": [
+    "04 Inferential Statistics/Controlling for Bias.mp4",
+    "Slides PDF: pages 61-63"
+  ],
+  "sections": [
+    {
+      "key": "intro",
+      "title_en": "1 · The Hidden Killer",
+      "title_ar": "1 · القاتل الخفى"
+    },
+    {
+      "key": "definitions",
+      "title_en": "2 · Common Types of Bias",
+      "title_ar": "2 · أنواع التحيز الشائعة"
+    },
+    {
+      "key": "concept",
+      "title_en": "3 · Sampling Techniques",
+      "title_ar": "3 · تقنيات المعاينة"
+    },
+    {
+      "key": "example",
+      "title_en": "4 · Worked Example - The David vs Clark Problem",
+      "title_ar": "4 · مثال محلول - مشكلة دافيد وكلارك"
+    },
+    {
+      "key": "practice",
+      "title_en": "5 · Business Uses",
+      "title_ar": "5 · استخدامات أعمال"
+    },
+    {
+      "key": "traps",
+      "title_en": "6 · Common Trap",
+      "title_ar": "6 · فخّ شائع"
+    }
+  ],
+  "formulas": [],
+  "examples": [],
+  "memory_aid": [
+    {
+      "en": "Random > big. A biased huge sample beats no sample, but it also misleads.",
+      "ar": "العشوائية > الحجم. عينة كبيرة متحيزة قد تخدع."
+    },
+    {
+      "en": "Use stratification when subgroups (age, region, plan) matter to your question.",
+      "ar": "استخدم الطبقات حين تهم المجموعات الفرعية لسؤالك."
+    }
+  ],
+  "summary": {
+    "en": "Bias is the silent killer of inference. The Math behind statistics is correct only when sampling is fair. Recognise selection, self-selection, survivorship, response, non-response, and confirmation bias. Use random assignment (or stratified, cluster, or systematic sampling) to make the math work for you, not against you. A biased huge sample produces confidently wrong results — the worst kind of statistics.",
+    "ar": "التحيز هو القاتل الصامت للاستدلال. رياضيات الإحصاء صحيحة فقط عندما تكون المعاينة عادلة. تعرّف على تحيز الاختيار، الذاتى، النجاة، الاستجابة، عدم الاستجابة، والتأكيد. استخدم التعيين العشوائى (أو الطبقات أو العناقيد أو المنتظم) لتعمل الرياضيات لصالحك. عينة كبيرة متحيزة تنتج نتائج خاطئة بثقة — أسوأ أنواع الإحصاء."
+  },
+  "quiz": [
+    {
+      "id": "M04-L10-Q1",
+      "topic": "M04-L10",
+      "type": "MCQ",
+      "q_en": "Online product reviews tend to be biased because:",
+      "q_ar": "مراجعات المنتجات عبر الإنترنت متحيزة لأن:",
+      "opts_en": [
+        "Reviewers self-select (often extreme experiences)",
+        "Reviewers are paid",
+        "All reviewers are bots",
+        "Reviewers are random"
+      ],
+      "opts_ar": [
+        "المراجعون يختارون أنفسهم (تجارب متطرفة عادة)",
+        "المراجعون مدفوعون",
+        "كلهم بوتات",
+        "كلهم عشوائيون"
+      ],
+      "ans": "A",
+      "exp_en": "Self-selection bias: happiest and angriest are loudest.",
+      "exp_ar": "تحيز ذاتى: الأسعد والأغضب هم الأعلى صوتاً.",
+      "formula_used": ""
+    },
+    {
+      "id": "M04-L10-Q2",
+      "topic": "M04-L10",
+      "type": "MCQ",
+      "q_en": "To survey customer satisfaction across regions, the best approach is:",
+      "q_ar": "لاستطلاع رضا العملاء عبر مناطق، الأفضل:",
+      "opts_en": [
+        "Random sample from all customers",
+        "Stratified sample by region",
+        "Survey only complainers",
+        "Skip statistics"
+      ],
+      "opts_ar": [
+        "عينة عشوائية من كل العملاء",
+        "عينة طبقية بالمنطقة",
+        "استطلاع المشتكين فقط",
+        "تخطى الإحصاء"
+      ],
+      "ans": "B",
+      "exp_en": "Stratification ensures every region is represented.",
+      "exp_ar": "الطبقات تضمن تمثيل كل منطقة.",
+      "formula_used": ""
+    },
+    {
+      "id": "M04-L10-Q3",
+      "topic": "M04-L10",
+      "type": "MCQ",
+      "q_en": "Studying 'successful' companies to figure out the recipe for success ignores:",
+      "q_ar": "دراسة الشركات 'الناجحة' لمعرفة وصفة النجاح تتجاهل:",
+      "opts_en": [
+        "Tax law",
+        "Survivorship bias",
+        "CLT",
+        "Mean reversion"
+      ],
+      "opts_ar": [
+        "قانون الضرائب",
+        "تحيز النجاة",
+        "CLT",
+        "الارتداد للمتوسط"
+      ],
+      "ans": "B",
+      "exp_en": "Failed companies are invisible. We see only winners.",
+      "exp_ar": "الشركات الفاشلة غير مرئية. نرى الفائزين فقط.",
+      "formula_used": ""
+    },
+    {
+      "id": "M04-L10-Q4",
+      "topic": "M04-L10",
+      "type": "TrueFalse",
+      "q_en": "True or False: A sample of 1 million emails can never be biased.",
+      "q_ar": "صح أم خطأ: عينة من مليون بريد لا يمكن أن تكون متحيزة.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "Bigger does not fix bias. Any size can be biased.",
+      "exp_ar": "الأكبر لا يصلح التحيز. أى حجم قد يكون متحيزاً.",
+      "formula_used": ""
+    },
+    {
+      "id": "M04-L10-Q5",
+      "topic": "M04-L10",
+      "type": "MCQ",
+      "q_en": "To run a clean A/B test, users should be assigned to variants by:",
+      "q_ar": "لتشغيل اختبار A/B نظيف، يُعيَّن المستخدمون للنسخ بـ:",
+      "opts_en": [
+        "Their own choice",
+        "Account creation date",
+        "A random hash of user ID",
+        "Whoever volunteers"
+      ],
+      "opts_ar": [
+        "اختيارهم",
+        "تاريخ إنشاء الحساب",
+        "تجزئة عشوائية لمعرف المستخدم",
+        "المتطوعون"
+      ],
+      "ans": "C",
+      "exp_en": "Random assignment kills selection bias.",
+      "exp_ar": "التعيين العشوائى يقتل تحيز الاختيار.",
+      "formula_used": ""
+    }
+  ],
+  "created": "2026-05-16"
+}

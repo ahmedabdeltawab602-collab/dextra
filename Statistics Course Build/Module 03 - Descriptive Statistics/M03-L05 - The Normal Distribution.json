@@ -1,0 +1,206 @@
+{
+  "id": "M03-L05",
+  "module": 3,
+  "type": "lesson",
+  "title_en": "The Normal Distribution",
+  "title_ar": "التوزيع الطبيعى",
+  "objectives_en": [
+    "Recognise the four properties of a Normal distribution.",
+    "Apply the Empirical Rule (68-95-99.7).",
+    "Use the standard normal Z-score to compare observations."
+  ],
+  "objectives_ar": [
+    "إدراك الخصائص الأربع للتوزيع الطبيعى.",
+    "تطبيق القاعدة التجريبية (68-95-99.7).",
+    "استخدام درجة Z للتوزيع الطبيعى القياسى لمقارنة المشاهدات."
+  ],
+  "sources": [
+    "03 Descriptive Statistics/Normal Distribution.mp4",
+    "Slides PDF: pages 26-27",
+    "Glossary: Normal Distribution",
+    "OpenStax: Chapter 6"
+  ],
+  "sections": [
+    {
+      "key": "intro",
+      "title_en": "1 · Why the Normal Distribution Matters",
+      "title_ar": "1 · لماذا يهمّ التوزيع الطبيعى"
+    },
+    {
+      "key": "definitions",
+      "title_en": "2 · The Four Properties",
+      "title_ar": "2 · الخصائص الأربع"
+    },
+    {
+      "key": "formulas",
+      "title_en": "3 · The Empirical Rule & Z-score",
+      "title_ar": "3 · القاعدة التجريبية ودرجة Z"
+    },
+    {
+      "key": "example",
+      "title_en": "4 · Worked Example - Banking Transactions",
+      "title_ar": "4 · مثال محلول - معاملات بنكية"
+    },
+    {
+      "key": "practice",
+      "title_en": "5 · Business Uses",
+      "title_ar": "5 · استخدامات أعمال"
+    },
+    {
+      "key": "traps",
+      "title_en": "6 · Common Traps",
+      "title_ar": "6 · الفخاخ الشائعة"
+    }
+  ],
+  "formulas": [
+    {
+      "id": "F-M03-L05-01",
+      "name_en": "Empirical rule",
+      "name_ar": "القاعدة التجريبية",
+      "expr": "μ ± 1σ ≈ 68%  ·  μ ± 2σ ≈ 95%  ·  μ ± 3σ ≈ 99.7%",
+      "where_en": "Coverage under a Normal curve",
+      "where_ar": "التغطية تحت المنحنى الطبيعى",
+      "when_en": "Data is approximately Normal.",
+      "when_ar": "حين تكون البيانات طبيعية تقريباً."
+    },
+    {
+      "id": "F-M03-L05-02",
+      "name_en": "Z-score",
+      "name_ar": "درجة Z",
+      "expr": "Z = (x − μ) / σ",
+      "where_en": "Standardised distance from mean",
+      "where_ar": "المسافة المعيارية من المتوسط",
+      "when_en": "Comparing values across different distributions.",
+      "when_ar": "مقارنة قيم من توزيعات مختلفة."
+    }
+  ],
+  "examples": [],
+  "memory_aid": [
+    {
+      "en": "Bell curve. Symmetric. Mean = Median = Mode. 68-95-99.7 rule.",
+      "ar": "منحنى جرسى. متماثل. المتوسط = الوسيط = المنوال. قاعدة 68-95-99.7."
+    },
+    {
+      "en": "Z = (x − μ) / σ. |Z|>2 = unusual. |Z|>3 = exceptional.",
+      "ar": "Z = (x − μ) / σ. |Z|>2 = غير عادى. |Z|>3 = استثنائى."
+    }
+  ],
+  "summary": {
+    "en": "The Normal distribution is symmetric, bell-shaped, and follows the 68-95-99.7 rule. It's the backbone of much of inferential statistics. The Z-score lets you compare values from any Normal distribution on a common scale. Always check that your data is actually Normal-shaped before applying these rules.",
+    "ar": "التوزيع الطبيعى متماثل، جرسى الشكل، يتبع قاعدة 68-95-99.7. هو العمود الفقرى للإحصاء الاستدلالى. درجة Z تتيح مقارنة قيم من أى توزيع طبيعى على مقياس مشترك. تحقق دائماً أن بياناتك طبيعية فعلاً قبل تطبيق هذه القواعد."
+  },
+  "quiz": [
+    {
+      "id": "M03-L05-Q1",
+      "topic": "M03-L05",
+      "type": "MCQ",
+      "q_en": "Which is NOT a property of the Normal distribution?",
+      "q_ar": "أى مما يلى ليس من خصائص التوزيع الطبيعى؟",
+      "opts_en": [
+        "Symmetric",
+        "Mean = Median = Mode",
+        "Always positive (no negative values)",
+        "Bell-shaped"
+      ],
+      "opts_ar": [
+        "متماثل",
+        "المتوسط = الوسيط = المنوال",
+        "موجب دائماً (لا قيم سالبة)",
+        "جرسى الشكل"
+      ],
+      "ans": "C",
+      "exp_en": "The Normal distribution extends from −∞ to +∞; it can have negative values.",
+      "exp_ar": "الطبيعى يمتد من -∞ إلى +∞؛ يمكن أن يحوى قيماً سالبة.",
+      "formula_used": ""
+    },
+    {
+      "id": "M03-L05-Q2",
+      "topic": "M03-L05",
+      "type": "Calc",
+      "q_en": "IQ scores: μ=100, σ=15. What % of people score between 85 and 115?",
+      "q_ar": "درجات الذكاء: μ=100، σ=15. ما النسبة بين 85 و 115؟",
+      "opts_en": [
+        "50%",
+        "68%",
+        "95%",
+        "99.7%"
+      ],
+      "opts_ar": [
+        "50%",
+        "68%",
+        "95%",
+        "99.7%"
+      ],
+      "ans": "B",
+      "exp_en": "85 = μ−σ, 115 = μ+σ → 68%.",
+      "exp_ar": "85 = μ−σ، 115 = μ+σ ← 68%.",
+      "formula_used": ""
+    },
+    {
+      "id": "M03-L05-Q3",
+      "topic": "M03-L05",
+      "type": "Calc",
+      "q_en": "A test has μ=70, σ=10. Student scored 90. What is Z?",
+      "q_ar": "اختبار μ=70، σ=10. الطالب حصل على 90. ما Z؟",
+      "opts_en": [
+        "0.5",
+        "1",
+        "2",
+        "3"
+      ],
+      "opts_ar": [
+        "0.5",
+        "1",
+        "2",
+        "3"
+      ],
+      "ans": "C",
+      "exp_en": "Z = (90−70)/10 = 2 → top ~2.5% of test-takers.",
+      "exp_ar": "Z = (90−70)/10 = 2 ← أعلى ~2.5% من المختبَرين.",
+      "formula_used": "Z = (x − μ) / σ"
+    },
+    {
+      "id": "M03-L05-Q4",
+      "topic": "M03-L05",
+      "type": "TrueFalse",
+      "q_en": "True or False: All business data is Normally distributed.",
+      "q_ar": "صح أم خطأ: كل بيانات الأعمال موزعة طبيعياً.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "Income, customer spend, and many metrics are skewed. Check first!",
+      "exp_ar": "الدخل وإنفاق العملاء وكثير من المقاييس منحرفة. تحقق أولاً!",
+      "formula_used": ""
+    },
+    {
+      "id": "M03-L05-Q5",
+      "topic": "M03-L05",
+      "type": "MCQ",
+      "q_en": "Approximately what % of data lies between μ−2σ and μ+2σ?",
+      "q_ar": "تقريباً ما النسبة بين μ−2σ و μ+2σ؟",
+      "opts_en": [
+        "50%",
+        "68%",
+        "95%",
+        "99.7%"
+      ],
+      "opts_ar": [
+        "50%",
+        "68%",
+        "95%",
+        "99.7%"
+      ],
+      "ans": "C",
+      "exp_en": "The 95% wing of 68-95-99.7.",
+      "exp_ar": "جناح الـ 95% فى 68-95-99.7.",
+      "formula_used": ""
+    }
+  ],
+  "created": "2026-05-16"
+}

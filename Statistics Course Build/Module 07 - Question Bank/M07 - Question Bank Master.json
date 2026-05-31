@@ -1,0 +1,5814 @@
+{
+  "id": "M07",
+  "type": "question_bank",
+  "title_en": "Statistics Fundamentals - Comprehensive Question Bank",
+  "title_ar": "أساسيات الإحصاء - بنك الأسئلة الشامل",
+  "modules_covered": [
+    "M01",
+    "M02",
+    "M03",
+    "M04",
+    "M05",
+    "M06"
+  ],
+  "total_questions": 205,
+  "questions": [
+    {
+      "module_id": "M01",
+      "module_en": "Introduction",
+      "module_ar": "المقدمة",
+      "lesson_id": "M01-L01",
+      "lesson_title_en": "Course Introduction & Roadmap",
+      "lesson_title_ar": "مقدمة الدورة وخريطة الطريق",
+      "qid": "M01-L01-Q1",
+      "qtype": "MCQ",
+      "q_en": "Statistics is best described as the science of:",
+      "q_ar": "يُوصَف الإحصاء بأنه علم:",
+      "opts_en": [
+        "Memorising large datasets.",
+        "Collecting, summarising, analysing and interpreting data to make decisions.",
+        "Building dashboards in Excel.",
+        "Forecasting stock prices."
+      ],
+      "opts_ar": [
+        "حفظ مجموعات البيانات الكبيرة.",
+        "جمع البيانات وتلخيصها وتحليلها وتفسيرها لاتخاذ القرارات.",
+        "بناء لوحات بيانات فى Excel.",
+        "التنبؤ بأسعار الأسهم."
+      ],
+      "ans": "B",
+      "exp_en": "Statistics is end-to-end: from collecting raw data to interpreting it for decisions. Dashboards and forecasts are downstream applications.",
+      "exp_ar": "الإحصاء عملية متكاملة من جمع البيانات الخام إلى تفسيرها لاتخاذ القرارات. أما لوحات البيانات والتوقعات فهى تطبيقات لاحقة عليه.",
+      "formula_used": "",
+      "global_index": 1
+    },
+    {
+      "module_id": "M01",
+      "module_en": "Introduction",
+      "module_ar": "المقدمة",
+      "lesson_id": "M01-L01",
+      "lesson_title_en": "Course Introduction & Roadmap",
+      "lesson_title_ar": "مقدمة الدورة وخريطة الطريق",
+      "qid": "M01-L01-Q2",
+      "qtype": "MCQ",
+      "q_en": "Which question is INFERENTIAL rather than descriptive?",
+      "q_ar": "أى سؤال من هذه يُعدّ استدلالياً وليس وصفياً؟",
+      "opts_en": [
+        "What was our average order value last month?",
+        "How many customers bought Product A in Q3?",
+        "Does our new ad increase clicks compared to the old one?",
+        "What is the median age of our subscribers?"
+      ],
+      "opts_ar": [
+        "ما متوسط قيمة الطلب الشهر الماضى؟",
+        "كم عميلاً اشترى المنتج A فى الربع الثالث؟",
+        "هل يزيد إعلاننا الجديد من النقرات مقارنة بالقديم؟",
+        "ما الوسيط العمرى للمشتركين لدينا؟"
+      ],
+      "ans": "C",
+      "exp_en": "A, B and D describe what already happened. C goes beyond the observed data to ask whether the ad has a real effect — that is inference.",
+      "exp_ar": "الخيارات A و B و D تصف ما حدث بالفعل. أما C فيتجاوز البيانات المرصودة ليسأل: هل للإعلان تأثير حقيقى؟ هذا استدلال.",
+      "formula_used": "",
+      "global_index": 2
+    },
+    {
+      "module_id": "M01",
+      "module_en": "Introduction",
+      "module_ar": "المقدمة",
+      "lesson_id": "M01-L01",
+      "lesson_title_en": "Course Introduction & Roadmap",
+      "lesson_title_ar": "مقدمة الدورة وخريطة الطريق",
+      "qid": "M01-L01-Q3",
+      "qtype": "TrueFalse",
+      "q_en": "True or False: A descriptive statistic such as the mean can be calculated from any sample, no matter how biased the sample is.",
+      "q_ar": "صح أم خطأ: يمكن حساب الإحصاء الوصفى مثل المتوسط من أى عينة مهما كانت متحيزة.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "A",
+      "exp_en": "You can always *compute* the mean of any list of numbers. The catch is interpretation: a biased sample's mean does not represent the population. Statistics is computable; inference is what gets tricky.",
+      "exp_ar": "يمكنك دائماً حساب المتوسط لأى قائمة من الأرقام. لكن الإشكال فى التفسير: متوسط عينة متحيزة لا يمثل المجتمع. الحساب ممكن، أما الاستدلال فهو الجزء الصعب.",
+      "formula_used": "",
+      "global_index": 3
+    },
+    {
+      "module_id": "M01",
+      "module_en": "Introduction",
+      "module_ar": "المقدمة",
+      "lesson_id": "M01-L01",
+      "lesson_title_en": "Course Introduction & Roadmap",
+      "lesson_title_ar": "مقدمة الدورة وخريطة الطريق",
+      "qid": "M01-L01-Q4",
+      "qtype": "MCQ",
+      "q_en": "A marketing team launches an A/B test on a sales page. The most natural module to study FIRST in this course is:",
+      "q_ar": "فريق تسويق يجرى اختبار A/B على صفحة مبيعات. الموديول الأنسب للبدء به فى هذه الدورة هو:",
+      "opts_en": [
+        "Module 05 — Hypothesis Testing directly.",
+        "Module 03 — Descriptive Statistics, to first understand the data.",
+        "Module 06 — Conclusion.",
+        "Skip the course; go to ChatGPT."
+      ],
+      "opts_ar": [
+        "الموديول الخامس — اختبار الفرضيات مباشرة.",
+        "الموديول الثالث — الإحصاء الوصفى، لفهم البيانات أولاً.",
+        "الموديول السادس — الخلاصة.",
+        "تجاهل الدورة واسأل ChatGPT."
+      ],
+      "ans": "B",
+      "exp_en": "You can't test hypotheses on data you don't understand. Start with descriptive statistics: distribution shape, central tendency, spread. Only then design a meaningful hypothesis test.",
+      "exp_ar": "لا يمكنك اختبار فرضية على بيانات لا تفهمها. ابدأ بالإحصاء الوصفى: شكل التوزيع، النزعة المركزية، التشتت. ثم صمّم اختبار فرضية مفيد.",
+      "formula_used": "",
+      "global_index": 4
+    },
+    {
+      "module_id": "M01",
+      "module_en": "Introduction",
+      "module_ar": "المقدمة",
+      "lesson_id": "M01-L01",
+      "lesson_title_en": "Course Introduction & Roadmap",
+      "lesson_title_ar": "مقدمة الدورة وخريطة الطريق",
+      "qid": "M01-L01-Q5",
+      "qtype": "MCQ",
+      "q_en": "Which statement BEST captures the spirit of inferential statistics?",
+      "q_ar": "أى عبارة تعبّر أفضل عن روح الإحصاء الاستدلالى؟",
+      "opts_en": [
+        "I will study every customer who ever existed.",
+        "From a sample, I can make defensible claims about a population.",
+        "I trust my gut more than the numbers.",
+        "I never make decisions without 100% certainty."
+      ],
+      "opts_ar": [
+        "سأدرس كل عميل وُجد فى التاريخ.",
+        "من عينة، يمكنى تقديم ادعاءات مدعومة حول المجتمع كله.",
+        "أثق بحدسى أكثر من الأرقام.",
+        "لا أتخذ قراراً دون يقين 100%."
+      ],
+      "ans": "B",
+      "exp_en": "The whole point of inference: drawing supportable conclusions about a population from a sample, while quantifying the uncertainty.",
+      "exp_ar": "جوهر الاستدلال: استخلاص استنتاجات مدعومة عن المجتمع من عينة، مع قياس عدم اليقين فى الادعاء.",
+      "formula_used": "",
+      "global_index": 5
+    },
+    {
+      "module_id": "M02",
+      "module_en": "The Statistical Landscape",
+      "module_ar": "المشهد الإحصائى",
+      "lesson_id": "M02-L01",
+      "lesson_title_en": "Chapter Introduction - The Statistical Landscape",
+      "lesson_title_ar": "مقدمة الفصل - المشهد الإحصائى",
+      "qid": "M02-L01-Q1",
+      "qtype": "MCQ",
+      "q_en": "Statistics is BEST defined as:",
+      "q_ar": "أفضل تعريف للإحصاء هو:",
+      "opts_en": [
+        "A branch of mathematics about numbers only.",
+        "The process of collecting, summarising, and analysing data to make decisions.",
+        "A type of software like Excel.",
+        "Probability theory."
+      ],
+      "opts_ar": [
+        "فرع من الرياضيات يهتم بالأرقام فقط.",
+        "عملية جمع البيانات وتلخيصها وتحليلها لاتخاذ القرارات.",
+        "نوع من البرمجيات مثل Excel.",
+        "نظرية الاحتمالات."
+      ],
+      "ans": "B",
+      "exp_en": "Statistics is the end-to-end process, not just numbers, not just one program. Probability is a tool within it.",
+      "exp_ar": "الإحصاء عملية متكاملة، ليس مجرد أرقام، ولا برنامج واحد. الاحتمالات أداة داخله.",
+      "formula_used": "",
+      "global_index": 6
+    },
+    {
+      "module_id": "M02",
+      "module_en": "The Statistical Landscape",
+      "module_ar": "المشهد الإحصائى",
+      "lesson_id": "M02-L01",
+      "lesson_title_en": "Chapter Introduction - The Statistical Landscape",
+      "lesson_title_ar": "مقدمة الفصل - المشهد الإحصائى",
+      "qid": "M02-L01-Q2",
+      "qtype": "MCQ",
+      "q_en": "Which step is NOT a part of the statistics process?",
+      "q_ar": "أى خطوة من هذه ليست جزءاً من عملية الإحصاء؟",
+      "opts_en": [
+        "Collecting data",
+        "Summarising data",
+        "Guessing without data",
+        "Making decisions"
+      ],
+      "opts_ar": [
+        "جمع البيانات",
+        "تلخيص البيانات",
+        "التخمين بدون بيانات",
+        "اتخاذ القرار"
+      ],
+      "ans": "C",
+      "exp_en": "Statistics is evidence-based. Guessing without data is the opposite of what statistics does.",
+      "exp_ar": "الإحصاء قائم على الأدلة. التخمين دون بيانات هو عكس ما يفعله الإحصاء.",
+      "formula_used": "",
+      "global_index": 7
+    },
+    {
+      "module_id": "M02",
+      "module_en": "The Statistical Landscape",
+      "module_ar": "المشهد الإحصائى",
+      "lesson_id": "M02-L01",
+      "lesson_title_en": "Chapter Introduction - The Statistical Landscape",
+      "lesson_title_ar": "مقدمة الفصل - المشهد الإحصائى",
+      "qid": "M02-L01-Q3",
+      "qtype": "MCQ",
+      "q_en": "A retailer wants to know whether last month's revenue was higher than the previous month. This is primarily:",
+      "q_ar": "متجر يريد معرفة هل إيرادات الشهر الماضى أعلى من الشهر السابق. هذا أساساً:",
+      "opts_en": [
+        "Inferential",
+        "Descriptive",
+        "Machine learning",
+        "None of the above"
+      ],
+      "opts_ar": [
+        "استدلالى",
+        "وصفى",
+        "تعلم آلى",
+        "لا شىء مما سبق"
+      ],
+      "ans": "B",
+      "exp_en": "Describing what already happened — sums, comparisons of known totals — is descriptive statistics.",
+      "exp_ar": "وصف ما حدث بالفعل — مجاميع، مقارنات لقيم معروفة — هو إحصاء وصفى.",
+      "formula_used": "",
+      "global_index": 8
+    },
+    {
+      "module_id": "M02",
+      "module_en": "The Statistical Landscape",
+      "module_ar": "المشهد الإحصائى",
+      "lesson_id": "M02-L01",
+      "lesson_title_en": "Chapter Introduction - The Statistical Landscape",
+      "lesson_title_ar": "مقدمة الفصل - المشهد الإحصائى",
+      "qid": "M02-L01-Q4",
+      "qtype": "TrueFalse",
+      "q_en": "True or False: Statistics is only used in scientific research, not in business.",
+      "q_ar": "صح أم خطأ: الإحصاء يُستخدم فى البحث العلمى فقط، لا فى الأعمال.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "Every modern business runs on statistics: marketing tests, finance models, ops dashboards, product analytics.",
+      "exp_ar": "كل عمل حديث يقوم على الإحصاء: اختبارات تسويق، نماذج مالية، لوحات تشغيل، تحليلات منتجات.",
+      "formula_used": "",
+      "global_index": 9
+    },
+    {
+      "module_id": "M02",
+      "module_en": "The Statistical Landscape",
+      "module_ar": "المشهد الإحصائى",
+      "lesson_id": "M02-L01",
+      "lesson_title_en": "Chapter Introduction - The Statistical Landscape",
+      "lesson_title_ar": "مقدمة الفصل - المشهد الإحصائى",
+      "qid": "M02-L01-Q5",
+      "qtype": "MCQ",
+      "q_en": "Which is the BEST way to think about this module?",
+      "q_ar": "أى عبارة أفضل لفهم هذا الموديول؟",
+      "opts_en": [
+        "A list of formulas to memorise.",
+        "A map: where each tool fits in the data-decision pipeline.",
+        "An introduction to machine learning only.",
+        "A history of statistics."
+      ],
+      "opts_ar": [
+        "قائمة بصيغ للحفظ.",
+        "خريطة: أين تقع كل أداة فى مسار البيانات والقرار.",
+        "مقدمة فى التعلم الآلى فقط.",
+        "تاريخ الإحصاء."
+      ],
+      "ans": "B",
+      "exp_en": "The landscape module is a map. Later modules drill into each tool.",
+      "exp_ar": "موديول المشهد هو خريطة. الموديولات اللاحقة تتعمق فى كل أداة.",
+      "formula_used": "",
+      "global_index": 10
+    },
+    {
+      "module_id": "M02",
+      "module_en": "The Statistical Landscape",
+      "module_ar": "المشهد الإحصائى",
+      "lesson_id": "M02-L02",
+      "lesson_title_en": "The Anatomy of a Data Set",
+      "lesson_title_ar": "تشريح مجموعة البيانات",
+      "qid": "M02-L02-Q1",
+      "qtype": "MCQ",
+      "q_en": "In a customer dataset, each row represents:",
+      "q_ar": "فى بيانات العملاء، كل صف يمثّل:",
+      "opts_en": [
+        "A column",
+        "A single observation (one customer)",
+        "All customers combined",
+        "A variable"
+      ],
+      "opts_ar": [
+        "عمود",
+        "مشاهدة واحدة (عميل واحد)",
+        "كل العملاء مجمّعين",
+        "متغير"
+      ],
+      "ans": "B",
+      "exp_en": "A row is one observation. A column is a variable.",
+      "exp_ar": "الصف مشاهدة واحدة. العمود متغير.",
+      "formula_used": "",
+      "global_index": 11
+    },
+    {
+      "module_id": "M02",
+      "module_en": "The Statistical Landscape",
+      "module_ar": "المشهد الإحصائى",
+      "lesson_id": "M02-L02",
+      "lesson_title_en": "The Anatomy of a Data Set",
+      "lesson_title_ar": "تشريح مجموعة البيانات",
+      "qid": "M02-L02-Q2",
+      "qtype": "MCQ",
+      "q_en": "An e-commerce team analyses 1,500 random customer orders out of 850,000. The 1,500 orders are:",
+      "q_ar": "فريق تجارة إلكترونية يحلل 1,500 طلب عشوائى من بين 850,000. الـ 1,500 هذه:",
+      "opts_en": [
+        "The population",
+        "A sample of the population",
+        "Unique IDs",
+        "Target variables"
+      ],
+      "opts_ar": [
+        "المجتمع",
+        "عينة من المجتمع",
+        "معرفات فريدة",
+        "متغيرات هدف"
+      ],
+      "ans": "B",
+      "exp_en": "A subset selected for study from a larger group is a sample.",
+      "exp_ar": "مجموعة فرعية مختارة من مجموعة أكبر للدراسة هى عينة.",
+      "formula_used": "",
+      "global_index": 12
+    },
+    {
+      "module_id": "M02",
+      "module_en": "The Statistical Landscape",
+      "module_ar": "المشهد الإحصائى",
+      "lesson_id": "M02-L02",
+      "lesson_title_en": "The Anatomy of a Data Set",
+      "lesson_title_ar": "تشريح مجموعة البيانات",
+      "qid": "M02-L02-Q3",
+      "qtype": "MCQ",
+      "q_en": "Which column is the most likely Target in a churn-prediction project?",
+      "q_ar": "أى عمود هو الأرجح ليكون 'الهدف' فى مشروع توقع مغادرة العملاء؟",
+      "opts_en": [
+        "Customer_ID",
+        "Signup_Date",
+        "Plan_Type",
+        "Did_Churn (Yes/No)"
+      ],
+      "opts_ar": [
+        "معرّف العميل",
+        "تاريخ التسجيل",
+        "نوع الباقة",
+        "هل غادر (نعم/لا)"
+      ],
+      "ans": "D",
+      "exp_en": "The target is what you want to predict — here, churn itself.",
+      "exp_ar": "الهدف هو ما تريد التنبؤ به — هنا، المغادرة نفسها.",
+      "formula_used": "",
+      "global_index": 13
+    },
+    {
+      "module_id": "M02",
+      "module_en": "The Statistical Landscape",
+      "module_ar": "المشهد الإحصائى",
+      "lesson_id": "M02-L02",
+      "lesson_title_en": "The Anatomy of a Data Set",
+      "lesson_title_ar": "تشريح مجموعة البيانات",
+      "qid": "M02-L02-Q4",
+      "qtype": "TrueFalse",
+      "q_en": "True or False: A dataset and a population are always the same thing.",
+      "q_ar": "صح أم خطأ: مجموعة البيانات والمجتمع شىء واحد دائماً.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "A dataset is usually a sample of the population, not the whole population.",
+      "exp_ar": "مجموعة البيانات غالباً عينة من المجتمع، لا المجتمع كله.",
+      "formula_used": "",
+      "global_index": 14
+    },
+    {
+      "module_id": "M02",
+      "module_en": "The Statistical Landscape",
+      "module_ar": "المشهد الإحصائى",
+      "lesson_id": "M02-L02",
+      "lesson_title_en": "The Anatomy of a Data Set",
+      "lesson_title_ar": "تشريح مجموعة البيانات",
+      "qid": "M02-L02-Q5",
+      "qtype": "MCQ",
+      "q_en": "A unique ID column should:",
+      "q_ar": "عمود المعرف الفريد يجب أن:",
+      "opts_en": [
+        "Contain duplicates for backup",
+        "Have one unique value per row, never repeating",
+        "Always be a name",
+        "Be optional in business datasets"
+      ],
+      "opts_ar": [
+        "يحتوى على مكررات للنسخ الاحتياطى",
+        "يحوى قيمة فريدة لكل صف، لا تتكرر",
+        "يكون اسماً دائماً",
+        "اختيارى فى بيانات الأعمال"
+      ],
+      "ans": "B",
+      "exp_en": "By definition, a unique ID is unique per row. Otherwise it isn't doing its job.",
+      "exp_ar": "بحكم تعريفه، المعرف الفريد لا يتكرر. وإلا لا يؤدى دوره.",
+      "formula_used": "",
+      "global_index": 15
+    },
+    {
+      "module_id": "M02",
+      "module_en": "The Statistical Landscape",
+      "module_ar": "المشهد الإحصائى",
+      "lesson_id": "M02-L03",
+      "lesson_title_en": "Descriptive vs Inferential Statistics",
+      "lesson_title_ar": "الإحصاء الوصفى مقابل الاستدلالى",
+      "qid": "M02-L03-Q1",
+      "qtype": "MCQ",
+      "q_en": "Calculating the average rating of 12 product reviews you have is:",
+      "q_ar": "حساب متوسط تقييم 12 مراجعة منتج بين يديك هو:",
+      "opts_en": [
+        "Inferential",
+        "Descriptive",
+        "Hypothesis testing",
+        "Forecasting"
+      ],
+      "opts_ar": [
+        "استدلالى",
+        "وصفى",
+        "اختبار فرضيات",
+        "تنبؤ"
+      ],
+      "ans": "B",
+      "exp_en": "Computing a number directly from your data is descriptive.",
+      "exp_ar": "حساب رقم مباشر من بياناتك وصفى.",
+      "formula_used": "",
+      "global_index": 16
+    },
+    {
+      "module_id": "M02",
+      "module_en": "The Statistical Landscape",
+      "module_ar": "المشهد الإحصائى",
+      "lesson_id": "M02-L03",
+      "lesson_title_en": "Descriptive vs Inferential Statistics",
+      "lesson_title_ar": "الإحصاء الوصفى مقابل الاستدلالى",
+      "qid": "M02-L03-Q2",
+      "qtype": "MCQ",
+      "q_en": "Estimating the true satisfaction of ALL customers from a 500-person survey is:",
+      "q_ar": "تقدير الرضا الحقيقى لكل العملاء من استطلاع 500 شخص هو:",
+      "opts_en": [
+        "Descriptive",
+        "Inferential",
+        "A KPI calculation",
+        "None of these"
+      ],
+      "opts_ar": [
+        "وصفى",
+        "استدلالى",
+        "حساب مؤشر أداء",
+        "لا شىء"
+      ],
+      "ans": "B",
+      "exp_en": "Going beyond your sample to a population is inference.",
+      "exp_ar": "تجاوز العينة إلى المجتمع هو استدلال.",
+      "formula_used": "",
+      "global_index": 17
+    },
+    {
+      "module_id": "M02",
+      "module_en": "The Statistical Landscape",
+      "module_ar": "المشهد الإحصائى",
+      "lesson_id": "M02-L03",
+      "lesson_title_en": "Descriptive vs Inferential Statistics",
+      "lesson_title_ar": "الإحصاء الوصفى مقابل الاستدلالى",
+      "qid": "M02-L03-Q3",
+      "qtype": "MCQ",
+      "q_en": "A dashboard tile showing 'Yesterday's revenue: $48,200' is:",
+      "q_ar": "بلاطة لوحة بيانات تعرض 'إيرادات الأمس: 48,200 دولار' هى:",
+      "opts_en": [
+        "Inferential",
+        "Descriptive",
+        "Predictive",
+        "Bayesian"
+      ],
+      "opts_ar": [
+        "استدلالى",
+        "وصفى",
+        "تنبؤى",
+        "بيزى"
+      ],
+      "ans": "B",
+      "exp_en": "Reporting a known total from data is descriptive.",
+      "exp_ar": "عرض إجمالى معروف من البيانات وصفى.",
+      "formula_used": "",
+      "global_index": 18
+    },
+    {
+      "module_id": "M02",
+      "module_en": "The Statistical Landscape",
+      "module_ar": "المشهد الإحصائى",
+      "lesson_id": "M02-L03",
+      "lesson_title_en": "Descriptive vs Inferential Statistics",
+      "lesson_title_ar": "الإحصاء الوصفى مقابل الاستدلالى",
+      "qid": "M02-L03-Q4",
+      "qtype": "MCQ",
+      "q_en": "A/B testing whether a new homepage increases conversion is:",
+      "q_ar": "اختبار A/B لمعرفة هل تزيد الصفحة الرئيسية الجديدة التحويل هو:",
+      "opts_en": [
+        "Descriptive",
+        "Inferential",
+        "Neither",
+        "Both descriptive and inferential"
+      ],
+      "opts_ar": [
+        "وصفى",
+        "استدلالى",
+        "لا واحد",
+        "الاثنان"
+      ],
+      "ans": "D",
+      "exp_en": "You describe each variant's conversion (descriptive) then test if the difference is real (inferential).",
+      "exp_ar": "تصف معدل التحويل لكل نسخة (وصفى) ثم تختبر هل الفرق حقيقى (استدلالى).",
+      "formula_used": "",
+      "global_index": 19
+    },
+    {
+      "module_id": "M02",
+      "module_en": "The Statistical Landscape",
+      "module_ar": "المشهد الإحصائى",
+      "lesson_id": "M02-L03",
+      "lesson_title_en": "Descriptive vs Inferential Statistics",
+      "lesson_title_ar": "الإحصاء الوصفى مقابل الاستدلالى",
+      "qid": "M02-L03-Q5",
+      "qtype": "TrueFalse",
+      "q_en": "True or False: Descriptive statistics involve uncertainty about a larger population.",
+      "q_ar": "صح أم خطأ: الإحصاء الوصفى يتضمن عدم يقين تجاه مجتمع أكبر.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "Descriptive stats compute exact values from data you already have — no uncertainty.",
+      "exp_ar": "الوصفى يحسب قيماً مضبوطة من بياناتك — لا عدم يقين.",
+      "formula_used": "",
+      "global_index": 20
+    },
+    {
+      "module_id": "M02",
+      "module_en": "The Statistical Landscape",
+      "module_ar": "المشهد الإحصائى",
+      "lesson_id": "M02-L04",
+      "lesson_title_en": "Approaches to Inferring Probability",
+      "lesson_title_ar": "مناهج الاستدلال الاحتمالى",
+      "qid": "M02-L04-Q1",
+      "qtype": "MCQ",
+      "q_en": "Saying 'a fair coin lands heads 50% of the time' is which approach?",
+      "q_ar": "القول 'عملة عادلة تظهر صورتها 50% من الوقت' من أى منهج؟",
+      "opts_en": [
+        "Frequentist",
+        "Bayesian",
+        "Classical",
+        "None"
+      ],
+      "opts_ar": [
+        "تكرارى",
+        "بيزى",
+        "كلاسيكى",
+        "لا شىء"
+      ],
+      "ans": "C",
+      "exp_en": "Equal possible outcomes — classic classical setup.",
+      "exp_ar": "نتائج متساوية الاحتمال — وضع كلاسيكى بحت.",
+      "formula_used": "",
+      "global_index": 21
+    },
+    {
+      "module_id": "M02",
+      "module_en": "The Statistical Landscape",
+      "module_ar": "المشهد الإحصائى",
+      "lesson_id": "M02-L04",
+      "lesson_title_en": "Approaches to Inferring Probability",
+      "lesson_title_ar": "مناهج الاستدلال الاحتمالى",
+      "qid": "M02-L04-Q2",
+      "qtype": "MCQ",
+      "q_en": "A casino tracks 100,000 spins and finds red showed 47.9% of the time. Concluding P(red) ≈ 0.479 is:",
+      "q_ar": "كازينو يسجل 100,000 دورة فتظهر الحمراء 47.9% من الوقت. استنتاج P(حمراء) ≈ 0.479 هو:",
+      "opts_en": [
+        "Classical",
+        "Frequentist",
+        "Bayesian",
+        "Wrong"
+      ],
+      "opts_ar": [
+        "كلاسيكى",
+        "تكرارى",
+        "بيزى",
+        "خاطئ"
+      ],
+      "ans": "B",
+      "exp_en": "Estimating probability from observed long-run frequency = frequentist.",
+      "exp_ar": "تقدير الاحتمال من التكرار المرصود طويل المدى = تكرارى.",
+      "formula_used": "",
+      "global_index": 22
+    },
+    {
+      "module_id": "M02",
+      "module_en": "The Statistical Landscape",
+      "module_ar": "المشهد الإحصائى",
+      "lesson_id": "M02-L04",
+      "lesson_title_en": "Approaches to Inferring Probability",
+      "lesson_title_ar": "مناهج الاستدلال الاحتمالى",
+      "qid": "M02-L04-Q3",
+      "qtype": "MCQ",
+      "q_en": "A spam filter starts believing P(spam)=0.4, sees 'win money now' in the email, and updates to P(spam|words)=0.95. This is:",
+      "q_ar": "فلتر سبام يبدأ بالاعتقاد P(سبام)=0.4، يرى 'اربح المال الآن' فى الرسالة، فيحدّث إلى 0.95. هذا:",
+      "opts_en": [
+        "Classical",
+        "Frequentist",
+        "Bayesian",
+        "Heuristic"
+      ],
+      "opts_ar": [
+        "كلاسيكى",
+        "تكرارى",
+        "بيزى",
+        "استدلالى"
+      ],
+      "ans": "C",
+      "exp_en": "Updating prior with new evidence is the heart of Bayes.",
+      "exp_ar": "تحديث المعرفة المسبقة بالأدلة الجديدة هو جوهر بايز.",
+      "formula_used": "",
+      "global_index": 23
+    },
+    {
+      "module_id": "M02",
+      "module_en": "The Statistical Landscape",
+      "module_ar": "المشهد الإحصائى",
+      "lesson_id": "M02-L04",
+      "lesson_title_en": "Approaches to Inferring Probability",
+      "lesson_title_ar": "مناهج الاستدلال الاحتمالى",
+      "qid": "M02-L04-Q4",
+      "qtype": "Calc",
+      "q_en": "A bag has 3 red and 7 blue balls. Probability of drawing red?",
+      "q_ar": "كيس به 3 كرات حمراء و 7 زرقاء. احتمال سحب الحمراء؟",
+      "opts_en": [
+        "0.30",
+        "0.50",
+        "0.70",
+        "0.43"
+      ],
+      "opts_ar": [
+        "0.30",
+        "0.50",
+        "0.70",
+        "0.43"
+      ],
+      "ans": "A",
+      "exp_en": "Classical: favorable=3, possible=10 → 3/10 = 0.30.",
+      "exp_ar": "كلاسيكى: المرغوب=3، الكل=10 → 3/10 = 0.30.",
+      "formula_used": "P = Favorable / Possible",
+      "global_index": 24
+    },
+    {
+      "module_id": "M02",
+      "module_en": "The Statistical Landscape",
+      "module_ar": "المشهد الإحصائى",
+      "lesson_id": "M02-L04",
+      "lesson_title_en": "Approaches to Inferring Probability",
+      "lesson_title_ar": "مناهج الاستدلال الاحتمالى",
+      "qid": "M02-L04-Q5",
+      "qtype": "MCQ",
+      "q_en": "Which approach is dominant in business A/B testing?",
+      "q_ar": "أى منهج هو السائد فى اختبارات A/B فى الأعمال؟",
+      "opts_en": [
+        "Classical",
+        "Frequentist",
+        "Bayesian",
+        "Machine learning"
+      ],
+      "opts_ar": [
+        "كلاسيكى",
+        "تكرارى",
+        "بيزى",
+        "تعلم آلى"
+      ],
+      "ans": "B",
+      "exp_en": "Frequentist p-value testing dominates online A/B testing platforms.",
+      "exp_ar": "اختبار قيم p التكرارى يسيطر على منصات اختبار A/B.",
+      "formula_used": "",
+      "global_index": 25
+    },
+    {
+      "module_id": "M02",
+      "module_en": "The Statistical Landscape",
+      "module_ar": "المشهد الإحصائى",
+      "lesson_id": "M02-L05",
+      "lesson_title_en": "Assumptions in Inferential Statistics",
+      "lesson_title_ar": "الافتراضات فى الإحصاء الاستدلالى",
+      "qid": "M02-L05-Q1",
+      "qtype": "MCQ",
+      "q_en": "Different inferential approaches sometimes give different answers on the same data because:",
+      "q_ar": "المناهج الاستدلالية المختلفة تعطى أحياناً إجابات مختلفة على نفس البيانات لأن:",
+      "opts_en": [
+        "The math is wrong",
+        "They rest on different assumptions",
+        "Statistics is broken",
+        "Random chance"
+      ],
+      "opts_ar": [
+        "الرياضيات خاطئة",
+        "تقوم على افتراضات مختلفة",
+        "الإحصاء معطّل",
+        "الصدفة"
+      ],
+      "ans": "B",
+      "exp_en": "Assumptions, not math, drive the divergence.",
+      "exp_ar": "الافتراضات لا الرياضيات هى السبب فى الاختلاف.",
+      "formula_used": "",
+      "global_index": 26
+    },
+    {
+      "module_id": "M02",
+      "module_en": "The Statistical Landscape",
+      "module_ar": "المشهد الإحصائى",
+      "lesson_id": "M02-L05",
+      "lesson_title_en": "Assumptions in Inferential Statistics",
+      "lesson_title_ar": "الافتراضات فى الإحصاء الاستدلالى",
+      "qid": "M02-L05-Q2",
+      "qtype": "TrueFalse",
+      "q_en": "True or False: A test with valid math always gives valid conclusions.",
+      "q_ar": "صح أم خطأ: الاختبار صحيح الرياضيات يعطى استنتاجات صحيحة دائماً.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "If the assumptions don't hold, the conclusions are wrong regardless of math.",
+      "exp_ar": "إذا لم تتحقق الافتراضات، الاستنتاجات خاطئة مهما صحّت الرياضيات.",
+      "formula_used": "",
+      "global_index": 27
+    },
+    {
+      "module_id": "M02",
+      "module_en": "The Statistical Landscape",
+      "module_ar": "المشهد الإحصائى",
+      "lesson_id": "M02-L05",
+      "lesson_title_en": "Assumptions in Inferential Statistics",
+      "lesson_title_ar": "الافتراضات فى الإحصاء الاستدلالى",
+      "qid": "M02-L05-Q3",
+      "qtype": "MCQ",
+      "q_en": "Which is NOT a typical assumption in frequentist hypothesis tests?",
+      "q_ar": "أى مما يلى ليس افتراضاً نموذجياً فى اختبارات الفرضيات التكرارية؟",
+      "opts_en": [
+        "Random sampling",
+        "Independence",
+        "Normality (often)",
+        "The analyst believes the result"
+      ],
+      "opts_ar": [
+        "عشوائية العينة",
+        "الاستقلال",
+        "التوزيع الطبيعى (غالباً)",
+        "يعتقد المحلل بالنتيجة"
+      ],
+      "ans": "D",
+      "exp_en": "The analyst's beliefs are not a statistical assumption.",
+      "exp_ar": "معتقدات المحلل ليست افتراضاً إحصائياً.",
+      "formula_used": "",
+      "global_index": 28
+    },
+    {
+      "module_id": "M02",
+      "module_en": "The Statistical Landscape",
+      "module_ar": "المشهد الإحصائى",
+      "lesson_id": "M02-L05",
+      "lesson_title_en": "Assumptions in Inferential Statistics",
+      "lesson_title_ar": "الافتراضات فى الإحصاء الاستدلالى",
+      "qid": "M02-L05-Q4",
+      "qtype": "MCQ",
+      "q_en": "A bank's credit-risk model assumed defaults were independent. In 2008 this assumption broke because:",
+      "q_ar": "نموذج مخاطر ائتمان بنكى افترض أن التعثرات مستقلة. فى 2008 انكسر هذا الافتراض لأن:",
+      "opts_en": [
+        "The math was wrong",
+        "Defaults clustered together during the crash",
+        "Banks stopped using statistics",
+        "Customers became smarter"
+      ],
+      "opts_ar": [
+        "كانت الرياضيات خاطئة",
+        "تجمعت حالات التعثر فى الانهيار",
+        "تخلّت البنوك عن الإحصاء",
+        "أصبح العملاء أذكى"
+      ],
+      "ans": "B",
+      "exp_en": "Systemic shock broke independence — defaults correlated heavily across borrowers.",
+      "exp_ar": "الصدمة النظامية كسرت الاستقلال — ارتبطت التعثرات بشدة بين المقترضين.",
+      "formula_used": "",
+      "global_index": 29
+    },
+    {
+      "module_id": "M02",
+      "module_en": "The Statistical Landscape",
+      "module_ar": "المشهد الإحصائى",
+      "lesson_id": "M02-L05",
+      "lesson_title_en": "Assumptions in Inferential Statistics",
+      "lesson_title_ar": "الافتراضات فى الإحصاء الاستدلالى",
+      "qid": "M02-L05-Q5",
+      "qtype": "MCQ",
+      "q_en": "The best response when you suspect an assumption is violated is:",
+      "q_ar": "الاستجابة الأفضل حين تشك فى انتهاك افتراض هى:",
+      "opts_en": [
+        "Ignore it - the test is robust",
+        "Run the test anyway and report the p-value",
+        "Diagnose, fix data, or switch to a method that fits",
+        "Stop doing statistics"
+      ],
+      "opts_ar": [
+        "تجاهلها - الاختبار قوى",
+        "شغّل الاختبار وأبلغ عن قيمة p",
+        "شخّص، عالج البيانات، أو غيّر المنهج",
+        "توقف عن الإحصاء"
+      ],
+      "ans": "C",
+      "exp_en": "Diagnose → repair → re-run, or switch methods.",
+      "exp_ar": "شخّص ← عالج ← أعد التشغيل، أو غيّر المنهج.",
+      "formula_used": "",
+      "global_index": 30
+    },
+    {
+      "module_id": "M02",
+      "module_en": "The Statistical Landscape",
+      "module_ar": "المشهد الإحصائى",
+      "lesson_id": "M02-L06",
+      "lesson_title_en": "The Flowchart - Analysis Selection",
+      "lesson_title_ar": "مخطط اختيار التحليل",
+      "qid": "M02-L06-Q1",
+      "qtype": "MCQ",
+      "q_en": "A daily revenue dashboard is primarily:",
+      "q_ar": "لوحة إيرادات يومية هى أساساً:",
+      "opts_en": [
+        "ML",
+        "Inferential",
+        "Descriptive",
+        "Bayesian"
+      ],
+      "opts_ar": [
+        "تعلم آلى",
+        "استدلالى",
+        "وصفى",
+        "بيزى"
+      ],
+      "ans": "C",
+      "exp_en": "Reporting known totals = descriptive.",
+      "exp_ar": "عرض إجماليات معروفة = وصفى.",
+      "formula_used": "",
+      "global_index": 31
+    },
+    {
+      "module_id": "M02",
+      "module_en": "The Statistical Landscape",
+      "module_ar": "المشهد الإحصائى",
+      "lesson_id": "M02-L06",
+      "lesson_title_en": "The Flowchart - Analysis Selection",
+      "lesson_title_ar": "مخطط اختيار التحليل",
+      "qid": "M02-L06-Q2",
+      "qtype": "MCQ",
+      "q_en": "An e-commerce site wants to decide whether to roll out a new checkout. Best tool:",
+      "q_ar": "موقع تجارة يريد تقرير إطلاق صفحة دفع جديدة. الأداة الأفضل:",
+      "opts_en": [
+        "Descriptive only",
+        "Inferential A/B test",
+        "ML model",
+        "Quick guess"
+      ],
+      "opts_ar": [
+        "وصفى فقط",
+        "اختبار A/B استدلالى",
+        "نموذج تعلم آلى",
+        "تخمين سريع"
+      ],
+      "ans": "B",
+      "exp_en": "One big yes/no decision → inferential test.",
+      "exp_ar": "قرار كبير واحد نعم/لا ← اختبار استدلالى.",
+      "formula_used": "",
+      "global_index": 32
+    },
+    {
+      "module_id": "M02",
+      "module_en": "The Statistical Landscape",
+      "module_ar": "المشهد الإحصائى",
+      "lesson_id": "M02-L06",
+      "lesson_title_en": "The Flowchart - Analysis Selection",
+      "lesson_title_ar": "مخطط اختيار التحليل",
+      "qid": "M02-L06-Q3",
+      "qtype": "MCQ",
+      "q_en": "A bank scoring 100,000 loan applications per day for default risk uses:",
+      "q_ar": "بنك يقيّم 100,000 طلب قرض يومياً لمخاطر التعثر يستخدم:",
+      "opts_en": [
+        "Descriptive",
+        "Inferential",
+        "Machine learning",
+        "Bayesian only"
+      ],
+      "opts_ar": [
+        "وصفى",
+        "استدلالى",
+        "تعلم آلى",
+        "بيزى فقط"
+      ],
+      "ans": "C",
+      "exp_en": "Many automated decisions → ML.",
+      "exp_ar": "قرارات آلية كثيرة ← تعلم آلى.",
+      "formula_used": "",
+      "global_index": 33
+    },
+    {
+      "module_id": "M02",
+      "module_en": "The Statistical Landscape",
+      "module_ar": "المشهد الإحصائى",
+      "lesson_id": "M02-L06",
+      "lesson_title_en": "The Flowchart - Analysis Selection",
+      "lesson_title_ar": "مخطط اختيار التحليل",
+      "qid": "M02-L06-Q4",
+      "qtype": "TrueFalse",
+      "q_en": "True or False: You should always start a project with an ML model.",
+      "q_ar": "صح أم خطأ: يجب البدء دائماً بنموذج تعلم آلى.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "Almost every project benefits from descriptive exploration first.",
+      "exp_ar": "معظم المشاريع تستفيد من الاستكشاف الوصفى أولاً.",
+      "formula_used": "",
+      "global_index": 34
+    },
+    {
+      "module_id": "M02",
+      "module_en": "The Statistical Landscape",
+      "module_ar": "المشهد الإحصائى",
+      "lesson_id": "M02-L06",
+      "lesson_title_en": "The Flowchart - Analysis Selection",
+      "lesson_title_ar": "مخطط اختيار التحليل",
+      "qid": "M02-L06-Q5",
+      "qtype": "MCQ",
+      "q_en": "If we don't yet understand our data well, the first step is:",
+      "q_ar": "إذا لم نفهم بياناتنا جيداً بعد، فالخطوة الأولى هى:",
+      "opts_en": [
+        "Train an ML model",
+        "Run a hypothesis test",
+        "Explore with descriptive stats and charts",
+        "Hire more analysts"
+      ],
+      "opts_ar": [
+        "تدريب نموذج تعلم آلى",
+        "تشغيل اختبار فرضيات",
+        "الاستكشاف بالإحصاء الوصفى والرسوم",
+        "توظيف محللين"
+      ],
+      "ans": "C",
+      "exp_en": "Always begin with exploration.",
+      "exp_ar": "ابدأ دائماً بالاستكشاف.",
+      "formula_used": "",
+      "global_index": 35
+    },
+    {
+      "module_id": "M02",
+      "module_en": "The Statistical Landscape",
+      "module_ar": "المشهد الإحصائى",
+      "lesson_id": "M02-L07",
+      "lesson_title_en": "Business Intelligence vs Data Science",
+      "lesson_title_ar": "ذكاء الأعمال مقابل علم البيانات",
+      "qid": "M02-L07-Q1",
+      "qtype": "MCQ",
+      "q_en": "Building a real-time dashboard of yesterday's sales is the typical job of:",
+      "q_ar": "بناء لوحة بيانات فورية لمبيعات الأمس هو عمل اعتيادى لـ:",
+      "opts_en": [
+        "ML specialist",
+        "BI analyst",
+        "Hardware engineer",
+        "Database admin"
+      ],
+      "opts_ar": [
+        "أخصائى تعلم آلى",
+        "محلل BI",
+        "مهندس عتاد",
+        "مسؤول قاعدة بيانات"
+      ],
+      "ans": "B",
+      "exp_en": "Dashboards = descriptive reporting = BI.",
+      "exp_ar": "لوحات البيانات = تقارير وصفية = BI.",
+      "formula_used": "",
+      "global_index": 36
+    },
+    {
+      "module_id": "M02",
+      "module_en": "The Statistical Landscape",
+      "module_ar": "المشهد الإحصائى",
+      "lesson_id": "M02-L07",
+      "lesson_title_en": "Business Intelligence vs Data Science",
+      "lesson_title_ar": "ذكاء الأعمال مقابل علم البيانات",
+      "qid": "M02-L07-Q2",
+      "qtype": "MCQ",
+      "q_en": "Designing an A/B test, picking the test type, and defending the conclusion is the job of:",
+      "q_ar": "تصميم اختبار A/B، اختيار نوع الاختبار، والدفاع عن الاستنتاج هو عمل:",
+      "opts_en": [
+        "BI analyst alone",
+        "ML specialist alone",
+        "Data scientist",
+        "Sales manager"
+      ],
+      "opts_ar": [
+        "محلل BI فقط",
+        "أخصائى تعلم آلى فقط",
+        "عالم بيانات",
+        "مدير مبيعات"
+      ],
+      "ans": "C",
+      "exp_en": "This is the matching-assumptions-to-tools skill.",
+      "exp_ar": "هذه مهارة مطابقة الافتراضات بالأدوات.",
+      "formula_used": "",
+      "global_index": 37
+    },
+    {
+      "module_id": "M02",
+      "module_en": "The Statistical Landscape",
+      "module_ar": "المشهد الإحصائى",
+      "lesson_id": "M02-L07",
+      "lesson_title_en": "Business Intelligence vs Data Science",
+      "lesson_title_ar": "ذكاء الأعمال مقابل علم البيانات",
+      "qid": "M02-L07-Q3",
+      "qtype": "TrueFalse",
+      "q_en": "True or False: A data scientist doesn't need to know descriptive statistics.",
+      "q_ar": "صح أم خطأ: عالم البيانات لا يحتاج معرفة الإحصاء الوصفى.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "Descriptive stats are the foundation — you can't infer without first describing.",
+      "exp_ar": "الوصفى هو الأساس — لا يمكن الاستدلال دون وصف.",
+      "formula_used": "",
+      "global_index": 38
+    },
+    {
+      "module_id": "M02",
+      "module_en": "The Statistical Landscape",
+      "module_ar": "المشهد الإحصائى",
+      "lesson_id": "M02-L07",
+      "lesson_title_en": "Business Intelligence vs Data Science",
+      "lesson_title_ar": "ذكاء الأعمال مقابل علم البيانات",
+      "qid": "M02-L07-Q4",
+      "qtype": "MCQ",
+      "q_en": "Across the three roles, the COMMON foundation is:",
+      "q_ar": "عبر الأدوار الثلاثة، الأساس المشترك هو:",
+      "opts_en": [
+        "Python",
+        "Statistics",
+        "SQL",
+        "Tableau"
+      ],
+      "opts_ar": [
+        "بايثون",
+        "الإحصاء",
+        "SQL",
+        "Tableau"
+      ],
+      "ans": "B",
+      "exp_en": "Statistics underpins every analytical role.",
+      "exp_ar": "الإحصاء يقع تحت كل دور تحليلى.",
+      "formula_used": "",
+      "global_index": 39
+    },
+    {
+      "module_id": "M02",
+      "module_en": "The Statistical Landscape",
+      "module_ar": "المشهد الإحصائى",
+      "lesson_id": "M02-L07",
+      "lesson_title_en": "Business Intelligence vs Data Science",
+      "lesson_title_ar": "ذكاء الأعمال مقابل علم البيانات",
+      "qid": "M02-L07-Q5",
+      "qtype": "MCQ",
+      "q_en": "A small startup hires its first analyst. They will mostly do:",
+      "q_ar": "شركة ناشئة صغيرة توظف أول محلل لها. سيؤدى غالباً:",
+      "opts_en": [
+        "Descriptive stats and basic inference",
+        "Only build deep neural networks",
+        "Pure research papers",
+        "Nothing involving data"
+      ],
+      "opts_ar": [
+        "إحصاء وصفى واستدلال بسيط",
+        "بناء شبكات عصبية عميقة فقط",
+        "أوراق بحثية بحتة",
+        "لا شىء يتعلق بالبيانات"
+      ],
+      "ans": "A",
+      "exp_en": "Early stage = descriptive + light inference.",
+      "exp_ar": "المراحل الأولى = وصفى + استدلال خفيف.",
+      "formula_used": "",
+      "global_index": 40
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L01",
+      "lesson_title_en": "Chapter Introduction - Descriptive Statistics",
+      "lesson_title_ar": "مقدمة الفصل - الإحصاء الوصفى",
+      "qid": "M03-L01-Q1",
+      "qtype": "MCQ",
+      "q_en": "Descriptive statistics primarily answers:",
+      "q_ar": "الإحصاء الوصفى يجيب أساساً على:",
+      "opts_en": [
+        "What will happen tomorrow?",
+        "What does my data look like?",
+        "Is the difference real?",
+        "What is the prior probability?"
+      ],
+      "opts_ar": [
+        "ماذا سيحدث غداً؟",
+        "كيف تبدو بياناتى؟",
+        "هل الفرق حقيقى؟",
+        "ما الاحتمال المسبق؟"
+      ],
+      "ans": "B",
+      "exp_en": "Pure description of the data on hand.",
+      "exp_ar": "مجرد وصف للبيانات التى بين يديك.",
+      "formula_used": "",
+      "global_index": 41
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L01",
+      "lesson_title_en": "Chapter Introduction - Descriptive Statistics",
+      "lesson_title_ar": "مقدمة الفصل - الإحصاء الوصفى",
+      "qid": "M03-L01-Q2",
+      "qtype": "MCQ",
+      "q_en": "The three families of descriptive statistics are:",
+      "q_ar": "العائلات الثلاثة للإحصاء الوصفى هى:",
+      "opts_en": [
+        "Mean, mode, p-value",
+        "Centre, spread, shape",
+        "Classical, frequentist, Bayesian",
+        "Sample, population, statistic"
+      ],
+      "opts_ar": [
+        "متوسط، منوال، قيمة p",
+        "المركز، التشتت، الشكل",
+        "كلاسيكى، تكرارى، بيزى",
+        "عينة، مجتمع، إحصاء"
+      ],
+      "ans": "B",
+      "exp_en": "Centre + Spread + Shape.",
+      "exp_ar": "مركز + تشتت + شكل.",
+      "formula_used": "",
+      "global_index": 42
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L01",
+      "lesson_title_en": "Chapter Introduction - Descriptive Statistics",
+      "lesson_title_ar": "مقدمة الفصل - الإحصاء الوصفى",
+      "qid": "M03-L01-Q3",
+      "qtype": "MCQ",
+      "q_en": "A measure of central tendency is:",
+      "q_ar": "مقياس نزعة مركزية هو:",
+      "opts_en": [
+        "Standard deviation",
+        "Skewness",
+        "Median",
+        "Range"
+      ],
+      "opts_ar": [
+        "الانحراف المعيارى",
+        "الالتواء",
+        "الوسيط",
+        "المدى"
+      ],
+      "ans": "C",
+      "exp_en": "Median is a centre measure (50th percentile).",
+      "exp_ar": "الوسيط مقياس مركز (الربيع الـ 50).",
+      "formula_used": "",
+      "global_index": 43
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L01",
+      "lesson_title_en": "Chapter Introduction - Descriptive Statistics",
+      "lesson_title_ar": "مقدمة الفصل - الإحصاء الوصفى",
+      "qid": "M03-L01-Q4",
+      "qtype": "TrueFalse",
+      "q_en": "True or False: Descriptive statistics tells us about uncertainty in our estimates of a population.",
+      "q_ar": "صح أم خطأ: الإحصاء الوصفى يخبرنا عن عدم اليقين فى تقديرات المجتمع.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "That's the job of INFERENTIAL statistics. Descriptive only describes the sample.",
+      "exp_ar": "هذه وظيفة الإحصاء الاستدلالى. الوصفى فقط يصف العينة.",
+      "formula_used": "",
+      "global_index": 44
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L01",
+      "lesson_title_en": "Chapter Introduction - Descriptive Statistics",
+      "lesson_title_ar": "مقدمة الفصل - الإحصاء الوصفى",
+      "qid": "M03-L01-Q5",
+      "qtype": "MCQ",
+      "q_en": "In a retail company, monthly KPIs (revenue, returns, items per order) shown on a dashboard are an example of:",
+      "q_ar": "فى متجر، مؤشرات الأداء الشهرية (إيرادات، إرجاع، أصناف لكل طلب) على لوحة بيانات هى مثال على:",
+      "opts_en": [
+        "Inferential statistics",
+        "Descriptive statistics",
+        "Machine learning",
+        "Hypothesis testing"
+      ],
+      "opts_ar": [
+        "إحصاء استدلالى",
+        "إحصاء وصفى",
+        "تعلم آلى",
+        "اختبار فرضيات"
+      ],
+      "ans": "B",
+      "exp_en": "Summary metrics from data on hand = descriptive.",
+      "exp_ar": "مقاييس ملخصة من البيانات الحالية = وصفى.",
+      "formula_used": "",
+      "global_index": 45
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L02",
+      "lesson_title_en": "Measures of Central Tendency",
+      "lesson_title_ar": "مقاييس النزعة المركزية",
+      "qid": "M03-L02-Q1",
+      "qtype": "Calc",
+      "q_en": "A small shop's daily sales (units) for a week: 12, 14, 13, 15, 14, 16, 14. What is the Mode?",
+      "q_ar": "مبيعات محل صغير يومياً (وحدات) لأسبوع: 12, 14, 13, 15, 14, 16, 14. ما المنوال؟",
+      "opts_en": [
+        "12",
+        "13",
+        "14",
+        "15"
+      ],
+      "opts_ar": [
+        "12",
+        "13",
+        "14",
+        "15"
+      ],
+      "ans": "C",
+      "exp_en": "14 appears 3 times — most often.",
+      "exp_ar": "القيمة 14 تظهر 3 مرات — الأكثر تكراراً.",
+      "formula_used": "",
+      "global_index": 46
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L02",
+      "lesson_title_en": "Measures of Central Tendency",
+      "lesson_title_ar": "مقاييس النزعة المركزية",
+      "qid": "M03-L02-Q2",
+      "qtype": "Calc",
+      "q_en": "Data: 4, 8, 6, 10, 12. What is the Mean?",
+      "q_ar": "بيانات: 4, 8, 6, 10, 12. ما المتوسط؟",
+      "opts_en": [
+        "6",
+        "8",
+        "10",
+        "12"
+      ],
+      "opts_ar": [
+        "6",
+        "8",
+        "10",
+        "12"
+      ],
+      "ans": "B",
+      "exp_en": "(4+8+6+10+12)/5 = 40/5 = 8.",
+      "exp_ar": "(4+8+6+10+12)/5 = 40/5 = 8.",
+      "formula_used": "x̄ = Σxᵢ / n",
+      "global_index": 47
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L02",
+      "lesson_title_en": "Measures of Central Tendency",
+      "lesson_title_ar": "مقاييس النزعة المركزية",
+      "qid": "M03-L02-Q3",
+      "qtype": "Calc",
+      "q_en": "Salaries (k EGP): 8, 9, 10, 11, 80. Which measure best represents a typical salary?",
+      "q_ar": "رواتب (ألف ج.م): 8, 9, 10, 11, 80. أى مقياس يمثل الراتب النموذجى أفضل؟",
+      "opts_en": [
+        "Mean (23.6)",
+        "Median (10)",
+        "Mode (none)",
+        "Range (72)"
+      ],
+      "opts_ar": [
+        "المتوسط (23.6)",
+        "الوسيط (10)",
+        "المنوال (لا يوجد)",
+        "المدى (72)"
+      ],
+      "ans": "B",
+      "exp_en": "The 80k outlier pulls the mean far from where typical salaries lie. Median = 10 is far more honest.",
+      "exp_ar": "القيمة المتطرفة 80 ألف تجذب المتوسط بعيداً عن الرواتب النموذجية. الوسيط = 10 أكثر صدقاً.",
+      "formula_used": "",
+      "global_index": 48
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L02",
+      "lesson_title_en": "Measures of Central Tendency",
+      "lesson_title_ar": "مقاييس النزعة المركزية",
+      "qid": "M03-L02-Q4",
+      "qtype": "MCQ",
+      "q_en": "In a right-skewed (positive) distribution:",
+      "q_ar": "فى توزيع منحرف لليمين (موجب):",
+      "opts_en": [
+        "Mean > Median > Mode",
+        "Mean = Median = Mode",
+        "Mode > Median > Mean",
+        "Median > Mean > Mode"
+      ],
+      "opts_ar": [
+        "متوسط > وسيط > منوال",
+        "متوسط = وسيط = منوال",
+        "منوال > وسيط > متوسط",
+        "وسيط > متوسط > منوال"
+      ],
+      "ans": "A",
+      "exp_en": "The long right tail drags the mean rightward, past the median.",
+      "exp_ar": "الذيل الأيمن الطويل يسحب المتوسط لليمين، بعيداً عن الوسيط.",
+      "formula_used": "",
+      "global_index": 49
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L02",
+      "lesson_title_en": "Measures of Central Tendency",
+      "lesson_title_ar": "مقاييس النزعة المركزية",
+      "qid": "M03-L02-Q5",
+      "qtype": "MCQ",
+      "q_en": "A favourite colour survey (Red, Blue, Blue, Green, Red, Blue) - the relevant measure is:",
+      "q_ar": "استبيان اللون المفضّل (أحمر، أزرق، أزرق، أخضر، أحمر، أزرق) - المقياس المناسب:",
+      "opts_en": [
+        "Mean",
+        "Median",
+        "Mode",
+        "Variance"
+      ],
+      "opts_ar": [
+        "المتوسط",
+        "الوسيط",
+        "المنوال",
+        "التباين"
+      ],
+      "ans": "C",
+      "exp_en": "Categorical data → Mode. Blue appears 3 times.",
+      "exp_ar": "بيانات فئوية ← المنوال. الأزرق يظهر 3 مرات.",
+      "formula_used": "",
+      "global_index": 50
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L03",
+      "lesson_title_en": "Measures of Dispersion - Range and Quartiles",
+      "lesson_title_ar": "مقاييس التشتت - المدى والربيعيات",
+      "qid": "M03-L03-Q1",
+      "qtype": "Calc",
+      "q_en": "Data: 5, 7, 8, 11, 14, 17, 22. What is the Range?",
+      "q_ar": "بيانات: 5, 7, 8, 11, 14, 17, 22. ما المدى؟",
+      "opts_en": [
+        "5",
+        "17",
+        "22",
+        "-17"
+      ],
+      "opts_ar": [
+        "5",
+        "17",
+        "22",
+        "-17"
+      ],
+      "ans": "B",
+      "exp_en": "Max 22 − Min 5 = 17.",
+      "exp_ar": "الأقصى 22 − الأدنى 5 = 17.",
+      "formula_used": "Range = Max − Min",
+      "global_index": 51
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L03",
+      "lesson_title_en": "Measures of Dispersion - Range and Quartiles",
+      "lesson_title_ar": "مقاييس التشتت - المدى والربيعيات",
+      "qid": "M03-L03-Q2",
+      "qtype": "MCQ",
+      "q_en": "The IQR represents the spread of:",
+      "q_ar": "IQR يمثل تشتت:",
+      "opts_en": [
+        "The whole dataset",
+        "The middle 50% of data",
+        "The bottom 25%",
+        "The top 25%"
+      ],
+      "opts_ar": [
+        "كل البيانات",
+        "النصف الأوسط 50% من البيانات",
+        "الأدنى 25%",
+        "الأعلى 25%"
+      ],
+      "ans": "B",
+      "exp_en": "IQR = Q3 − Q1 captures the middle half.",
+      "exp_ar": "IQR يلتقط النصف الأوسط.",
+      "formula_used": "",
+      "global_index": 52
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L03",
+      "lesson_title_en": "Measures of Dispersion - Range and Quartiles",
+      "lesson_title_ar": "مقاييس التشتت - المدى والربيعيات",
+      "qid": "M03-L03-Q3",
+      "qtype": "Calc",
+      "q_en": "If Q1 = 20 and Q3 = 50, what is the IQR and which values are outliers?",
+      "q_ar": "إذا كان Q1 = 20 و Q3 = 50، فما IQR وأى القيم متطرفة؟",
+      "opts_en": [
+        "IQR=30; outliers below -25 or above 95",
+        "IQR=70; outliers below 0 or above 100",
+        "IQR=30; outliers above 50 only",
+        "IQR=10; outliers any value"
+      ],
+      "opts_ar": [
+        "IQR=30؛ متطرفات أقل من -25 أو أكبر من 95",
+        "IQR=70؛ متطرفات أقل من 0 أو أكبر من 100",
+        "IQR=30؛ متطرفات فوق 50 فقط",
+        "IQR=10؛ متطرفات أى قيمة"
+      ],
+      "ans": "A",
+      "exp_en": "IQR=30. Lower fence=20−45=−25. Upper=50+45=95.",
+      "exp_ar": "IQR=30. حد سفلى=20−45=−25. علوى=50+45=95.",
+      "formula_used": "",
+      "global_index": 53
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L03",
+      "lesson_title_en": "Measures of Dispersion - Range and Quartiles",
+      "lesson_title_ar": "مقاييس التشتت - المدى والربيعيات",
+      "qid": "M03-L03-Q4",
+      "qtype": "TrueFalse",
+      "q_en": "True or False: Range is more resistant to outliers than IQR.",
+      "q_ar": "صح أم خطأ: المدى أكثر مقاومة للمتطرفات من IQR.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "Range USES the extremes; IQR ignores them.",
+      "exp_ar": "المدى يستخدم الأطراف، IQR يتجاهلها.",
+      "formula_used": "",
+      "global_index": 54
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L03",
+      "lesson_title_en": "Measures of Dispersion - Range and Quartiles",
+      "lesson_title_ar": "مقاييس التشتت - المدى والربيعيات",
+      "qid": "M03-L03-Q5",
+      "qtype": "MCQ",
+      "q_en": "Two stores have the same average daily revenue. Store A's range is $5,000; Store B's range is $25,000. What does this say?",
+      "q_ar": "متجران لهما نفس متوسط الإيرادات اليومية. مدى A = 5,000 دولار؛ مدى B = 25,000. ماذا يعنى ذلك؟",
+      "opts_en": [
+        "A has more variability",
+        "B has more variability — less predictable",
+        "They're identical",
+        "Range doesn't tell us anything"
+      ],
+      "opts_ar": [
+        "A أكثر تباين",
+        "B أكثر تباين — أقل قدرة على التنبؤ",
+        "متطابقان",
+        "المدى لا يخبرنا بشىء"
+      ],
+      "ans": "B",
+      "exp_en": "Wider range = wilder swings = harder to plan staffing, inventory, cash flow.",
+      "exp_ar": "مدى أوسع = تقلبات أعنف = أصعب فى التخطيط للموارد والمخزون والسيولة.",
+      "formula_used": "",
+      "global_index": 55
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L04",
+      "lesson_title_en": "Variance and Standard Deviation",
+      "lesson_title_ar": "التباين والانحراف المعيارى",
+      "qid": "M03-L04-Q1",
+      "qtype": "Calc",
+      "q_en": "For sample {2, 4, 6}, mean = 4. What is sample variance s²?",
+      "q_ar": "لعينة {2, 4, 6}، المتوسط = 4. ما تباين العينة s²؟",
+      "opts_en": [
+        "4",
+        "2.67",
+        "8",
+        "6"
+      ],
+      "opts_ar": [
+        "4",
+        "2.67",
+        "8",
+        "6"
+      ],
+      "ans": "A",
+      "exp_en": "Deviations: −2, 0, 2 → squared 4, 0, 4 → sum 8 → /(n−1)=/2 → 4.",
+      "exp_ar": "الانحرافات: −2, 0, 2 ← مربّعة 4, 0, 4 ← مجموع 8 ← /(n−1)=/2 ← 4.",
+      "formula_used": "s² = Σ(xᵢ−x̄)² / (n−1)",
+      "global_index": 56
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L04",
+      "lesson_title_en": "Variance and Standard Deviation",
+      "lesson_title_ar": "التباين والانحراف المعيارى",
+      "qid": "M03-L04-Q2",
+      "qtype": "Calc",
+      "q_en": "If sample variance = 25, what is sample standard deviation?",
+      "q_ar": "إذا كان تباين العينة = 25، فما الانحراف المعيارى؟",
+      "opts_en": [
+        "12.5",
+        "5",
+        "25",
+        "625"
+      ],
+      "opts_ar": [
+        "12.5",
+        "5",
+        "25",
+        "625"
+      ],
+      "ans": "B",
+      "exp_en": "s = √s² = √25 = 5.",
+      "exp_ar": "s = √s² = √25 = 5.",
+      "formula_used": "",
+      "global_index": 57
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L04",
+      "lesson_title_en": "Variance and Standard Deviation",
+      "lesson_title_ar": "التباين والانحراف المعيارى",
+      "qid": "M03-L04-Q3",
+      "qtype": "MCQ",
+      "q_en": "Why do we square the deviations when computing variance?",
+      "q_ar": "لماذا نربّع الانحرافات عند حساب التباين؟",
+      "opts_en": [
+        "To make calculations harder",
+        "Positive and negative deviations would cancel out otherwise",
+        "To convert units",
+        "Because Excel requires it"
+      ],
+      "opts_ar": [
+        "لجعل الحسابات أصعب",
+        "وإلا تلغى الموجبة والسالبة بعضها",
+        "لتحويل الوحدات",
+        "لأن Excel يتطلبها"
+      ],
+      "ans": "B",
+      "exp_en": "Squaring eliminates sign cancellation; the deviations would otherwise average to zero.",
+      "exp_ar": "التربيع يلغى التعارض؛ وإلا فمتوسط الانحرافات المُوقّعة يساوى صفر.",
+      "formula_used": "",
+      "global_index": 58
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L04",
+      "lesson_title_en": "Variance and Standard Deviation",
+      "lesson_title_ar": "التباين والانحراف المعيارى",
+      "qid": "M03-L04-Q4",
+      "qtype": "MCQ",
+      "q_en": "A stock with std dev 30% is — relative to one with std dev 10%:",
+      "q_ar": "سهم بانحراف 30% — مقارنة بـ 10%:",
+      "opts_en": [
+        "Less risky",
+        "Equally risky",
+        "About 3× more volatile",
+        "Cheaper"
+      ],
+      "opts_ar": [
+        "أقل مخاطرة",
+        "نفس المخاطرة",
+        "أكثر تقلباً بـ 3 مرات",
+        "أرخص"
+      ],
+      "ans": "C",
+      "exp_en": "Higher std dev = higher volatility = higher risk.",
+      "exp_ar": "انحراف أعلى = تقلب أعلى = مخاطرة أعلى.",
+      "formula_used": "",
+      "global_index": 59
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L04",
+      "lesson_title_en": "Variance and Standard Deviation",
+      "lesson_title_ar": "التباين والانحراف المعيارى",
+      "qid": "M03-L04-Q5",
+      "qtype": "TrueFalse",
+      "q_en": "True or False: Variance and standard deviation are in the same units.",
+      "q_ar": "صح أم خطأ: التباين والانحراف بنفس الوحدات.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "Variance is squared units (e.g., EGP²); std dev is in original units (EGP).",
+      "exp_ar": "التباين بوحدات مربّعة (ج.م²)؛ الانحراف بالوحدات الأصلية (ج.م).",
+      "formula_used": "",
+      "global_index": 60
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L05",
+      "lesson_title_en": "The Normal Distribution",
+      "lesson_title_ar": "التوزيع الطبيعى",
+      "qid": "M03-L05-Q1",
+      "qtype": "MCQ",
+      "q_en": "Which is NOT a property of the Normal distribution?",
+      "q_ar": "أى مما يلى ليس من خصائص التوزيع الطبيعى؟",
+      "opts_en": [
+        "Symmetric",
+        "Mean = Median = Mode",
+        "Always positive (no negative values)",
+        "Bell-shaped"
+      ],
+      "opts_ar": [
+        "متماثل",
+        "المتوسط = الوسيط = المنوال",
+        "موجب دائماً (لا قيم سالبة)",
+        "جرسى الشكل"
+      ],
+      "ans": "C",
+      "exp_en": "The Normal distribution extends from −∞ to +∞; it can have negative values.",
+      "exp_ar": "الطبيعى يمتد من -∞ إلى +∞؛ يمكن أن يحوى قيماً سالبة.",
+      "formula_used": "",
+      "global_index": 61
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L05",
+      "lesson_title_en": "The Normal Distribution",
+      "lesson_title_ar": "التوزيع الطبيعى",
+      "qid": "M03-L05-Q2",
+      "qtype": "Calc",
+      "q_en": "IQ scores: μ=100, σ=15. What % of people score between 85 and 115?",
+      "q_ar": "درجات الذكاء: μ=100، σ=15. ما النسبة بين 85 و 115؟",
+      "opts_en": [
+        "50%",
+        "68%",
+        "95%",
+        "99.7%"
+      ],
+      "opts_ar": [
+        "50%",
+        "68%",
+        "95%",
+        "99.7%"
+      ],
+      "ans": "B",
+      "exp_en": "85 = μ−σ, 115 = μ+σ → 68%.",
+      "exp_ar": "85 = μ−σ، 115 = μ+σ ← 68%.",
+      "formula_used": "",
+      "global_index": 62
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L05",
+      "lesson_title_en": "The Normal Distribution",
+      "lesson_title_ar": "التوزيع الطبيعى",
+      "qid": "M03-L05-Q3",
+      "qtype": "Calc",
+      "q_en": "A test has μ=70, σ=10. Student scored 90. What is Z?",
+      "q_ar": "اختبار μ=70، σ=10. الطالب حصل على 90. ما Z؟",
+      "opts_en": [
+        "0.5",
+        "1",
+        "2",
+        "3"
+      ],
+      "opts_ar": [
+        "0.5",
+        "1",
+        "2",
+        "3"
+      ],
+      "ans": "C",
+      "exp_en": "Z = (90−70)/10 = 2 → top ~2.5% of test-takers.",
+      "exp_ar": "Z = (90−70)/10 = 2 ← أعلى ~2.5% من المختبَرين.",
+      "formula_used": "Z = (x − μ) / σ",
+      "global_index": 63
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L05",
+      "lesson_title_en": "The Normal Distribution",
+      "lesson_title_ar": "التوزيع الطبيعى",
+      "qid": "M03-L05-Q4",
+      "qtype": "TrueFalse",
+      "q_en": "True or False: All business data is Normally distributed.",
+      "q_ar": "صح أم خطأ: كل بيانات الأعمال موزعة طبيعياً.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "Income, customer spend, and many metrics are skewed. Check first!",
+      "exp_ar": "الدخل وإنفاق العملاء وكثير من المقاييس منحرفة. تحقق أولاً!",
+      "formula_used": "",
+      "global_index": 64
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L05",
+      "lesson_title_en": "The Normal Distribution",
+      "lesson_title_ar": "التوزيع الطبيعى",
+      "qid": "M03-L05-Q5",
+      "qtype": "MCQ",
+      "q_en": "Approximately what % of data lies between μ−2σ and μ+2σ?",
+      "q_ar": "تقريباً ما النسبة بين μ−2σ و μ+2σ؟",
+      "opts_en": [
+        "50%",
+        "68%",
+        "95%",
+        "99.7%"
+      ],
+      "opts_ar": [
+        "50%",
+        "68%",
+        "95%",
+        "99.7%"
+      ],
+      "ans": "C",
+      "exp_en": "The 95% wing of 68-95-99.7.",
+      "exp_ar": "جناح الـ 95% فى 68-95-99.7.",
+      "formula_used": "",
+      "global_index": 65
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L06",
+      "lesson_title_en": "Kurtosis",
+      "lesson_title_ar": "التفرطح",
+      "qid": "M03-L06-Q1",
+      "qtype": "MCQ",
+      "q_en": "Leptokurtic distributions have:",
+      "q_ar": "التوزيعات leptokurtic لها:",
+      "opts_en": [
+        "Thin tails (rare extremes)",
+        "Fat tails (frequent extremes)",
+        "Equal tails",
+        "No tails"
+      ],
+      "opts_ar": [
+        "ذيول رفيعة (تطرف نادر)",
+        "ذيول سمينة (تطرف متكرر)",
+        "ذيول متساوية",
+        "لا ذيول"
+      ],
+      "ans": "B",
+      "exp_en": "Leptokurtic = high kurtosis = fat tails.",
+      "exp_ar": "Leptokurtic = تفرطح مرتفع = ذيول سمينة.",
+      "formula_used": "",
+      "global_index": 66
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L06",
+      "lesson_title_en": "Kurtosis",
+      "lesson_title_ar": "التفرطح",
+      "qid": "M03-L06-Q2",
+      "qtype": "MCQ",
+      "q_en": "Normal distribution kurtosis is:",
+      "q_ar": "تفرطح التوزيع الطبيعى:",
+      "opts_en": [
+        "0",
+        "1",
+        "3",
+        "100"
+      ],
+      "opts_ar": [
+        "0",
+        "1",
+        "3",
+        "100"
+      ],
+      "ans": "C",
+      "exp_en": "Kurtosis of Normal = 3 (excess kurtosis = 0).",
+      "exp_ar": "تفرطح الطبيعى = 3 (الزائد = 0).",
+      "formula_used": "",
+      "global_index": 67
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L06",
+      "lesson_title_en": "Kurtosis",
+      "lesson_title_ar": "التفرطح",
+      "qid": "M03-L06-Q3",
+      "qtype": "MCQ",
+      "q_en": "A platykurtic distribution is:",
+      "q_ar": "التوزيع platykurtic:",
+      "opts_en": [
+        "High kurtosis, fat tails",
+        "Low kurtosis, thin tails",
+        "Mean = Median",
+        "Always Normal"
+      ],
+      "opts_ar": [
+        "تفرطح مرتفع، ذيول سمينة",
+        "تفرطح منخفض، ذيول رفيعة",
+        "المتوسط = الوسيط",
+        "طبيعى دائماً"
+      ],
+      "ans": "B",
+      "exp_en": "Platykurtic = flat tails, fewer extremes.",
+      "exp_ar": "Platykurtic = ذيول مسطحة، تطرفات أقل.",
+      "formula_used": "",
+      "global_index": 68
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L06",
+      "lesson_title_en": "Kurtosis",
+      "lesson_title_ar": "التفرطح",
+      "qid": "M03-L06-Q4",
+      "qtype": "TrueFalse",
+      "q_en": "True or False: Kurtosis describes the height of the peak.",
+      "q_ar": "صح أم خطأ: التفرطح يصف ارتفاع القمة.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "Kurtosis is about tail-weight, not peak height.",
+      "exp_ar": "التفرطح عن ثقل الذيول، لا ارتفاع القمة.",
+      "formula_used": "",
+      "global_index": 69
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L06",
+      "lesson_title_en": "Kurtosis",
+      "lesson_title_ar": "التفرطح",
+      "qid": "M03-L06-Q5",
+      "qtype": "MCQ",
+      "q_en": "In risk management, a high-kurtosis return distribution implies:",
+      "q_ar": "فى إدارة المخاطر، توزيع عوائد عالى التفرطح يعنى:",
+      "opts_en": [
+        "Smooth predictable returns",
+        "Higher chance of extreme events than a Normal model predicts",
+        "No risk",
+        "Always positive returns"
+      ],
+      "opts_ar": [
+        "عوائد ناعمة متوقعة",
+        "فرصة أعلى لأحداث متطرفة أكثر مما يتوقعه نموذج طبيعى",
+        "لا مخاطر",
+        "عوائد موجبة دائماً"
+      ],
+      "ans": "B",
+      "exp_en": "Fat tails = real-world tail risk that Normal models miss.",
+      "exp_ar": "ذيول سمينة = مخاطر ذيول حقيقية تفوّتها نماذج الطبيعى.",
+      "formula_used": "",
+      "global_index": 70
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L07",
+      "lesson_title_en": "Asymmetric Distributions and Skewness",
+      "lesson_title_ar": "التوزيعات غير المتماثلة والالتواء",
+      "qid": "M03-L07-Q1",
+      "qtype": "MCQ",
+      "q_en": "A distribution with a long right tail is:",
+      "q_ar": "توزيع له ذيل أيمن طويل:",
+      "opts_en": [
+        "Symmetric",
+        "Left-skewed",
+        "Right-skewed",
+        "Kurtotic only"
+      ],
+      "opts_ar": [
+        "متماثل",
+        "منحرف يسار",
+        "منحرف يمين",
+        "متفرطح فقط"
+      ],
+      "ans": "C",
+      "exp_en": "Long right tail = right (positive) skew.",
+      "exp_ar": "ذيل أيمن طويل = التواء يمين (موجب).",
+      "formula_used": "",
+      "global_index": 71
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L07",
+      "lesson_title_en": "Asymmetric Distributions and Skewness",
+      "lesson_title_ar": "التوزيعات غير المتماثلة والالتواء",
+      "qid": "M03-L07-Q2",
+      "qtype": "MCQ",
+      "q_en": "Customer income data shows Mean = $80k, Median = $55k. Skew direction?",
+      "q_ar": "دخل عملاء: المتوسط = 80 ألف، الوسيط = 55 ألف. اتجاه الالتواء؟",
+      "opts_en": [
+        "Symmetric",
+        "Right (positive)",
+        "Left (negative)",
+        "Cannot tell"
+      ],
+      "opts_ar": [
+        "متماثل",
+        "يمين (موجب)",
+        "يسار (سالب)",
+        "لا يمكن"
+      ],
+      "ans": "B",
+      "exp_en": "Mean > Median → right-skewed (a few high earners pull the mean up).",
+      "exp_ar": "المتوسط > الوسيط ← منحرف يمين (قلة من ذوى الدخل المرتفع تسحب المتوسط).",
+      "formula_used": "",
+      "global_index": 72
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L07",
+      "lesson_title_en": "Asymmetric Distributions and Skewness",
+      "lesson_title_ar": "التوزيعات غير المتماثلة والالتواء",
+      "qid": "M03-L07-Q3",
+      "qtype": "MCQ",
+      "q_en": "For right-skewed business data, the BEST summary measure is:",
+      "q_ar": "لبيانات منحرفة يميناً، أفضل مقياس تلخيصى:",
+      "opts_en": [
+        "Mean",
+        "Median",
+        "Mode",
+        "Range"
+      ],
+      "opts_ar": [
+        "المتوسط",
+        "الوسيط",
+        "المنوال",
+        "المدى"
+      ],
+      "ans": "B",
+      "exp_en": "Median is robust to the long right tail.",
+      "exp_ar": "الوسيط مقاوم للذيل الأيمن الطويل.",
+      "formula_used": "",
+      "global_index": 73
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L07",
+      "lesson_title_en": "Asymmetric Distributions and Skewness",
+      "lesson_title_ar": "التوزيعات غير المتماثلة والالتواء",
+      "qid": "M03-L07-Q4",
+      "qtype": "TrueFalse",
+      "q_en": "True or False: Left-skewed means the Mean is greater than the Median.",
+      "q_ar": "صح أم خطأ: الالتواء اليسارى يعنى أن المتوسط أكبر من الوسيط.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "Left-skew: Mean < Median.",
+      "exp_ar": "التواء يسار: المتوسط < الوسيط.",
+      "formula_used": "",
+      "global_index": 74
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L07",
+      "lesson_title_en": "Asymmetric Distributions and Skewness",
+      "lesson_title_ar": "التوزيعات غير المتماثلة والالتواء",
+      "qid": "M03-L07-Q5",
+      "qtype": "MCQ",
+      "q_en": "A common trick for heavily right-skewed data is to apply:",
+      "q_ar": "حيلة شائعة لبيانات منحرفة بشدة يميناً:",
+      "opts_en": [
+        "Squaring",
+        "Log-transform",
+        "Multiply by 0",
+        "Reverse the data"
+      ],
+      "opts_ar": [
+        "تربيع",
+        "تحويل لوغاريتمى",
+        "الضرب فى صفر",
+        "عكس البيانات"
+      ],
+      "ans": "B",
+      "exp_en": "log(x) compresses the long tail and often yields a near-Normal shape.",
+      "exp_ar": "log(x) يضغط الذيل الطويل وغالباً ينتج شكلاً قريباً من الطبيعى.",
+      "formula_used": "",
+      "global_index": 75
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L08",
+      "lesson_title_en": "Excel Workshop - Univariate Analysis",
+      "lesson_title_ar": "ورشة Excel - التحليل أحادى المتغير",
+      "qid": "M03-L08-Q1",
+      "qtype": "MCQ",
+      "q_en": "Excel function for sample standard deviation:",
+      "q_ar": "دالة Excel للانحراف المعيارى للعينة:",
+      "opts_en": [
+        "=STDEV.P",
+        "=STDEV.S",
+        "=STD",
+        "=DEVSQ"
+      ],
+      "opts_ar": [
+        "=STDEV.P",
+        "=STDEV.S",
+        "=STD",
+        "=DEVSQ"
+      ],
+      "ans": "B",
+      "exp_en": "STDEV.S divides by n−1 (sample). STDEV.P uses N (population).",
+      "exp_ar": "STDEV.S يقسم على n−1. STDEV.P على N.",
+      "formula_used": "",
+      "global_index": 76
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L08",
+      "lesson_title_en": "Excel Workshop - Univariate Analysis",
+      "lesson_title_ar": "ورشة Excel - التحليل أحادى المتغير",
+      "qid": "M03-L08-Q2",
+      "qtype": "MCQ",
+      "q_en": "To enable Data Analysis ToolPak you go to:",
+      "q_ar": "لتفعيل Data Analysis ToolPak تذهب إلى:",
+      "opts_en": [
+        "Insert > Add-ins",
+        "File > Options > Add-ins > Excel Add-ins > Go",
+        "Home > Conditional Formatting",
+        "Data > PivotTable"
+      ],
+      "opts_ar": [
+        "إدراج > الإضافات",
+        "ملف > خيارات > الإضافات > إضافات Excel > انتقل",
+        "الصفحة الرئيسية > التنسيق الشرطى",
+        "البيانات > Pivot"
+      ],
+      "ans": "B",
+      "exp_en": "File → Options → Add-ins is the path.",
+      "exp_ar": "ملف ← خيارات ← الإضافات هو المسار.",
+      "formula_used": "",
+      "global_index": 77
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L08",
+      "lesson_title_en": "Excel Workshop - Univariate Analysis",
+      "lesson_title_ar": "ورشة Excel - التحليل أحادى المتغير",
+      "qid": "M03-L08-Q3",
+      "qtype": "MCQ",
+      "q_en": "In the S&P 500 daily returns: kurtosis = 11.83. This tells you:",
+      "q_ar": "فى العوائد اليومية لـ S&P 500: التفرطح = 11.83. يخبرك أن:",
+      "opts_en": [
+        "Returns are perfectly Normal",
+        "Returns have very fat tails (extreme events more common than Normal)",
+        "There is no risk",
+        "Variance is zero"
+      ],
+      "opts_ar": [
+        "العوائد طبيعية تماماً",
+        "العوائد لها ذيول سمينة جداً (تطرف أكثر من الطبيعى)",
+        "لا توجد مخاطرة",
+        "التباين صفر"
+      ],
+      "ans": "B",
+      "exp_en": "Excess kurtosis far above 0 = fat tails = real-world tail risk.",
+      "exp_ar": "تفرطح زائد >> 0 = ذيول سمينة = مخاطر ذيول.",
+      "formula_used": "",
+      "global_index": 78
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L08",
+      "lesson_title_en": "Excel Workshop - Univariate Analysis",
+      "lesson_title_ar": "ورشة Excel - التحليل أحادى المتغير",
+      "qid": "M03-L08-Q4",
+      "qtype": "Calc",
+      "q_en": "To compute the 95th percentile of values in A2:A100, use:",
+      "q_ar": "لحساب الربيع الـ 95 لقيم A2:A100، استخدم:",
+      "opts_en": [
+        "=PERCENTILE.INC(A2:A100, 95)",
+        "=PERCENTILE.INC(A2:A100, 0.95)",
+        "=QUARTILE(A2:A100, 95)",
+        "=MEAN(A2:A100)"
+      ],
+      "opts_ar": [
+        "=PERCENTILE.INC(A2:A100, 95)",
+        "=PERCENTILE.INC(A2:A100, 0.95)",
+        "=QUARTILE(A2:A100, 95)",
+        "=MEAN(A2:A100)"
+      ],
+      "ans": "B",
+      "exp_en": "Percentile argument is a decimal between 0 and 1.",
+      "exp_ar": "معامل الربيع رقم عشرى بين 0 و 1.",
+      "formula_used": "",
+      "global_index": 79
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L08",
+      "lesson_title_en": "Excel Workshop - Univariate Analysis",
+      "lesson_title_ar": "ورشة Excel - التحليل أحادى المتغير",
+      "qid": "M03-L08-Q5",
+      "qtype": "TrueFalse",
+      "q_en": "True or False: STDEV.P and STDEV.S give the same result.",
+      "q_ar": "صح أم خطأ: STDEV.P و STDEV.S يعطيان نفس النتيجة.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "P divides by N, S divides by n−1 — slightly different.",
+      "exp_ar": "P يقسم على N، S على n−1 — مختلفان قليلاً.",
+      "formula_used": "",
+      "global_index": 80
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L09",
+      "lesson_title_en": "Univariate vs Bivariate Analysis",
+      "lesson_title_ar": "التحليل أحادى ومثنوى المتغير",
+      "qid": "M03-L09-Q1",
+      "qtype": "MCQ",
+      "q_en": "Calculating the standard deviation of one column is:",
+      "q_ar": "حساب الانحراف المعيارى لعمود واحد:",
+      "opts_en": [
+        "Bivariate",
+        "Univariate",
+        "Correlation",
+        "Regression"
+      ],
+      "opts_ar": [
+        "ثنائى",
+        "أحادى",
+        "ارتباط",
+        "انحدار"
+      ],
+      "ans": "B",
+      "exp_en": "One variable at a time = univariate.",
+      "exp_ar": "متغير واحد = أحادى.",
+      "formula_used": "",
+      "global_index": 81
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L09",
+      "lesson_title_en": "Univariate vs Bivariate Analysis",
+      "lesson_title_ar": "التحليل أحادى ومثنوى المتغير",
+      "qid": "M03-L09-Q2",
+      "qtype": "MCQ",
+      "q_en": "A scatter plot of age vs spend is:",
+      "q_ar": "مخطط تشتت العمر مقابل الإنفاق:",
+      "opts_en": [
+        "Univariate",
+        "Bivariate",
+        "Histogram",
+        "Box plot"
+      ],
+      "opts_ar": [
+        "أحادى",
+        "ثنائى",
+        "رسم تكرار",
+        "صندوقى"
+      ],
+      "ans": "B",
+      "exp_en": "Two variables on two axes = bivariate.",
+      "exp_ar": "متغيران على محورَين = ثنائى.",
+      "formula_used": "",
+      "global_index": 82
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L09",
+      "lesson_title_en": "Univariate vs Bivariate Analysis",
+      "lesson_title_ar": "التحليل أحادى ومثنوى المتغير",
+      "qid": "M03-L09-Q3",
+      "qtype": "MCQ",
+      "q_en": "Which question is bivariate?",
+      "q_ar": "أى سؤال ثنائى؟",
+      "opts_en": [
+        "What is the average order value?",
+        "Does discount level affect order value?",
+        "What is the median age?",
+        "What is the mode response?"
+      ],
+      "opts_ar": [
+        "ما متوسط قيمة الطلب؟",
+        "هل يؤثر مستوى الخصم على قيمة الطلب؟",
+        "ما الوسيط العمرى؟",
+        "ما المنوال؟"
+      ],
+      "ans": "B",
+      "exp_en": "Two variables: discount and order value.",
+      "exp_ar": "متغيران: خصم وقيمة طلب.",
+      "formula_used": "",
+      "global_index": 83
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L09",
+      "lesson_title_en": "Univariate vs Bivariate Analysis",
+      "lesson_title_ar": "التحليل أحادى ومثنوى المتغير",
+      "qid": "M03-L09-Q4",
+      "qtype": "TrueFalse",
+      "q_en": "True or False: A histogram is a bivariate visualisation.",
+      "q_ar": "صح أم خطأ: الرسم التكرارى تصور ثنائى.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "Histogram shows one variable's distribution = univariate.",
+      "exp_ar": "الرسم التكرارى يظهر توزيع متغير واحد = أحادى.",
+      "formula_used": "",
+      "global_index": 84
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L09",
+      "lesson_title_en": "Univariate vs Bivariate Analysis",
+      "lesson_title_ar": "التحليل أحادى ومثنوى المتغير",
+      "qid": "M03-L09-Q5",
+      "qtype": "MCQ",
+      "q_en": "Marketing wants to know which channel drives most signups. They should start with:",
+      "q_ar": "التسويق يريد معرفة أى قناة تأتى بأكبر تسجيلات. يجب البدء بـ:",
+      "opts_en": [
+        "Univariate count of signups",
+        "Bivariate: signups grouped by channel",
+        "Bivariate: signups vs revenue",
+        "Skip statistics"
+      ],
+      "opts_ar": [
+        "عدّ أحادى للتسجيلات",
+        "ثنائى: تسجيلات مجمّعة بالقناة",
+        "ثنائى: تسجيلات مقابل إيرادات",
+        "تخطى الإحصاء"
+      ],
+      "ans": "B",
+      "exp_en": "Channel × signups → bivariate breakdown.",
+      "exp_ar": "قناة × تسجيلات ← تحليل ثنائى.",
+      "formula_used": "",
+      "global_index": 85
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L10",
+      "lesson_title_en": "Correlation and the Correlation Coefficient",
+      "lesson_title_ar": "الارتباط ومعامل الارتباط",
+      "qid": "M03-L10-Q1",
+      "qtype": "MCQ",
+      "q_en": "r = −0.85 means:",
+      "q_ar": "r = −0.85 يعنى:",
+      "opts_en": [
+        "Strong positive linear relationship",
+        "Strong negative linear relationship",
+        "Weak negative",
+        "No linear relationship"
+      ],
+      "opts_ar": [
+        "علاقة خطية موجبة قوية",
+        "علاقة خطية سالبة قوية",
+        "سالبة ضعيفة",
+        "لا علاقة خطية"
+      ],
+      "ans": "B",
+      "exp_en": "|r| close to 1 = strong; negative sign = inverse.",
+      "exp_ar": "|r| قرب 1 = قوى؛ الإشارة السالبة = عكسى.",
+      "formula_used": "",
+      "global_index": 86
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L10",
+      "lesson_title_en": "Correlation and the Correlation Coefficient",
+      "lesson_title_ar": "الارتباط ومعامل الارتباط",
+      "qid": "M03-L10-Q2",
+      "qtype": "MCQ",
+      "q_en": "The famous saying about correlation is:",
+      "q_ar": "القول الشهير عن الارتباط:",
+      "opts_en": [
+        "Correlation = Causation",
+        "Correlation implies causation",
+        "Correlation does NOT imply causation",
+        "Correlation is always wrong"
+      ],
+      "opts_ar": [
+        "الارتباط = السببية",
+        "الارتباط يعنى السببية",
+        "الارتباط لا يعنى السببية",
+        "الارتباط دائماً خاطئ"
+      ],
+      "ans": "C",
+      "exp_en": "The classic warning every analyst learns.",
+      "exp_ar": "التحذير الكلاسيكى لكل محلل.",
+      "formula_used": "",
+      "global_index": 87
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L10",
+      "lesson_title_en": "Correlation and the Correlation Coefficient",
+      "lesson_title_ar": "الارتباط ومعامل الارتباط",
+      "qid": "M03-L10-Q3",
+      "qtype": "MCQ",
+      "q_en": "A scatter plot shows a clear U-shape. r ≈ 0. What's true?",
+      "q_ar": "مخطط تشتت يظهر شكل U واضح. r ≈ 0. ما الصحيح؟",
+      "opts_en": [
+        "No relationship exists",
+        "A relationship exists but is non-linear",
+        "Data is wrong",
+        "r should be 1"
+      ],
+      "opts_ar": [
+        "لا توجد علاقة",
+        "علاقة موجودة لكنها غير خطية",
+        "البيانات خاطئة",
+        "r يجب أن يكون 1"
+      ],
+      "ans": "B",
+      "exp_en": "r captures linear only. A parabola has near-zero r despite a perfect non-linear relationship.",
+      "exp_ar": "r يلتقط الخطى فقط. القطع المكافئ r ~ 0 رغم وجود علاقة غير خطية مثالية.",
+      "formula_used": "",
+      "global_index": 88
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L10",
+      "lesson_title_en": "Correlation and the Correlation Coefficient",
+      "lesson_title_ar": "الارتباط ومعامل الارتباط",
+      "qid": "M03-L10-Q4",
+      "qtype": "Calc",
+      "q_en": "Marketing finds r = 0.92 between TV ad spend and weekly sales. The best conclusion:",
+      "q_ar": "التسويق وجد r = 0.92 بين الإنفاق على إعلانات التلفزيون والمبيعات الأسبوعية. الاستنتاج الأفضل:",
+      "opts_en": [
+        "TV ads cause sales perfectly",
+        "Strong positive linear association; further testing needed for causation",
+        "Coincidence; r doesn't matter",
+        "Stop advertising"
+      ],
+      "opts_ar": [
+        "إعلانات التلفزيون تسبب المبيعات بشكل مثالى",
+        "ارتباط خطى موجب قوى؛ يحتاج اختبار سببية إضافى",
+        "صدفة؛ r لا يهم",
+        "أوقف الإعلانات"
+      ],
+      "ans": "B",
+      "exp_en": "Strong correlation supports investigating, but doesn't prove cause.",
+      "exp_ar": "ارتباط قوى يدعم البحث، لكن لا يثبت السببية.",
+      "formula_used": "",
+      "global_index": 89
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L10",
+      "lesson_title_en": "Correlation and the Correlation Coefficient",
+      "lesson_title_ar": "الارتباط ومعامل الارتباط",
+      "qid": "M03-L10-Q5",
+      "qtype": "TrueFalse",
+      "q_en": "True or False: Correlation has the same units as the original variables.",
+      "q_ar": "صح أم خطأ: الارتباط له نفس وحدات المتغيرات الأصلية.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "r is dimensionless (unit-free). That's a huge advantage.",
+      "exp_ar": "r بلا وحدة. وهذه ميزة كبيرة.",
+      "formula_used": "",
+      "global_index": 90
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L11",
+      "lesson_title_en": "Simple Linear Regression",
+      "lesson_title_ar": "الانحدار الخطى البسيط",
+      "qid": "M03-L11-Q1",
+      "qtype": "MCQ",
+      "q_en": "In Y = mX + b, which is the slope?",
+      "q_ar": "فى Y = mX + b، أيهما الميل؟",
+      "opts_en": [
+        "Y",
+        "X",
+        "m",
+        "b"
+      ],
+      "opts_ar": [
+        "Y",
+        "X",
+        "m",
+        "b"
+      ],
+      "ans": "C",
+      "exp_en": "m is slope; b is intercept.",
+      "exp_ar": "m الميل، b التقاطع.",
+      "formula_used": "",
+      "global_index": 91
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L11",
+      "lesson_title_en": "Simple Linear Regression",
+      "lesson_title_ar": "الانحدار الخطى البسيط",
+      "qid": "M03-L11-Q2",
+      "qtype": "Calc",
+      "q_en": "Y = 5X + 10. Predict Y when X = 4.",
+      "q_ar": "Y = 5X + 10. توقع Y حين X = 4.",
+      "opts_en": [
+        "20",
+        "30",
+        "50",
+        "14"
+      ],
+      "opts_ar": [
+        "20",
+        "30",
+        "50",
+        "14"
+      ],
+      "ans": "B",
+      "exp_en": "5·4 + 10 = 30.",
+      "exp_ar": "5·4 + 10 = 30.",
+      "formula_used": "Y = mX + b",
+      "global_index": 92
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L11",
+      "lesson_title_en": "Simple Linear Regression",
+      "lesson_title_ar": "الانحدار الخطى البسيط",
+      "qid": "M03-L11-Q3",
+      "qtype": "MCQ",
+      "q_en": "A regression of sales (Y) on ads (X) gives m = 8 (in units of sales per $1000 ad spend). Interpretation:",
+      "q_ar": "انحدار مبيعات (Y) على إعلانات (X) يعطى m = 8 (وحدة مبيعات لكل ألف دولار). التفسير:",
+      "opts_en": [
+        "Every $1000 in ads adds 8 sales (on average)",
+        "Every sale generates $8000 in ads",
+        "Slope means nothing",
+        "Sales fall 8 per ad dollar"
+      ],
+      "opts_ar": [
+        "كل ألف دولار يضيف 8 مبيعات (وسطياً)",
+        "كل بيع يولّد 8000 دولار إعلانات",
+        "الميل لا يعنى شيئاً",
+        "المبيعات تنخفض 8 لكل دولار"
+      ],
+      "ans": "A",
+      "exp_en": "Slope = average change in Y per +1 of X.",
+      "exp_ar": "الميل = متوسط التغير فى Y لكل +1 من X.",
+      "formula_used": "",
+      "global_index": 93
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L11",
+      "lesson_title_en": "Simple Linear Regression",
+      "lesson_title_ar": "الانحدار الخطى البسيط",
+      "qid": "M03-L11-Q4",
+      "qtype": "MCQ",
+      "q_en": "Why is extrapolation outside the data range dangerous?",
+      "q_ar": "لماذا يعتبر الاستقراء خارج نطاق البيانات خطراً؟",
+      "opts_en": [
+        "It always works",
+        "The linear relationship may not hold outside the observed range",
+        "It's against the law",
+        "Excel can't do it"
+      ],
+      "opts_ar": [
+        "يعمل دائماً",
+        "قد لا تستمر العلاقة الخطية خارج النطاق",
+        "ضد القانون",
+        "Excel لا يستطيع"
+      ],
+      "ans": "B",
+      "exp_en": "The line was fitted within a range; outside, the world may behave differently.",
+      "exp_ar": "الخط رُكِّب داخل نطاق؛ خارجه قد يتغير العالم.",
+      "formula_used": "",
+      "global_index": 94
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L11",
+      "lesson_title_en": "Simple Linear Regression",
+      "lesson_title_ar": "الانحدار الخطى البسيط",
+      "qid": "M03-L11-Q5",
+      "qtype": "TrueFalse",
+      "q_en": "True or False: r and the regression slope m always have the same sign.",
+      "q_ar": "صح أم خطأ: r و الميل m لهما نفس الإشارة دائماً.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "A",
+      "exp_en": "m = r · (s_y/sₓ). Since std devs are positive, sign(m) = sign(r).",
+      "exp_ar": "m = r · (s_y/sₓ). الانحرافات موجبة، فإشارة m = إشارة r.",
+      "formula_used": "",
+      "global_index": 95
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L12",
+      "lesson_title_en": "Excel Workshop - Bivariate Analysis",
+      "lesson_title_ar": "ورشة Excel - التحليل ثنائى المتغير",
+      "qid": "M03-L12-Q1",
+      "qtype": "MCQ",
+      "q_en": "To get correlation in Excel:",
+      "q_ar": "للحصول على الارتباط فى Excel:",
+      "opts_en": [
+        "=CORREL(X,Y)",
+        "=AVERAGE(X,Y)",
+        "=SUM(X*Y)",
+        "=DEVSQ(X)"
+      ],
+      "opts_ar": [
+        "=CORREL(X,Y)",
+        "=AVERAGE(X,Y)",
+        "=SUM(X*Y)",
+        "=DEVSQ(X)"
+      ],
+      "ans": "A",
+      "exp_en": "CORREL returns Pearson r.",
+      "exp_ar": "CORREL يعيد r لبيرسون.",
+      "formula_used": "",
+      "global_index": 96
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L12",
+      "lesson_title_en": "Excel Workshop - Bivariate Analysis",
+      "lesson_title_ar": "ورشة Excel - التحليل ثنائى المتغير",
+      "qid": "M03-L12-Q2",
+      "qtype": "MCQ",
+      "q_en": "In =SLOPE(A,B), which range is Y?",
+      "q_ar": "فى =SLOPE(A,B)، أيهما Y؟",
+      "opts_en": [
+        "A (first)",
+        "B (second)",
+        "Either",
+        "Neither"
+      ],
+      "opts_ar": [
+        "A (الأول)",
+        "B (الثانى)",
+        "أى",
+        "لا أحد"
+      ],
+      "ans": "A",
+      "exp_en": "In SLOPE and INTERCEPT, Y comes first, then X.",
+      "exp_ar": "فى SLOPE و INTERCEPT، Y أولاً ثم X.",
+      "formula_used": "",
+      "global_index": 97
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L12",
+      "lesson_title_en": "Excel Workshop - Bivariate Analysis",
+      "lesson_title_ar": "ورشة Excel - التحليل ثنائى المتغير",
+      "qid": "M03-L12-Q3",
+      "qtype": "MCQ",
+      "q_en": "R² = 0.85 means:",
+      "q_ar": "R² = 0.85 يعنى:",
+      "opts_en": [
+        "X causes 85% of Y",
+        "X explains 85% of Y's variance",
+        "85% chance the relationship is real",
+        "R = 0.85"
+      ],
+      "opts_ar": [
+        "X يسبب 85% من Y",
+        "X يفسّر 85% من تباين Y",
+        "85% احتمال العلاقة حقيقية",
+        "R = 0.85"
+      ],
+      "ans": "B",
+      "exp_en": "R² is variance explained, not causation, not the same as r.",
+      "exp_ar": "R² تباين مُفسَّر، ليس سببية، ليس مثل r.",
+      "formula_used": "",
+      "global_index": 98
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L12",
+      "lesson_title_en": "Excel Workshop - Bivariate Analysis",
+      "lesson_title_ar": "ورشة Excel - التحليل ثنائى المتغير",
+      "qid": "M03-L12-Q4",
+      "qtype": "Calc",
+      "q_en": "If r = 0.6, R² = ?",
+      "q_ar": "إذا كان r = 0.6، فما R²؟",
+      "opts_en": [
+        "0.6",
+        "0.36",
+        "0.4",
+        "0.8"
+      ],
+      "opts_ar": [
+        "0.6",
+        "0.36",
+        "0.4",
+        "0.8"
+      ],
+      "ans": "B",
+      "exp_en": "R² = r² = 0.6² = 0.36.",
+      "exp_ar": "R² = r² = 0.6² = 0.36.",
+      "formula_used": "",
+      "global_index": 99
+    },
+    {
+      "module_id": "M03",
+      "module_en": "Descriptive Statistics",
+      "module_ar": "الإحصاء الوصفى",
+      "lesson_id": "M03-L12",
+      "lesson_title_en": "Excel Workshop - Bivariate Analysis",
+      "lesson_title_ar": "ورشة Excel - التحليل ثنائى المتغير",
+      "qid": "M03-L12-Q5",
+      "qtype": "TrueFalse",
+      "q_en": "True or False: A scatter plot is essential before trusting a correlation number.",
+      "q_ar": "صح أم خطأ: مخطط التشتت ضرورى قبل الوثوق برقم الارتباط.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "A",
+      "exp_en": "Always visualise — outliers and curves are invisible in r alone.",
+      "exp_ar": "ارسم دائماً — المتطرفات والمنحنيات غير مرئية فى r وحده.",
+      "formula_used": "",
+      "global_index": 100
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L01",
+      "lesson_title_en": "Chapter Introduction - Inferential Statistics",
+      "lesson_title_ar": "مقدمة الفصل - الإحصاء الاستدلالى",
+      "qid": "M04-L01-Q1",
+      "qtype": "MCQ",
+      "q_en": "Inferential statistics is mainly about:",
+      "q_ar": "الإحصاء الاستدلالى يدور أساساً حول:",
+      "opts_en": [
+        "Describing my data",
+        "Generalising from a sample to a population",
+        "Building dashboards",
+        "Cleaning data"
+      ],
+      "opts_ar": [
+        "وصف بياناتى",
+        "التعميم من عينة إلى مجتمع",
+        "بناء لوحات بيانات",
+        "تنظيف البيانات"
+      ],
+      "ans": "B",
+      "exp_en": "Going beyond the sample is inference.",
+      "exp_ar": "تجاوز العينة هو الاستدلال.",
+      "formula_used": "",
+      "global_index": 101
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L01",
+      "lesson_title_en": "Chapter Introduction - Inferential Statistics",
+      "lesson_title_ar": "مقدمة الفصل - الإحصاء الاستدلالى",
+      "qid": "M04-L01-Q2",
+      "qtype": "TrueFalse",
+      "q_en": "True or False: Inferential statistics produces certain conclusions.",
+      "q_ar": "صح أم خطأ: الإحصاء الاستدلالى ينتج استنتاجات يقينية.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "Inference always has uncertainty — quantified by p-values and confidence levels.",
+      "exp_ar": "الاستدلال دائماً فيه عدم يقين — مقيّس بقيم p ومستويات الثقة.",
+      "formula_used": "",
+      "global_index": 102
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L01",
+      "lesson_title_en": "Chapter Introduction - Inferential Statistics",
+      "lesson_title_ar": "مقدمة الفصل - الإحصاء الاستدلالى",
+      "qid": "M04-L01-Q3",
+      "qtype": "MCQ",
+      "q_en": "An A/B test for a new website is an application of:",
+      "q_ar": "اختبار A/B لموقع جديد تطبيق لـ:",
+      "opts_en": [
+        "Descriptive",
+        "Inferential",
+        "Web design",
+        "Project management"
+      ],
+      "opts_ar": [
+        "وصفى",
+        "استدلالى",
+        "تصميم ويب",
+        "إدارة مشاريع"
+      ],
+      "ans": "B",
+      "exp_en": "Testing whether the new design is really better = inference.",
+      "exp_ar": "اختبار هل التصميم الجديد أفضل = استدلال.",
+      "formula_used": "",
+      "global_index": 103
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L01",
+      "lesson_title_en": "Chapter Introduction - Inferential Statistics",
+      "lesson_title_ar": "مقدمة الفصل - الإحصاء الاستدلالى",
+      "qid": "M04-L01-Q4",
+      "qtype": "MCQ",
+      "q_en": "Two pillars that make inference from samples possible are:",
+      "q_ar": "العمودان اللذان يجعلان الاستدلال من العينات ممكناً:",
+      "opts_en": [
+        "Mean and median",
+        "LLN and CLT",
+        "p-value and alpha",
+        "Excel and Python"
+      ],
+      "opts_ar": [
+        "المتوسط والوسيط",
+        "LLN و CLT",
+        "قيمة p و ألفا",
+        "Excel و Python"
+      ],
+      "ans": "B",
+      "exp_en": "Law of Large Numbers + Central Limit Theorem.",
+      "exp_ar": "قانون الأعداد الكبيرة + النظرية المركزية.",
+      "formula_used": "",
+      "global_index": 104
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L01",
+      "lesson_title_en": "Chapter Introduction - Inferential Statistics",
+      "lesson_title_ar": "مقدمة الفصل - الإحصاء الاستدلالى",
+      "qid": "M04-L01-Q5",
+      "qtype": "MCQ",
+      "q_en": "The biggest practical advantage of inference over a census is:",
+      "q_ar": "أكبر ميزة عملية للاستدلال على الإحصاء الشامل:",
+      "opts_en": [
+        "More accurate",
+        "Faster and cheaper using a sample",
+        "Eliminates uncertainty",
+        "Avoids using mean"
+      ],
+      "opts_ar": [
+        "أكثر دقة",
+        "أسرع وأرخص باستخدام عينة",
+        "يلغى عدم اليقين",
+        "يتجنب المتوسط"
+      ],
+      "ans": "B",
+      "exp_en": "Sampling makes statistics economical and feasible.",
+      "exp_ar": "المعاينة تجعل الإحصاء اقتصادياً ممكناً.",
+      "formula_used": "",
+      "global_index": 105
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L02",
+      "lesson_title_en": "Populations and Samples",
+      "lesson_title_ar": "المجتمعات والعينات",
+      "qid": "M04-L02-Q1",
+      "qtype": "MCQ",
+      "q_en": "μ refers to:",
+      "q_ar": "μ تشير إلى:",
+      "opts_en": [
+        "Sample mean",
+        "Population mean",
+        "Sample size",
+        "Population size"
+      ],
+      "opts_ar": [
+        "متوسط العينة",
+        "متوسط المجتمع",
+        "حجم العينة",
+        "حجم المجتمع"
+      ],
+      "ans": "B",
+      "exp_en": "Greek = population.",
+      "exp_ar": "يونانى = مجتمع.",
+      "formula_used": "",
+      "global_index": 106
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L02",
+      "lesson_title_en": "Populations and Samples",
+      "lesson_title_ar": "المجتمعات والعينات",
+      "qid": "M04-L02-Q2",
+      "qtype": "MCQ",
+      "q_en": "A sample that is REPRESENTATIVE of the population is:",
+      "q_ar": "عينة ممثّلة للمجتمع هى:",
+      "opts_en": [
+        "Very large",
+        "Carefully picked friends",
+        "Random and large enough",
+        "Always 30 items"
+      ],
+      "opts_ar": [
+        "كبيرة جداً",
+        "أصدقاء مختارون بعناية",
+        "عشوائية وكبيرة كافية",
+        "30 دائماً"
+      ],
+      "ans": "C",
+      "exp_en": "Random + enough size = representative.",
+      "exp_ar": "عشوائى + حجم كاف = تمثيلى.",
+      "formula_used": "",
+      "global_index": 107
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L02",
+      "lesson_title_en": "Populations and Samples",
+      "lesson_title_ar": "المجتمعات والعينات",
+      "qid": "M04-L02-Q3",
+      "qtype": "TrueFalse",
+      "q_en": "True or False: A large biased sample is generally better than a small random one.",
+      "q_ar": "صح أم خطأ: عينة كبيرة متحيزة عموماً أفضل من صغيرة عشوائية.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "Bias is far more dangerous than small size.",
+      "exp_ar": "التحيز أخطر بكثير من صغر الحجم.",
+      "formula_used": "",
+      "global_index": 108
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L02",
+      "lesson_title_en": "Populations and Samples",
+      "lesson_title_ar": "المجتمعات والعينات",
+      "qid": "M04-L02-Q4",
+      "qtype": "MCQ",
+      "q_en": "Two random samples from the same population give different means because:",
+      "q_ar": "عينتان عشوائيتان من نفس المجتمع تعطيان متوسطات مختلفة لأن:",
+      "opts_en": [
+        "The population changed",
+        "Random chance — sampling variation",
+        "One of them is wrong",
+        "Different units"
+      ],
+      "opts_ar": [
+        "المجتمع تغيّر",
+        "الصدفة العشوائية — تباين المعاينة",
+        "أحدهما خاطئ",
+        "وحدات مختلفة"
+      ],
+      "ans": "B",
+      "exp_en": "Different draws → different points → different means.",
+      "exp_ar": "سحبات مختلفة ← نقاط مختلفة ← متوسطات مختلفة.",
+      "formula_used": "",
+      "global_index": 109
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L02",
+      "lesson_title_en": "Populations and Samples",
+      "lesson_title_ar": "المجتمعات والعينات",
+      "qid": "M04-L02-Q5",
+      "qtype": "MCQ",
+      "q_en": "A bank wants to estimate average loan default rate. Best approach:",
+      "q_ar": "بنك يريد تقدير معدل التعثر. الأفضل:",
+      "opts_en": [
+        "Sample only VIP loans",
+        "Sample only failed loans",
+        "Random sample across all loans",
+        "Use only last month's data"
+      ],
+      "opts_ar": [
+        "عينة قروض VIP فقط",
+        "عينة القروض الفاشلة فقط",
+        "عينة عشوائية من كل القروض",
+        "شهر الماضى فقط"
+      ],
+      "ans": "C",
+      "exp_en": "Representativeness requires randomness across the full population.",
+      "exp_ar": "التمثيلية تتطلب عشوائية عبر المجتمع كاملاً.",
+      "formula_used": "",
+      "global_index": 110
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L03",
+      "lesson_title_en": "P-values - The Concept",
+      "lesson_title_ar": "قيم p - المفهوم",
+      "qid": "M04-L03-Q1",
+      "qtype": "MCQ",
+      "q_en": "P-value is best defined as:",
+      "q_ar": "قيمة p تُعرَّف أفضل بأنها:",
+      "opts_en": [
+        "The probability H₀ is true",
+        "The probability of seeing data as extreme as observed, assuming H₀ is true",
+        "How big the effect is",
+        "1 minus alpha"
+      ],
+      "opts_ar": [
+        "احتمال أن H₀ صحيحة",
+        "احتمال رؤية بيانات بنفس تطرف الملاحَظ، بفرض أن H₀ صحيحة",
+        "حجم التأثير",
+        "1 ناقص ألفا"
+      ],
+      "ans": "B",
+      "exp_en": "The technical definition.",
+      "exp_ar": "التعريف التقنى.",
+      "formula_used": "",
+      "global_index": 111
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L03",
+      "lesson_title_en": "P-values - The Concept",
+      "lesson_title_ar": "قيم p - المفهوم",
+      "qid": "M04-L03-Q2",
+      "qtype": "MCQ",
+      "q_en": "A small p-value indicates:",
+      "q_ar": "قيمة p صغيرة تشير إلى:",
+      "opts_en": [
+        "H₀ is definitely false",
+        "Strong evidence against H₀",
+        "A large effect",
+        "The conclusion is certainly correct"
+      ],
+      "opts_ar": [
+        "H₀ خاطئة بالتأكيد",
+        "دليل قوى ضد H₀",
+        "تأثير كبير",
+        "الاستنتاج صحيح بالتأكيد"
+      ],
+      "ans": "B",
+      "exp_en": "Small p = strong evidence against H₀, not proof.",
+      "exp_ar": "p صغيرة = دليل قوى ضد H₀، لا برهان.",
+      "formula_used": "",
+      "global_index": 112
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L03",
+      "lesson_title_en": "P-values - The Concept",
+      "lesson_title_ar": "قيم p - المفهوم",
+      "qid": "M04-L03-Q3",
+      "qtype": "TrueFalse",
+      "q_en": "True or False: P-value tells you the size of the effect.",
+      "q_ar": "صح أم خطأ: قيمة p تخبرك بحجم التأثير.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "P measures evidence, not effect size. Tiny effects can have tiny p with huge samples.",
+      "exp_ar": "p تقيس الدليل، لا حجم التأثير. تأثيرات صغيرة قد تعطى p صغيرة مع عينات ضخمة.",
+      "formula_used": "",
+      "global_index": 113
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L03",
+      "lesson_title_en": "P-values - The Concept",
+      "lesson_title_ar": "قيم p - المفهوم",
+      "qid": "M04-L03-Q4",
+      "qtype": "MCQ",
+      "q_en": "An A/B test gives p = 0.003. The most defensible statement:",
+      "q_ar": "اختبار A/B يعطى p = 0.003. أكثر العبارات قابلة للدفاع:",
+      "opts_en": [
+        "The new design is definitely better",
+        "There's strong evidence the difference isn't just chance",
+        "p = 0.003 means 0.3% chance of being wrong",
+        "The effect is huge"
+      ],
+      "opts_ar": [
+        "التصميم الجديد أفضل قطعاً",
+        "هناك دليل قوى على أن الفرق ليس مجرد صدفة",
+        "p=0.003 يعنى 0.3% احتمال للخطأ",
+        "التأثير ضخم"
+      ],
+      "ans": "B",
+      "exp_en": "Tight, defensible language.",
+      "exp_ar": "لغة دقيقة قابلة للدفاع.",
+      "formula_used": "",
+      "global_index": 114
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L03",
+      "lesson_title_en": "P-values - The Concept",
+      "lesson_title_ar": "قيم p - المفهوم",
+      "qid": "M04-L03-Q5",
+      "qtype": "MCQ",
+      "q_en": "With 5 million users, an A/B test finds a difference with p = 0.001 but the effect is +0.05% conversion. The correct next step:",
+      "q_ar": "مع 5 مليون مستخدم، اختبار A/B يجد فرقاً بـ p=0.001 لكن التأثير +0.05% تحويل. الخطوة الصحيحة:",
+      "opts_en": [
+        "Roll out immediately",
+        "Ignore - p too small to trust",
+        "Statistically real but evaluate business value before rollout",
+        "Re-run the test"
+      ],
+      "opts_ar": [
+        "إطلاق فورى",
+        "تجاهل - p صغيرة جداً للثقة",
+        "حقيقى إحصائياً لكن قيّم القيمة التجارية قبل الإطلاق",
+        "أعد التشغيل"
+      ],
+      "ans": "C",
+      "exp_en": "Statistical significance is achieved; practical value still requires judgment.",
+      "exp_ar": "الدلالة الإحصائية متحققة؛ القيمة العملية تحتاج تقييماً.",
+      "formula_used": "",
+      "global_index": 115
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L04",
+      "lesson_title_en": "Calculating P-values",
+      "lesson_title_ar": "حساب قيم p",
+      "qid": "M04-L04-Q1",
+      "qtype": "Calc",
+      "q_en": "Flipping a fair coin 4 times, exactly 4 heads. P-value (two-tailed)?",
+      "q_ar": "رمى عملة عادلة 4 مرات، 4 صور بالضبط. قيمة p (ذيلَين)؟",
+      "opts_en": [
+        "1/16",
+        "2/16",
+        "4/16",
+        "8/16"
+      ],
+      "opts_ar": [
+        "1/16",
+        "2/16",
+        "4/16",
+        "8/16"
+      ],
+      "ans": "B",
+      "exp_en": "2⁴=16 outcomes. P(4 heads) = 1/16. P(4 tails equally rare) = 1/16. Two-tail p = 2/16.",
+      "exp_ar": "2⁴=16 نتيجة. P(4 صور) = 1/16. P(4 شعار) = 1/16. p ذيلَين = 2/16.",
+      "formula_used": "",
+      "global_index": 116
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L04",
+      "lesson_title_en": "Calculating P-values",
+      "lesson_title_ar": "حساب قيم p",
+      "qid": "M04-L04-Q2",
+      "qtype": "MCQ",
+      "q_en": "The 'as extreme as or more extreme than' rule matters because:",
+      "q_ar": "قاعدة 'بنفس التطرف أو أكثر' مهمة لأن:",
+      "opts_en": [
+        "Excel requires it",
+        "P-value summarises evidence about extreme outcomes, not just the exact one",
+        "It's tradition",
+        "To inflate the result"
+      ],
+      "opts_ar": [
+        "Excel يتطلبها",
+        "p تلخّص دليلاً على النتائج المتطرفة، لا الواحدة بالضبط",
+        "تقليد",
+        "لتضخيم النتيجة"
+      ],
+      "ans": "B",
+      "exp_en": "The tail-area concept defines p-value.",
+      "exp_ar": "مفهوم منطقة الذيل يعرّف قيمة p.",
+      "formula_used": "",
+      "global_index": 117
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L04",
+      "lesson_title_en": "Calculating P-values",
+      "lesson_title_ar": "حساب قيم p",
+      "qid": "M04-L04-Q3",
+      "qtype": "MCQ",
+      "q_en": "One-tail vs two-tail decision should be made:",
+      "q_ar": "قرار ذيل واحد أم ذيلَين يجب أن يُتخذ:",
+      "opts_en": [
+        "After seeing the result",
+        "Before the experiment",
+        "Halfway through",
+        "Never matters"
+      ],
+      "opts_ar": [
+        "بعد رؤية النتيجة",
+        "قبل التجربة",
+        "فى المنتصف",
+        "لا يهم"
+      ],
+      "ans": "B",
+      "exp_en": "Pre-registration prevents p-hacking.",
+      "exp_ar": "التحديد المسبق يمنع التلاعب.",
+      "formula_used": "",
+      "global_index": 118
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L04",
+      "lesson_title_en": "Calculating P-values",
+      "lesson_title_ar": "حساب قيم p",
+      "qid": "M04-L04-Q4",
+      "qtype": "TrueFalse",
+      "q_en": "True or False: A two-tail p-value is half a one-tail p-value, all else equal.",
+      "q_ar": "صح أم خطأ: قيمة p ذيلَين نصف قيمة الذيل الواحد، مع ثبات الباقى.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "Two-tail is approximately DOUBLE the one-tail (covers both extremes).",
+      "exp_ar": "ذيلَين تقريباً ضعف الذيل الواحد (يغطى كلا التطرّفَين).",
+      "formula_used": "",
+      "global_index": 119
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L04",
+      "lesson_title_en": "Calculating P-values",
+      "lesson_title_ar": "حساب قيم p",
+      "qid": "M04-L04-Q5",
+      "qtype": "MCQ",
+      "q_en": "An online A/B test reports p = 0.024 (two-tail). At α = 0.05:",
+      "q_ar": "اختبار A/B عبر الإنترنت يبلغ p = 0.024 (ذيلَين). عند α = 0.05:",
+      "opts_en": [
+        "Fail to reject H₀",
+        "Reject H₀",
+        "Recalculate",
+        "Need more data"
+      ],
+      "opts_ar": [
+        "لا نرفض H₀",
+        "نرفض H₀",
+        "أعد الحساب",
+        "نحتاج بيانات أكثر"
+      ],
+      "ans": "B",
+      "exp_en": "p < α → reject 'no difference'.",
+      "exp_ar": "p < α ← ارفض 'لا فرق'.",
+      "formula_used": "",
+      "global_index": 120
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L05",
+      "lesson_title_en": "Alphas and Confidence Levels",
+      "lesson_title_ar": "ألفا ومستويات الثقة",
+      "qid": "M04-L05-Q1",
+      "qtype": "Calc",
+      "q_en": "If α = 0.05, the confidence level is:",
+      "q_ar": "إذا كان α = 0.05، فإن مستوى الثقة:",
+      "opts_en": [
+        "5%",
+        "50%",
+        "95%",
+        "99%"
+      ],
+      "opts_ar": [
+        "5%",
+        "50%",
+        "95%",
+        "99%"
+      ],
+      "ans": "C",
+      "exp_en": "1 - 0.05 = 0.95 = 95%.",
+      "exp_ar": "1 - 0.05 = 0.95 = 95%.",
+      "formula_used": "",
+      "global_index": 121
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L05",
+      "lesson_title_en": "Alphas and Confidence Levels",
+      "lesson_title_ar": "ألفا ومستويات الثقة",
+      "qid": "M04-L05-Q2",
+      "qtype": "MCQ",
+      "q_en": "Alpha is the probability of:",
+      "q_ar": "ألفا هو احتمال:",
+      "opts_en": [
+        "Type I error (false positive)",
+        "Type II error",
+        "Being correct",
+        "Effect size"
+      ],
+      "opts_ar": [
+        "خطأ من النوع الأول (إيجابى كاذب)",
+        "النوع الثانى",
+        "صواب الاستنتاج",
+        "حجم التأثير"
+      ],
+      "ans": "A",
+      "exp_en": "α controls false-positive rate.",
+      "exp_ar": "ألفا يضبط معدل الإيجابى الكاذب.",
+      "formula_used": "",
+      "global_index": 122
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L05",
+      "lesson_title_en": "Alphas and Confidence Levels",
+      "lesson_title_ar": "ألفا ومستويات الثقة",
+      "qid": "M04-L05-Q3",
+      "qtype": "MCQ",
+      "q_en": "For a medical trial deciding if a new drug is safe, the best alpha is probably:",
+      "q_ar": "لتجربة طبية تقرر سلامة دواء جديد، أفضل ألفا غالباً:",
+      "opts_en": [
+        "0.10",
+        "0.05",
+        "0.01 or stricter",
+        "Doesn't matter"
+      ],
+      "opts_ar": [
+        "0.10",
+        "0.05",
+        "0.01 أو أصرم",
+        "لا يهم"
+      ],
+      "ans": "C",
+      "exp_en": "High stakes → demand stronger evidence.",
+      "exp_ar": "قرار حرج ← يتطلب دليلاً أقوى.",
+      "formula_used": "",
+      "global_index": 123
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L05",
+      "lesson_title_en": "Alphas and Confidence Levels",
+      "lesson_title_ar": "ألفا ومستويات الثقة",
+      "qid": "M04-L05-Q4",
+      "qtype": "TrueFalse",
+      "q_en": "True or False: You should choose alpha after seeing p-value to maximise your chance of finding an effect.",
+      "q_ar": "صح أم خطأ: يجب اختيار ألفا بعد رؤية قيمة p لتعظيم فرصة العثور على تأثير.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "That's p-hacking. Pre-commit to alpha.",
+      "exp_ar": "هذا تلاعب. ثبّت ألفا مسبقاً.",
+      "formula_used": "",
+      "global_index": 124
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L05",
+      "lesson_title_en": "Alphas and Confidence Levels",
+      "lesson_title_ar": "ألفا ومستويات الثقة",
+      "qid": "M04-L05-Q5",
+      "qtype": "MCQ",
+      "q_en": "P-value = 0.07, alpha = 0.05. Decision:",
+      "q_ar": "قيمة p = 0.07، ألفا = 0.05. القرار:",
+      "opts_en": [
+        "Reject H₀",
+        "Fail to reject H₀",
+        "Modify alpha to 0.10",
+        "Conclude H₀ is true"
+      ],
+      "opts_ar": [
+        "ارفض H₀",
+        "لا ترفض H₀",
+        "غيّر ألفا إلى 0.10",
+        "استنتج أن H₀ صحيحة"
+      ],
+      "ans": "B",
+      "exp_en": "p > α → not enough evidence to reject. Note: 'fail to reject' is NOT 'accept'.",
+      "exp_ar": "p > α ← لا دليل كاف للرفض. ملاحظة: 'عدم الرفض' ليس 'القبول'.",
+      "formula_used": "",
+      "global_index": 125
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L06",
+      "lesson_title_en": "Proving a Difference vs Rejecting No Difference",
+      "lesson_title_ar": "إثبات الفرق مقابل رفض عدم الفرق",
+      "qid": "M04-L06-Q1",
+      "qtype": "MCQ",
+      "q_en": "In hypothesis testing, we:",
+      "q_ar": "فى اختبار الفرضيات:",
+      "opts_en": [
+        "Prove the alternative",
+        "Reject or fail to reject the null",
+        "Always accept the null",
+        "Always pick the alternative"
+      ],
+      "opts_ar": [
+        "نُثبت البديلة",
+        "نرفض أو لا نرفض الصفرية",
+        "نقبل الصفرية دائماً",
+        "نختار البديلة دائماً"
+      ],
+      "ans": "B",
+      "exp_en": "Reject / fail to reject is the only correct framing.",
+      "exp_ar": "الرفض / عدم الرفض هو الصياغة الصحيحة الوحيدة.",
+      "formula_used": "",
+      "global_index": 126
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L06",
+      "lesson_title_en": "Proving a Difference vs Rejecting No Difference",
+      "lesson_title_ar": "إثبات الفرق مقابل رفض عدم الفرق",
+      "qid": "M04-L06-Q2",
+      "qtype": "MCQ",
+      "q_en": "Failing to reject H₀ means:",
+      "q_ar": "عدم رفض H₀ يعنى:",
+      "opts_en": [
+        "H₀ is true",
+        "H₀ is proven",
+        "Not enough evidence to reject H₀",
+        "Hₐ is wrong"
+      ],
+      "opts_ar": [
+        "H₀ صحيحة",
+        "H₀ مُثبتة",
+        "لا دليل كاف لرفض H₀",
+        "Hₐ خاطئة"
+      ],
+      "ans": "C",
+      "exp_en": "Lack of evidence ≠ proof of H₀.",
+      "exp_ar": "نقص الدليل ≠ إثبات H₀.",
+      "formula_used": "",
+      "global_index": 127
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L06",
+      "lesson_title_en": "Proving a Difference vs Rejecting No Difference",
+      "lesson_title_ar": "إثبات الفرق مقابل رفض عدم الفرق",
+      "qid": "M04-L06-Q3",
+      "qtype": "TrueFalse",
+      "q_en": "True or False: A single counter-example is enough to disprove a universal claim.",
+      "q_ar": "صح أم خطأ: مثال مضاد واحد يكفى لتفنيد ادعاء عام.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "A",
+      "exp_en": "Popper's falsification logic.",
+      "exp_ar": "منطق التفنيد لبوبر.",
+      "formula_used": "",
+      "global_index": 128
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L06",
+      "lesson_title_en": "Proving a Difference vs Rejecting No Difference",
+      "lesson_title_ar": "إثبات الفرق مقابل رفض عدم الفرق",
+      "qid": "M04-L06-Q4",
+      "qtype": "MCQ",
+      "q_en": "An A/B test gives p = 0.40. Correct conclusion:",
+      "q_ar": "اختبار A/B يعطى p = 0.40. الاستنتاج الصحيح:",
+      "opts_en": [
+        "Variants are equal",
+        "We have no evidence to reject 'no difference'",
+        "Variant A wins",
+        "Variant B wins"
+      ],
+      "opts_ar": [
+        "النسختان متساويتان",
+        "لا دليل لدينا لرفض 'لا فرق'",
+        "A فائز",
+        "B فائز"
+      ],
+      "ans": "B",
+      "exp_en": "The careful, defensible conclusion.",
+      "exp_ar": "الاستنتاج الحريص القابل للدفاع.",
+      "formula_used": "",
+      "global_index": 129
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L06",
+      "lesson_title_en": "Proving a Difference vs Rejecting No Difference",
+      "lesson_title_ar": "إثبات الفرق مقابل رفض عدم الفرق",
+      "qid": "M04-L06-Q5",
+      "qtype": "MCQ",
+      "q_en": "Karl Popper's contribution to statistics is:",
+      "q_ar": "مساهمة كارل بوبر فى الإحصاء:",
+      "opts_en": [
+        "The Normal distribution",
+        "The principle of falsifiability",
+        "P-value formula",
+        "Bayes' theorem"
+      ],
+      "opts_ar": [
+        "التوزيع الطبيعى",
+        "مبدأ القابلية للتفنيد",
+        "صيغة قيمة p",
+        "نظرية بايز"
+      ],
+      "ans": "B",
+      "exp_en": "Falsifiability is the philosophical backbone of hypothesis testing.",
+      "exp_ar": "القابلية للتفنيد هى الأساس الفلسفى لاختبار الفرضيات.",
+      "formula_used": "",
+      "global_index": 130
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L07",
+      "lesson_title_en": "Determining Sample Size",
+      "lesson_title_ar": "تحديد حجم العينة",
+      "qid": "M04-L07-Q1",
+      "qtype": "MCQ",
+      "q_en": "Which does NOT increase required sample size?",
+      "q_ar": "أى مما يلى لا يزيد حجم العينة المطلوب؟",
+      "opts_en": [
+        "Tighter margin of error",
+        "Higher confidence level",
+        "Larger sample mean",
+        "Higher population variance"
+      ],
+      "opts_ar": [
+        "هامش خطأ أضيق",
+        "مستوى ثقة أعلى",
+        "متوسط عينة أكبر",
+        "تباين مجتمع أعلى"
+      ],
+      "ans": "C",
+      "exp_en": "Mean's value doesn't affect required size; variance does.",
+      "exp_ar": "قيمة المتوسط لا تؤثر؛ التباين يؤثر.",
+      "formula_used": "",
+      "global_index": 131
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L07",
+      "lesson_title_en": "Determining Sample Size",
+      "lesson_title_ar": "تحديد حجم العينة",
+      "qid": "M04-L07-Q2",
+      "qtype": "Calc",
+      "q_en": "Need ±5% margin, 95% confidence, large population. Required n is approximately:",
+      "q_ar": "هامش ±5%، ثقة 95%، مجتمع كبير. n المطلوب تقريباً:",
+      "opts_en": [
+        "50",
+        "384",
+        "1,067",
+        "10,000"
+      ],
+      "opts_ar": [
+        "50",
+        "384",
+        "1,067",
+        "10,000"
+      ],
+      "ans": "B",
+      "exp_en": "The classic '384' from the table.",
+      "exp_ar": "الـ '384' الكلاسيكى من الجدول.",
+      "formula_used": "",
+      "global_index": 132
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L07",
+      "lesson_title_en": "Determining Sample Size",
+      "lesson_title_ar": "تحديد حجم العينة",
+      "qid": "M04-L07-Q3",
+      "qtype": "MCQ",
+      "q_en": "For a survey of 5,000 customers with ±3% margin and 95% confidence, sample needed is around:",
+      "q_ar": "استبيان لـ 5,000 عميل بهامش ±3% وثقة 95%، العينة المطلوبة حوالى:",
+      "opts_en": [
+        "384",
+        "880",
+        "1,067",
+        "2,000"
+      ],
+      "opts_ar": [
+        "384",
+        "880",
+        "1,067",
+        "2,000"
+      ],
+      "ans": "B",
+      "exp_en": "From the table: 880 for population of 5,000 at ±3%.",
+      "exp_ar": "من الجدول: 880 لمجتمع 5,000 عند ±3%.",
+      "formula_used": "",
+      "global_index": 133
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L07",
+      "lesson_title_en": "Determining Sample Size",
+      "lesson_title_ar": "تحديد حجم العينة",
+      "qid": "M04-L07-Q4",
+      "qtype": "TrueFalse",
+      "q_en": "True or False: A larger sample always means a more accurate estimate, regardless of how the sample was collected.",
+      "q_ar": "صح أم خطأ: عينة أكبر تعنى تقديراً أدق دائماً، بغض النظر عن طريقة الجمع.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "A biased sample of any size gives biased estimates. Random > big.",
+      "exp_ar": "عينة متحيزة بأى حجم تعطى تقديرات متحيزة. العشوائية > الحجم.",
+      "formula_used": "",
+      "global_index": 134
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L07",
+      "lesson_title_en": "Determining Sample Size",
+      "lesson_title_ar": "تحديد حجم العينة",
+      "qid": "M04-L07-Q5",
+      "qtype": "MCQ",
+      "q_en": "Detecting a rare event (say 1% rate) accurately requires:",
+      "q_ar": "اكتشاف حدث نادر (نسبة 1%) بدقة يتطلب:",
+      "opts_en": [
+        "Smaller sample",
+        "Larger sample",
+        "Same sample as 50% rate",
+        "No sample"
+      ],
+      "opts_ar": [
+        "عينة أصغر",
+        "عينة أكبر",
+        "نفس عينة الـ 50%",
+        "لا عينة"
+      ],
+      "ans": "B",
+      "exp_en": "Rare events need bigger n to see enough cases.",
+      "exp_ar": "الأحداث النادرة تحتاج n أكبر لرؤية حالات كافية.",
+      "formula_used": "",
+      "global_index": 135
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L08",
+      "lesson_title_en": "The Law of Large Numbers",
+      "lesson_title_ar": "قانون الأعداد الكبيرة",
+      "qid": "M04-L08-Q1",
+      "qtype": "MCQ",
+      "q_en": "The Law of Large Numbers says, as n → ∞:",
+      "q_ar": "قانون الأعداد الكبيرة يقول إنه مع n ← ∞:",
+      "opts_en": [
+        "Sample variance approaches 0",
+        "Sample mean approaches population mean",
+        "Population mean approaches sample mean",
+        "Nothing changes"
+      ],
+      "opts_ar": [
+        "تباين العينة يقترب من 0",
+        "متوسط العينة يقترب من متوسط المجتمع",
+        "متوسط المجتمع يقترب من متوسط العينة",
+        "لا شىء يتغير"
+      ],
+      "ans": "B",
+      "exp_en": "x̄ₙ → μ as n → ∞.",
+      "exp_ar": "x̄ₙ ← μ مع n ← ∞.",
+      "formula_used": "",
+      "global_index": 136
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L08",
+      "lesson_title_en": "The Law of Large Numbers",
+      "lesson_title_ar": "قانون الأعداد الكبيرة",
+      "qid": "M04-L08-Q2",
+      "qtype": "Calc",
+      "q_en": "Rolling a fair six-sided die, the long-run average should approach:",
+      "q_ar": "رمى نرد عادل، المتوسط طويل المدى يقترب من:",
+      "opts_en": [
+        "3.0",
+        "3.5",
+        "4.0",
+        "6.0"
+      ],
+      "opts_ar": [
+        "3.0",
+        "3.5",
+        "4.0",
+        "6.0"
+      ],
+      "ans": "B",
+      "exp_en": "(1+2+3+4+5+6)/6 = 3.5.",
+      "exp_ar": "(1+2+3+4+5+6)/6 = 3.5.",
+      "formula_used": "",
+      "global_index": 137
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L08",
+      "lesson_title_en": "The Law of Large Numbers",
+      "lesson_title_ar": "قانون الأعداد الكبيرة",
+      "qid": "M04-L08-Q3",
+      "qtype": "TrueFalse",
+      "q_en": "True or False: After 100 heads in a row, the next flip is MORE likely to be tails (LLN guarantees a balance).",
+      "q_ar": "صح أم خطأ: بعد 100 صورة متتالية، الرمية التالية أكثر احتمالاً أن تكون شعار (LLN يضمن التوازن).",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "Gambler's Fallacy. Each fair-coin flip is independent: 50/50.",
+      "exp_ar": "مغالطة المقامر. كل رمية مستقلة: 50/50.",
+      "formula_used": "",
+      "global_index": 138
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L08",
+      "lesson_title_en": "The Law of Large Numbers",
+      "lesson_title_ar": "قانون الأعداد الكبيرة",
+      "qid": "M04-L08-Q4",
+      "qtype": "MCQ",
+      "q_en": "Insurance companies rely on LLN because:",
+      "q_ar": "شركات التأمين تعتمد على LLN لأن:",
+      "opts_en": [
+        "Each customer pays the average loss",
+        "Across many customers, average loss approaches true expected loss",
+        "Customers all lose equally",
+        "No real reason"
+      ],
+      "opts_ar": [
+        "كل عميل يدفع الخسارة المتوسطة",
+        "عبر عملاء كثر، متوسط الخسارة يقترب من المتوقع الحقيقى",
+        "كل العملاء يخسرون بالتساوى",
+        "لا سبب حقيقى"
+      ],
+      "ans": "B",
+      "exp_en": "Risk pooling + LLN = predictable aggregate losses.",
+      "exp_ar": "تجميع المخاطر + LLN = خسائر إجمالية متوقعة.",
+      "formula_used": "",
+      "global_index": 139
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L08",
+      "lesson_title_en": "The Law of Large Numbers",
+      "lesson_title_ar": "قانون الأعداد الكبيرة",
+      "qid": "M04-L08-Q5",
+      "qtype": "MCQ",
+      "q_en": "A coffee shop wants to estimate its true average daily customers. Best approach (LLN-wise):",
+      "q_ar": "مقهى يريد تقدير المتوسط اليومى الحقيقى للعملاء. الأفضل (بمنطق LLN):",
+      "opts_en": [
+        "3 days of data",
+        "30 days",
+        "300 days",
+        "Any sample size"
+      ],
+      "opts_ar": [
+        "3 أيام",
+        "30 يوماً",
+        "300 يوم",
+        "أى حجم"
+      ],
+      "ans": "C",
+      "exp_en": "More days → x̄ closer to μ. 300 is much better than 30 or 3.",
+      "exp_ar": "أيام أكثر ← x̄ أقرب لـ μ. 300 أفضل بكثير من 30 أو 3.",
+      "formula_used": "",
+      "global_index": 140
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L09",
+      "lesson_title_en": "The Central Limit Theorem",
+      "lesson_title_ar": "نظرية النهاية المركزية",
+      "qid": "M04-L09-Q1",
+      "qtype": "MCQ",
+      "q_en": "The Central Limit Theorem states that as n grows, the distribution of:",
+      "q_ar": "نظرية النهاية المركزية تقول إنه مع زيادة n، توزيع:",
+      "opts_en": [
+        "Original data becomes Normal",
+        "Sample means becomes approximately Normal",
+        "Variance becomes zero",
+        "Population grows"
+      ],
+      "opts_ar": [
+        "البيانات الأصلية يصبح طبيعياً",
+        "متوسطات العينات يصبح طبيعياً تقريباً",
+        "التباين يصبح صفراً",
+        "المجتمع يكبر"
+      ],
+      "ans": "B",
+      "exp_en": "CLT is about the distribution of SAMPLE MEANS.",
+      "exp_ar": "CLT عن توزيع متوسطات العينات.",
+      "formula_used": "",
+      "global_index": 141
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L09",
+      "lesson_title_en": "The Central Limit Theorem",
+      "lesson_title_ar": "نظرية النهاية المركزية",
+      "qid": "M04-L09-Q2",
+      "qtype": "MCQ",
+      "q_en": "The rule-of-thumb sample size for CLT to kick in is approximately:",
+      "q_ar": "حجم العينة كقاعدة عامة لتفعيل CLT تقريباً:",
+      "opts_en": [
+        "n ≥ 5",
+        "n ≥ 30",
+        "n ≥ 100",
+        "n ≥ 1000"
+      ],
+      "opts_ar": [
+        "n ≥ 5",
+        "n ≥ 30",
+        "n ≥ 100",
+        "n ≥ 1000"
+      ],
+      "ans": "B",
+      "exp_en": "n ≥ 30 is the common threshold.",
+      "exp_ar": "n ≥ 30 هو الحد الشائع.",
+      "formula_used": "",
+      "global_index": 142
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L09",
+      "lesson_title_en": "The Central Limit Theorem",
+      "lesson_title_ar": "نظرية النهاية المركزية",
+      "qid": "M04-L09-Q3",
+      "qtype": "Calc",
+      "q_en": "A population has σ = 20. For n = 100, what is the Standard Error of the Mean?",
+      "q_ar": "مجتمع σ = 20. لـ n = 100، ما الخطأ المعيارى للمتوسط؟",
+      "opts_en": [
+        "20",
+        "2",
+        "0.2",
+        "200"
+      ],
+      "opts_ar": [
+        "20",
+        "2",
+        "0.2",
+        "200"
+      ],
+      "ans": "B",
+      "exp_en": "SE = σ/√n = 20/10 = 2.",
+      "exp_ar": "SE = σ/√n = 20/10 = 2.",
+      "formula_used": "SE = σ / √n",
+      "global_index": 143
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L09",
+      "lesson_title_en": "The Central Limit Theorem",
+      "lesson_title_ar": "نظرية النهاية المركزية",
+      "qid": "M04-L09-Q4",
+      "qtype": "TrueFalse",
+      "q_en": "True or False: CLT requires the original population to be Normally distributed.",
+      "q_ar": "صح أم خطأ: CLT يتطلب أن يكون المجتمع طبيعياً.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "CLT works regardless of the original distribution (with finite variance).",
+      "exp_ar": "CLT يعمل بغض النظر عن التوزيع الأصلى (بتباين محدود).",
+      "formula_used": "",
+      "global_index": 144
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L09",
+      "lesson_title_en": "The Central Limit Theorem",
+      "lesson_title_ar": "نظرية النهاية المركزية",
+      "qid": "M04-L09-Q5",
+      "qtype": "MCQ",
+      "q_en": "A company tracks daily revenue (highly right-skewed). Wants an A/B test on monthly mean revenue. CLT is helpful because:",
+      "q_ar": "شركة تتتبع إيرادات يومية (منحرفة بشدة). تريد اختبار A/B على متوسط الإيراد الشهرى. CLT مفيد لأن:",
+      "opts_en": [
+        "It makes the daily data Normal",
+        "It makes the monthly mean Normal-distributed across many months",
+        "It increases revenue",
+        "It removes skew from data"
+      ],
+      "opts_ar": [
+        "يجعل البيانات اليومية طبيعية",
+        "يجعل المتوسط الشهرى طبيعى التوزيع عبر شهور كثيرة",
+        "يزيد الإيراد",
+        "يحذف الانحراف"
+      ],
+      "ans": "B",
+      "exp_en": "The mean of 30 daily values is approximately Normal even when daily data isn't.",
+      "exp_ar": "متوسط 30 قيمة يومية طبيعى تقريباً حتى لو لم تكن البيانات اليومية كذلك.",
+      "formula_used": "",
+      "global_index": 145
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L10",
+      "lesson_title_en": "Controlling for Bias in Sampling",
+      "lesson_title_ar": "التحكم فى التحيز فى أخذ العينات",
+      "qid": "M04-L10-Q1",
+      "qtype": "MCQ",
+      "q_en": "Online product reviews tend to be biased because:",
+      "q_ar": "مراجعات المنتجات عبر الإنترنت متحيزة لأن:",
+      "opts_en": [
+        "Reviewers self-select (often extreme experiences)",
+        "Reviewers are paid",
+        "All reviewers are bots",
+        "Reviewers are random"
+      ],
+      "opts_ar": [
+        "المراجعون يختارون أنفسهم (تجارب متطرفة عادة)",
+        "المراجعون مدفوعون",
+        "كلهم بوتات",
+        "كلهم عشوائيون"
+      ],
+      "ans": "A",
+      "exp_en": "Self-selection bias: happiest and angriest are loudest.",
+      "exp_ar": "تحيز ذاتى: الأسعد والأغضب هم الأعلى صوتاً.",
+      "formula_used": "",
+      "global_index": 146
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L10",
+      "lesson_title_en": "Controlling for Bias in Sampling",
+      "lesson_title_ar": "التحكم فى التحيز فى أخذ العينات",
+      "qid": "M04-L10-Q2",
+      "qtype": "MCQ",
+      "q_en": "To survey customer satisfaction across regions, the best approach is:",
+      "q_ar": "لاستطلاع رضا العملاء عبر مناطق، الأفضل:",
+      "opts_en": [
+        "Random sample from all customers",
+        "Stratified sample by region",
+        "Survey only complainers",
+        "Skip statistics"
+      ],
+      "opts_ar": [
+        "عينة عشوائية من كل العملاء",
+        "عينة طبقية بالمنطقة",
+        "استطلاع المشتكين فقط",
+        "تخطى الإحصاء"
+      ],
+      "ans": "B",
+      "exp_en": "Stratification ensures every region is represented.",
+      "exp_ar": "الطبقات تضمن تمثيل كل منطقة.",
+      "formula_used": "",
+      "global_index": 147
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L10",
+      "lesson_title_en": "Controlling for Bias in Sampling",
+      "lesson_title_ar": "التحكم فى التحيز فى أخذ العينات",
+      "qid": "M04-L10-Q3",
+      "qtype": "MCQ",
+      "q_en": "Studying 'successful' companies to figure out the recipe for success ignores:",
+      "q_ar": "دراسة الشركات 'الناجحة' لمعرفة وصفة النجاح تتجاهل:",
+      "opts_en": [
+        "Tax law",
+        "Survivorship bias",
+        "CLT",
+        "Mean reversion"
+      ],
+      "opts_ar": [
+        "قانون الضرائب",
+        "تحيز النجاة",
+        "CLT",
+        "الارتداد للمتوسط"
+      ],
+      "ans": "B",
+      "exp_en": "Failed companies are invisible. We see only winners.",
+      "exp_ar": "الشركات الفاشلة غير مرئية. نرى الفائزين فقط.",
+      "formula_used": "",
+      "global_index": 148
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L10",
+      "lesson_title_en": "Controlling for Bias in Sampling",
+      "lesson_title_ar": "التحكم فى التحيز فى أخذ العينات",
+      "qid": "M04-L10-Q4",
+      "qtype": "TrueFalse",
+      "q_en": "True or False: A sample of 1 million emails can never be biased.",
+      "q_ar": "صح أم خطأ: عينة من مليون بريد لا يمكن أن تكون متحيزة.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "Bigger does not fix bias. Any size can be biased.",
+      "exp_ar": "الأكبر لا يصلح التحيز. أى حجم قد يكون متحيزاً.",
+      "formula_used": "",
+      "global_index": 149
+    },
+    {
+      "module_id": "M04",
+      "module_en": "Inferential Statistics",
+      "module_ar": "الإحصاء الاستدلالى",
+      "lesson_id": "M04-L10",
+      "lesson_title_en": "Controlling for Bias in Sampling",
+      "lesson_title_ar": "التحكم فى التحيز فى أخذ العينات",
+      "qid": "M04-L10-Q5",
+      "qtype": "MCQ",
+      "q_en": "To run a clean A/B test, users should be assigned to variants by:",
+      "q_ar": "لتشغيل اختبار A/B نظيف، يُعيَّن المستخدمون للنسخ بـ:",
+      "opts_en": [
+        "Their own choice",
+        "Account creation date",
+        "A random hash of user ID",
+        "Whoever volunteers"
+      ],
+      "opts_ar": [
+        "اختيارهم",
+        "تاريخ إنشاء الحساب",
+        "تجزئة عشوائية لمعرف المستخدم",
+        "المتطوعون"
+      ],
+      "ans": "C",
+      "exp_en": "Random assignment kills selection bias.",
+      "exp_ar": "التعيين العشوائى يقتل تحيز الاختيار.",
+      "formula_used": "",
+      "global_index": 150
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L01",
+      "lesson_title_en": "Chapter Introduction - Hypothesis Testing",
+      "lesson_title_ar": "مقدمة الفصل - اختبار الفرضيات",
+      "qid": "M05-L01-Q1",
+      "qtype": "MCQ",
+      "q_en": "Hypothesis testing is best described as:",
+      "q_ar": "اختبار الفرضيات يوصف أفضل بأنه:",
+      "opts_en": [
+        "A guessing game",
+        "A formal procedure to decide if an effect is real",
+        "A type of regression",
+        "Pure intuition"
+      ],
+      "opts_ar": [
+        "لعبة تخمين",
+        "إجراء رسمى لتحديد هل التأثير حقيقى",
+        "نوع من الانحدار",
+        "حدس بحت"
+      ],
+      "ans": "B",
+      "exp_en": "The formal-procedure framing is the right one.",
+      "exp_ar": "صياغة 'إجراء رسمى' هى الصحيحة.",
+      "formula_used": "",
+      "global_index": 151
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L01",
+      "lesson_title_en": "Chapter Introduction - Hypothesis Testing",
+      "lesson_title_ar": "مقدمة الفصل - اختبار الفرضيات",
+      "qid": "M05-L01-Q2",
+      "qtype": "MCQ",
+      "q_en": "Which is NOT typically a hypothesis-testing scenario?",
+      "q_ar": "أى مما يلى ليس عادة سيناريو اختبار فرضيات؟",
+      "opts_en": [
+        "A/B testing a website",
+        "Clinical trial of a drug",
+        "Quality control on a production line",
+        "Calculating monthly KPIs"
+      ],
+      "opts_ar": [
+        "اختبار A/B لموقع",
+        "تجربة دواء سريرية",
+        "ضبط جودة على خط إنتاج",
+        "حساب مؤشرات الأداء الشهرية"
+      ],
+      "ans": "D",
+      "exp_en": "Calculating KPIs is descriptive; testing if they changed is inferential.",
+      "exp_ar": "حساب المؤشرات وصفى؛ اختبار هل تغيّرت استدلالى.",
+      "formula_used": "",
+      "global_index": 152
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L01",
+      "lesson_title_en": "Chapter Introduction - Hypothesis Testing",
+      "lesson_title_ar": "مقدمة الفصل - اختبار الفرضيات",
+      "qid": "M05-L01-Q3",
+      "qtype": "TrueFalse",
+      "q_en": "True or False: Hypothesis testing eliminates uncertainty.",
+      "q_ar": "صح أم خطأ: اختبار الفرضيات يلغى عدم اليقين.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "It QUANTIFIES uncertainty (via p and alpha), it doesn't eliminate it.",
+      "exp_ar": "يُقيس عدم اليقين، لا يلغيه.",
+      "formula_used": "",
+      "global_index": 153
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L01",
+      "lesson_title_en": "Chapter Introduction - Hypothesis Testing",
+      "lesson_title_ar": "مقدمة الفصل - اختبار الفرضيات",
+      "qid": "M05-L01-Q4",
+      "qtype": "MCQ",
+      "q_en": "The five-step procedure starts with:",
+      "q_ar": "الإجراء الخماسى يبدأ بـ:",
+      "opts_en": [
+        "Calculate p-value",
+        "State hypotheses",
+        "Set alpha",
+        "Pick the test"
+      ],
+      "opts_ar": [
+        "احسب قيمة p",
+        "صِغ الفرضيات",
+        "حدد ألفا",
+        "اختر الاختبار"
+      ],
+      "ans": "B",
+      "exp_en": "You can't compute anything until you write H₀ and Hₐ.",
+      "exp_ar": "لا تحسب شيئاً قبل كتابة H₀ و Hₐ.",
+      "formula_used": "",
+      "global_index": 154
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L01",
+      "lesson_title_en": "Chapter Introduction - Hypothesis Testing",
+      "lesson_title_ar": "مقدمة الفصل - اختبار الفرضيات",
+      "qid": "M05-L01-Q5",
+      "qtype": "MCQ",
+      "q_en": "In the warranty example, what's the underlying business question?",
+      "q_ar": "فى مثال الضمان، ما السؤال التجارى الأساسى؟",
+      "opts_en": [
+        "How many vacuums to sell",
+        "Which warranty produces a different revenue per customer",
+        "How long warranties last",
+        "Price of vacuums"
+      ],
+      "opts_ar": [
+        "كم عدد المكانس للبيع",
+        "أى ضمان ينتج إيراداً مختلفاً لكل عميل",
+        "مدة الضمانات",
+        "سعر المكانس"
+      ],
+      "ans": "B",
+      "exp_en": "Does warranty A vs B vs none drive different revenue per customer?",
+      "exp_ar": "هل الضمان A مقابل B مقابل لا شىء يحرّك إيراداً مختلفاً؟",
+      "formula_used": "",
+      "global_index": 155
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L02",
+      "lesson_title_en": "The 5 Steps of Hypothesis Testing",
+      "lesson_title_ar": "الخمس خطوات لاختبار الفرضيات",
+      "qid": "M05-L02-Q1",
+      "qtype": "MCQ",
+      "q_en": "The first step in hypothesis testing is:",
+      "q_ar": "الخطوة الأولى فى اختبار الفرضيات:",
+      "opts_en": [
+        "Compute p-value",
+        "Set alpha",
+        "State H0 and Ha",
+        "Pick the test"
+      ],
+      "opts_ar": [
+        "احسب قيمة p",
+        "حدد ألفا",
+        "صِغ H0 و Ha",
+        "اختر الاختبار"
+      ],
+      "ans": "C",
+      "exp_en": "State hypotheses first.",
+      "exp_ar": "صياغة الفرضيات أولاً.",
+      "formula_used": "",
+      "global_index": 156
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L02",
+      "lesson_title_en": "The 5 Steps of Hypothesis Testing",
+      "lesson_title_ar": "الخمس خطوات لاختبار الفرضيات",
+      "qid": "M05-L02-Q2",
+      "qtype": "MCQ",
+      "q_en": "The final step is:",
+      "q_ar": "الخطوة الأخيرة:",
+      "opts_en": [
+        "Set alpha",
+        "Compute p-value",
+        "Compare p to alpha and decide",
+        "Submit to a journal"
+      ],
+      "opts_ar": [
+        "حدد ألفا",
+        "احسب قيمة p",
+        "قارن p بألفا وقرر",
+        "قدّمها لمجلة"
+      ],
+      "ans": "C",
+      "exp_en": "The decision is the output.",
+      "exp_ar": "القرار هو المخرج.",
+      "formula_used": "",
+      "global_index": 157
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L02",
+      "lesson_title_en": "The 5 Steps of Hypothesis Testing",
+      "lesson_title_ar": "الخمس خطوات لاختبار الفرضيات",
+      "qid": "M05-L02-Q3",
+      "qtype": "TrueFalse",
+      "q_en": "True or False: Alpha should be chosen after looking at the p-value.",
+      "q_ar": "صح أم خطأ: ألفا يُختار بعد النظر إلى قيمة p.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "Pre-commit to alpha. Otherwise it's p-hacking.",
+      "exp_ar": "ثبّت ألفا مسبقاً. وإلا فهو تلاعب.",
+      "formula_used": "",
+      "global_index": 158
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L02",
+      "lesson_title_en": "The 5 Steps of Hypothesis Testing",
+      "lesson_title_ar": "الخمس خطوات لاختبار الفرضيات",
+      "qid": "M05-L02-Q4",
+      "qtype": "MCQ",
+      "q_en": "Step 4 produces:",
+      "q_ar": "الخطوة 4 تنتج:",
+      "opts_en": [
+        "A hypothesis",
+        "A test choice",
+        "A test statistic and p-value",
+        "A confidence interval only"
+      ],
+      "opts_ar": [
+        "فرضية",
+        "اختياراً للاختبار",
+        "إحصاء اختبار وقيمة p",
+        "فاصل ثقة فقط"
+      ],
+      "ans": "C",
+      "exp_en": "Compute the statistic and p-value before deciding.",
+      "exp_ar": "احسب الإحصاء وقيمة p قبل القرار.",
+      "formula_used": "",
+      "global_index": 159
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L02",
+      "lesson_title_en": "The 5 Steps of Hypothesis Testing",
+      "lesson_title_ar": "الخمس خطوات لاختبار الفرضيات",
+      "qid": "M05-L02-Q5",
+      "qtype": "MCQ",
+      "q_en": "If p = 0.03 and alpha = 0.05, your decision is:",
+      "q_ar": "إذا p = 0.03 و ألفا = 0.05، قرارك:",
+      "opts_en": [
+        "Reject H0",
+        "Fail to reject H0",
+        "Re-run the test",
+        "Set new alpha"
+      ],
+      "opts_ar": [
+        "ارفض H0",
+        "لا ترفض H0",
+        "أعد التشغيل",
+        "ضع ألفا جديد"
+      ],
+      "ans": "A",
+      "exp_en": "p < alpha → reject H0.",
+      "exp_ar": "p < ألفا ← ارفض H0.",
+      "formula_used": "",
+      "global_index": 160
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L03",
+      "lesson_title_en": "Stating the Hypothesis",
+      "lesson_title_ar": "صياغة الفرضيات",
+      "qid": "M05-L03-Q1",
+      "qtype": "MCQ",
+      "q_en": "The null hypothesis typically states:",
+      "q_ar": "الفرضية الصفرية تذكر عادة:",
+      "opts_en": [
+        "The effect we hope to find",
+        "No effect / no difference",
+        "A strong opinion",
+        "An uncertain guess"
+      ],
+      "opts_ar": [
+        "التأثير الذى نأمل إيجاده",
+        "لا تأثير / لا فرق",
+        "رأى قوى",
+        "تخمين"
+      ],
+      "ans": "B",
+      "exp_en": "H0 is the boring default.",
+      "exp_ar": "H0 الافتراض المملّ.",
+      "formula_used": "",
+      "global_index": 161
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L03",
+      "lesson_title_en": "Stating the Hypothesis",
+      "lesson_title_ar": "صياغة الفرضيات",
+      "qid": "M05-L03-Q2",
+      "qtype": "MCQ",
+      "q_en": "For 'Did the new homepage increase signups above 5%?', Ha is:",
+      "q_ar": "لـ 'هل رفعت الصفحة الجديدة التسجيلات فوق 5%؟'، Ha:",
+      "opts_en": [
+        "p = 0.05",
+        "p ≠ 0.05",
+        "p > 0.05",
+        "p < 0.05"
+      ],
+      "opts_ar": [
+        "p = 0.05",
+        "p ≠ 0.05",
+        "p > 0.05",
+        "p < 0.05"
+      ],
+      "ans": "C",
+      "exp_en": "'Above' = right-sided test.",
+      "exp_ar": "'فوق' = اختبار جانب أيمن.",
+      "formula_used": "",
+      "global_index": 162
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L03",
+      "lesson_title_en": "Stating the Hypothesis",
+      "lesson_title_ar": "صياغة الفرضيات",
+      "qid": "M05-L03-Q3",
+      "qtype": "MCQ",
+      "q_en": "For 'Are revenues of A and B different?', Ha is:",
+      "q_ar": "لـ 'هل إيرادات A و B مختلفة؟'، Ha:",
+      "opts_en": [
+        "μ_A = μ_B",
+        "μ_A ≠ μ_B",
+        "μ_A > μ_B",
+        "μ_A < μ_B"
+      ],
+      "opts_ar": [
+        "μ_A = μ_B",
+        "μ_A ≠ μ_B",
+        "μ_A > μ_B",
+        "μ_A < μ_B"
+      ],
+      "ans": "B",
+      "exp_en": "'Different' = two-tailed ≠.",
+      "exp_ar": "'مختلف' = ذيلَين ≠.",
+      "formula_used": "",
+      "global_index": 163
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L03",
+      "lesson_title_en": "Stating the Hypothesis",
+      "lesson_title_ar": "صياغة الفرضيات",
+      "qid": "M05-L03-Q4",
+      "qtype": "TrueFalse",
+      "q_en": "True or False: You should pick the test direction (one-tail / two-tail) after looking at the data.",
+      "q_ar": "صح أم خطأ: اختيار اتجاه الاختبار بعد النظر للبيانات.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "Pre-register the direction. After-the-fact picking inflates false positives.",
+      "exp_ar": "سجّل الاتجاه مسبقاً. الاختيار اللاحق يضخّم الإيجابيات الكاذبة.",
+      "formula_used": "",
+      "global_index": 164
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L03",
+      "lesson_title_en": "Stating the Hypothesis",
+      "lesson_title_ar": "صياغة الفرضيات",
+      "qid": "M05-L03-Q5",
+      "qtype": "MCQ",
+      "q_en": "A pharmaceutical company tests if their drug LOWERS blood pressure. The right Ha is:",
+      "q_ar": "شركة دواء تختبر هل دواؤها يخفّض ضغط الدم. Ha الصحيحة:",
+      "opts_en": [
+        "μ_after = μ_before",
+        "μ_after > μ_before",
+        "μ_after < μ_before",
+        "μ_after ≠ μ_before"
+      ],
+      "opts_ar": [
+        "μ_after = μ_before",
+        "μ_after > μ_before",
+        "μ_after < μ_before",
+        "μ_after ≠ μ_before"
+      ],
+      "ans": "C",
+      "exp_en": "'Lowers' = left-sided.",
+      "exp_ar": "'يخفض' = جانب أيسر.",
+      "formula_used": "",
+      "global_index": 165
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L04",
+      "lesson_title_en": "Setting the Alpha and Confidence Level",
+      "lesson_title_ar": "ضبط ألفا ومستوى الثقة",
+      "qid": "M05-L04-Q1",
+      "qtype": "Calc",
+      "q_en": "Alpha = 0.10. Confidence level is:",
+      "q_ar": "ألفا = 0.10. مستوى الثقة:",
+      "opts_en": [
+        "10%",
+        "90%",
+        "99%",
+        "50%"
+      ],
+      "opts_ar": [
+        "10%",
+        "90%",
+        "99%",
+        "50%"
+      ],
+      "ans": "B",
+      "exp_en": "1 − 0.10 = 0.90 = 90%.",
+      "exp_ar": "1 − 0.10 = 0.90 = 90%.",
+      "formula_used": "",
+      "global_index": 166
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L04",
+      "lesson_title_en": "Setting the Alpha and Confidence Level",
+      "lesson_title_ar": "ضبط ألفا ومستوى الثقة",
+      "qid": "M05-L04-Q2",
+      "qtype": "MCQ",
+      "q_en": "High-stakes decisions (e.g., drug safety) typically use:",
+      "q_ar": "قرارات حرجة (مثل سلامة الدواء) تستخدم عادة:",
+      "opts_en": [
+        "α=0.10",
+        "α=0.05",
+        "α=0.01 or stricter",
+        "No alpha"
+      ],
+      "opts_ar": [
+        "ألفا=0.10",
+        "ألفا=0.05",
+        "ألفا=0.01 أو أصرم",
+        "لا ألفا"
+      ],
+      "ans": "C",
+      "exp_en": "Lower alpha = fewer false positives.",
+      "exp_ar": "ألفا أقل = إيجابيات كاذبة أقل.",
+      "formula_used": "",
+      "global_index": 167
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L04",
+      "lesson_title_en": "Setting the Alpha and Confidence Level",
+      "lesson_title_ar": "ضبط ألفا ومستوى الثقة",
+      "qid": "M05-L04-Q3",
+      "qtype": "TrueFalse",
+      "q_en": "True or False: Running 20 independent tests at α=0.05 produces about 1 false positive on average.",
+      "q_ar": "صح أم خطأ: تشغيل 20 اختباراً مستقلاً بـ ألفا=0.05 ينتج ~1 إيجابى كاذب فى المتوسط.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "A",
+      "exp_en": "20 × 0.05 = 1.",
+      "exp_ar": "20 × 0.05 = 1.",
+      "formula_used": "",
+      "global_index": 168
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L04",
+      "lesson_title_en": "Setting the Alpha and Confidence Level",
+      "lesson_title_ar": "ضبط ألفا ومستوى الثقة",
+      "qid": "M05-L04-Q4",
+      "qtype": "MCQ",
+      "q_en": "Lowering alpha from 0.05 to 0.01:",
+      "q_ar": "خفض ألفا من 0.05 إلى 0.01:",
+      "opts_en": [
+        "Increases Type I error",
+        "Decreases Type I error",
+        "Has no effect",
+        "Increases sample mean"
+      ],
+      "opts_ar": [
+        "يزيد الخطأ من النوع الأول",
+        "يقلله",
+        "لا أثر",
+        "يزيد متوسط العينة"
+      ],
+      "ans": "B",
+      "exp_en": "Lower α = fewer false positives.",
+      "exp_ar": "ألفا أقل = إيجابيات كاذبة أقل.",
+      "formula_used": "",
+      "global_index": 169
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L04",
+      "lesson_title_en": "Setting the Alpha and Confidence Level",
+      "lesson_title_ar": "ضبط ألفا ومستوى الثقة",
+      "qid": "M05-L04-Q5",
+      "qtype": "MCQ",
+      "q_en": "The trade-off of a much smaller alpha is:",
+      "q_ar": "مقايضة ألفا أصغر بكثير:",
+      "opts_en": [
+        "Smaller sample needed",
+        "Same sample",
+        "Larger sample needed to detect a real effect",
+        "No trade-off"
+      ],
+      "opts_ar": [
+        "عينة أصغر",
+        "نفس العينة",
+        "عينة أكبر لكشف تأثير حقيقى",
+        "لا مقايضة"
+      ],
+      "ans": "C",
+      "exp_en": "Smaller α with same power → larger n.",
+      "exp_ar": "ألفا أصغر مع نفس القوة ← n أكبر.",
+      "formula_used": "",
+      "global_index": 170
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L05",
+      "lesson_title_en": "Selecting the Hypothesis Test",
+      "lesson_title_ar": "اختيار الاختبار",
+      "qid": "M05-L05-Q1",
+      "qtype": "MCQ",
+      "q_en": "A two-tailed test rejects H0 if the test statistic falls in:",
+      "q_ar": "اختبار ذيلَين يرفض H0 إذا وقع إحصاء الاختبار فى:",
+      "opts_en": [
+        "Right tail only",
+        "Left tail only",
+        "Either tail",
+        "Neither"
+      ],
+      "opts_ar": [
+        "الأيمن فقط",
+        "الأيسر فقط",
+        "أى منهما",
+        "لا منهما"
+      ],
+      "ans": "C",
+      "exp_en": "Two tails: extreme either direction.",
+      "exp_ar": "ذيلَين: متطرف فى أى اتجاه.",
+      "formula_used": "",
+      "global_index": 171
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L05",
+      "lesson_title_en": "Selecting the Hypothesis Test",
+      "lesson_title_ar": "اختيار الاختبار",
+      "qid": "M05-L05-Q2",
+      "qtype": "MCQ",
+      "q_en": "An online store wants to test if a new banner increases (specifically increases) click-through. Best test:",
+      "q_ar": "متجر يريد اختبار هل لافتة جديدة تزيد (تحديداً تزيد) النقرات. الأفضل:",
+      "opts_en": [
+        "Two-tailed",
+        "Right-tailed (one-tailed)",
+        "Left-tailed",
+        "No test"
+      ],
+      "opts_ar": [
+        "ذيلَين",
+        "ذيل أيمن (واحد)",
+        "ذيل أيسر",
+        "لا اختبار"
+      ],
+      "ans": "B",
+      "exp_en": "Directional hope of increase → one-tailed right.",
+      "exp_ar": "اتجاه متوقع للزيادة ← ذيل أيمن.",
+      "formula_used": "",
+      "global_index": 172
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L05",
+      "lesson_title_en": "Selecting the Hypothesis Test",
+      "lesson_title_ar": "اختيار الاختبار",
+      "qid": "M05-L05-Q3",
+      "qtype": "TrueFalse",
+      "q_en": "True or False: A one-tailed test has higher statistical power than two-tailed at the same alpha.",
+      "q_ar": "صح أم خطأ: اختبار ذيل واحد له قوة أعلى من ذيلَين عند نفس ألفا.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "A",
+      "exp_en": "All alpha in one tail = easier to reach significance there.",
+      "exp_ar": "كل ألفا فى ذيل واحد = أسهل بلوغ الدلالة هناك.",
+      "formula_used": "",
+      "global_index": 173
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L05",
+      "lesson_title_en": "Selecting the Hypothesis Test",
+      "lesson_title_ar": "اختيار الاختبار",
+      "qid": "M05-L05-Q4",
+      "qtype": "MCQ",
+      "q_en": "The biggest risk of one-tailed tests is:",
+      "q_ar": "أكبر مخاطر اختبار ذيل واحد:",
+      "opts_en": [
+        "More math",
+        "Choosing direction after seeing data (data-snooping)",
+        "Worse names",
+        "Excel can't do them"
+      ],
+      "opts_ar": [
+        "رياضيات أكثر",
+        "اختيار الاتجاه بعد رؤية البيانات (تجسس)",
+        "أسماء أسوأ",
+        "Excel لا يستطيع"
+      ],
+      "ans": "B",
+      "exp_en": "Post-hoc direction inflates false positives.",
+      "exp_ar": "الاتجاه اللاحق يضخّم الإيجابيات الكاذبة.",
+      "formula_used": "",
+      "global_index": 174
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L05",
+      "lesson_title_en": "Selecting the Hypothesis Test",
+      "lesson_title_ar": "اختيار الاختبار",
+      "qid": "M05-L05-Q5",
+      "qtype": "MCQ",
+      "q_en": "For 'Is the new design's conversion DIFFERENT from the old?', the test is:",
+      "q_ar": "لـ 'هل تحويل التصميم الجديد مختلف عن القديم؟'، الاختبار:",
+      "opts_en": [
+        "One-tail right",
+        "One-tail left",
+        "Two-tail",
+        "Bayesian"
+      ],
+      "opts_ar": [
+        "ذيل أيمن",
+        "ذيل أيسر",
+        "ذيلَين",
+        "بيزى"
+      ],
+      "ans": "C",
+      "exp_en": "'Different' (no direction) → two-tailed.",
+      "exp_ar": "'مختلف' (لا اتجاه) ← ذيلَين.",
+      "formula_used": "",
+      "global_index": 175
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L06",
+      "lesson_title_en": "Running a Two-Tailed Hypothesis Test",
+      "lesson_title_ar": "تشغيل اختبار فرضيات ذيلَين",
+      "qid": "M05-L06-Q1",
+      "qtype": "MCQ",
+      "q_en": "For comparing two A/B variants' means in Excel, use:",
+      "q_ar": "لمقارنة متوسطَى نسختَى A/B فى Excel، استخدم:",
+      "opts_en": [
+        "F-test",
+        "Z-test for one sample",
+        "t-Test: Two-Sample Assuming Unequal Variances",
+        "Chi-square"
+      ],
+      "opts_ar": [
+        "F-test",
+        "Z-test لعينة واحدة",
+        "t-Test: Two-Sample Assuming Unequal Variances",
+        "Chi-square"
+      ],
+      "ans": "C",
+      "exp_en": "Two-sample t-test is the workhorse for comparing two means.",
+      "exp_ar": "t لعينتَين هو الحصان لمقارنة متوسطَين.",
+      "formula_used": "",
+      "global_index": 176
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L06",
+      "lesson_title_en": "Running a Two-Tailed Hypothesis Test",
+      "lesson_title_ar": "تشغيل اختبار فرضيات ذيلَين",
+      "qid": "M05-L06-Q2",
+      "qtype": "TrueFalse",
+      "q_en": "True or False: A 13% raw gap between means always means statistical significance.",
+      "q_ar": "صح أم خطأ: فجوة 13% خام بين متوسطَين تعنى دلالة إحصائية دائماً.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "Depends on variance and n. Run the test.",
+      "exp_ar": "تعتمد على التباين و n. شغّل الاختبار.",
+      "formula_used": "",
+      "global_index": 177
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L06",
+      "lesson_title_en": "Running a Two-Tailed Hypothesis Test",
+      "lesson_title_ar": "تشغيل اختبار فرضيات ذيلَين",
+      "qid": "M05-L06-Q3",
+      "qtype": "MCQ",
+      "q_en": "The Excel output shows p (two-tail) = 0.08. At α = 0.05:",
+      "q_ar": "مخرج Excel: p ذيلَين = 0.08. عند ألفا = 0.05:",
+      "opts_en": [
+        "Reject H0",
+        "Fail to reject H0",
+        "Inconclusive",
+        "Bug"
+      ],
+      "opts_ar": [
+        "ارفض H0",
+        "لا ترفض H0",
+        "غير حاسم",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "p > α → fail to reject.",
+      "exp_ar": "p > ألفا ← لا ترفض.",
+      "formula_used": "",
+      "global_index": 178
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L06",
+      "lesson_title_en": "Running a Two-Tailed Hypothesis Test",
+      "lesson_title_ar": "تشغيل اختبار فرضيات ذيلَين",
+      "qid": "M05-L06-Q4",
+      "qtype": "Calc",
+      "q_en": "If x̄₁=84, x̄₂=80, s₁=15, s₂=15, n₁=n₂=200. t ≈?",
+      "q_ar": "إذا x̄₁=84، x̄₂=80، s₁=15، s₂=15، n₁=n₂=200. t ≈؟",
+      "opts_en": [
+        "1.0",
+        "2.0",
+        "2.67",
+        "4.0"
+      ],
+      "opts_ar": [
+        "1.0",
+        "2.0",
+        "2.67",
+        "4.0"
+      ],
+      "ans": "C",
+      "exp_en": "(84-80)/√(225/200+225/200) = 4/√2.25 = 4/1.5 ≈ 2.67.",
+      "exp_ar": "(84-80)/√(225/200+225/200) = 4/1.5 ≈ 2.67.",
+      "formula_used": "t = (x̄₁ − x̄₂)/√(s₁²/n₁ + s₂²/n₂)",
+      "global_index": 179
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L06",
+      "lesson_title_en": "Running a Two-Tailed Hypothesis Test",
+      "lesson_title_ar": "تشغيل اختبار فرضيات ذيلَين",
+      "qid": "M05-L06-Q5",
+      "qtype": "MCQ",
+      "q_en": "If you fail to reject H0 in a two-tailed test, you can say:",
+      "q_ar": "إذا فشلت فى رفض H0 فى ذيلَين، يمكنك القول:",
+      "opts_en": [
+        "The variants are equal",
+        "H0 is true",
+        "No evidence of a difference in this test",
+        "Ha is wrong"
+      ],
+      "opts_ar": [
+        "النسختان متساويتان",
+        "H0 صحيحة",
+        "لا دليل على فرق فى هذا الاختبار",
+        "Ha خاطئة"
+      ],
+      "ans": "C",
+      "exp_en": "Defensible language.",
+      "exp_ar": "لغة قابلة للدفاع.",
+      "formula_used": "",
+      "global_index": 180
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L07",
+      "lesson_title_en": "The One-Tailed Test",
+      "lesson_title_ar": "اختبار ذيل واحد",
+      "qid": "M05-L07-Q1",
+      "qtype": "MCQ",
+      "q_en": "A one-tailed test puts all of alpha:",
+      "q_ar": "اختبار ذيل واحد يضع كل ألفا:",
+      "opts_en": [
+        "Equally in both tails",
+        "In one specific tail",
+        "In the middle",
+        "Outside the distribution"
+      ],
+      "opts_ar": [
+        "بالتساوى فى الذيلَين",
+        "فى ذيل محدد",
+        "فى الوسط",
+        "خارج التوزيع"
+      ],
+      "ans": "B",
+      "exp_en": "All in one tail = more sensitive there.",
+      "exp_ar": "كل ألفا فى ذيل واحد = أكثر حساسية هناك.",
+      "formula_used": "",
+      "global_index": 181
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L07",
+      "lesson_title_en": "The One-Tailed Test",
+      "lesson_title_ar": "اختبار ذيل واحد",
+      "qid": "M05-L07-Q2",
+      "qtype": "MCQ",
+      "q_en": "Ha: μ > 100 indicates:",
+      "q_ar": "Ha: μ > 100 تشير إلى:",
+      "opts_en": [
+        "Two-tailed",
+        "Right-tailed",
+        "Left-tailed",
+        "Bayesian"
+      ],
+      "opts_ar": [
+        "ذيلَين",
+        "ذيل أيمن",
+        "ذيل أيسر",
+        "بيزى"
+      ],
+      "ans": "B",
+      "exp_en": "> = right-tailed.",
+      "exp_ar": "> = أيمن.",
+      "formula_used": "",
+      "global_index": 182
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L07",
+      "lesson_title_en": "The One-Tailed Test",
+      "lesson_title_ar": "اختبار ذيل واحد",
+      "qid": "M05-L07-Q3",
+      "qtype": "TrueFalse",
+      "q_en": "True or False: A one-tailed test can reject H0 even if data goes the opposite direction.",
+      "q_ar": "صح أم خطأ: ذيل واحد يمكنه رفض H0 حتى لو ذهبت البيانات فى الاتجاه المعاكس.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "One-tail can only reject in its committed direction.",
+      "exp_ar": "ذيل واحد يرفض فقط فى اتجاهه الملتزَم.",
+      "formula_used": "",
+      "global_index": 183
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L07",
+      "lesson_title_en": "The One-Tailed Test",
+      "lesson_title_ar": "اختبار ذيل واحد",
+      "qid": "M05-L07-Q4",
+      "qtype": "MCQ",
+      "q_en": "A bank wants to confirm new fraud system DETECTS MORE fraud. Right Ha:",
+      "q_ar": "بنك يريد التأكد من نظام احتيال جديد يكشف فعلاً أكثر. Ha الصحيحة:",
+      "opts_en": [
+        "p_new = p_old",
+        "p_new ≠ p_old",
+        "p_new > p_old",
+        "p_new < p_old"
+      ],
+      "opts_ar": [
+        "p_جديد = p_قديم",
+        "p_جديد ≠ p_قديم",
+        "p_جديد > p_قديم",
+        "p_جديد < p_قديم"
+      ],
+      "ans": "C",
+      "exp_en": "'More fraud detected' = right-tailed.",
+      "exp_ar": "'احتيال أكثر' = ذيل أيمن.",
+      "formula_used": "",
+      "global_index": 184
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L07",
+      "lesson_title_en": "The One-Tailed Test",
+      "lesson_title_ar": "اختبار ذيل واحد",
+      "qid": "M05-L07-Q5",
+      "qtype": "MCQ",
+      "q_en": "The biggest ethical risk of one-tailed tests is:",
+      "q_ar": "أكبر مخاطر أخلاقية لذيل واحد:",
+      "opts_en": [
+        "Excel can't handle them",
+        "Picking the direction after seeing data (p-hacking)",
+        "More math required",
+        "Bad font in output"
+      ],
+      "opts_ar": [
+        "Excel لا يستطيع",
+        "اختيار الاتجاه بعد البيانات (تلاعب)",
+        "رياضيات أكثر",
+        "خط سيئ"
+      ],
+      "ans": "B",
+      "exp_en": "The classical p-hacking trap.",
+      "exp_ar": "فخ التلاعب الكلاسيكى.",
+      "formula_used": "",
+      "global_index": 185
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L08",
+      "lesson_title_en": "Running a One-Tailed Hypothesis Test",
+      "lesson_title_ar": "تشغيل اختبار فرضيات ذيل واحد",
+      "qid": "M05-L08-Q1",
+      "qtype": "MCQ",
+      "q_en": "In Excel's t-test ToolPak output, the value to use for a one-tailed test is:",
+      "q_ar": "فى مخرج t-test ToolPak فى Excel، القيمة لاختبار ذيل واحد:",
+      "opts_en": [
+        "t Stat",
+        "df",
+        "P(T<=t) one-tail",
+        "t Critical two-tail"
+      ],
+      "opts_ar": [
+        "t Stat",
+        "df",
+        "P(T<=t) one-tail",
+        "t Critical two-tail"
+      ],
+      "ans": "C",
+      "exp_en": "The one-tail p is labelled exactly so.",
+      "exp_ar": "قيمة p للذيل الواحد مسماة هكذا.",
+      "formula_used": "",
+      "global_index": 186
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L08",
+      "lesson_title_en": "Running a One-Tailed Hypothesis Test",
+      "lesson_title_ar": "تشغيل اختبار فرضيات ذيل واحد",
+      "qid": "M05-L08-Q2",
+      "qtype": "MCQ",
+      "q_en": "One-tail Ha: μ_new > μ_old. Data shows x̄_new < x̄_old by a lot. Decision:",
+      "q_ar": "Ha ذيل واحد: μ_جديد > μ_قديم. البيانات تظهر x̄_جديد < x̄_قديم بكثير. القرار:",
+      "opts_en": [
+        "Reject H0 (huge effect)",
+        "Fail to reject H0 (wrong direction)",
+        "Switch to left-tailed",
+        "Re-run as two-tailed"
+      ],
+      "opts_ar": [
+        "ارفض H0 (تأثير ضخم)",
+        "لا ترفض H0 (اتجاه خاطئ)",
+        "غيّر لذيل أيسر",
+        "أعد كذيلَين"
+      ],
+      "ans": "B",
+      "exp_en": "Wrong direction = cannot reject right-tailed H0, no matter how extreme.",
+      "exp_ar": "اتجاه خاطئ = لا يمكن رفض H0 لذيل أيمن، مهما كان متطرفاً.",
+      "formula_used": "",
+      "global_index": 187
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L08",
+      "lesson_title_en": "Running a One-Tailed Hypothesis Test",
+      "lesson_title_ar": "تشغيل اختبار فرضيات ذيل واحد",
+      "qid": "M05-L08-Q3",
+      "qtype": "TrueFalse",
+      "q_en": "True or False: For a one-tailed test, p (one-tail) is approximately half of p (two-tail).",
+      "q_ar": "صح أم خطأ: لاختبار ذيل واحد، p one-tail ≈ نصف p two-tail.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "A",
+      "exp_en": "Two-tail is symmetric around 0; one-tail is half (in the right direction).",
+      "exp_ar": "ذيلَين متماثل حول 0؛ ذيل واحد نصف (فى الاتجاه الصحيح).",
+      "formula_used": "",
+      "global_index": 188
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L08",
+      "lesson_title_en": "Running a One-Tailed Hypothesis Test",
+      "lesson_title_ar": "تشغيل اختبار فرضيات ذيل واحد",
+      "qid": "M05-L08-Q4",
+      "qtype": "MCQ",
+      "q_en": "A quality engineer wants to test if a new process reduces defect rate below 2%. Test type:",
+      "q_ar": "مهندس جودة يختبر هل عملية جديدة تخفض العيوب تحت 2%. نوع الاختبار:",
+      "opts_en": [
+        "Two-tailed",
+        "Right-tailed",
+        "Left-tailed",
+        "Chi-square"
+      ],
+      "opts_ar": [
+        "ذيلَين",
+        "أيمن",
+        "أيسر",
+        "Chi-square"
+      ],
+      "ans": "C",
+      "exp_en": "'Below' = left-tailed.",
+      "exp_ar": "'تحت' = أيسر.",
+      "formula_used": "",
+      "global_index": 189
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L08",
+      "lesson_title_en": "Running a One-Tailed Hypothesis Test",
+      "lesson_title_ar": "تشغيل اختبار فرضيات ذيل واحد",
+      "qid": "M05-L08-Q5",
+      "qtype": "MCQ",
+      "q_en": "After rejecting H0 in a right-tailed test (Ha: μ > 80, p = 0.01), the best wording is:",
+      "q_ar": "بعد رفض H0 فى ذيل أيمن (Ha: μ > 80, p = 0.01)، أفضل صياغة:",
+      "opts_en": [
+        "μ = 80 is proven false",
+        "We have evidence μ > 80 (p=0.01)",
+        "All means are > 80",
+        "The data are wrong"
+      ],
+      "opts_ar": [
+        "μ=80 مُثبَت خطأها",
+        "لدينا دليل μ > 80 (p=0.01)",
+        "كل المتوسطات > 80",
+        "البيانات خاطئة"
+      ],
+      "ans": "B",
+      "exp_en": "Directional, evidence-based language.",
+      "exp_ar": "لغة اتجاهية مدعومة بالأدلة.",
+      "formula_used": "",
+      "global_index": 190
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L09",
+      "lesson_title_en": "Errors in Hypothesis Testing",
+      "lesson_title_ar": "الأخطاء فى اختبار الفرضيات",
+      "qid": "M05-L09-Q1",
+      "qtype": "MCQ",
+      "q_en": "A Type I error is:",
+      "q_ar": "الخطأ من النوع الأول:",
+      "opts_en": [
+        "Rejecting H0 when H0 is true",
+        "Failing to reject H0 when H0 is false",
+        "Not running a test",
+        "Using the wrong formula"
+      ],
+      "opts_ar": [
+        "رفض H0 وهى صحيحة",
+        "عدم رفض H0 وهى خاطئة",
+        "عدم تشغيل اختبار",
+        "صيغة خاطئة"
+      ],
+      "ans": "A",
+      "exp_en": "False positive.",
+      "exp_ar": "إيجابى كاذب.",
+      "formula_used": "",
+      "global_index": 191
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L09",
+      "lesson_title_en": "Errors in Hypothesis Testing",
+      "lesson_title_ar": "الأخطاء فى اختبار الفرضيات",
+      "qid": "M05-L09-Q2",
+      "qtype": "MCQ",
+      "q_en": "A Type II error is also called:",
+      "q_ar": "الخطأ من النوع الثانى يُسمى أيضاً:",
+      "opts_en": [
+        "False positive",
+        "False negative",
+        "Standard error",
+        "Variance"
+      ],
+      "opts_ar": [
+        "إيجابى كاذب",
+        "سالب كاذب",
+        "خطأ معيارى",
+        "تباين"
+      ],
+      "ans": "B",
+      "exp_en": "False negative = missed real effect.",
+      "exp_ar": "سالب كاذب = تأثير حقيقى مفقود.",
+      "formula_used": "",
+      "global_index": 192
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L09",
+      "lesson_title_en": "Errors in Hypothesis Testing",
+      "lesson_title_ar": "الأخطاء فى اختبار الفرضيات",
+      "qid": "M05-L09-Q3",
+      "qtype": "Calc",
+      "q_en": "Power of a test is defined as:",
+      "q_ar": "قوة الاختبار تُعرَّف بـ:",
+      "opts_en": [
+        "α",
+        "β",
+        "1 − α",
+        "1 − β"
+      ],
+      "opts_ar": [
+        "α",
+        "β",
+        "1 − α",
+        "1 − β"
+      ],
+      "ans": "D",
+      "exp_en": "Power = chance of detecting a real effect = 1 − β.",
+      "exp_ar": "القوة = فرصة كشف تأثير حقيقى = 1 − β.",
+      "formula_used": "",
+      "global_index": 193
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L09",
+      "lesson_title_en": "Errors in Hypothesis Testing",
+      "lesson_title_ar": "الأخطاء فى اختبار الفرضيات",
+      "qid": "M05-L09-Q4",
+      "qtype": "MCQ",
+      "q_en": "The single best lever to reduce Type II error is:",
+      "q_ar": "أفضل ذراع لتقليل خطأ النوع الثانى:",
+      "opts_en": [
+        "Lower alpha",
+        "Increase sample size n",
+        "Change H0",
+        "Use a different test name"
+      ],
+      "opts_ar": [
+        "خفض ألفا",
+        "زيادة n",
+        "تغيير H0",
+        "اسم اختبار مختلف"
+      ],
+      "ans": "B",
+      "exp_en": "Bigger n = lower β = higher power.",
+      "exp_ar": "n أكبر = β أقل = قوة أعلى.",
+      "formula_used": "",
+      "global_index": 194
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L09",
+      "lesson_title_en": "Errors in Hypothesis Testing",
+      "lesson_title_ar": "الأخطاء فى اختبار الفرضيات",
+      "qid": "M05-L09-Q5",
+      "qtype": "MCQ",
+      "q_en": "In the justice system analogy, a Type I error is:",
+      "q_ar": "فى تشبيه القضاء، خطأ النوع الأول:",
+      "opts_en": [
+        "A guilty person goes free",
+        "An innocent person is punished",
+        "A trial is delayed",
+        "Defendant doesn't show up"
+      ],
+      "opts_ar": [
+        "مذنب يفلت",
+        "برىء يُعاقب",
+        "تأخير المحاكمة",
+        "غياب المتهم"
+      ],
+      "ans": "B",
+      "exp_en": "Reject 'innocent' when actually innocent = punish innocent.",
+      "exp_ar": "رفض 'برىء' عندما هو فعلاً برىء = معاقبة البرىء.",
+      "formula_used": "",
+      "global_index": 195
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L10",
+      "lesson_title_en": "Reporting the Results",
+      "lesson_title_ar": "إعداد التقرير",
+      "qid": "M05-L10-Q1",
+      "qtype": "MCQ",
+      "q_en": "Which is NOT required in a good hypothesis-test report?",
+      "q_ar": "أى مما يلى ليس مطلوباً فى تقرير جيد؟",
+      "opts_en": [
+        "Sample size n",
+        "p-value",
+        "Effect size and CI",
+        "The analyst's personal opinion"
+      ],
+      "opts_ar": [
+        "حجم العينة",
+        "قيمة p",
+        "حجم التأثير و CI",
+        "رأى المحلل الشخصى"
+      ],
+      "ans": "D",
+      "exp_en": "Personal opinion is not a statistical artefact. Stick to the numbers and the decision.",
+      "exp_ar": "الرأى الشخصى ليس أداة إحصائية. التزم بالأرقام والقرار.",
+      "formula_used": "",
+      "global_index": 196
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L10",
+      "lesson_title_en": "Reporting the Results",
+      "lesson_title_ar": "إعداد التقرير",
+      "qid": "M05-L10-Q2",
+      "qtype": "MCQ",
+      "q_en": "A report says only 'p = 0.04'. The biggest missing piece is:",
+      "q_ar": "تقرير يقول فقط 'p = 0.04'. أكبر شىء مفقود:",
+      "opts_en": [
+        "More p-values",
+        "Effect size and sample size for context",
+        "More variables",
+        "Color graphs"
+      ],
+      "opts_ar": [
+        "قيم p أكثر",
+        "حجم التأثير و n للسياق",
+        "متغيرات أكثر",
+        "رسوم ملوّنة"
+      ],
+      "ans": "B",
+      "exp_en": "p alone is meaningless without context.",
+      "exp_ar": "p وحدها لا معنى لها دون سياق.",
+      "formula_used": "",
+      "global_index": 197
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L10",
+      "lesson_title_en": "Reporting the Results",
+      "lesson_title_ar": "إعداد التقرير",
+      "qid": "M05-L10-Q3",
+      "qtype": "TrueFalse",
+      "q_en": "True or False: It's acceptable to drop outliers until the p-value crosses 0.05.",
+      "q_ar": "صح أم خطأ: مقبول حذف المتطرفات حتى تعبر p حد 0.05.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "That's p-hacking, the cardinal sin.",
+      "exp_ar": "هذا تلاعب، الذنب الأكبر.",
+      "formula_used": "",
+      "global_index": 198
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L10",
+      "lesson_title_en": "Reporting the Results",
+      "lesson_title_ar": "إعداد التقرير",
+      "qid": "M05-L10-Q4",
+      "qtype": "MCQ",
+      "q_en": "A negative result (failed to reject H0) should be:",
+      "q_ar": "نتيجة سالبة (لم نرفض H0) يجب:",
+      "opts_en": [
+        "Hidden",
+        "Reported with sample size and observed effect",
+        "Re-framed as positive",
+        "Discarded"
+      ],
+      "opts_ar": [
+        "إخفاؤها",
+        "تقديمها مع حجم العينة والتأثير المرصود",
+        "إعادة صياغتها كإيجابية",
+        "رميها"
+      ],
+      "ans": "B",
+      "exp_en": "Honest negative reports help the field and your team.",
+      "exp_ar": "التقارير السالبة الأمينة تخدم المجال والفريق.",
+      "formula_used": "",
+      "global_index": 199
+    },
+    {
+      "module_id": "M05",
+      "module_en": "Hypothesis Testing",
+      "module_ar": "اختبار الفرضيات",
+      "lesson_id": "M05-L10",
+      "lesson_title_en": "Reporting the Results",
+      "lesson_title_ar": "إعداد التقرير",
+      "qid": "M05-L10-Q5",
+      "qtype": "MCQ",
+      "q_en": "A massive sample finds p < 0.001 but the effect is only +0.05% conversion. The best report:",
+      "q_ar": "عينة ضخمة تجد p < 0.001 لكن التأثير +0.05% تحويل فقط. أفضل تقرير:",
+      "opts_en": [
+        "Declare big win",
+        "Report statistically significant but discuss practical relevance",
+        "Hide the result",
+        "Re-run the test"
+      ],
+      "opts_ar": [
+        "إعلان فوز كبير",
+        "ذو دلالة إحصائية لكن ناقش الأهمية العملية",
+        "إخفاء",
+        "إعادة الاختبار"
+      ],
+      "ans": "B",
+      "exp_en": "Statistical significance ≠ business value. Both deserve mention.",
+      "exp_ar": "الدلالة الإحصائية ≠ القيمة التجارية. كلاهما يستحق الذكر.",
+      "formula_used": "",
+      "global_index": 200
+    },
+    {
+      "module_id": "M06",
+      "module_en": "Conclusion - Review",
+      "module_ar": "خلاصة - مراجعة",
+      "lesson_id": "M06-L01",
+      "lesson_title_en": "Course Summary and the Statistical Toolbox",
+      "lesson_title_ar": "ملخص الدورة وصندوق الأدوات الإحصائية",
+      "qid": "M06-L01-Q1",
+      "qtype": "MCQ",
+      "q_en": "Which is descriptive, NOT inferential?",
+      "q_ar": "أى مما يلى وصفى، لا استدلالى؟",
+      "opts_en": [
+        "Computing last month's average revenue from full records",
+        "Estimating population mean from a sample",
+        "Running an A/B test",
+        "Computing a p-value"
+      ],
+      "opts_ar": [
+        "حساب متوسط إيراد الشهر الماضى من السجلات الكاملة",
+        "تقدير متوسط المجتمع من عينة",
+        "تشغيل اختبار A/B",
+        "حساب قيمة p"
+      ],
+      "ans": "A",
+      "exp_en": "Computing a value from full data on hand is descriptive.",
+      "exp_ar": "حساب قيمة من البيانات الموجودة وصفى.",
+      "formula_used": "",
+      "global_index": 201
+    },
+    {
+      "module_id": "M06",
+      "module_en": "Conclusion - Review",
+      "module_ar": "خلاصة - مراجعة",
+      "lesson_id": "M06-L01",
+      "lesson_title_en": "Course Summary and the Statistical Toolbox",
+      "lesson_title_ar": "ملخص الدورة وصندوق الأدوات الإحصائية",
+      "qid": "M06-L01-Q2",
+      "qtype": "MCQ",
+      "q_en": "A right-skewed business metric (like revenue per customer) is best summarised with:",
+      "q_ar": "مقياس أعمال منحرف يميناً (مثل الإيراد لكل عميل) يلخّص أفضل بـ:",
+      "opts_en": [
+        "Mean only",
+        "Median (and mention mean for context)",
+        "Range only",
+        "Standard deviation only"
+      ],
+      "opts_ar": [
+        "المتوسط فقط",
+        "الوسيط (مع ذكر المتوسط)",
+        "المدى فقط",
+        "الانحراف المعيارى فقط"
+      ],
+      "ans": "B",
+      "exp_en": "Median resists the long right tail. Mean alone misleads.",
+      "exp_ar": "الوسيط مقاوم للذيل الأيمن. المتوسط وحده مضلّل.",
+      "formula_used": "",
+      "global_index": 202
+    },
+    {
+      "module_id": "M06",
+      "module_en": "Conclusion - Review",
+      "module_ar": "خلاصة - مراجعة",
+      "lesson_id": "M06-L01",
+      "lesson_title_en": "Course Summary and the Statistical Toolbox",
+      "lesson_title_ar": "ملخص الدورة وصندوق الأدوات الإحصائية",
+      "qid": "M06-L01-Q3",
+      "qtype": "MCQ",
+      "q_en": "Power of a test is increased most reliably by:",
+      "q_ar": "قوة الاختبار تُزاد بشكل موثوق بـ:",
+      "opts_en": [
+        "Lowering alpha",
+        "Increasing sample size",
+        "Changing the alternative",
+        "Picking nicer colours"
+      ],
+      "opts_ar": [
+        "خفض ألفا",
+        "زيادة n",
+        "تغيير البديلة",
+        "ألوان أجمل"
+      ],
+      "ans": "B",
+      "exp_en": "Bigger n is the universal lever for power.",
+      "exp_ar": "n أكبر هى الذراع العالمية للقوة.",
+      "formula_used": "",
+      "global_index": 203
+    },
+    {
+      "module_id": "M06",
+      "module_en": "Conclusion - Review",
+      "module_ar": "خلاصة - مراجعة",
+      "lesson_id": "M06-L01",
+      "lesson_title_en": "Course Summary and the Statistical Toolbox",
+      "lesson_title_ar": "ملخص الدورة وصندوق الأدوات الإحصائية",
+      "qid": "M06-L01-Q4",
+      "qtype": "MCQ",
+      "q_en": "An A/B test on millions of users shows p = 0.0001 with a +0.05% conversion lift. The honest report says:",
+      "q_ar": "اختبار A/B على ملايين المستخدمين p=0.0001 لكن +0.05% فقط. التقرير الأمين يقول:",
+      "opts_en": [
+        "Big effect, roll out",
+        "Statistically significant but practically tiny — decide based on cost/benefit",
+        "Re-run the test",
+        "Discard the result"
+      ],
+      "opts_ar": [
+        "تأثير كبير، أطلق",
+        "ذو دلالة إحصائية لكن ضئيل عملياً — قرّر بحسب التكلفة/الفائدة",
+        "أعد التشغيل",
+        "تجاهل"
+      ],
+      "ans": "B",
+      "exp_en": "Statistical significance ≠ business value.",
+      "exp_ar": "الدلالة الإحصائية ≠ القيمة التجارية.",
+      "formula_used": "",
+      "global_index": 204
+    },
+    {
+      "module_id": "M06",
+      "module_en": "Conclusion - Review",
+      "module_ar": "خلاصة - مراجعة",
+      "lesson_id": "M06-L01",
+      "lesson_title_en": "Course Summary and the Statistical Toolbox",
+      "lesson_title_ar": "ملخص الدورة وصندوق الأدوات الإحصائية",
+      "qid": "M06-L01-Q5",
+      "qtype": "MCQ",
+      "q_en": "A non-statistical decision-maker asks: 'Should we launch?' Your job as analyst is to:",
+      "q_ar": "صانع قرار غير متخصص يسأل: 'هل نطلق؟' دورك كمحلل:",
+      "opts_en": [
+        "Hand them a p-value and walk away",
+        "Translate the test result into a clear business recommendation with uncertainty",
+        "Refuse to answer until they learn statistics",
+        "Always recommend launch"
+      ],
+      "opts_ar": [
+        "أعطه قيمة p وامش",
+        "ترجم النتيجة لتوصية أعمال واضحة مع عدم اليقين",
+        "ارفض حتى يتعلم الإحصاء",
+        "انصح بالإطلاق دائماً"
+      ],
+      "ans": "B",
+      "exp_en": "Statistics serves business decisions, not the other way around.",
+      "exp_ar": "الإحصاء يخدم قرارات الأعمال، لا العكس.",
+      "formula_used": "",
+      "global_index": 205
+    }
+  ]
+}

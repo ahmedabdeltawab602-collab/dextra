@@ -1,0 +1,184 @@
+{
+  "id": "M02-L02",
+  "module": 2,
+  "type": "lesson",
+  "title_en": "The Anatomy of a Data Set",
+  "title_ar": "تشريح مجموعة البيانات",
+  "objectives_en": [
+    "Distinguish population, sample, and dataset.",
+    "Identify rows, columns, variables, target, and unique ID.",
+    "Recognise when a dataset is a sample vs the full population."
+  ],
+  "objectives_ar": [
+    "التمييز بين المجتمع والعينة ومجموعة البيانات.",
+    "تحديد الصفوف والأعمدة والمتغيرات والهدف والمعرف الفريد.",
+    "إدراك متى تكون البيانات عينة ومتى تكون المجتمع كاملاً."
+  ],
+  "sources": [
+    "02 The Statistical Landscape/The Anatomy of a Data Set.mp4",
+    "Slides PDF: pages 5-8",
+    "Translation: ترجمة الشريحة.docx pages 5-8"
+  ],
+  "sections": [
+    {
+      "key": "intro",
+      "title_en": "1 · The Picture of a Dataset",
+      "title_ar": "1 · صورة مجموعة البيانات"
+    },
+    {
+      "key": "definitions",
+      "title_en": "2 · Core Vocabulary",
+      "title_ar": "2 · المفردات الأساسية"
+    },
+    {
+      "key": "concept",
+      "title_en": "3 · Why We Use Samples",
+      "title_ar": "3 · لماذا نستخدم العينات"
+    },
+    {
+      "key": "example",
+      "title_en": "4 · Worked Example - A Coffee Chain",
+      "title_ar": "4 · مثال محلول - سلسلة قهوة"
+    },
+    {
+      "key": "traps",
+      "title_en": "5 · Common Traps",
+      "title_ar": "5 · أخطاء شائعة"
+    },
+    {
+      "key": "practice",
+      "title_en": "6 · Your Pre-Analysis Checklist",
+      "title_ar": "6 · قائمتك قبل بدء التحليل"
+    }
+  ],
+  "formulas": [],
+  "examples": [],
+  "memory_aid": [
+    {
+      "en": "Row = observation. Column = variable. Target = what you predict. Unique ID = one value per row.",
+      "ar": "صف = مشاهدة. عمود = متغير. الهدف = ما تتنبأ به. المعرف الفريد = قيمة لكل صف."
+    },
+    {
+      "en": "Sample ⊂ Population. We study the sample to learn about the population.",
+      "ar": "العينة جزء من المجتمع. ندرس العينة لنعرف المجتمع."
+    }
+  ],
+  "summary": {
+    "en": "A dataset is your table of analysis. Rows are observations, columns are variables, one column is usually the target, and a unique ID keeps the rows distinct. Most real datasets are samples, not full populations, which sets up everything in inferential statistics.",
+    "ar": "مجموعة البيانات هى جدول التحليل. الصفوف مشاهدات، الأعمدة متغيرات، عمود واحد هو الهدف غالباً، والمعرف الفريد يميّز الصفوف. معظم البيانات الحقيقية عينات لا مجتمعات كاملة، وعلى هذا يُبنى الإحصاء الاستدلالى لاحقاً."
+  },
+  "quiz": [
+    {
+      "id": "M02-L02-Q1",
+      "topic": "M02-L02",
+      "type": "MCQ",
+      "q_en": "In a customer dataset, each row represents:",
+      "q_ar": "فى بيانات العملاء، كل صف يمثّل:",
+      "opts_en": [
+        "A column",
+        "A single observation (one customer)",
+        "All customers combined",
+        "A variable"
+      ],
+      "opts_ar": [
+        "عمود",
+        "مشاهدة واحدة (عميل واحد)",
+        "كل العملاء مجمّعين",
+        "متغير"
+      ],
+      "ans": "B",
+      "exp_en": "A row is one observation. A column is a variable.",
+      "exp_ar": "الصف مشاهدة واحدة. العمود متغير.",
+      "formula_used": ""
+    },
+    {
+      "id": "M02-L02-Q2",
+      "topic": "M02-L02",
+      "type": "MCQ",
+      "q_en": "An e-commerce team analyses 1,500 random customer orders out of 850,000. The 1,500 orders are:",
+      "q_ar": "فريق تجارة إلكترونية يحلل 1,500 طلب عشوائى من بين 850,000. الـ 1,500 هذه:",
+      "opts_en": [
+        "The population",
+        "A sample of the population",
+        "Unique IDs",
+        "Target variables"
+      ],
+      "opts_ar": [
+        "المجتمع",
+        "عينة من المجتمع",
+        "معرفات فريدة",
+        "متغيرات هدف"
+      ],
+      "ans": "B",
+      "exp_en": "A subset selected for study from a larger group is a sample.",
+      "exp_ar": "مجموعة فرعية مختارة من مجموعة أكبر للدراسة هى عينة.",
+      "formula_used": ""
+    },
+    {
+      "id": "M02-L02-Q3",
+      "topic": "M02-L02",
+      "type": "MCQ",
+      "q_en": "Which column is the most likely Target in a churn-prediction project?",
+      "q_ar": "أى عمود هو الأرجح ليكون 'الهدف' فى مشروع توقع مغادرة العملاء؟",
+      "opts_en": [
+        "Customer_ID",
+        "Signup_Date",
+        "Plan_Type",
+        "Did_Churn (Yes/No)"
+      ],
+      "opts_ar": [
+        "معرّف العميل",
+        "تاريخ التسجيل",
+        "نوع الباقة",
+        "هل غادر (نعم/لا)"
+      ],
+      "ans": "D",
+      "exp_en": "The target is what you want to predict — here, churn itself.",
+      "exp_ar": "الهدف هو ما تريد التنبؤ به — هنا، المغادرة نفسها.",
+      "formula_used": ""
+    },
+    {
+      "id": "M02-L02-Q4",
+      "topic": "M02-L02",
+      "type": "TrueFalse",
+      "q_en": "True or False: A dataset and a population are always the same thing.",
+      "q_ar": "صح أم خطأ: مجموعة البيانات والمجتمع شىء واحد دائماً.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "A dataset is usually a sample of the population, not the whole population.",
+      "exp_ar": "مجموعة البيانات غالباً عينة من المجتمع، لا المجتمع كله.",
+      "formula_used": ""
+    },
+    {
+      "id": "M02-L02-Q5",
+      "topic": "M02-L02",
+      "type": "MCQ",
+      "q_en": "A unique ID column should:",
+      "q_ar": "عمود المعرف الفريد يجب أن:",
+      "opts_en": [
+        "Contain duplicates for backup",
+        "Have one unique value per row, never repeating",
+        "Always be a name",
+        "Be optional in business datasets"
+      ],
+      "opts_ar": [
+        "يحتوى على مكررات للنسخ الاحتياطى",
+        "يحوى قيمة فريدة لكل صف، لا تتكرر",
+        "يكون اسماً دائماً",
+        "اختيارى فى بيانات الأعمال"
+      ],
+      "ans": "B",
+      "exp_en": "By definition, a unique ID is unique per row. Otherwise it isn't doing its job.",
+      "exp_ar": "بحكم تعريفه، المعرف الفريد لا يتكرر. وإلا لا يؤدى دوره.",
+      "formula_used": ""
+    }
+  ],
+  "created": "2026-05-16"
+}

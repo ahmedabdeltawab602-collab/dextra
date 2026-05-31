@@ -1,0 +1,183 @@
+{
+  "id": "M04-L03",
+  "module": 4,
+  "type": "lesson",
+  "title_en": "P-values - The Concept",
+  "title_ar": "قيم p - المفهوم",
+  "objectives_en": [
+    "State exactly what a p-value means (in plain words).",
+    "Use the p-value to judge whether an observed effect could be just chance.",
+    "Recognise small p-values as evidence against the no-effect hypothesis."
+  ],
+  "objectives_ar": [
+    "صياغة معنى قيمة p بالضبط (بكلمات بسيطة).",
+    "استخدام قيمة p للحكم على ما إذا كان التأثير المرصود قد يكون صدفة.",
+    "إدراك أن قيمة p الصغيرة دليل ضد فرضية عدم التأثير."
+  ],
+  "sources": [
+    "04 Inferential Statistics/P-values.mp4",
+    "Slides PDF: pages 39-42",
+    "Glossary: P Value"
+  ],
+  "sections": [
+    {
+      "key": "intro",
+      "title_en": "1 · The Definition That Matters",
+      "title_ar": "1 · التعريف الذى يهمّ"
+    },
+    {
+      "key": "concept",
+      "title_en": "2 · The Intuition",
+      "title_ar": "2 · الحدس"
+    },
+    {
+      "key": "example",
+      "title_en": "3 · Reading P-values - Real Numbers",
+      "title_ar": "3 · قراءة قيم p - أرقام حقيقية"
+    },
+    {
+      "key": "traps",
+      "title_en": "4 · Three Big Misconceptions",
+      "title_ar": "4 · ثلاثة سوء فهم كبرى"
+    },
+    {
+      "key": "practice",
+      "title_en": "5 · Statistical vs Practical Significance",
+      "title_ar": "5 · الدلالة الإحصائية مقابل العملية"
+    }
+  ],
+  "formulas": [],
+  "examples": [],
+  "memory_aid": [
+    {
+      "en": "P-value = 'How likely is data this extreme if there is no effect?'",
+      "ar": "قيمة p = 'كم احتمال بيانات بهذا التطرف لو لم يكن هناك تأثير؟'"
+    },
+    {
+      "en": "Small p → reject 'no effect'. Large p → not enough evidence to reject.",
+      "ar": "p صغيرة ← ارفض 'لا تأثير'. p كبيرة ← لا دليل كافٍ للرفض."
+    },
+    {
+      "en": "Statistical significance ≠ practical significance. Always ask: is this effect worth acting on?",
+      "ar": "الدلالة الإحصائية ≠ الدلالة العملية. اسأل دائماً: هل التأثير يستحق العمل عليه؟"
+    }
+  ],
+  "summary": {
+    "en": "A p-value is the probability of seeing data at least as extreme as yours IF the null hypothesis (no effect) were true. Small p-values are evidence against the null; large p-values are not. P-value tells you about evidence, not effect size, and never about how likely the null is to be true. Used carelessly, it has fueled a replication crisis; used well, it remains a workhorse of modern decision-making.",
+    "ar": "قيمة p هى احتمال رؤية بيانات بنفس تطرّف بياناتك (أو أكثر تطرّفاً) لو كانت الفرضية الصفرية (لا تأثير) صحيحة. قيم p الصغيرة دليل ضدّ الصفرية؛ الكبيرة ليست كذلك. قيمة p تخبرك عن الدليل، لا عن حجم التأثير، ولا عن احتمال صحة الفرضية الصفرية. استخدامها بإهمال تسبّب فى أزمة عدم تكرار النتائج؛ استخدامها جيداً يبقيها حصان عمل لاتخاذ القرار."
+  },
+  "quiz": [
+    {
+      "id": "M04-L03-Q1",
+      "topic": "M04-L03",
+      "type": "MCQ",
+      "q_en": "P-value is best defined as:",
+      "q_ar": "قيمة p تُعرَّف أفضل بأنها:",
+      "opts_en": [
+        "The probability H₀ is true",
+        "The probability of seeing data as extreme as observed, assuming H₀ is true",
+        "How big the effect is",
+        "1 minus alpha"
+      ],
+      "opts_ar": [
+        "احتمال أن H₀ صحيحة",
+        "احتمال رؤية بيانات بنفس تطرف الملاحَظ، بفرض أن H₀ صحيحة",
+        "حجم التأثير",
+        "1 ناقص ألفا"
+      ],
+      "ans": "B",
+      "exp_en": "The technical definition.",
+      "exp_ar": "التعريف التقنى.",
+      "formula_used": ""
+    },
+    {
+      "id": "M04-L03-Q2",
+      "topic": "M04-L03",
+      "type": "MCQ",
+      "q_en": "A small p-value indicates:",
+      "q_ar": "قيمة p صغيرة تشير إلى:",
+      "opts_en": [
+        "H₀ is definitely false",
+        "Strong evidence against H₀",
+        "A large effect",
+        "The conclusion is certainly correct"
+      ],
+      "opts_ar": [
+        "H₀ خاطئة بالتأكيد",
+        "دليل قوى ضد H₀",
+        "تأثير كبير",
+        "الاستنتاج صحيح بالتأكيد"
+      ],
+      "ans": "B",
+      "exp_en": "Small p = strong evidence against H₀, not proof.",
+      "exp_ar": "p صغيرة = دليل قوى ضد H₀، لا برهان.",
+      "formula_used": ""
+    },
+    {
+      "id": "M04-L03-Q3",
+      "topic": "M04-L03",
+      "type": "TrueFalse",
+      "q_en": "True or False: P-value tells you the size of the effect.",
+      "q_ar": "صح أم خطأ: قيمة p تخبرك بحجم التأثير.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "P measures evidence, not effect size. Tiny effects can have tiny p with huge samples.",
+      "exp_ar": "p تقيس الدليل، لا حجم التأثير. تأثيرات صغيرة قد تعطى p صغيرة مع عينات ضخمة.",
+      "formula_used": ""
+    },
+    {
+      "id": "M04-L03-Q4",
+      "topic": "M04-L03",
+      "type": "MCQ",
+      "q_en": "An A/B test gives p = 0.003. The most defensible statement:",
+      "q_ar": "اختبار A/B يعطى p = 0.003. أكثر العبارات قابلة للدفاع:",
+      "opts_en": [
+        "The new design is definitely better",
+        "There's strong evidence the difference isn't just chance",
+        "p = 0.003 means 0.3% chance of being wrong",
+        "The effect is huge"
+      ],
+      "opts_ar": [
+        "التصميم الجديد أفضل قطعاً",
+        "هناك دليل قوى على أن الفرق ليس مجرد صدفة",
+        "p=0.003 يعنى 0.3% احتمال للخطأ",
+        "التأثير ضخم"
+      ],
+      "ans": "B",
+      "exp_en": "Tight, defensible language.",
+      "exp_ar": "لغة دقيقة قابلة للدفاع.",
+      "formula_used": ""
+    },
+    {
+      "id": "M04-L03-Q5",
+      "topic": "M04-L03",
+      "type": "MCQ",
+      "q_en": "With 5 million users, an A/B test finds a difference with p = 0.001 but the effect is +0.05% conversion. The correct next step:",
+      "q_ar": "مع 5 مليون مستخدم، اختبار A/B يجد فرقاً بـ p=0.001 لكن التأثير +0.05% تحويل. الخطوة الصحيحة:",
+      "opts_en": [
+        "Roll out immediately",
+        "Ignore - p too small to trust",
+        "Statistically real but evaluate business value before rollout",
+        "Re-run the test"
+      ],
+      "opts_ar": [
+        "إطلاق فورى",
+        "تجاهل - p صغيرة جداً للثقة",
+        "حقيقى إحصائياً لكن قيّم القيمة التجارية قبل الإطلاق",
+        "أعد التشغيل"
+      ],
+      "ans": "C",
+      "exp_en": "Statistical significance is achieved; practical value still requires judgment.",
+      "exp_ar": "الدلالة الإحصائية متحققة؛ القيمة العملية تحتاج تقييماً.",
+      "formula_used": ""
+    }
+  ],
+  "created": "2026-05-16"
+}

@@ -1,0 +1,178 @@
+{
+  "id": "M05-L04",
+  "module": 5,
+  "type": "lesson",
+  "title_en": "Setting the Alpha and Confidence Level",
+  "title_ar": "ضبط ألفا ومستوى الثقة",
+  "objectives_en": [
+    "Choose an alpha appropriate to the business stakes.",
+    "Connect alpha to Type I error and confidence level.",
+    "Adjust alpha for sample-size trade-offs."
+  ],
+  "objectives_ar": [
+    "اختيار ألفا مناسب لأهمية القرار التجارى.",
+    "ربط ألفا بالخطأ من النوع الأول ومستوى الثقة.",
+    "تعديل ألفا لمقايضات حجم العينة."
+  ],
+  "sources": [
+    "05 Hypothesis Testing/Setting the Alpha & Confidence Level.mp4",
+    "Slides PDF: page 70"
+  ],
+  "sections": [
+    {
+      "key": "intro",
+      "title_en": "1 · The Pre-Commitment",
+      "title_ar": "1 · الالتزام المسبق"
+    },
+    {
+      "key": "definitions",
+      "title_en": "2 · The Trade-off Table",
+      "title_ar": "2 · جدول المقايضة"
+    },
+    {
+      "key": "example",
+      "title_en": "3 · Worked Example - Picking Alpha by Stakes",
+      "title_ar": "3 · مثال محلول - اختيار ألفا حسب الأهمية"
+    },
+    {
+      "key": "practice",
+      "title_en": "4 · Choosing Alpha in Real Projects",
+      "title_ar": "4 · اختيار ألفا فى مشاريع حقيقية"
+    },
+    {
+      "key": "traps",
+      "title_en": "5 · The Multiple-Testing Trap",
+      "title_ar": "5 · فخ الاختبارات المتعددة"
+    }
+  ],
+  "formulas": [],
+  "examples": [],
+  "memory_aid": [
+    {
+      "en": "Alpha = 1 − Confidence. Both are pre-set; never tuned after p-value.",
+      "ar": "ألفا = 1 − الثقة. كلاهما مسبق؛ لا يُضبط بعد قيمة p."
+    },
+    {
+      "en": "0.05 default, 0.01 for high-stakes, 0.10 for quick exploration.",
+      "ar": "0.05 افتراضى، 0.01 للحرجة، 0.10 للاستكشاف السريع."
+    }
+  ],
+  "summary": {
+    "en": "Alpha is the line in the sand: how unlikely must the data be (under H0) before we reject H0? Confidence level = 1 − alpha. Pick alpha based on the cost of a false positive: 0.05 for everyday decisions, 0.01 for high-stakes, 0.10 for quick exploration. Always pre-commit and beware multiple-testing inflation.",
+    "ar": "ألفا هو الخط الفاصل: كم يجب أن تكون البيانات غير محتملة (تحت H0) قبل أن نرفض H0؟ مستوى الثقة = 1 − ألفا. اختر ألفا حسب تكلفة الإيجابى الكاذب: 0.05 للقرارات اليومية، 0.01 للحرجة، 0.10 للاستكشاف. ثبّت دائماً مسبقاً وانتبه لتضخّم الاختبارات المتعددة."
+  },
+  "quiz": [
+    {
+      "id": "M05-L04-Q1",
+      "topic": "M05-L04",
+      "type": "Calc",
+      "q_en": "Alpha = 0.10. Confidence level is:",
+      "q_ar": "ألفا = 0.10. مستوى الثقة:",
+      "opts_en": [
+        "10%",
+        "90%",
+        "99%",
+        "50%"
+      ],
+      "opts_ar": [
+        "10%",
+        "90%",
+        "99%",
+        "50%"
+      ],
+      "ans": "B",
+      "exp_en": "1 − 0.10 = 0.90 = 90%.",
+      "exp_ar": "1 − 0.10 = 0.90 = 90%.",
+      "formula_used": ""
+    },
+    {
+      "id": "M05-L04-Q2",
+      "topic": "M05-L04",
+      "type": "MCQ",
+      "q_en": "High-stakes decisions (e.g., drug safety) typically use:",
+      "q_ar": "قرارات حرجة (مثل سلامة الدواء) تستخدم عادة:",
+      "opts_en": [
+        "α=0.10",
+        "α=0.05",
+        "α=0.01 or stricter",
+        "No alpha"
+      ],
+      "opts_ar": [
+        "ألفا=0.10",
+        "ألفا=0.05",
+        "ألفا=0.01 أو أصرم",
+        "لا ألفا"
+      ],
+      "ans": "C",
+      "exp_en": "Lower alpha = fewer false positives.",
+      "exp_ar": "ألفا أقل = إيجابيات كاذبة أقل.",
+      "formula_used": ""
+    },
+    {
+      "id": "M05-L04-Q3",
+      "topic": "M05-L04",
+      "type": "TrueFalse",
+      "q_en": "True or False: Running 20 independent tests at α=0.05 produces about 1 false positive on average.",
+      "q_ar": "صح أم خطأ: تشغيل 20 اختباراً مستقلاً بـ ألفا=0.05 ينتج ~1 إيجابى كاذب فى المتوسط.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "A",
+      "exp_en": "20 × 0.05 = 1.",
+      "exp_ar": "20 × 0.05 = 1.",
+      "formula_used": ""
+    },
+    {
+      "id": "M05-L04-Q4",
+      "topic": "M05-L04",
+      "type": "MCQ",
+      "q_en": "Lowering alpha from 0.05 to 0.01:",
+      "q_ar": "خفض ألفا من 0.05 إلى 0.01:",
+      "opts_en": [
+        "Increases Type I error",
+        "Decreases Type I error",
+        "Has no effect",
+        "Increases sample mean"
+      ],
+      "opts_ar": [
+        "يزيد الخطأ من النوع الأول",
+        "يقلله",
+        "لا أثر",
+        "يزيد متوسط العينة"
+      ],
+      "ans": "B",
+      "exp_en": "Lower α = fewer false positives.",
+      "exp_ar": "ألفا أقل = إيجابيات كاذبة أقل.",
+      "formula_used": ""
+    },
+    {
+      "id": "M05-L04-Q5",
+      "topic": "M05-L04",
+      "type": "MCQ",
+      "q_en": "The trade-off of a much smaller alpha is:",
+      "q_ar": "مقايضة ألفا أصغر بكثير:",
+      "opts_en": [
+        "Smaller sample needed",
+        "Same sample",
+        "Larger sample needed to detect a real effect",
+        "No trade-off"
+      ],
+      "opts_ar": [
+        "عينة أصغر",
+        "نفس العينة",
+        "عينة أكبر لكشف تأثير حقيقى",
+        "لا مقايضة"
+      ],
+      "ans": "C",
+      "exp_en": "Smaller α with same power → larger n.",
+      "exp_ar": "ألفا أصغر مع نفس القوة ← n أكبر.",
+      "formula_used": ""
+    }
+  ],
+  "created": "2026-05-16"
+}

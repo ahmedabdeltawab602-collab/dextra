@@ -1,0 +1,49 @@
+{
+  "id": "M02",
+  "module": 2,
+  "type": "module",
+  "title_en": "The Statistical Landscape",
+  "title_ar": "المشهد الإحصائى",
+  "lessons": [
+    {
+      "id": "M02-L01",
+      "title_en": "Chapter Introduction - The Statistical Landscape",
+      "title_ar": "مقدمة الفصل - المشهد الإحصائى"
+    },
+    {
+      "id": "M02-L02",
+      "title_en": "The Anatomy of a Data Set",
+      "title_ar": "تشريح مجموعة البيانات"
+    },
+    {
+      "id": "M02-L03",
+      "title_en": "Descriptive vs Inferential Statistics",
+      "title_ar": "الإحصاء الوصفى مقابل الاستدلالى"
+    },
+    {
+      "id": "M02-L04",
+      "title_en": "Approaches to Inferring Probability",
+      "title_ar": "مناهج الاستدلال الاحتمالى"
+    },
+    {
+      "id": "M02-L05",
+      "title_en": "Assumptions in Inferential Statistics",
+      "title_ar": "الافتراضات فى الإحصاء الاستدلالى"
+    },
+    {
+      "id": "M02-L06",
+      "title_en": "The Flowchart - Analysis Selection",
+      "title_ar": "مخطط اختيار التحليل"
+    },
+    {
+      "id": "M02-L07",
+      "title_en": "Business Intelligence vs Data Science",
+      "title_ar": "ذكاء الأعمال مقابل علم البيانات"
+    }
+  ],
+  "sources": [
+    "02 The Statistical Landscape/*",
+    "Slides PDF pages 3-16",
+    "Glossary Terms: Descriptive Statistics, Inferential Statistics, Bayesian"
+  ]
+}

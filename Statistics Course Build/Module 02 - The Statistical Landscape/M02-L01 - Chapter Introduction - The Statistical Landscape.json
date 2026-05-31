@@ -1,0 +1,166 @@
+{
+  "id": "M02-L01",
+  "module": 2,
+  "type": "lesson",
+  "title_en": "Chapter Introduction - The Statistical Landscape",
+  "title_ar": "مقدمة الفصل - المشهد الإحصائى",
+  "objectives_en": [
+    "Define statistics in plain language.",
+    "See the three big themes: descriptive, inferential, and choosing the right approach.",
+    "Connect statistics to everyday business decisions."
+  ],
+  "objectives_ar": [
+    "تعريف الإحصاء بلغة بسيطة.",
+    "رؤية المحاور الثلاثة الكبرى: الوصفى، الاستدلالى، واختيار المنهج المناسب.",
+    "ربط الإحصاء بقرارات الأعمال اليومية."
+  ],
+  "sources": [
+    "Folder: 02 The Statistical Landscape/Chapter Introduction.mp4",
+    "Slides PDF: pages 3-4",
+    "Translation: ترجمة الشريحة.docx pages 3-4",
+    "OpenStax: Chapter 1.1"
+  ],
+  "sections": [
+    {
+      "key": "intro",
+      "title_en": "1 · What This Chapter Is About",
+      "title_ar": "1 · عمّا يدور هذا الفصل"
+    },
+    {
+      "key": "concept",
+      "title_en": "2 · The Three-Stage Journey",
+      "title_ar": "2 · الرحلة ذات الثلاث مراحل"
+    },
+    {
+      "key": "practice",
+      "title_en": "3 · Statistics in the Real Business World",
+      "title_ar": "3 · الإحصاء فى عالم الأعمال الحقيقى"
+    }
+  ],
+  "formulas": [],
+  "examples": [],
+  "memory_aid": [
+    {
+      "en": "Statistics = collect → summarise → analyse → decide.",
+      "ar": "الإحصاء = جمع ← تلخيص ← تحليل ← قرار."
+    }
+  ],
+  "summary": {
+    "en": "This chapter zooms out before zooming in. Statistics is a four-step process — collect, summarise, analyse, decide — and the rest of the module gives you the language and tools to do each step well, with real business intuition baked in.",
+    "ar": "هذا الفصل يأخذنا نحو الصورة الواسعة قبل التعمّق. الإحصاء عملية من أربع خطوات — جمع، تلخيص، تحليل، قرار — وبقية الموديول يمنحك اللغة والأدوات لتؤدّى كل خطوة جيداً، مع فهم عملى لأعمال الواقع."
+  },
+  "quiz": [
+    {
+      "id": "M02-L01-Q1",
+      "topic": "M02-L01",
+      "type": "MCQ",
+      "q_en": "Statistics is BEST defined as:",
+      "q_ar": "أفضل تعريف للإحصاء هو:",
+      "opts_en": [
+        "A branch of mathematics about numbers only.",
+        "The process of collecting, summarising, and analysing data to make decisions.",
+        "A type of software like Excel.",
+        "Probability theory."
+      ],
+      "opts_ar": [
+        "فرع من الرياضيات يهتم بالأرقام فقط.",
+        "عملية جمع البيانات وتلخيصها وتحليلها لاتخاذ القرارات.",
+        "نوع من البرمجيات مثل Excel.",
+        "نظرية الاحتمالات."
+      ],
+      "ans": "B",
+      "exp_en": "Statistics is the end-to-end process, not just numbers, not just one program. Probability is a tool within it.",
+      "exp_ar": "الإحصاء عملية متكاملة، ليس مجرد أرقام، ولا برنامج واحد. الاحتمالات أداة داخله.",
+      "formula_used": ""
+    },
+    {
+      "id": "M02-L01-Q2",
+      "topic": "M02-L01",
+      "type": "MCQ",
+      "q_en": "Which step is NOT a part of the statistics process?",
+      "q_ar": "أى خطوة من هذه ليست جزءاً من عملية الإحصاء؟",
+      "opts_en": [
+        "Collecting data",
+        "Summarising data",
+        "Guessing without data",
+        "Making decisions"
+      ],
+      "opts_ar": [
+        "جمع البيانات",
+        "تلخيص البيانات",
+        "التخمين بدون بيانات",
+        "اتخاذ القرار"
+      ],
+      "ans": "C",
+      "exp_en": "Statistics is evidence-based. Guessing without data is the opposite of what statistics does.",
+      "exp_ar": "الإحصاء قائم على الأدلة. التخمين دون بيانات هو عكس ما يفعله الإحصاء.",
+      "formula_used": ""
+    },
+    {
+      "id": "M02-L01-Q3",
+      "topic": "M02-L01",
+      "type": "MCQ",
+      "q_en": "A retailer wants to know whether last month's revenue was higher than the previous month. This is primarily:",
+      "q_ar": "متجر يريد معرفة هل إيرادات الشهر الماضى أعلى من الشهر السابق. هذا أساساً:",
+      "opts_en": [
+        "Inferential",
+        "Descriptive",
+        "Machine learning",
+        "None of the above"
+      ],
+      "opts_ar": [
+        "استدلالى",
+        "وصفى",
+        "تعلم آلى",
+        "لا شىء مما سبق"
+      ],
+      "ans": "B",
+      "exp_en": "Describing what already happened — sums, comparisons of known totals — is descriptive statistics.",
+      "exp_ar": "وصف ما حدث بالفعل — مجاميع، مقارنات لقيم معروفة — هو إحصاء وصفى.",
+      "formula_used": ""
+    },
+    {
+      "id": "M02-L01-Q4",
+      "topic": "M02-L01",
+      "type": "TrueFalse",
+      "q_en": "True or False: Statistics is only used in scientific research, not in business.",
+      "q_ar": "صح أم خطأ: الإحصاء يُستخدم فى البحث العلمى فقط، لا فى الأعمال.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "Every modern business runs on statistics: marketing tests, finance models, ops dashboards, product analytics.",
+      "exp_ar": "كل عمل حديث يقوم على الإحصاء: اختبارات تسويق، نماذج مالية، لوحات تشغيل، تحليلات منتجات.",
+      "formula_used": ""
+    },
+    {
+      "id": "M02-L01-Q5",
+      "topic": "M02-L01",
+      "type": "MCQ",
+      "q_en": "Which is the BEST way to think about this module?",
+      "q_ar": "أى عبارة أفضل لفهم هذا الموديول؟",
+      "opts_en": [
+        "A list of formulas to memorise.",
+        "A map: where each tool fits in the data-decision pipeline.",
+        "An introduction to machine learning only.",
+        "A history of statistics."
+      ],
+      "opts_ar": [
+        "قائمة بصيغ للحفظ.",
+        "خريطة: أين تقع كل أداة فى مسار البيانات والقرار.",
+        "مقدمة فى التعلم الآلى فقط.",
+        "تاريخ الإحصاء."
+      ],
+      "ans": "B",
+      "exp_en": "The landscape module is a map. Later modules drill into each tool.",
+      "exp_ar": "موديول المشهد هو خريطة. الموديولات اللاحقة تتعمق فى كل أداة.",
+      "formula_used": ""
+    }
+  ],
+  "created": "2026-05-16"
+}

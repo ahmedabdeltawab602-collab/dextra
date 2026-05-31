@@ -1,0 +1,191 @@
+{
+  "id": "M04-L08",
+  "module": 4,
+  "type": "lesson",
+  "title_en": "The Law of Large Numbers",
+  "title_ar": "قانون الأعداد الكبيرة",
+  "objectives_en": [
+    "State the Law of Large Numbers (LLN).",
+    "Watch a sample mean converge to the true mean as n grows.",
+    "Use LLN to justify trust in large-sample averages."
+  ],
+  "objectives_ar": [
+    "صياغة قانون الأعداد الكبيرة (LLN).",
+    "مشاهدة كيف يقترب متوسط العينة من المتوسط الحقيقى كلما زاد n.",
+    "استخدام LLN لتبرير الثقة فى متوسطات العينات الكبيرة."
+  ],
+  "sources": [
+    "04 Inferential Statistics/Law of Large Numbers.mp4",
+    "04 Inferential Statistics/Excel - Law of Large Numbers.mp4",
+    "Slides PDF: pages 55-56",
+    "Workbook: 03 - CLT & LLN.xlsx"
+  ],
+  "sections": [
+    {
+      "key": "intro",
+      "title_en": "1 · The Statement",
+      "title_ar": "1 · النص"
+    },
+    {
+      "key": "formulas",
+      "title_en": "2 · The Math (in 1 Line)",
+      "title_ar": "2 · الرياضيات (فى سطر واحد)"
+    },
+    {
+      "key": "example",
+      "title_en": "3 · Worked Example - Die Rolls",
+      "title_ar": "3 · مثال محلول - رمى النرد"
+    },
+    {
+      "key": "practice",
+      "title_en": "4 · Business Uses",
+      "title_ar": "4 · استخدامات أعمال"
+    },
+    {
+      "key": "traps",
+      "title_en": "5 · The Gambler's Fallacy",
+      "title_ar": "5 · مغالطة المقامر"
+    }
+  ],
+  "formulas": [
+    {
+      "id": "F-M04-L08-01",
+      "name_en": "Law of Large Numbers",
+      "name_ar": "قانون الأعداد الكبيرة",
+      "expr": "lim (n→∞) x̄ₙ = μ",
+      "where_en": "x̄ₙ = mean of n samples, μ = true mean",
+      "where_ar": "x̄ₙ متوسط n عينة، μ المتوسط الحقيقى",
+      "when_en": "Justifying that bigger samples are more reliable.",
+      "when_ar": "تبرير أن عينات أكبر أوثق."
+    }
+  ],
+  "examples": [],
+  "memory_aid": [
+    {
+      "en": "Bigger sample → mean closer to truth. Always.",
+      "ar": "عينة أكبر ← متوسط أقرب للحقيقة. دائماً."
+    },
+    {
+      "en": "LLN ≠ 'losing streaks reverse'. Past doesn't owe the future a balance.",
+      "ar": "LLN ليس 'الخسائر ستنعكس'. الماضى لا يدين للمستقبل بتوازن."
+    }
+  ],
+  "summary": {
+    "en": "The Law of Large Numbers is the foundation that makes inference work. As n grows, the sample mean inevitably approaches the true population mean. It's why insurance, casinos, and quality-control sampling all function. Beware the Gambler's Fallacy — LLN works on averages, never on guaranteeing individual outcomes balance.",
+    "ar": "قانون الأعداد الكبيرة هو الأساس الذى يجعل الاستدلال يعمل. كلما زاد n، يقترب متوسط العينة حتماً من متوسط المجتمع. لذا يعمل التأمين والكازينوهات وعينات ضبط الجودة. احذر مغالطة المقامر — LLN يعمل على المتوسطات، لا يضمن أبداً توازن النتائج الفردية."
+  },
+  "quiz": [
+    {
+      "id": "M04-L08-Q1",
+      "topic": "M04-L08",
+      "type": "MCQ",
+      "q_en": "The Law of Large Numbers says, as n → ∞:",
+      "q_ar": "قانون الأعداد الكبيرة يقول إنه مع n ← ∞:",
+      "opts_en": [
+        "Sample variance approaches 0",
+        "Sample mean approaches population mean",
+        "Population mean approaches sample mean",
+        "Nothing changes"
+      ],
+      "opts_ar": [
+        "تباين العينة يقترب من 0",
+        "متوسط العينة يقترب من متوسط المجتمع",
+        "متوسط المجتمع يقترب من متوسط العينة",
+        "لا شىء يتغير"
+      ],
+      "ans": "B",
+      "exp_en": "x̄ₙ → μ as n → ∞.",
+      "exp_ar": "x̄ₙ ← μ مع n ← ∞.",
+      "formula_used": ""
+    },
+    {
+      "id": "M04-L08-Q2",
+      "topic": "M04-L08",
+      "type": "Calc",
+      "q_en": "Rolling a fair six-sided die, the long-run average should approach:",
+      "q_ar": "رمى نرد عادل، المتوسط طويل المدى يقترب من:",
+      "opts_en": [
+        "3.0",
+        "3.5",
+        "4.0",
+        "6.0"
+      ],
+      "opts_ar": [
+        "3.0",
+        "3.5",
+        "4.0",
+        "6.0"
+      ],
+      "ans": "B",
+      "exp_en": "(1+2+3+4+5+6)/6 = 3.5.",
+      "exp_ar": "(1+2+3+4+5+6)/6 = 3.5.",
+      "formula_used": ""
+    },
+    {
+      "id": "M04-L08-Q3",
+      "topic": "M04-L08",
+      "type": "TrueFalse",
+      "q_en": "True or False: After 100 heads in a row, the next flip is MORE likely to be tails (LLN guarantees a balance).",
+      "q_ar": "صح أم خطأ: بعد 100 صورة متتالية، الرمية التالية أكثر احتمالاً أن تكون شعار (LLN يضمن التوازن).",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "Gambler's Fallacy. Each fair-coin flip is independent: 50/50.",
+      "exp_ar": "مغالطة المقامر. كل رمية مستقلة: 50/50.",
+      "formula_used": ""
+    },
+    {
+      "id": "M04-L08-Q4",
+      "topic": "M04-L08",
+      "type": "MCQ",
+      "q_en": "Insurance companies rely on LLN because:",
+      "q_ar": "شركات التأمين تعتمد على LLN لأن:",
+      "opts_en": [
+        "Each customer pays the average loss",
+        "Across many customers, average loss approaches true expected loss",
+        "Customers all lose equally",
+        "No real reason"
+      ],
+      "opts_ar": [
+        "كل عميل يدفع الخسارة المتوسطة",
+        "عبر عملاء كثر، متوسط الخسارة يقترب من المتوقع الحقيقى",
+        "كل العملاء يخسرون بالتساوى",
+        "لا سبب حقيقى"
+      ],
+      "ans": "B",
+      "exp_en": "Risk pooling + LLN = predictable aggregate losses.",
+      "exp_ar": "تجميع المخاطر + LLN = خسائر إجمالية متوقعة.",
+      "formula_used": ""
+    },
+    {
+      "id": "M04-L08-Q5",
+      "topic": "M04-L08",
+      "type": "MCQ",
+      "q_en": "A coffee shop wants to estimate its true average daily customers. Best approach (LLN-wise):",
+      "q_ar": "مقهى يريد تقدير المتوسط اليومى الحقيقى للعملاء. الأفضل (بمنطق LLN):",
+      "opts_en": [
+        "3 days of data",
+        "30 days",
+        "300 days",
+        "Any sample size"
+      ],
+      "opts_ar": [
+        "3 أيام",
+        "30 يوماً",
+        "300 يوم",
+        "أى حجم"
+      ],
+      "ans": "C",
+      "exp_en": "More days → x̄ closer to μ. 300 is much better than 30 or 3.",
+      "exp_ar": "أيام أكثر ← x̄ أقرب لـ μ. 300 أفضل بكثير من 30 أو 3.",
+      "formula_used": ""
+    }
+  ],
+  "created": "2026-05-16"
+}

@@ -1,0 +1,199 @@
+{
+  "id": "M03-L07",
+  "module": 3,
+  "type": "lesson",
+  "title_en": "Asymmetric Distributions and Skewness",
+  "title_ar": "التوزيعات غير المتماثلة والالتواء",
+  "objectives_en": [
+    "Define skewness and recognise positive vs negative skew.",
+    "Predict the relative position of Mean, Median, and Mode from skew direction.",
+    "Apply log-transforms when skew is too strong."
+  ],
+  "objectives_ar": [
+    "تعريف الالتواء وتمييز الالتواء الموجب والسالب.",
+    "توقع الترتيب النسبى للمتوسط والوسيط والمنوال من اتجاه الالتواء.",
+    "تطبيق تحويلات لوغاريتمية حين يكون الالتواء حاداً."
+  ],
+  "sources": [
+    "03 Descriptive Statistics/Asymmetric (and Other) Distributions.mp4",
+    "Slides PDF: pages 29-30",
+    "Glossary: Asymmetric, Skewness"
+  ],
+  "sections": [
+    {
+      "key": "intro",
+      "title_en": "1 · Symmetry is the Exception",
+      "title_ar": "1 · التماثل هو الاستثناء"
+    },
+    {
+      "key": "definitions",
+      "title_en": "2 · Three Cases",
+      "title_ar": "2 · ثلاث حالات"
+    },
+    {
+      "key": "formulas",
+      "title_en": "3 · How to Measure Skewness",
+      "title_ar": "3 · كيف نقيس الالتواء"
+    },
+    {
+      "key": "example",
+      "title_en": "4 · Worked Example - Order Values",
+      "title_ar": "4 · مثال محلول - قيم الطلبات"
+    },
+    {
+      "key": "practice",
+      "title_en": "5 · Business Uses",
+      "title_ar": "5 · استخدامات أعمال"
+    },
+    {
+      "key": "traps",
+      "title_en": "6 · Common Trap",
+      "title_ar": "6 · فخّ شائع"
+    }
+  ],
+  "formulas": [
+    {
+      "id": "F-M03-L07-01",
+      "name_en": "Pearson skewness",
+      "name_ar": "التواء بيرسون",
+      "expr": "Skew ≈ 3·(Mean − Median)/σ",
+      "where_en": "σ = standard deviation",
+      "where_ar": "σ = الانحراف المعيارى",
+      "when_en": "Quick check on skew direction and strength.",
+      "when_ar": "فحص سريع للالتواء واتجاهه."
+    }
+  ],
+  "examples": [],
+  "memory_aid": [
+    {
+      "en": "Right-skew → Mean > Median (mean pulled right).",
+      "ar": "التواء يمين ← المتوسط > الوسيط (المتوسط مسحوب يميناً)."
+    },
+    {
+      "en": "Left-skew → Mean < Median (mean pulled left).",
+      "ar": "التواء يسار ← المتوسط < الوسيط."
+    },
+    {
+      "en": "Heavy right-skew? Try log-transform for analysis.",
+      "ar": "التواء يمين حاد؟ جرّب التحويل اللوغاريتمى."
+    }
+  ],
+  "summary": {
+    "en": "Skewness measures asymmetry. Right-skewed (positive) distributions have long right tails and Mean > Median — typical of income, prices, transactions. Left-skewed is rarer in business. When skew is heavy, report the Median, watch for outliers, and consider transforming the data before running tools that assume symmetry.",
+    "ar": "الالتواء يقيس عدم التماثل. التوزيعات منحرفة اليمين (موجبة) لها ذيول يمنى طويلة و المتوسط > الوسيط — مثل الدخل والأسعار والمعاملات. الانحراف لليسار أندر فى الأعمال. حين يكون الالتواء حاداً، اعرض الوسيط، تابع المتطرفات، وفكّر فى تحويل البيانات قبل أدوات تفترض التماثل."
+  },
+  "quiz": [
+    {
+      "id": "M03-L07-Q1",
+      "topic": "M03-L07",
+      "type": "MCQ",
+      "q_en": "A distribution with a long right tail is:",
+      "q_ar": "توزيع له ذيل أيمن طويل:",
+      "opts_en": [
+        "Symmetric",
+        "Left-skewed",
+        "Right-skewed",
+        "Kurtotic only"
+      ],
+      "opts_ar": [
+        "متماثل",
+        "منحرف يسار",
+        "منحرف يمين",
+        "متفرطح فقط"
+      ],
+      "ans": "C",
+      "exp_en": "Long right tail = right (positive) skew.",
+      "exp_ar": "ذيل أيمن طويل = التواء يمين (موجب).",
+      "formula_used": ""
+    },
+    {
+      "id": "M03-L07-Q2",
+      "topic": "M03-L07",
+      "type": "MCQ",
+      "q_en": "Customer income data shows Mean = $80k, Median = $55k. Skew direction?",
+      "q_ar": "دخل عملاء: المتوسط = 80 ألف، الوسيط = 55 ألف. اتجاه الالتواء؟",
+      "opts_en": [
+        "Symmetric",
+        "Right (positive)",
+        "Left (negative)",
+        "Cannot tell"
+      ],
+      "opts_ar": [
+        "متماثل",
+        "يمين (موجب)",
+        "يسار (سالب)",
+        "لا يمكن"
+      ],
+      "ans": "B",
+      "exp_en": "Mean > Median → right-skewed (a few high earners pull the mean up).",
+      "exp_ar": "المتوسط > الوسيط ← منحرف يمين (قلة من ذوى الدخل المرتفع تسحب المتوسط).",
+      "formula_used": ""
+    },
+    {
+      "id": "M03-L07-Q3",
+      "topic": "M03-L07",
+      "type": "MCQ",
+      "q_en": "For right-skewed business data, the BEST summary measure is:",
+      "q_ar": "لبيانات منحرفة يميناً، أفضل مقياس تلخيصى:",
+      "opts_en": [
+        "Mean",
+        "Median",
+        "Mode",
+        "Range"
+      ],
+      "opts_ar": [
+        "المتوسط",
+        "الوسيط",
+        "المنوال",
+        "المدى"
+      ],
+      "ans": "B",
+      "exp_en": "Median is robust to the long right tail.",
+      "exp_ar": "الوسيط مقاوم للذيل الأيمن الطويل.",
+      "formula_used": ""
+    },
+    {
+      "id": "M03-L07-Q4",
+      "topic": "M03-L07",
+      "type": "TrueFalse",
+      "q_en": "True or False: Left-skewed means the Mean is greater than the Median.",
+      "q_ar": "صح أم خطأ: الالتواء اليسارى يعنى أن المتوسط أكبر من الوسيط.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "Left-skew: Mean < Median.",
+      "exp_ar": "التواء يسار: المتوسط < الوسيط.",
+      "formula_used": ""
+    },
+    {
+      "id": "M03-L07-Q5",
+      "topic": "M03-L07",
+      "type": "MCQ",
+      "q_en": "A common trick for heavily right-skewed data is to apply:",
+      "q_ar": "حيلة شائعة لبيانات منحرفة بشدة يميناً:",
+      "opts_en": [
+        "Squaring",
+        "Log-transform",
+        "Multiply by 0",
+        "Reverse the data"
+      ],
+      "opts_ar": [
+        "تربيع",
+        "تحويل لوغاريتمى",
+        "الضرب فى صفر",
+        "عكس البيانات"
+      ],
+      "ans": "B",
+      "exp_en": "log(x) compresses the long tail and often yields a near-Normal shape.",
+      "exp_ar": "log(x) يضغط الذيل الطويل وغالباً ينتج شكلاً قريباً من الطبيعى.",
+      "formula_used": ""
+    }
+  ],
+  "created": "2026-05-16"
+}

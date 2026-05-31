@@ -1,0 +1,174 @@
+{
+  "id": "M05-L02",
+  "module": 5,
+  "type": "lesson",
+  "title_en": "The 5 Steps of Hypothesis Testing",
+  "title_ar": "الخمس خطوات لاختبار الفرضيات",
+  "objectives_en": [
+    "Memorise the five steps in order.",
+    "Understand why the order matters.",
+    "Apply the steps to a simple business example."
+  ],
+  "objectives_ar": [
+    "حفظ الخمس خطوات بالترتيب.",
+    "فهم لماذا الترتيب مهم.",
+    "تطبيق الخطوات على مثال أعمال بسيط."
+  ],
+  "sources": [
+    "05 Hypothesis Testing/Hypothesis Testing Steps.mp4",
+    "Slides PDF: page 68"
+  ],
+  "sections": [
+    {
+      "key": "intro",
+      "title_en": "1 · One Procedure to Rule Them All",
+      "title_ar": "1 · إجراء واحد يحكمها كلها"
+    },
+    {
+      "key": "definitions",
+      "title_en": "2 · The 5 Steps Table",
+      "title_ar": "2 · جدول الخمس خطوات"
+    },
+    {
+      "key": "example",
+      "title_en": "3 · Worked Example - 5 Steps in 60 Seconds",
+      "title_ar": "3 · مثال محلول - 5 خطوات فى 60 ثانية"
+    },
+    {
+      "key": "traps",
+      "title_en": "4 · The Order Matters",
+      "title_ar": "4 · الترتيب يهمّ"
+    },
+    {
+      "key": "practice",
+      "title_en": "5 · The Sticky-Note Checklist",
+      "title_ar": "5 · قائمة الملصق"
+    }
+  ],
+  "formulas": [],
+  "examples": [],
+  "memory_aid": [
+    {
+      "en": "STATE → SET → SELECT → COMPUTE → COMPARE.",
+      "ar": "صِغ ← حدد ← اختر ← احسب ← قارن."
+    }
+  ],
+  "summary": {
+    "en": "Five steps, always in this order: state hypotheses; set alpha; select the test; compute the statistic and p-value; compare to alpha and decide. The procedure is universal across A/B tests, clinical trials, quality control, and any business experiment. Master the order before you worry about the math.",
+    "ar": "خمس خطوات بهذا الترتيب دائماً: صِغ الفرضيات؛ حدد ألفا؛ اختر الاختبار؛ احسب الإحصاء وقيمة p؛ قارن بألفا وقرر. الإجراء عالمى عبر اختبارات A/B والتجارب السريرية وضبط الجودة وأى تجربة أعمال. أتقن الترتيب قبل الرياضيات."
+  },
+  "quiz": [
+    {
+      "id": "M05-L02-Q1",
+      "topic": "M05-L02",
+      "type": "MCQ",
+      "q_en": "The first step in hypothesis testing is:",
+      "q_ar": "الخطوة الأولى فى اختبار الفرضيات:",
+      "opts_en": [
+        "Compute p-value",
+        "Set alpha",
+        "State H0 and Ha",
+        "Pick the test"
+      ],
+      "opts_ar": [
+        "احسب قيمة p",
+        "حدد ألفا",
+        "صِغ H0 و Ha",
+        "اختر الاختبار"
+      ],
+      "ans": "C",
+      "exp_en": "State hypotheses first.",
+      "exp_ar": "صياغة الفرضيات أولاً.",
+      "formula_used": ""
+    },
+    {
+      "id": "M05-L02-Q2",
+      "topic": "M05-L02",
+      "type": "MCQ",
+      "q_en": "The final step is:",
+      "q_ar": "الخطوة الأخيرة:",
+      "opts_en": [
+        "Set alpha",
+        "Compute p-value",
+        "Compare p to alpha and decide",
+        "Submit to a journal"
+      ],
+      "opts_ar": [
+        "حدد ألفا",
+        "احسب قيمة p",
+        "قارن p بألفا وقرر",
+        "قدّمها لمجلة"
+      ],
+      "ans": "C",
+      "exp_en": "The decision is the output.",
+      "exp_ar": "القرار هو المخرج.",
+      "formula_used": ""
+    },
+    {
+      "id": "M05-L02-Q3",
+      "topic": "M05-L02",
+      "type": "TrueFalse",
+      "q_en": "True or False: Alpha should be chosen after looking at the p-value.",
+      "q_ar": "صح أم خطأ: ألفا يُختار بعد النظر إلى قيمة p.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "Pre-commit to alpha. Otherwise it's p-hacking.",
+      "exp_ar": "ثبّت ألفا مسبقاً. وإلا فهو تلاعب.",
+      "formula_used": ""
+    },
+    {
+      "id": "M05-L02-Q4",
+      "topic": "M05-L02",
+      "type": "MCQ",
+      "q_en": "Step 4 produces:",
+      "q_ar": "الخطوة 4 تنتج:",
+      "opts_en": [
+        "A hypothesis",
+        "A test choice",
+        "A test statistic and p-value",
+        "A confidence interval only"
+      ],
+      "opts_ar": [
+        "فرضية",
+        "اختياراً للاختبار",
+        "إحصاء اختبار وقيمة p",
+        "فاصل ثقة فقط"
+      ],
+      "ans": "C",
+      "exp_en": "Compute the statistic and p-value before deciding.",
+      "exp_ar": "احسب الإحصاء وقيمة p قبل القرار.",
+      "formula_used": ""
+    },
+    {
+      "id": "M05-L02-Q5",
+      "topic": "M05-L02",
+      "type": "MCQ",
+      "q_en": "If p = 0.03 and alpha = 0.05, your decision is:",
+      "q_ar": "إذا p = 0.03 و ألفا = 0.05، قرارك:",
+      "opts_en": [
+        "Reject H0",
+        "Fail to reject H0",
+        "Re-run the test",
+        "Set new alpha"
+      ],
+      "opts_ar": [
+        "ارفض H0",
+        "لا ترفض H0",
+        "أعد التشغيل",
+        "ضع ألفا جديد"
+      ],
+      "ans": "A",
+      "exp_en": "p < alpha → reject H0.",
+      "exp_ar": "p < ألفا ← ارفض H0.",
+      "formula_used": ""
+    }
+  ],
+  "created": "2026-05-16"
+}

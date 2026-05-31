@@ -1,0 +1,169 @@
+{
+  "id": "M02-L07",
+  "module": 2,
+  "type": "lesson",
+  "title_en": "Business Intelligence vs Data Science",
+  "title_ar": "ذكاء الأعمال مقابل علم البيانات",
+  "objectives_en": [
+    "Distinguish the roles of BI analyst, ML specialist, and data scientist.",
+    "Understand where statistics fits in each role.",
+    "Set yourself up to grow across the skill spectrum."
+  ],
+  "objectives_ar": [
+    "التمييز بين أدوار محلل ذكاء الأعمال، أخصائى التعلم الآلى، وعالم البيانات.",
+    "فهم أين يقع الإحصاء فى كل دور.",
+    "تجهيز نفسك للنمو عبر طيف المهارات."
+  ],
+  "sources": [
+    "Slides PDF: page 16",
+    "Translation: ترجمة الشريحة.docx page 16"
+  ],
+  "sections": [
+    {
+      "key": "intro",
+      "title_en": "1 · A Spectrum, Not a Wall",
+      "title_ar": "1 · طيف لا جدار"
+    },
+    {
+      "key": "definitions",
+      "title_en": "2 · The Three Roles",
+      "title_ar": "2 · الأدوار الثلاثة"
+    },
+    {
+      "key": "concept",
+      "title_en": "3 · The Differentiator",
+      "title_ar": "3 · الفارق الجوهرى"
+    },
+    {
+      "key": "practice",
+      "title_en": "4 · A Career Roadmap",
+      "title_ar": "4 · خريطة طريق مهنية"
+    }
+  ],
+  "formulas": [],
+  "examples": [],
+  "memory_aid": [
+    {
+      "en": "BI describes. ML predicts at scale. Data Science wraps stats around context.",
+      "ar": "BI يصف. التعلم الآلى يتنبأ على نطاق واسع. علم البيانات يلفّ الإحصاء حول السياق."
+    }
+  ],
+  "summary": {
+    "en": "BI analysts, ML specialists, and data scientists all live on the same data spectrum. The defining skill of a data scientist is matching assumptions to tools. Whichever role you target, statistics is your foundation — and this course is precisely that foundation.",
+    "ar": "محللو BI، وأخصائيو التعلم الآلى، وعلماء البيانات يعيشون على نفس طيف البيانات. المهارة المميّزة لعالم البيانات هى مطابقة الافتراضات للأدوات. أياً كان الدور الذى تستهدفه، الإحصاء أساسك — وهذه الدورة هى ذلك الأساس بالضبط."
+  },
+  "quiz": [
+    {
+      "id": "M02-L07-Q1",
+      "topic": "M02-L07",
+      "type": "MCQ",
+      "q_en": "Building a real-time dashboard of yesterday's sales is the typical job of:",
+      "q_ar": "بناء لوحة بيانات فورية لمبيعات الأمس هو عمل اعتيادى لـ:",
+      "opts_en": [
+        "ML specialist",
+        "BI analyst",
+        "Hardware engineer",
+        "Database admin"
+      ],
+      "opts_ar": [
+        "أخصائى تعلم آلى",
+        "محلل BI",
+        "مهندس عتاد",
+        "مسؤول قاعدة بيانات"
+      ],
+      "ans": "B",
+      "exp_en": "Dashboards = descriptive reporting = BI.",
+      "exp_ar": "لوحات البيانات = تقارير وصفية = BI.",
+      "formula_used": ""
+    },
+    {
+      "id": "M02-L07-Q2",
+      "topic": "M02-L07",
+      "type": "MCQ",
+      "q_en": "Designing an A/B test, picking the test type, and defending the conclusion is the job of:",
+      "q_ar": "تصميم اختبار A/B، اختيار نوع الاختبار، والدفاع عن الاستنتاج هو عمل:",
+      "opts_en": [
+        "BI analyst alone",
+        "ML specialist alone",
+        "Data scientist",
+        "Sales manager"
+      ],
+      "opts_ar": [
+        "محلل BI فقط",
+        "أخصائى تعلم آلى فقط",
+        "عالم بيانات",
+        "مدير مبيعات"
+      ],
+      "ans": "C",
+      "exp_en": "This is the matching-assumptions-to-tools skill.",
+      "exp_ar": "هذه مهارة مطابقة الافتراضات بالأدوات.",
+      "formula_used": ""
+    },
+    {
+      "id": "M02-L07-Q3",
+      "topic": "M02-L07",
+      "type": "TrueFalse",
+      "q_en": "True or False: A data scientist doesn't need to know descriptive statistics.",
+      "q_ar": "صح أم خطأ: عالم البيانات لا يحتاج معرفة الإحصاء الوصفى.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "Descriptive stats are the foundation — you can't infer without first describing.",
+      "exp_ar": "الوصفى هو الأساس — لا يمكن الاستدلال دون وصف.",
+      "formula_used": ""
+    },
+    {
+      "id": "M02-L07-Q4",
+      "topic": "M02-L07",
+      "type": "MCQ",
+      "q_en": "Across the three roles, the COMMON foundation is:",
+      "q_ar": "عبر الأدوار الثلاثة، الأساس المشترك هو:",
+      "opts_en": [
+        "Python",
+        "Statistics",
+        "SQL",
+        "Tableau"
+      ],
+      "opts_ar": [
+        "بايثون",
+        "الإحصاء",
+        "SQL",
+        "Tableau"
+      ],
+      "ans": "B",
+      "exp_en": "Statistics underpins every analytical role.",
+      "exp_ar": "الإحصاء يقع تحت كل دور تحليلى.",
+      "formula_used": ""
+    },
+    {
+      "id": "M02-L07-Q5",
+      "topic": "M02-L07",
+      "type": "MCQ",
+      "q_en": "A small startup hires its first analyst. They will mostly do:",
+      "q_ar": "شركة ناشئة صغيرة توظف أول محلل لها. سيؤدى غالباً:",
+      "opts_en": [
+        "Descriptive stats and basic inference",
+        "Only build deep neural networks",
+        "Pure research papers",
+        "Nothing involving data"
+      ],
+      "opts_ar": [
+        "إحصاء وصفى واستدلال بسيط",
+        "بناء شبكات عصبية عميقة فقط",
+        "أوراق بحثية بحتة",
+        "لا شىء يتعلق بالبيانات"
+      ],
+      "ans": "A",
+      "exp_en": "Early stage = descriptive + light inference.",
+      "exp_ar": "المراحل الأولى = وصفى + استدلال خفيف.",
+      "formula_used": ""
+    }
+  ],
+  "created": "2026-05-16"
+}

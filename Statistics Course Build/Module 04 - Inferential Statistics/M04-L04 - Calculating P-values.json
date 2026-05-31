@@ -1,0 +1,178 @@
+{
+  "id": "M04-L04",
+  "module": 4,
+  "type": "lesson",
+  "title_en": "Calculating P-values",
+  "title_ar": "حساب قيم p",
+  "objectives_en": [
+    "Walk through a complete p-value calculation in a simple coin-flip scenario.",
+    "Understand the role of 'as extreme or more extreme' in the count.",
+    "Build intuition that you can extend to real tests."
+  ],
+  "objectives_ar": [
+    "المرور بحساب كامل لقيمة p فى سيناريو عملة بسيط.",
+    "فهم دور 'نفس التطرف أو أكثر' فى العدّ.",
+    "بناء حدس يمكنك مدّه للاختبارات الحقيقية."
+  ],
+  "sources": [
+    "04 Inferential Statistics/Calculating p-values.mp4",
+    "Slides PDF: pages 43-46"
+  ],
+  "sections": [
+    {
+      "key": "intro",
+      "title_en": "1 · The Coin-Flip Question",
+      "title_ar": "1 · سؤال العملة"
+    },
+    {
+      "key": "example",
+      "title_en": "2 · Worked Example - Step-by-Step",
+      "title_ar": "2 · مثال محلول - خطوة بخطوة"
+    },
+    {
+      "key": "interpret",
+      "title_en": "3 · The Course's Slide Example",
+      "title_ar": "3 · المثال من شرائح الدورة"
+    },
+    {
+      "key": "practice",
+      "title_en": "4 · From Coin to A/B Test",
+      "title_ar": "4 · من العملة إلى اختبار A/B"
+    },
+    {
+      "key": "traps",
+      "title_en": "5 · Common Traps",
+      "title_ar": "5 · الفخاخ الشائعة"
+    }
+  ],
+  "formulas": [],
+  "examples": [],
+  "memory_aid": [
+    {
+      "en": "P-value = P(your data or more extreme | H₀ true).",
+      "ar": "قيمة p = P(بياناتك أو أكثر تطرفاً | H₀ صحيحة)."
+    },
+    {
+      "en": "Two-tailed = both directions equally extreme. Decide before seeing the data!",
+      "ar": "ذيلَين = كلا الاتجاهَين بنفس التطرف. قرر قبل البيانات!"
+    }
+  ],
+  "summary": {
+    "en": "P-value calculation, at its heart, is a counting exercise: list all outcomes that are at least as extreme as yours under the null, sum their probabilities. The coin-flip example makes the logic concrete; the same logic — done by software — drives every real-world A/B test and clinical trial.",
+    "ar": "حساب قيمة p فى جوهره عملية عدّ: اذكر كل النتائج بنفس تطرف بياناتك أو أكثر تحت الصفرية، اجمع احتمالاتها. مثال العملة يجعل المنطق ملموساً؛ نفس المنطق — تنفّذه البرامج — يحرّك كل اختبار A/B وتجربة سريرية فى الواقع."
+  },
+  "quiz": [
+    {
+      "id": "M04-L04-Q1",
+      "topic": "M04-L04",
+      "type": "Calc",
+      "q_en": "Flipping a fair coin 4 times, exactly 4 heads. P-value (two-tailed)?",
+      "q_ar": "رمى عملة عادلة 4 مرات، 4 صور بالضبط. قيمة p (ذيلَين)؟",
+      "opts_en": [
+        "1/16",
+        "2/16",
+        "4/16",
+        "8/16"
+      ],
+      "opts_ar": [
+        "1/16",
+        "2/16",
+        "4/16",
+        "8/16"
+      ],
+      "ans": "B",
+      "exp_en": "2⁴=16 outcomes. P(4 heads) = 1/16. P(4 tails equally rare) = 1/16. Two-tail p = 2/16.",
+      "exp_ar": "2⁴=16 نتيجة. P(4 صور) = 1/16. P(4 شعار) = 1/16. p ذيلَين = 2/16.",
+      "formula_used": ""
+    },
+    {
+      "id": "M04-L04-Q2",
+      "topic": "M04-L04",
+      "type": "MCQ",
+      "q_en": "The 'as extreme as or more extreme than' rule matters because:",
+      "q_ar": "قاعدة 'بنفس التطرف أو أكثر' مهمة لأن:",
+      "opts_en": [
+        "Excel requires it",
+        "P-value summarises evidence about extreme outcomes, not just the exact one",
+        "It's tradition",
+        "To inflate the result"
+      ],
+      "opts_ar": [
+        "Excel يتطلبها",
+        "p تلخّص دليلاً على النتائج المتطرفة، لا الواحدة بالضبط",
+        "تقليد",
+        "لتضخيم النتيجة"
+      ],
+      "ans": "B",
+      "exp_en": "The tail-area concept defines p-value.",
+      "exp_ar": "مفهوم منطقة الذيل يعرّف قيمة p.",
+      "formula_used": ""
+    },
+    {
+      "id": "M04-L04-Q3",
+      "topic": "M04-L04",
+      "type": "MCQ",
+      "q_en": "One-tail vs two-tail decision should be made:",
+      "q_ar": "قرار ذيل واحد أم ذيلَين يجب أن يُتخذ:",
+      "opts_en": [
+        "After seeing the result",
+        "Before the experiment",
+        "Halfway through",
+        "Never matters"
+      ],
+      "opts_ar": [
+        "بعد رؤية النتيجة",
+        "قبل التجربة",
+        "فى المنتصف",
+        "لا يهم"
+      ],
+      "ans": "B",
+      "exp_en": "Pre-registration prevents p-hacking.",
+      "exp_ar": "التحديد المسبق يمنع التلاعب.",
+      "formula_used": ""
+    },
+    {
+      "id": "M04-L04-Q4",
+      "topic": "M04-L04",
+      "type": "TrueFalse",
+      "q_en": "True or False: A two-tail p-value is half a one-tail p-value, all else equal.",
+      "q_ar": "صح أم خطأ: قيمة p ذيلَين نصف قيمة الذيل الواحد، مع ثبات الباقى.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "Two-tail is approximately DOUBLE the one-tail (covers both extremes).",
+      "exp_ar": "ذيلَين تقريباً ضعف الذيل الواحد (يغطى كلا التطرّفَين).",
+      "formula_used": ""
+    },
+    {
+      "id": "M04-L04-Q5",
+      "topic": "M04-L04",
+      "type": "MCQ",
+      "q_en": "An online A/B test reports p = 0.024 (two-tail). At α = 0.05:",
+      "q_ar": "اختبار A/B عبر الإنترنت يبلغ p = 0.024 (ذيلَين). عند α = 0.05:",
+      "opts_en": [
+        "Fail to reject H₀",
+        "Reject H₀",
+        "Recalculate",
+        "Need more data"
+      ],
+      "opts_ar": [
+        "لا نرفض H₀",
+        "نرفض H₀",
+        "أعد الحساب",
+        "نحتاج بيانات أكثر"
+      ],
+      "ans": "B",
+      "exp_en": "p < α → reject 'no difference'.",
+      "exp_ar": "p < α ← ارفض 'لا فرق'.",
+      "formula_used": ""
+    }
+  ],
+  "created": "2026-05-16"
+}

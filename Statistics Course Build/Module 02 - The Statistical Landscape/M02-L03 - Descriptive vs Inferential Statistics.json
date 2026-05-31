@@ -1,0 +1,175 @@
+{
+  "id": "M02-L03",
+  "module": 2,
+  "type": "lesson",
+  "title_en": "Descriptive vs Inferential Statistics",
+  "title_ar": "الإحصاء الوصفى مقابل الاستدلالى",
+  "objectives_en": [
+    "Define descriptive and inferential statistics in plain words.",
+    "Pick the right family for any business question.",
+    "Avoid the classic mistake of confusing the two."
+  ],
+  "objectives_ar": [
+    "تعريف الإحصاء الوصفى والاستدلالى بكلمات بسيطة.",
+    "اختيار العائلة الصحيحة لأى سؤال أعمال.",
+    "تجنّب الخطأ الكلاسيكى فى الخلط بينهما."
+  ],
+  "sources": [
+    "02 The Statistical Landscape/Descriptive vs Inferential Statistics.mp4",
+    "Slides PDF: pages 9-11",
+    "Glossary: Descriptive Statistics, Inferential Statistics"
+  ],
+  "sections": [
+    {
+      "key": "intro",
+      "title_en": "1 · One Field, Two Families",
+      "title_ar": "1 · علم واحد، عائلتان"
+    },
+    {
+      "key": "definitions",
+      "title_en": "2 · Side-by-Side Comparison",
+      "title_ar": "2 · مقارنة جنباً إلى جنب"
+    },
+    {
+      "key": "example",
+      "title_en": "3 · Same Project, Different Questions",
+      "title_ar": "3 · نفس المشروع، أسئلة مختلفة"
+    },
+    {
+      "key": "practice",
+      "title_en": "4 · Where Each Lives in Business",
+      "title_ar": "4 · أين تعيش كل عائلة فى الأعمال"
+    },
+    {
+      "key": "traps",
+      "title_en": "5 · Common Traps",
+      "title_ar": "5 · الفخاخ الشائعة"
+    }
+  ],
+  "formulas": [],
+  "examples": [],
+  "memory_aid": [
+    {
+      "en": "Descriptive describes. Inferential infers. Description has no uncertainty; inference always does.",
+      "ar": "الوصفى يصف. الاستدلالى يستدل. الوصف لا يقين فيه، الاستدلال دائماً فيه عدم يقين."
+    }
+  ],
+  "summary": {
+    "en": "Descriptive statistics tell you what is — exact numbers from the data in your hands. Inferential statistics tell you what probably is — quantified guesses about a larger population. Most business questions need both: describe first, infer later.",
+    "ar": "الإحصاء الوصفى يخبرك بما هو موجود — أرقام مضبوطة من البيانات بين يديك. الاستدلالى يخبرك بما هو الأرجح — تخمينات مدروسة عن مجتمع أكبر. معظم أسئلة الأعمال تحتاج الاثنين: صف أولاً، استدل لاحقاً."
+  },
+  "quiz": [
+    {
+      "id": "M02-L03-Q1",
+      "topic": "M02-L03",
+      "type": "MCQ",
+      "q_en": "Calculating the average rating of 12 product reviews you have is:",
+      "q_ar": "حساب متوسط تقييم 12 مراجعة منتج بين يديك هو:",
+      "opts_en": [
+        "Inferential",
+        "Descriptive",
+        "Hypothesis testing",
+        "Forecasting"
+      ],
+      "opts_ar": [
+        "استدلالى",
+        "وصفى",
+        "اختبار فرضيات",
+        "تنبؤ"
+      ],
+      "ans": "B",
+      "exp_en": "Computing a number directly from your data is descriptive.",
+      "exp_ar": "حساب رقم مباشر من بياناتك وصفى.",
+      "formula_used": ""
+    },
+    {
+      "id": "M02-L03-Q2",
+      "topic": "M02-L03",
+      "type": "MCQ",
+      "q_en": "Estimating the true satisfaction of ALL customers from a 500-person survey is:",
+      "q_ar": "تقدير الرضا الحقيقى لكل العملاء من استطلاع 500 شخص هو:",
+      "opts_en": [
+        "Descriptive",
+        "Inferential",
+        "A KPI calculation",
+        "None of these"
+      ],
+      "opts_ar": [
+        "وصفى",
+        "استدلالى",
+        "حساب مؤشر أداء",
+        "لا شىء"
+      ],
+      "ans": "B",
+      "exp_en": "Going beyond your sample to a population is inference.",
+      "exp_ar": "تجاوز العينة إلى المجتمع هو استدلال.",
+      "formula_used": ""
+    },
+    {
+      "id": "M02-L03-Q3",
+      "topic": "M02-L03",
+      "type": "MCQ",
+      "q_en": "A dashboard tile showing 'Yesterday's revenue: $48,200' is:",
+      "q_ar": "بلاطة لوحة بيانات تعرض 'إيرادات الأمس: 48,200 دولار' هى:",
+      "opts_en": [
+        "Inferential",
+        "Descriptive",
+        "Predictive",
+        "Bayesian"
+      ],
+      "opts_ar": [
+        "استدلالى",
+        "وصفى",
+        "تنبؤى",
+        "بيزى"
+      ],
+      "ans": "B",
+      "exp_en": "Reporting a known total from data is descriptive.",
+      "exp_ar": "عرض إجمالى معروف من البيانات وصفى.",
+      "formula_used": ""
+    },
+    {
+      "id": "M02-L03-Q4",
+      "topic": "M02-L03",
+      "type": "MCQ",
+      "q_en": "A/B testing whether a new homepage increases conversion is:",
+      "q_ar": "اختبار A/B لمعرفة هل تزيد الصفحة الرئيسية الجديدة التحويل هو:",
+      "opts_en": [
+        "Descriptive",
+        "Inferential",
+        "Neither",
+        "Both descriptive and inferential"
+      ],
+      "opts_ar": [
+        "وصفى",
+        "استدلالى",
+        "لا واحد",
+        "الاثنان"
+      ],
+      "ans": "D",
+      "exp_en": "You describe each variant's conversion (descriptive) then test if the difference is real (inferential).",
+      "exp_ar": "تصف معدل التحويل لكل نسخة (وصفى) ثم تختبر هل الفرق حقيقى (استدلالى).",
+      "formula_used": ""
+    },
+    {
+      "id": "M02-L03-Q5",
+      "topic": "M02-L03",
+      "type": "TrueFalse",
+      "q_en": "True or False: Descriptive statistics involve uncertainty about a larger population.",
+      "q_ar": "صح أم خطأ: الإحصاء الوصفى يتضمن عدم يقين تجاه مجتمع أكبر.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "Descriptive stats compute exact values from data you already have — no uncertainty.",
+      "exp_ar": "الوصفى يحسب قيماً مضبوطة من بياناتك — لا عدم يقين.",
+      "formula_used": ""
+    }
+  ],
+  "created": "2026-05-16"
+}

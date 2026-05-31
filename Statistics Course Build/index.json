@@ -1,0 +1,1031 @@
+{
+  "course_id": "STATS-FUND",
+  "course_title_en": "Statistics Fundamentals",
+  "course_title_ar": "أساسيات الإحصاء",
+  "author": "Ahmed Abd El Tawab",
+  "generated": "2026-05-16",
+  "modules": [
+    {
+      "id": "M01",
+      "title_en": "Introduction",
+      "title_ar": "المقدمة",
+      "folder": "Module 01 - Introduction",
+      "lessons": [
+        {
+          "id": "M01-L01",
+          "title_en": "Course Introduction & Roadmap",
+          "title_ar": "مقدمة الدورة وخريطة الطريق",
+          "filename_docx": "M01-L01 - Course Introduction and Roadmap.docx",
+          "filename_json": "M01-L01 - Course Introduction and Roadmap.json",
+          "sections": [
+            "intro",
+            "definitions",
+            "concept",
+            "practice",
+            "traps"
+          ],
+          "n_formulas": 0,
+          "n_examples": 0,
+          "n_memory": 2,
+          "n_quiz": 5,
+          "sources": [
+            "Folder: 01 Introduction/Course Introduction.mp4",
+            "Slides PDF: pages 1–4",
+            "Translation: ترجمة الشريحة.docx pages 1–4",
+            "OpenStax: Chapter 1.1 — Definitions of Statistics"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M02",
+      "title_en": "The Statistical Landscape",
+      "title_ar": "المشهد الإحصائى",
+      "folder": "Module 02 - The Statistical Landscape",
+      "lessons": [
+        {
+          "id": "M02-L01",
+          "title_en": "Chapter Introduction - The Statistical Landscape",
+          "title_ar": "مقدمة الفصل - المشهد الإحصائى",
+          "filename_docx": "M02-L01 - Chapter Introduction - The Statistical Landscape.docx",
+          "filename_json": "M02-L01 - Chapter Introduction - The Statistical Landscape.json",
+          "sections": [
+            "intro",
+            "concept",
+            "practice"
+          ],
+          "n_formulas": 0,
+          "n_examples": 0,
+          "n_memory": 1,
+          "n_quiz": 5,
+          "sources": [
+            "Folder: 02 The Statistical Landscape/Chapter Introduction.mp4",
+            "Slides PDF: pages 3-4",
+            "Translation: ترجمة الشريحة.docx pages 3-4",
+            "OpenStax: Chapter 1.1"
+          ]
+        },
+        {
+          "id": "M02-L02",
+          "title_en": "The Anatomy of a Data Set",
+          "title_ar": "تشريح مجموعة البيانات",
+          "filename_docx": "M02-L02 - The Anatomy of a Data Set.docx",
+          "filename_json": "M02-L02 - The Anatomy of a Data Set.json",
+          "sections": [
+            "intro",
+            "definitions",
+            "concept",
+            "example",
+            "traps",
+            "practice"
+          ],
+          "n_formulas": 0,
+          "n_examples": 0,
+          "n_memory": 2,
+          "n_quiz": 5,
+          "sources": [
+            "02 The Statistical Landscape/The Anatomy of a Data Set.mp4",
+            "Slides PDF: pages 5-8",
+            "Translation: ترجمة الشريحة.docx pages 5-8"
+          ]
+        },
+        {
+          "id": "M02-L03",
+          "title_en": "Descriptive vs Inferential Statistics",
+          "title_ar": "الإحصاء الوصفى مقابل الاستدلالى",
+          "filename_docx": "M02-L03 - Descriptive vs Inferential Statistics.docx",
+          "filename_json": "M02-L03 - Descriptive vs Inferential Statistics.json",
+          "sections": [
+            "intro",
+            "definitions",
+            "example",
+            "practice",
+            "traps"
+          ],
+          "n_formulas": 0,
+          "n_examples": 0,
+          "n_memory": 1,
+          "n_quiz": 5,
+          "sources": [
+            "02 The Statistical Landscape/Descriptive vs Inferential Statistics.mp4",
+            "Slides PDF: pages 9-11",
+            "Glossary: Descriptive Statistics, Inferential Statistics"
+          ]
+        },
+        {
+          "id": "M02-L04",
+          "title_en": "Approaches to Inferring Probability",
+          "title_ar": "مناهج الاستدلال الاحتمالى",
+          "filename_docx": "M02-L04 - Approaches to Inferring Probability.docx",
+          "filename_json": "M02-L04 - Approaches to Inferring Probability.json",
+          "sections": [
+            "intro",
+            "formulas",
+            "example",
+            "practice",
+            "traps"
+          ],
+          "n_formulas": 3,
+          "n_examples": 0,
+          "n_memory": 1,
+          "n_quiz": 5,
+          "sources": [
+            "02 The Statistical Landscape/Approaches to Inferring Probability.mp4",
+            "Slides PDF: pages 12-13",
+            "Glossary: Bayesian"
+          ]
+        },
+        {
+          "id": "M02-L05",
+          "title_en": "Assumptions in Inferential Statistics",
+          "title_ar": "الافتراضات فى الإحصاء الاستدلالى",
+          "filename_docx": "M02-L05 - Assumptions in Inferential Statistics.docx",
+          "filename_json": "M02-L05 - Assumptions in Inferential Statistics.json",
+          "sections": [
+            "intro",
+            "example",
+            "concept",
+            "practice",
+            "traps"
+          ],
+          "n_formulas": 0,
+          "n_examples": 0,
+          "n_memory": 1,
+          "n_quiz": 5,
+          "sources": [
+            "02 The Statistical Landscape/Assumptions in Inferential Statistics.mp4",
+            "Slides PDF: page 13"
+          ]
+        },
+        {
+          "id": "M02-L06",
+          "title_en": "The Flowchart - Analysis Selection",
+          "title_ar": "مخطط اختيار التحليل",
+          "filename_docx": "M02-L06 - The Flowchart - Analysis Selection.docx",
+          "filename_json": "M02-L06 - The Flowchart - Analysis Selection.json",
+          "sections": [
+            "intro",
+            "concept",
+            "example",
+            "practice",
+            "traps"
+          ],
+          "n_formulas": 0,
+          "n_examples": 0,
+          "n_memory": 1,
+          "n_quiz": 5,
+          "sources": [
+            "02 The Statistical Landscape/The Flow Chart.mp4",
+            "Slides PDF: pages 14-15"
+          ]
+        },
+        {
+          "id": "M02-L07",
+          "title_en": "Business Intelligence vs Data Science",
+          "title_ar": "ذكاء الأعمال مقابل علم البيانات",
+          "filename_docx": "M02-L07 - Business Intelligence vs Data Science.docx",
+          "filename_json": "M02-L07 - Business Intelligence vs Data Science.json",
+          "sections": [
+            "intro",
+            "definitions",
+            "concept",
+            "practice"
+          ],
+          "n_formulas": 0,
+          "n_examples": 0,
+          "n_memory": 1,
+          "n_quiz": 5,
+          "sources": [
+            "Slides PDF: page 16",
+            "Translation: ترجمة الشريحة.docx page 16"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M03",
+      "title_en": "Descriptive Statistics",
+      "title_ar": "الإحصاء الوصفى",
+      "folder": "Module 03 - Descriptive Statistics",
+      "lessons": [
+        {
+          "id": "M03-L01",
+          "title_en": "Chapter Introduction - Descriptive Statistics",
+          "title_ar": "مقدمة الفصل - الإحصاء الوصفى",
+          "filename_docx": "M03-L01 - Chapter Introduction - Descriptive Statistics.docx",
+          "filename_json": "M03-L01 - Chapter Introduction - Descriptive Statistics.json",
+          "sections": [
+            "intro",
+            "definitions",
+            "practice"
+          ],
+          "n_formulas": 0,
+          "n_examples": 0,
+          "n_memory": 1,
+          "n_quiz": 5,
+          "sources": [
+            "03 Descriptive Statistics/Chapter Introduction.mp4",
+            "Slides PDF: pages 17-19",
+            "Translation: ترجمة الشريحة.docx pages 17-19",
+            "Excel: 02 - Descriptive Statistics.xlsx"
+          ]
+        },
+        {
+          "id": "M03-L02",
+          "title_en": "Measures of Central Tendency",
+          "title_ar": "مقاييس النزعة المركزية",
+          "filename_docx": "M03-L02 - Measures of Central Tendency.docx",
+          "filename_json": "M03-L02 - Measures of Central Tendency.json",
+          "sections": [
+            "intro",
+            "definitions",
+            "formulas",
+            "example",
+            "interpret",
+            "traps",
+            "practice"
+          ],
+          "n_formulas": 2,
+          "n_examples": 0,
+          "n_memory": 3,
+          "n_quiz": 5,
+          "sources": [
+            "03 Descriptive Statistics/Measures of Central Tendency.mp4",
+            "Slides PDF: page 20",
+            "Glossary: Mean, Median, Mode",
+            "OpenStax: 2.5 Measures of the Center of the Data"
+          ]
+        },
+        {
+          "id": "M03-L03",
+          "title_en": "Measures of Dispersion - Range and Quartiles",
+          "title_ar": "مقاييس التشتت - المدى والربيعيات",
+          "filename_docx": "M03-L03 - Measures of Dispersion - Range and Quartiles.docx",
+          "filename_json": "M03-L03 - Measures of Dispersion - Range and Quartiles.json",
+          "sections": [
+            "intro",
+            "definitions",
+            "formulas",
+            "example",
+            "practice",
+            "traps"
+          ],
+          "n_formulas": 3,
+          "n_examples": 0,
+          "n_memory": 2,
+          "n_quiz": 5,
+          "sources": [
+            "03 Descriptive Statistics/Measures of Dispersion.mp4",
+            "Slides PDF: pages 21-23",
+            "Glossary: Range, Standard Deviation"
+          ]
+        },
+        {
+          "id": "M03-L04",
+          "title_en": "Variance and Standard Deviation",
+          "title_ar": "التباين والانحراف المعيارى",
+          "filename_docx": "M03-L04 - Variance and Standard Deviation.docx",
+          "filename_json": "M03-L04 - Variance and Standard Deviation.json",
+          "sections": [
+            "intro",
+            "formulas",
+            "concept",
+            "example",
+            "interpret",
+            "practice",
+            "traps"
+          ],
+          "n_formulas": 3,
+          "n_examples": 0,
+          "n_memory": 3,
+          "n_quiz": 5,
+          "sources": [
+            "03 Descriptive Statistics/Measures of Dispersion.mp4",
+            "Slides PDF: pages 24-25",
+            "Glossary: Standard Deviation",
+            "OpenStax: 2.7 Measures of the Spread of the Data"
+          ]
+        },
+        {
+          "id": "M03-L05",
+          "title_en": "The Normal Distribution",
+          "title_ar": "التوزيع الطبيعى",
+          "filename_docx": "M03-L05 - The Normal Distribution.docx",
+          "filename_json": "M03-L05 - The Normal Distribution.json",
+          "sections": [
+            "intro",
+            "definitions",
+            "formulas",
+            "example",
+            "practice",
+            "traps"
+          ],
+          "n_formulas": 2,
+          "n_examples": 0,
+          "n_memory": 2,
+          "n_quiz": 5,
+          "sources": [
+            "03 Descriptive Statistics/Normal Distribution.mp4",
+            "Slides PDF: pages 26-27",
+            "Glossary: Normal Distribution",
+            "OpenStax: Chapter 6"
+          ]
+        },
+        {
+          "id": "M03-L06",
+          "title_en": "Kurtosis",
+          "title_ar": "التفرطح",
+          "filename_docx": "M03-L06 - Kurtosis.docx",
+          "filename_json": "M03-L06 - Kurtosis.json",
+          "sections": [
+            "intro",
+            "definitions",
+            "example",
+            "practice",
+            "traps"
+          ],
+          "n_formulas": 1,
+          "n_examples": 0,
+          "n_memory": 1,
+          "n_quiz": 5,
+          "sources": [
+            "03 Descriptive Statistics/Kurtosis.mp4",
+            "Slides PDF: page 28",
+            "Glossary: Kurtosis"
+          ]
+        },
+        {
+          "id": "M03-L07",
+          "title_en": "Asymmetric Distributions and Skewness",
+          "title_ar": "التوزيعات غير المتماثلة والالتواء",
+          "filename_docx": "M03-L07 - Asymmetric Distributions and Skewness.docx",
+          "filename_json": "M03-L07 - Asymmetric Distributions and Skewness.json",
+          "sections": [
+            "intro",
+            "definitions",
+            "formulas",
+            "example",
+            "practice",
+            "traps"
+          ],
+          "n_formulas": 1,
+          "n_examples": 0,
+          "n_memory": 3,
+          "n_quiz": 5,
+          "sources": [
+            "03 Descriptive Statistics/Asymmetric (and Other) Distributions.mp4",
+            "Slides PDF: pages 29-30",
+            "Glossary: Asymmetric, Skewness"
+          ]
+        },
+        {
+          "id": "M03-L08",
+          "title_en": "Excel Workshop - Univariate Analysis",
+          "title_ar": "ورشة Excel - التحليل أحادى المتغير",
+          "filename_docx": "M03-L08 - Excel Workshop - Univariate Analysis.docx",
+          "filename_json": "M03-L08 - Excel Workshop - Univariate Analysis.json",
+          "sections": [
+            "intro",
+            "concept",
+            "example",
+            "interpret",
+            "practice"
+          ],
+          "n_formulas": 0,
+          "n_examples": 0,
+          "n_memory": 1,
+          "n_quiz": 5,
+          "sources": [
+            "03 Descriptive Statistics/Excel - Univariate Analysis.mp4 (×5 parts)",
+            "Workbook: 02 - Descriptive Statistics.xlsx",
+            "Solution: 02 - Complete - Descriptive Statistics.xlsx"
+          ]
+        },
+        {
+          "id": "M03-L09",
+          "title_en": "Univariate vs Bivariate Analysis",
+          "title_ar": "التحليل أحادى ومثنوى المتغير",
+          "filename_docx": "M03-L09 - Univariate vs Bivariate Analysis.docx",
+          "filename_json": "M03-L09 - Univariate vs Bivariate Analysis.json",
+          "sections": [
+            "intro",
+            "definitions",
+            "practice",
+            "concept"
+          ],
+          "n_formulas": 0,
+          "n_examples": 0,
+          "n_memory": 1,
+          "n_quiz": 5,
+          "sources": [
+            "03 Descriptive Statistics/Univariate vs Bivariate.mp4",
+            "Slides PDF: page 31"
+          ]
+        },
+        {
+          "id": "M03-L10",
+          "title_en": "Correlation and the Correlation Coefficient",
+          "title_ar": "الارتباط ومعامل الارتباط",
+          "filename_docx": "M03-L10 - Correlation and the Correlation Coefficient.docx",
+          "filename_json": "M03-L10 - Correlation and the Correlation Coefficient.json",
+          "sections": [
+            "intro",
+            "definitions",
+            "concept",
+            "example",
+            "traps",
+            "practice"
+          ],
+          "n_formulas": 1,
+          "n_examples": 0,
+          "n_memory": 3,
+          "n_quiz": 5,
+          "sources": [
+            "03 Descriptive Statistics/Correlation.mp4",
+            "Slides PDF: pages 32-33",
+            "Glossary: Correlation, Correlation coefficient"
+          ]
+        },
+        {
+          "id": "M03-L11",
+          "title_en": "Simple Linear Regression",
+          "title_ar": "الانحدار الخطى البسيط",
+          "filename_docx": "M03-L11 - Simple Linear Regression.docx",
+          "filename_json": "M03-L11 - Simple Linear Regression.json",
+          "sections": [
+            "intro",
+            "formulas",
+            "example",
+            "practice",
+            "traps"
+          ],
+          "n_formulas": 3,
+          "n_examples": 0,
+          "n_memory": 2,
+          "n_quiz": 5,
+          "sources": [
+            "03 Descriptive Statistics/Simple Linear Regression.mp4",
+            "Slides PDF: page 34",
+            "Glossary: Regression Analysis, Coefficient",
+            "OpenStax: Chapter 12"
+          ]
+        },
+        {
+          "id": "M03-L12",
+          "title_en": "Excel Workshop - Bivariate Analysis",
+          "title_ar": "ورشة Excel - التحليل ثنائى المتغير",
+          "filename_docx": "M03-L12 - Excel Workshop - Bivariate Analysis.docx",
+          "filename_json": "M03-L12 - Excel Workshop - Bivariate Analysis.json",
+          "sections": [
+            "intro",
+            "concept",
+            "interpret",
+            "practice",
+            "formulas"
+          ],
+          "n_formulas": 0,
+          "n_examples": 0,
+          "n_memory": 1,
+          "n_quiz": 5,
+          "sources": [
+            "03 Descriptive Statistics/Excel - Bivariate Analysis.mp4",
+            "Workbook: 02 - Descriptive Statistics.xlsx (Bivariate sheet)",
+            "Solution: 02 - Complete - Descriptive Statistics.xlsx"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M04",
+      "title_en": "Inferential Statistics",
+      "title_ar": "الإحصاء الاستدلالى",
+      "folder": "Module 04 - Inferential Statistics",
+      "lessons": [
+        {
+          "id": "M04-L01",
+          "title_en": "Chapter Introduction - Inferential Statistics",
+          "title_ar": "مقدمة الفصل - الإحصاء الاستدلالى",
+          "filename_docx": "M04-L01 - Chapter Introduction - Inferential Statistics.docx",
+          "filename_json": "M04-L01 - Chapter Introduction - Inferential Statistics.json",
+          "sections": [
+            "intro",
+            "concept",
+            "practice"
+          ],
+          "n_formulas": 0,
+          "n_examples": 0,
+          "n_memory": 1,
+          "n_quiz": 5,
+          "sources": [
+            "04 Inferential Statistics/Chapter Introduction - Inferential Statistics.mp4",
+            "Slides PDF: page 36"
+          ]
+        },
+        {
+          "id": "M04-L02",
+          "title_en": "Populations and Samples",
+          "title_ar": "المجتمعات والعينات",
+          "filename_docx": "M04-L02 - Populations and Samples.docx",
+          "filename_json": "M04-L02 - Populations and Samples.json",
+          "sections": [
+            "intro",
+            "definitions",
+            "concept",
+            "example",
+            "practice",
+            "traps"
+          ],
+          "n_formulas": 0,
+          "n_examples": 0,
+          "n_memory": 2,
+          "n_quiz": 5,
+          "sources": [
+            "04 Inferential Statistics/Population & Samples.mp4",
+            "Slides PDF: pages 37-38"
+          ]
+        },
+        {
+          "id": "M04-L03",
+          "title_en": "P-values - The Concept",
+          "title_ar": "قيم p - المفهوم",
+          "filename_docx": "M04-L03 - P-values - The Concept.docx",
+          "filename_json": "M04-L03 - P-values - The Concept.json",
+          "sections": [
+            "intro",
+            "concept",
+            "example",
+            "traps",
+            "practice"
+          ],
+          "n_formulas": 0,
+          "n_examples": 0,
+          "n_memory": 3,
+          "n_quiz": 5,
+          "sources": [
+            "04 Inferential Statistics/P-values.mp4",
+            "Slides PDF: pages 39-42",
+            "Glossary: P Value"
+          ]
+        },
+        {
+          "id": "M04-L04",
+          "title_en": "Calculating P-values",
+          "title_ar": "حساب قيم p",
+          "filename_docx": "M04-L04 - Calculating P-values.docx",
+          "filename_json": "M04-L04 - Calculating P-values.json",
+          "sections": [
+            "intro",
+            "example",
+            "interpret",
+            "practice",
+            "traps"
+          ],
+          "n_formulas": 0,
+          "n_examples": 0,
+          "n_memory": 2,
+          "n_quiz": 5,
+          "sources": [
+            "04 Inferential Statistics/Calculating p-values.mp4",
+            "Slides PDF: pages 43-46"
+          ]
+        },
+        {
+          "id": "M04-L05",
+          "title_en": "Alphas and Confidence Levels",
+          "title_ar": "ألفا ومستويات الثقة",
+          "filename_docx": "M04-L05 - Alphas and Confidence Levels.docx",
+          "filename_json": "M04-L05 - Alphas and Confidence Levels.json",
+          "sections": [
+            "intro",
+            "definitions",
+            "concept",
+            "example",
+            "practice",
+            "traps"
+          ],
+          "n_formulas": 1,
+          "n_examples": 0,
+          "n_memory": 2,
+          "n_quiz": 5,
+          "sources": [
+            "04 Inferential Statistics/Alphas & Confidence Levels.mp4",
+            "Slides PDF: pages 47-48",
+            "Glossary: Alpha, Confidence Level"
+          ]
+        },
+        {
+          "id": "M04-L06",
+          "title_en": "Proving a Difference vs Rejecting No Difference",
+          "title_ar": "إثبات الفرق مقابل رفض عدم الفرق",
+          "filename_docx": "M04-L06 - Proving a Difference vs Rejecting No Difference.docx",
+          "filename_json": "M04-L06 - Proving a Difference vs Rejecting No Difference.json",
+          "sections": [
+            "intro",
+            "concept",
+            "example",
+            "traps",
+            "practice"
+          ],
+          "n_formulas": 0,
+          "n_examples": 0,
+          "n_memory": 2,
+          "n_quiz": 5,
+          "sources": [
+            "04 Inferential Statistics/Proving a Difference vs Rejecting No Difference.mp4",
+            "Slides PDF: pages 49-52"
+          ]
+        },
+        {
+          "id": "M04-L07",
+          "title_en": "Determining Sample Size",
+          "title_ar": "تحديد حجم العينة",
+          "filename_docx": "M04-L07 - Determining Sample Size.docx",
+          "filename_json": "M04-L07 - Determining Sample Size.json",
+          "sections": [
+            "intro",
+            "definitions",
+            "formulas",
+            "example",
+            "practice",
+            "traps"
+          ],
+          "n_formulas": 1,
+          "n_examples": 0,
+          "n_memory": 2,
+          "n_quiz": 5,
+          "sources": [
+            "04 Inferential Statistics/Determining Sample Size.mp4",
+            "Slides PDF: page 54",
+            "Glossary: Sample Size"
+          ]
+        },
+        {
+          "id": "M04-L08",
+          "title_en": "The Law of Large Numbers",
+          "title_ar": "قانون الأعداد الكبيرة",
+          "filename_docx": "M04-L08 - The Law of Large Numbers.docx",
+          "filename_json": "M04-L08 - The Law of Large Numbers.json",
+          "sections": [
+            "intro",
+            "formulas",
+            "example",
+            "practice",
+            "traps"
+          ],
+          "n_formulas": 1,
+          "n_examples": 0,
+          "n_memory": 2,
+          "n_quiz": 5,
+          "sources": [
+            "04 Inferential Statistics/Law of Large Numbers.mp4",
+            "04 Inferential Statistics/Excel - Law of Large Numbers.mp4",
+            "Slides PDF: pages 55-56",
+            "Workbook: 03 - CLT & LLN.xlsx"
+          ]
+        },
+        {
+          "id": "M04-L09",
+          "title_en": "The Central Limit Theorem",
+          "title_ar": "نظرية النهاية المركزية",
+          "filename_docx": "M04-L09 - The Central Limit Theorem.docx",
+          "filename_json": "M04-L09 - The Central Limit Theorem.json",
+          "sections": [
+            "intro",
+            "formulas",
+            "example",
+            "practice",
+            "interpret",
+            "definitions",
+            "traps"
+          ],
+          "n_formulas": 2,
+          "n_examples": 0,
+          "n_memory": 3,
+          "n_quiz": 5,
+          "sources": [
+            "04 Inferential Statistics/Central Limit Theorem.mp4",
+            "04 Inferential Statistics/Excel - Central Limit Theorem.mp4",
+            "Slides PDF: pages 57-60",
+            "Glossary: Central Limit Theorem",
+            "Workbook: 03 - CLT & LLN.xlsx"
+          ]
+        },
+        {
+          "id": "M04-L10",
+          "title_en": "Controlling for Bias in Sampling",
+          "title_ar": "التحكم فى التحيز فى أخذ العينات",
+          "filename_docx": "M04-L10 - Controlling for Bias in Sampling.docx",
+          "filename_json": "M04-L10 - Controlling for Bias in Sampling.json",
+          "sections": [
+            "intro",
+            "definitions",
+            "concept",
+            "example",
+            "practice",
+            "traps"
+          ],
+          "n_formulas": 0,
+          "n_examples": 0,
+          "n_memory": 2,
+          "n_quiz": 5,
+          "sources": [
+            "04 Inferential Statistics/Controlling for Bias.mp4",
+            "Slides PDF: pages 61-63"
+          ]
+        },
+        {
+          "id": "TEST-L99",
+          "title_en": "Test Title",
+          "title_ar": "عنوان",
+          "filename_docx": "TEST-L99 - Test Title.docx",
+          "filename_json": "TEST-L99 - Test Title.json",
+          "sections": [],
+          "n_formulas": 0,
+          "n_examples": 0,
+          "n_memory": 0,
+          "n_quiz": 0,
+          "sources": []
+        }
+      ]
+    },
+    {
+      "id": "M05",
+      "title_en": "Hypothesis Testing",
+      "title_ar": "اختبار الفرضيات",
+      "folder": "Module 05 - Hypothesis Testing",
+      "lessons": [
+        {
+          "id": "M05-L01",
+          "title_en": "Chapter Introduction - Hypothesis Testing",
+          "title_ar": "مقدمة الفصل - اختبار الفرضيات",
+          "filename_docx": "M05-L01 - Chapter Introduction - Hypothesis Testing.docx",
+          "filename_json": "M05-L01 - Chapter Introduction - Hypothesis Testing.json",
+          "sections": [
+            "intro",
+            "example",
+            "concept"
+          ],
+          "n_formulas": 0,
+          "n_examples": 0,
+          "n_memory": 1,
+          "n_quiz": 5,
+          "sources": [
+            "05 Hypothesis Testing/Chapter Introduction.mp4",
+            "Slides PDF: pages 65-67",
+            "Glossary: Hypothesis Testing"
+          ]
+        },
+        {
+          "id": "M05-L02",
+          "title_en": "The 5 Steps of Hypothesis Testing",
+          "title_ar": "الخمس خطوات لاختبار الفرضيات",
+          "filename_docx": "M05-L02 - The 5 Steps of Hypothesis Testing.docx",
+          "filename_json": "M05-L02 - The 5 Steps of Hypothesis Testing.json",
+          "sections": [
+            "intro",
+            "definitions",
+            "example",
+            "traps",
+            "practice"
+          ],
+          "n_formulas": 0,
+          "n_examples": 0,
+          "n_memory": 1,
+          "n_quiz": 5,
+          "sources": [
+            "05 Hypothesis Testing/Hypothesis Testing Steps.mp4",
+            "Slides PDF: page 68"
+          ]
+        },
+        {
+          "id": "M05-L03",
+          "title_en": "Stating the Hypothesis",
+          "title_ar": "صياغة الفرضيات",
+          "filename_docx": "M05-L03 - Stating the Hypothesis.docx",
+          "filename_json": "M05-L03 - Stating the Hypothesis.json",
+          "sections": [
+            "intro",
+            "definitions",
+            "example",
+            "concept",
+            "traps",
+            "practice"
+          ],
+          "n_formulas": 0,
+          "n_examples": 0,
+          "n_memory": 2,
+          "n_quiz": 5,
+          "sources": [
+            "05 Hypothesis Testing/Stating the Hypothesis.mp4",
+            "Slides PDF: page 69",
+            "Glossary: Null Hypothesis, Alternative hypothesis"
+          ]
+        },
+        {
+          "id": "M05-L04",
+          "title_en": "Setting the Alpha and Confidence Level",
+          "title_ar": "ضبط ألفا ومستوى الثقة",
+          "filename_docx": "M05-L04 - Setting the Alpha and Confidence Level.docx",
+          "filename_json": "M05-L04 - Setting the Alpha and Confidence Level.json",
+          "sections": [
+            "intro",
+            "definitions",
+            "example",
+            "practice",
+            "traps"
+          ],
+          "n_formulas": 0,
+          "n_examples": 0,
+          "n_memory": 2,
+          "n_quiz": 5,
+          "sources": [
+            "05 Hypothesis Testing/Setting the Alpha & Confidence Level.mp4",
+            "Slides PDF: page 70"
+          ]
+        },
+        {
+          "id": "M05-L05",
+          "title_en": "Selecting the Hypothesis Test",
+          "title_ar": "اختيار الاختبار",
+          "filename_docx": "M05-L05 - Selecting the Hypothesis Test.docx",
+          "filename_json": "M05-L05 - Selecting the Hypothesis Test.json",
+          "sections": [
+            "intro",
+            "definitions",
+            "example",
+            "traps",
+            "practice"
+          ],
+          "n_formulas": 0,
+          "n_examples": 0,
+          "n_memory": 1,
+          "n_quiz": 5,
+          "sources": [
+            "05 Hypothesis Testing/Selecting the Hypothesis Test.mp4",
+            "Slides PDF: pages 71-72"
+          ]
+        },
+        {
+          "id": "M05-L06",
+          "title_en": "Running a Two-Tailed Hypothesis Test",
+          "title_ar": "تشغيل اختبار فرضيات ذيلَين",
+          "filename_docx": "M05-L06 - Running a Two-Tailed Hypothesis Test.docx",
+          "filename_json": "M05-L06 - Running a Two-Tailed Hypothesis Test.json",
+          "sections": [
+            "intro",
+            "example",
+            "interpret",
+            "practice"
+          ],
+          "n_formulas": 1,
+          "n_examples": 0,
+          "n_memory": 2,
+          "n_quiz": 5,
+          "sources": [
+            "05 Hypothesis Testing/Running a Two-Tailed Hypothesis Test.mp4",
+            "Slides PDF: page 71-72",
+            "Workbook: 04 - Hypothesis Testing.xlsx (Two-Tail sheet)"
+          ]
+        },
+        {
+          "id": "M05-L07",
+          "title_en": "The One-Tailed Test",
+          "title_ar": "اختبار ذيل واحد",
+          "filename_docx": "M05-L07 - The One-Tailed Test.docx",
+          "filename_json": "M05-L07 - The One-Tailed Test.json",
+          "sections": [
+            "intro",
+            "example",
+            "definitions",
+            "practice",
+            "traps"
+          ],
+          "n_formulas": 0,
+          "n_examples": 0,
+          "n_memory": 2,
+          "n_quiz": 5,
+          "sources": [
+            "05 Hypothesis Testing/One-Tailed Test.mp4",
+            "Slides PDF: pages 73-74"
+          ]
+        },
+        {
+          "id": "M05-L08",
+          "title_en": "Running a One-Tailed Hypothesis Test",
+          "title_ar": "تشغيل اختبار فرضيات ذيل واحد",
+          "filename_docx": "M05-L08 - Running a One-Tailed Hypothesis Test.docx",
+          "filename_json": "M05-L08 - Running a One-Tailed Hypothesis Test.json",
+          "sections": [
+            "intro",
+            "example",
+            "interpret",
+            "practice"
+          ],
+          "n_formulas": 0,
+          "n_examples": 0,
+          "n_memory": 2,
+          "n_quiz": 5,
+          "sources": [
+            "05 Hypothesis Testing/Running a One-Tailed Hypothesis Test.mp4",
+            "Workbook: 04 - Hypothesis Testing.xlsx (One-Tail sheet)"
+          ]
+        },
+        {
+          "id": "M05-L09",
+          "title_en": "Errors in Hypothesis Testing",
+          "title_ar": "الأخطاء فى اختبار الفرضيات",
+          "filename_docx": "M05-L09 - Errors in Hypothesis Testing.docx",
+          "filename_json": "M05-L09 - Errors in Hypothesis Testing.json",
+          "sections": [
+            "intro",
+            "definitions",
+            "formulas",
+            "example",
+            "concept",
+            "practice",
+            "traps"
+          ],
+          "n_formulas": 3,
+          "n_examples": 0,
+          "n_memory": 3,
+          "n_quiz": 5,
+          "sources": [
+            "05 Hypothesis Testing/Errors in Hypothesis Testing.mp4",
+            "Slides PDF: pages 75-78",
+            "Glossary: False Negative"
+          ]
+        },
+        {
+          "id": "M05-L10",
+          "title_en": "Reporting the Results",
+          "title_ar": "إعداد التقرير",
+          "filename_docx": "M05-L10 - Reporting the Results.docx",
+          "filename_json": "M05-L10 - Reporting the Results.json",
+          "sections": [
+            "intro",
+            "definitions",
+            "example",
+            "traps",
+            "practice"
+          ],
+          "n_formulas": 0,
+          "n_examples": 0,
+          "n_memory": 3,
+          "n_quiz": 5,
+          "sources": [
+            "05 Hypothesis Testing/Reporting the Results.mp4",
+            "Slides PDF: page 79"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M06",
+      "title_en": "Conclusion",
+      "title_ar": "الخلاصة",
+      "folder": "Module 06 - Conclusion",
+      "lessons": [
+        {
+          "id": "M06-L01",
+          "title_en": "Course Summary and the Statistical Toolbox",
+          "title_ar": "ملخص الدورة وصندوق الأدوات الإحصائية",
+          "filename_docx": "M06-L01 - Course Summary and the Statistical Toolbox.docx",
+          "filename_json": "M06-L01 - Course Summary and the Statistical Toolbox.json",
+          "sections": [
+            "intro",
+            "concept",
+            "example",
+            "interpret",
+            "practice",
+            "traps",
+            "summary"
+          ],
+          "n_formulas": 0,
+          "n_examples": 0,
+          "n_memory": 5,
+          "n_quiz": 5,
+          "sources": [
+            "06 Conclusion/Course Summary.mp4",
+            "Slides PDF: page 80 (Chapter Review)"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M07",
+      "title_en": "Question Bank",
+      "title_ar": "بنك الأسئلة",
+      "folder": "Module 07 - Question Bank",
+      "lessons": []
+    }
+  ],
+  "stats": {
+    "modules": 6,
+    "lessons": 42,
+    "sections": 213,
+    "examples": 0,
+    "memory_aids": 78,
+    "quiz_questions": 205,
+    "formulas": 28
+  }
+}

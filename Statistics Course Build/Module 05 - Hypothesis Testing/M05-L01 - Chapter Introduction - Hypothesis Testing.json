@@ -1,0 +1,165 @@
+{
+  "id": "M05-L01",
+  "module": 5,
+  "type": "lesson",
+  "title_en": "Chapter Introduction - Hypothesis Testing",
+  "title_ar": "مقدمة الفصل - اختبار الفرضيات",
+  "objectives_en": [
+    "Understand what hypothesis testing is and when to use it.",
+    "Connect this module to the previous one (p-values, alpha).",
+    "Recognise hypothesis testing as the formal workhorse of business inference."
+  ],
+  "objectives_ar": [
+    "فهم ما هو اختبار الفرضيات ومتى يُستخدم.",
+    "ربط هذا الموديول بسابقه (قيم p، ألفا).",
+    "إدراك أن اختبار الفرضيات هو الأداة الرسمية للاستدلال فى الأعمال."
+  ],
+  "sources": [
+    "05 Hypothesis Testing/Chapter Introduction.mp4",
+    "Slides PDF: pages 65-67",
+    "Glossary: Hypothesis Testing"
+  ],
+  "sections": [
+    {
+      "key": "intro",
+      "title_en": "1 · The Formal Procedure",
+      "title_ar": "1 · الإجراء الرسمى"
+    },
+    {
+      "key": "example",
+      "title_en": "2 · The Running Example",
+      "title_ar": "2 · المثال المرجعى"
+    },
+    {
+      "key": "concept",
+      "title_en": "3 · Roadmap of the Module",
+      "title_ar": "3 · خريطة الموديول"
+    }
+  ],
+  "formulas": [],
+  "examples": [],
+  "memory_aid": [
+    {
+      "en": "Hypothesis testing = the formal procedure that turns data into a defensible decision.",
+      "ar": "اختبار الفرضيات = الإجراء الرسمى الذى يحوّل البيانات إلى قرار مدعوم."
+    }
+  ],
+  "summary": {
+    "en": "Hypothesis testing wraps everything you learned in Module 04 into one ten-step workflow. The same procedure powers A/B testing, clinical trials, quality control, and business experimentation. By the end of this module you will write hypotheses, choose tests, compute p-values, and report results to a non-statistical audience with confidence.",
+    "ar": "اختبار الفرضيات يدمج كل ما تعلمته فى الموديول السابق فى سير عمل واحد. نفس الإجراء يحرّك اختبارات A/B، والتجارب السريرية، وضبط الجودة، وتجارب الأعمال. بنهاية هذا الموديول ستكتب الفرضيات، تختار الاختبار، تحسب قيمة p، وتُبلّغ النتائج لجمهور غير متخصص بثقة."
+  },
+  "quiz": [
+    {
+      "id": "M05-L01-Q1",
+      "topic": "M05-L01",
+      "type": "MCQ",
+      "q_en": "Hypothesis testing is best described as:",
+      "q_ar": "اختبار الفرضيات يوصف أفضل بأنه:",
+      "opts_en": [
+        "A guessing game",
+        "A formal procedure to decide if an effect is real",
+        "A type of regression",
+        "Pure intuition"
+      ],
+      "opts_ar": [
+        "لعبة تخمين",
+        "إجراء رسمى لتحديد هل التأثير حقيقى",
+        "نوع من الانحدار",
+        "حدس بحت"
+      ],
+      "ans": "B",
+      "exp_en": "The formal-procedure framing is the right one.",
+      "exp_ar": "صياغة 'إجراء رسمى' هى الصحيحة.",
+      "formula_used": ""
+    },
+    {
+      "id": "M05-L01-Q2",
+      "topic": "M05-L01",
+      "type": "MCQ",
+      "q_en": "Which is NOT typically a hypothesis-testing scenario?",
+      "q_ar": "أى مما يلى ليس عادة سيناريو اختبار فرضيات؟",
+      "opts_en": [
+        "A/B testing a website",
+        "Clinical trial of a drug",
+        "Quality control on a production line",
+        "Calculating monthly KPIs"
+      ],
+      "opts_ar": [
+        "اختبار A/B لموقع",
+        "تجربة دواء سريرية",
+        "ضبط جودة على خط إنتاج",
+        "حساب مؤشرات الأداء الشهرية"
+      ],
+      "ans": "D",
+      "exp_en": "Calculating KPIs is descriptive; testing if they changed is inferential.",
+      "exp_ar": "حساب المؤشرات وصفى؛ اختبار هل تغيّرت استدلالى.",
+      "formula_used": ""
+    },
+    {
+      "id": "M05-L01-Q3",
+      "topic": "M05-L01",
+      "type": "TrueFalse",
+      "q_en": "True or False: Hypothesis testing eliminates uncertainty.",
+      "q_ar": "صح أم خطأ: اختبار الفرضيات يلغى عدم اليقين.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "It QUANTIFIES uncertainty (via p and alpha), it doesn't eliminate it.",
+      "exp_ar": "يُقيس عدم اليقين، لا يلغيه.",
+      "formula_used": ""
+    },
+    {
+      "id": "M05-L01-Q4",
+      "topic": "M05-L01",
+      "type": "MCQ",
+      "q_en": "The five-step procedure starts with:",
+      "q_ar": "الإجراء الخماسى يبدأ بـ:",
+      "opts_en": [
+        "Calculate p-value",
+        "State hypotheses",
+        "Set alpha",
+        "Pick the test"
+      ],
+      "opts_ar": [
+        "احسب قيمة p",
+        "صِغ الفرضيات",
+        "حدد ألفا",
+        "اختر الاختبار"
+      ],
+      "ans": "B",
+      "exp_en": "You can't compute anything until you write H₀ and Hₐ.",
+      "exp_ar": "لا تحسب شيئاً قبل كتابة H₀ و Hₐ.",
+      "formula_used": ""
+    },
+    {
+      "id": "M05-L01-Q5",
+      "topic": "M05-L01",
+      "type": "MCQ",
+      "q_en": "In the warranty example, what's the underlying business question?",
+      "q_ar": "فى مثال الضمان، ما السؤال التجارى الأساسى؟",
+      "opts_en": [
+        "How many vacuums to sell",
+        "Which warranty produces a different revenue per customer",
+        "How long warranties last",
+        "Price of vacuums"
+      ],
+      "opts_ar": [
+        "كم عدد المكانس للبيع",
+        "أى ضمان ينتج إيراداً مختلفاً لكل عميل",
+        "مدة الضمانات",
+        "سعر المكانس"
+      ],
+      "ans": "B",
+      "exp_en": "Does warranty A vs B vs none drive different revenue per customer?",
+      "exp_ar": "هل الضمان A مقابل B مقابل لا شىء يحرّك إيراداً مختلفاً؟",
+      "formula_used": ""
+    }
+  ],
+  "created": "2026-05-16"
+}

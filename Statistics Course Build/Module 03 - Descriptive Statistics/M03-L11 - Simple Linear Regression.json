@@ -1,0 +1,211 @@
+{
+  "id": "M03-L11",
+  "module": 3,
+  "type": "lesson",
+  "title_en": "Simple Linear Regression",
+  "title_ar": "الانحدار الخطى البسيط",
+  "objectives_en": [
+    "Write and interpret the regression equation Y = mX + b.",
+    "Distinguish the dependent variable Y from independent variable X.",
+    "Use regression to make basic business predictions."
+  ],
+  "objectives_ar": [
+    "كتابة وتفسير معادلة الانحدار Y = mX + b.",
+    "التمييز بين المتغير التابع Y والمستقل X.",
+    "استخدام الانحدار للتنبؤ فى الأعمال."
+  ],
+  "sources": [
+    "03 Descriptive Statistics/Simple Linear Regression.mp4",
+    "Slides PDF: page 34",
+    "Glossary: Regression Analysis, Coefficient",
+    "OpenStax: Chapter 12"
+  ],
+  "sections": [
+    {
+      "key": "intro",
+      "title_en": "1 · From Correlation to Prediction",
+      "title_ar": "1 · من الارتباط إلى التنبؤ"
+    },
+    {
+      "key": "formulas",
+      "title_en": "2 · The Equation Y = mX + b",
+      "title_ar": "2 · المعادلة Y = mX + b"
+    },
+    {
+      "key": "example",
+      "title_en": "3 · Worked Example - Umbrellas vs Rain",
+      "title_ar": "3 · مثال محلول - المظلات والمطر"
+    },
+    {
+      "key": "practice",
+      "title_en": "4 · Business Uses",
+      "title_ar": "4 · استخدامات أعمال"
+    },
+    {
+      "key": "traps",
+      "title_en": "5 · Common Traps",
+      "title_ar": "5 · الفخاخ الشائعة"
+    }
+  ],
+  "formulas": [
+    {
+      "id": "F-M03-L11-01",
+      "name_en": "Regression line",
+      "name_ar": "خط الانحدار",
+      "expr": "Y = m·X + b",
+      "where_en": "Predicted Y from X",
+      "where_ar": "Y المتنبأ به من X",
+      "when_en": "Predicting a numeric outcome from one numeric predictor.",
+      "when_ar": "التنبؤ بنتيجة رقمية من منبئ رقمى."
+    },
+    {
+      "id": "F-M03-L11-02",
+      "name_en": "Slope",
+      "name_ar": "الميل",
+      "expr": "m = r · (s_y / sₓ)",
+      "where_en": "r is correlation",
+      "where_ar": "r هو الارتباط",
+      "when_en": "Computing slope from correlation and std devs.",
+      "when_ar": "حساب الميل من الارتباط والانحرافات."
+    },
+    {
+      "id": "F-M03-L11-03",
+      "name_en": "Intercept",
+      "name_ar": "نقطة التقاطع",
+      "expr": "b = ȳ − m · x̄",
+      "where_en": "Passes through (x̄, ȳ)",
+      "where_ar": "يمرّ بـ (x̄, ȳ)",
+      "when_en": "Completes the line equation.",
+      "when_ar": "يكمل معادلة الخط."
+    }
+  ],
+  "examples": [],
+  "memory_aid": [
+    {
+      "en": "Y = mX + b. m = slope. b = intercept. Use it to predict.",
+      "ar": "Y = mX + b. m = الميل. b = التقاطع. استخدمها للتنبؤ."
+    },
+    {
+      "en": "Don't extrapolate beyond the data you fitted.",
+      "ar": "لا تستقرئ خارج البيانات التى استخدمتها للتركيب."
+    }
+  ],
+  "summary": {
+    "en": "Simple linear regression fits a straight line Y = mX + b that best summarises a linear relationship between two numeric variables. The slope m quantifies how Y responds to X; the intercept b gives the baseline. Regression is the workhorse of business prediction — sales, demand, churn — but it works only when a line really fits the data, and only inside the observed X range.",
+    "ar": "الانحدار الخطى البسيط يلائم خطاً Y = mX + b يلخّص علاقة خطية بين متغيرَين رقمَيين. الميل m يقيس كم يستجيب Y لـ X؛ التقاطع b يعطى الأساس. الانحدار حصان عمل التنبؤ فى الأعمال — مبيعات، طلب، مغادرة — لكنه يعمل فقط حين يلائم الخط حقاً، وداخل نطاق X المرصود."
+  },
+  "quiz": [
+    {
+      "id": "M03-L11-Q1",
+      "topic": "M03-L11",
+      "type": "MCQ",
+      "q_en": "In Y = mX + b, which is the slope?",
+      "q_ar": "فى Y = mX + b، أيهما الميل؟",
+      "opts_en": [
+        "Y",
+        "X",
+        "m",
+        "b"
+      ],
+      "opts_ar": [
+        "Y",
+        "X",
+        "m",
+        "b"
+      ],
+      "ans": "C",
+      "exp_en": "m is slope; b is intercept.",
+      "exp_ar": "m الميل، b التقاطع.",
+      "formula_used": ""
+    },
+    {
+      "id": "M03-L11-Q2",
+      "topic": "M03-L11",
+      "type": "Calc",
+      "q_en": "Y = 5X + 10. Predict Y when X = 4.",
+      "q_ar": "Y = 5X + 10. توقع Y حين X = 4.",
+      "opts_en": [
+        "20",
+        "30",
+        "50",
+        "14"
+      ],
+      "opts_ar": [
+        "20",
+        "30",
+        "50",
+        "14"
+      ],
+      "ans": "B",
+      "exp_en": "5·4 + 10 = 30.",
+      "exp_ar": "5·4 + 10 = 30.",
+      "formula_used": "Y = mX + b"
+    },
+    {
+      "id": "M03-L11-Q3",
+      "topic": "M03-L11",
+      "type": "MCQ",
+      "q_en": "A regression of sales (Y) on ads (X) gives m = 8 (in units of sales per $1000 ad spend). Interpretation:",
+      "q_ar": "انحدار مبيعات (Y) على إعلانات (X) يعطى m = 8 (وحدة مبيعات لكل ألف دولار). التفسير:",
+      "opts_en": [
+        "Every $1000 in ads adds 8 sales (on average)",
+        "Every sale generates $8000 in ads",
+        "Slope means nothing",
+        "Sales fall 8 per ad dollar"
+      ],
+      "opts_ar": [
+        "كل ألف دولار يضيف 8 مبيعات (وسطياً)",
+        "كل بيع يولّد 8000 دولار إعلانات",
+        "الميل لا يعنى شيئاً",
+        "المبيعات تنخفض 8 لكل دولار"
+      ],
+      "ans": "A",
+      "exp_en": "Slope = average change in Y per +1 of X.",
+      "exp_ar": "الميل = متوسط التغير فى Y لكل +1 من X.",
+      "formula_used": ""
+    },
+    {
+      "id": "M03-L11-Q4",
+      "topic": "M03-L11",
+      "type": "MCQ",
+      "q_en": "Why is extrapolation outside the data range dangerous?",
+      "q_ar": "لماذا يعتبر الاستقراء خارج نطاق البيانات خطراً؟",
+      "opts_en": [
+        "It always works",
+        "The linear relationship may not hold outside the observed range",
+        "It's against the law",
+        "Excel can't do it"
+      ],
+      "opts_ar": [
+        "يعمل دائماً",
+        "قد لا تستمر العلاقة الخطية خارج النطاق",
+        "ضد القانون",
+        "Excel لا يستطيع"
+      ],
+      "ans": "B",
+      "exp_en": "The line was fitted within a range; outside, the world may behave differently.",
+      "exp_ar": "الخط رُكِّب داخل نطاق؛ خارجه قد يتغير العالم.",
+      "formula_used": ""
+    },
+    {
+      "id": "M03-L11-Q5",
+      "topic": "M03-L11",
+      "type": "TrueFalse",
+      "q_en": "True or False: r and the regression slope m always have the same sign.",
+      "q_ar": "صح أم خطأ: r و الميل m لهما نفس الإشارة دائماً.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "A",
+      "exp_en": "m = r · (s_y/sₓ). Since std devs are positive, sign(m) = sign(r).",
+      "exp_ar": "m = r · (s_y/sₓ). الانحرافات موجبة، فإشارة m = إشارة r.",
+      "formula_used": ""
+    }
+  ],
+  "created": "2026-05-16"
+}

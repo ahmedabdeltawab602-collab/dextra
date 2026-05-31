@@ -1,0 +1,195 @@
+{
+  "id": "M04-L05",
+  "module": 4,
+  "type": "lesson",
+  "title_en": "Alphas and Confidence Levels",
+  "title_ar": "ألفا ومستويات الثقة",
+  "objectives_en": [
+    "Define alpha (α) and confidence level.",
+    "Pick a sensible alpha for different business stakes.",
+    "Connect alpha to Type I error risk."
+  ],
+  "objectives_ar": [
+    "تعريف ألفا (α) ومستوى الثقة.",
+    "اختيار ألفا مناسب حسب أهمية القرار التجارى.",
+    "ربط ألفا بمخاطر الخطأ من النوع الأول."
+  ],
+  "sources": [
+    "04 Inferential Statistics/Alphas & Confidence Levels.mp4",
+    "Slides PDF: pages 47-48",
+    "Glossary: Alpha, Confidence Level"
+  ],
+  "sections": [
+    {
+      "key": "intro",
+      "title_en": "1 · Drawing the Line",
+      "title_ar": "1 · رسم الخط"
+    },
+    {
+      "key": "definitions",
+      "title_en": "2 · Common Alpha Values",
+      "title_ar": "2 · قيم ألفا الشائعة"
+    },
+    {
+      "key": "concept",
+      "title_en": "3 · The Trade-off",
+      "title_ar": "3 · المقايضة"
+    },
+    {
+      "key": "example",
+      "title_en": "4 · Worked Example - The Fertiliser Test",
+      "title_ar": "4 · مثال محلول - اختبار السماد"
+    },
+    {
+      "key": "practice",
+      "title_en": "5 · Choosing α by Stakes",
+      "title_ar": "5 · اختيار ألفا حسب الأهمية"
+    },
+    {
+      "key": "traps",
+      "title_en": "6 · Common Trap",
+      "title_ar": "6 · فخّ شائع"
+    }
+  ],
+  "formulas": [
+    {
+      "id": "F-M04-L05-01",
+      "name_en": "Alpha-confidence relation",
+      "name_ar": "علاقة ألفا والثقة",
+      "expr": "Confidence = 1 − α",
+      "where_en": "α is the chosen significance threshold",
+      "where_ar": "α هو حد الدلالة المختار",
+      "when_en": "Setting decision rule before testing.",
+      "when_ar": "عند وضع قاعدة القرار قبل الاختبار."
+    }
+  ],
+  "examples": [],
+  "memory_aid": [
+    {
+      "en": "Alpha = threshold for rejecting H₀. Confidence = 1 − alpha.",
+      "ar": "ألفا = حد رفض H₀. الثقة = 1 − ألفا."
+    },
+    {
+      "en": "Smaller α → fewer false positives, but harder to detect real effects.",
+      "ar": "ألفا أصغر ← أخطاء كاذبة أقل، لكن أصعب كشف الحقيقى."
+    }
+  ],
+  "summary": {
+    "en": "Alpha is the threshold below which p-values lead you to reject H₀; confidence level is its complement (1 − α). Pick α to match the cost of being wrong: 0.05 for everyday business, 0.01 or stricter for high-stakes decisions. Most importantly, fix α BEFORE looking at the data — otherwise statistics becomes storytelling.",
+    "ar": "ألفا هو الحد الذى إذا كانت قيمة p تحته نرفض H₀؛ مستوى الثقة هو مكمّله (1 − α). اختر ألفا بما يطابق تكلفة الخطأ: 0.05 لأعمال يومية، 0.01 أو أصرم لقرارات حرجة. والأهم: ثبّت ألفا قبل النظر إلى البيانات — وإلا تحوّل الإحصاء إلى حكاية."
+  },
+  "quiz": [
+    {
+      "id": "M04-L05-Q1",
+      "topic": "M04-L05",
+      "type": "Calc",
+      "q_en": "If α = 0.05, the confidence level is:",
+      "q_ar": "إذا كان α = 0.05، فإن مستوى الثقة:",
+      "opts_en": [
+        "5%",
+        "50%",
+        "95%",
+        "99%"
+      ],
+      "opts_ar": [
+        "5%",
+        "50%",
+        "95%",
+        "99%"
+      ],
+      "ans": "C",
+      "exp_en": "1 - 0.05 = 0.95 = 95%.",
+      "exp_ar": "1 - 0.05 = 0.95 = 95%.",
+      "formula_used": ""
+    },
+    {
+      "id": "M04-L05-Q2",
+      "topic": "M04-L05",
+      "type": "MCQ",
+      "q_en": "Alpha is the probability of:",
+      "q_ar": "ألفا هو احتمال:",
+      "opts_en": [
+        "Type I error (false positive)",
+        "Type II error",
+        "Being correct",
+        "Effect size"
+      ],
+      "opts_ar": [
+        "خطأ من النوع الأول (إيجابى كاذب)",
+        "النوع الثانى",
+        "صواب الاستنتاج",
+        "حجم التأثير"
+      ],
+      "ans": "A",
+      "exp_en": "α controls false-positive rate.",
+      "exp_ar": "ألفا يضبط معدل الإيجابى الكاذب.",
+      "formula_used": ""
+    },
+    {
+      "id": "M04-L05-Q3",
+      "topic": "M04-L05",
+      "type": "MCQ",
+      "q_en": "For a medical trial deciding if a new drug is safe, the best alpha is probably:",
+      "q_ar": "لتجربة طبية تقرر سلامة دواء جديد، أفضل ألفا غالباً:",
+      "opts_en": [
+        "0.10",
+        "0.05",
+        "0.01 or stricter",
+        "Doesn't matter"
+      ],
+      "opts_ar": [
+        "0.10",
+        "0.05",
+        "0.01 أو أصرم",
+        "لا يهم"
+      ],
+      "ans": "C",
+      "exp_en": "High stakes → demand stronger evidence.",
+      "exp_ar": "قرار حرج ← يتطلب دليلاً أقوى.",
+      "formula_used": ""
+    },
+    {
+      "id": "M04-L05-Q4",
+      "topic": "M04-L05",
+      "type": "TrueFalse",
+      "q_en": "True or False: You should choose alpha after seeing p-value to maximise your chance of finding an effect.",
+      "q_ar": "صح أم خطأ: يجب اختيار ألفا بعد رؤية قيمة p لتعظيم فرصة العثور على تأثير.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "That's p-hacking. Pre-commit to alpha.",
+      "exp_ar": "هذا تلاعب. ثبّت ألفا مسبقاً.",
+      "formula_used": ""
+    },
+    {
+      "id": "M04-L05-Q5",
+      "topic": "M04-L05",
+      "type": "MCQ",
+      "q_en": "P-value = 0.07, alpha = 0.05. Decision:",
+      "q_ar": "قيمة p = 0.07، ألفا = 0.05. القرار:",
+      "opts_en": [
+        "Reject H₀",
+        "Fail to reject H₀",
+        "Modify alpha to 0.10",
+        "Conclude H₀ is true"
+      ],
+      "opts_ar": [
+        "ارفض H₀",
+        "لا ترفض H₀",
+        "غيّر ألفا إلى 0.10",
+        "استنتج أن H₀ صحيحة"
+      ],
+      "ans": "B",
+      "exp_en": "p > α → not enough evidence to reject. Note: 'fail to reject' is NOT 'accept'.",
+      "exp_ar": "p > α ← لا دليل كاف للرفض. ملاحظة: 'عدم الرفض' ليس 'القبول'.",
+      "formula_used": ""
+    }
+  ],
+  "created": "2026-05-16"
+}

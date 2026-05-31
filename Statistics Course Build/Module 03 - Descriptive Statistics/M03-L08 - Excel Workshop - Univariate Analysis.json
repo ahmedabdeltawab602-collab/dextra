@@ -1,0 +1,175 @@
+{
+  "id": "M03-L08",
+  "module": 3,
+  "type": "lesson",
+  "title_en": "Excel Workshop - Univariate Analysis",
+  "title_ar": "ورشة Excel - التحليل أحادى المتغير",
+  "objectives_en": [
+    "Run a full univariate descriptive analysis in Excel.",
+    "Use the Data Analysis ToolPak to get all measures in one shot.",
+    "Read the output: mean, median, std dev, kurtosis, skewness."
+  ],
+  "objectives_ar": [
+    "تشغيل تحليل وصفى أحادى المتغير كامل فى Excel.",
+    "استخدام Data Analysis ToolPak للحصول على كل المقاييس مرة واحدة.",
+    "قراءة المخرجات: المتوسط، الوسيط، الانحراف، التفرطح، الالتواء."
+  ],
+  "sources": [
+    "03 Descriptive Statistics/Excel - Univariate Analysis.mp4 (×5 parts)",
+    "Workbook: 02 - Descriptive Statistics.xlsx",
+    "Solution: 02 - Complete - Descriptive Statistics.xlsx"
+  ],
+  "sections": [
+    {
+      "key": "intro",
+      "title_en": "1 · The Tool You're About to Master",
+      "title_ar": "1 · الأداة التى ستتقنها"
+    },
+    {
+      "key": "concept",
+      "title_en": "2 · Step-by-Step Workflow",
+      "title_ar": "2 · سير العمل خطوة بخطوة"
+    },
+    {
+      "key": "example",
+      "title_en": "3 · Reading the Output",
+      "title_ar": "3 · قراءة المخرجات"
+    },
+    {
+      "key": "interpret",
+      "title_en": "4 · The Story the Numbers Tell",
+      "title_ar": "4 · القصة التى ترويها الأرقام"
+    },
+    {
+      "key": "practice",
+      "title_en": "5 · Bring This Anywhere",
+      "title_ar": "5 · طبّقها فى أى مكان"
+    }
+  ],
+  "formulas": [],
+  "examples": [],
+  "memory_aid": [
+    {
+      "en": "ToolPak → Descriptive Statistics → one click = full univariate report.",
+      "ar": "ToolPak ← Descriptive Statistics ← نقرة واحدة = تقرير كامل أحادى المتغير."
+    }
+  ],
+  "summary": {
+    "en": "Excel's Data Analysis ToolPak runs a complete univariate descriptive analysis in seconds. The output gives you mean, median, std dev, skewness, kurtosis and more — everything from this module's previous lessons in one table. Practise on the course workbook, then bring the workflow to your own data.",
+    "ar": "Data Analysis ToolPak فى Excel ينفّذ تحليلاً وصفياً أحادى المتغير كاملاً فى ثوانٍ. المخرجات تعطيك المتوسط والوسيط والانحراف والالتواء والتفرطح وأكثر — كل ما سبق فى دروس هذا الموديول فى جدول واحد. تدرّب على ملف الدورة، ثم انقل سير العمل إلى بياناتك."
+  },
+  "quiz": [
+    {
+      "id": "M03-L08-Q1",
+      "topic": "M03-L08",
+      "type": "MCQ",
+      "q_en": "Excel function for sample standard deviation:",
+      "q_ar": "دالة Excel للانحراف المعيارى للعينة:",
+      "opts_en": [
+        "=STDEV.P",
+        "=STDEV.S",
+        "=STD",
+        "=DEVSQ"
+      ],
+      "opts_ar": [
+        "=STDEV.P",
+        "=STDEV.S",
+        "=STD",
+        "=DEVSQ"
+      ],
+      "ans": "B",
+      "exp_en": "STDEV.S divides by n−1 (sample). STDEV.P uses N (population).",
+      "exp_ar": "STDEV.S يقسم على n−1. STDEV.P على N.",
+      "formula_used": ""
+    },
+    {
+      "id": "M03-L08-Q2",
+      "topic": "M03-L08",
+      "type": "MCQ",
+      "q_en": "To enable Data Analysis ToolPak you go to:",
+      "q_ar": "لتفعيل Data Analysis ToolPak تذهب إلى:",
+      "opts_en": [
+        "Insert > Add-ins",
+        "File > Options > Add-ins > Excel Add-ins > Go",
+        "Home > Conditional Formatting",
+        "Data > PivotTable"
+      ],
+      "opts_ar": [
+        "إدراج > الإضافات",
+        "ملف > خيارات > الإضافات > إضافات Excel > انتقل",
+        "الصفحة الرئيسية > التنسيق الشرطى",
+        "البيانات > Pivot"
+      ],
+      "ans": "B",
+      "exp_en": "File → Options → Add-ins is the path.",
+      "exp_ar": "ملف ← خيارات ← الإضافات هو المسار.",
+      "formula_used": ""
+    },
+    {
+      "id": "M03-L08-Q3",
+      "topic": "M03-L08",
+      "type": "MCQ",
+      "q_en": "In the S&P 500 daily returns: kurtosis = 11.83. This tells you:",
+      "q_ar": "فى العوائد اليومية لـ S&P 500: التفرطح = 11.83. يخبرك أن:",
+      "opts_en": [
+        "Returns are perfectly Normal",
+        "Returns have very fat tails (extreme events more common than Normal)",
+        "There is no risk",
+        "Variance is zero"
+      ],
+      "opts_ar": [
+        "العوائد طبيعية تماماً",
+        "العوائد لها ذيول سمينة جداً (تطرف أكثر من الطبيعى)",
+        "لا توجد مخاطرة",
+        "التباين صفر"
+      ],
+      "ans": "B",
+      "exp_en": "Excess kurtosis far above 0 = fat tails = real-world tail risk.",
+      "exp_ar": "تفرطح زائد >> 0 = ذيول سمينة = مخاطر ذيول.",
+      "formula_used": ""
+    },
+    {
+      "id": "M03-L08-Q4",
+      "topic": "M03-L08",
+      "type": "Calc",
+      "q_en": "To compute the 95th percentile of values in A2:A100, use:",
+      "q_ar": "لحساب الربيع الـ 95 لقيم A2:A100، استخدم:",
+      "opts_en": [
+        "=PERCENTILE.INC(A2:A100, 95)",
+        "=PERCENTILE.INC(A2:A100, 0.95)",
+        "=QUARTILE(A2:A100, 95)",
+        "=MEAN(A2:A100)"
+      ],
+      "opts_ar": [
+        "=PERCENTILE.INC(A2:A100, 95)",
+        "=PERCENTILE.INC(A2:A100, 0.95)",
+        "=QUARTILE(A2:A100, 95)",
+        "=MEAN(A2:A100)"
+      ],
+      "ans": "B",
+      "exp_en": "Percentile argument is a decimal between 0 and 1.",
+      "exp_ar": "معامل الربيع رقم عشرى بين 0 و 1.",
+      "formula_used": ""
+    },
+    {
+      "id": "M03-L08-Q5",
+      "topic": "M03-L08",
+      "type": "TrueFalse",
+      "q_en": "True or False: STDEV.P and STDEV.S give the same result.",
+      "q_ar": "صح أم خطأ: STDEV.P و STDEV.S يعطيان نفس النتيجة.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "P divides by N, S divides by n−1 — slightly different.",
+      "exp_ar": "P يقسم على N، S على n−1 — مختلفان قليلاً.",
+      "formula_used": ""
+    }
+  ],
+  "created": "2026-05-16"
+}

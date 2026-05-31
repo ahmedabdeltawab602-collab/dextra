@@ -1,0 +1,20 @@
+{
+  "id": "TEST-L99",
+  "module": 4,
+  "type": "lesson",
+  "title_en": "Test Title",
+  "title_ar": "عنوان",
+  "objectives_en": [],
+  "objectives_ar": [],
+  "sources": [],
+  "sections": [],
+  "formulas": [],
+  "examples": [],
+  "memory_aid": [],
+  "summary": {
+    "en": "",
+    "ar": ""
+  },
+  "quiz": [],
+  "created": "2026-05-16"
+}

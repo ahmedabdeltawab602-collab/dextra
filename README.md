@@ -9,14 +9,24 @@
 
 **🇦🇷 العربية:** [README.ar.md](README.ar.md) — هذا الملف بالعربية.
 
-`dextra` gives you three small, focused helpers for the first ten minutes
-of any data-analysis workflow:
+`dextra` is a choice-first toolkit for the whole exploratory workflow. Every
+function follows one contract: **one line of code -> a rich numeric table + a
+multi-panel figure + a one-sentence `Decision:`**. It currently ships **48
+public functions** across six modules:
 
-| Function | What it does |
-|---|---|
-| `describe_numeric` | A richer version of `df.describe()` with IQR, outlier counts, skew/kurtosis, and formatted output. |
-| `plot_histograms` | One matplotlib figure per DataFrame, with histogram + KDE on the left and the full stats panel on the right. |
-| `plot_boxplots` | Stacked horizontal Plotly box-plots with annotated statistics — interactive, good for reports. |
+| Module | Functions | What it covers |
+|---|---|---|
+| `stats` / `plots` | `describe_numeric`, `plot_histograms`, `plot_boxplots` | Foundational EDA: rich summaries and better default plots. |
+| `stats_advanced` | 22 functions (z-scores, skewness, correlation, SLR, CIs, t-tests, ANOVA, chi-square, VIF, class imbalance, ...) | Descriptive, bivariate, inference, hypothesis tests and ML diagnostics. |
+| `cleaning` | 10 functions (`clean_report`, `na_show`/`na_fix`, `dedupe`, `clip_outliers`, ...) | Data-quality auditing and cleaning across the DAMA-DMBOK stages. |
+| `features` | 8 functions (`transform`, `scale`, `bin`, `encode`, `dtfeats`, `cross`, `aggfeat`, `featpipe`) | Leakage-safe feature engineering with a fit/apply contract. |
+| `selection` | 5 functions (`redundancy`, `relevance`, `importance`, `rfe`, `selectpipe`) | Filter / Embedded / Wrapper feature selection, leakage-safe. |
+
+Run `dx.functions()` to print the whole public API with one-line summaries.
+Most functions expose a `method='compare'` mode that ranks every option and
+**decides nothing for you**, and a `fit/apply` mode (via a `params` dict) that
+learns on training data and replays verbatim on held-out data -- the safeguard
+against data leakage.
 
 ---
 
@@ -85,14 +95,14 @@ to export to Excel, CSV, or do further math.
 
 ## API reference
 
-### `describe_numeric(df, cols=None, decimals=2, df_name=None, iqr_multiplier=1.5, metrics_as_rows=True, show=True, return_df=False, raw=False)`
+### `describe_numeric(df, cols=None, decimals=2, df_name=None, iqr_multiplier=1.5, ddof=1, metrics_as_rows=True, show=True, return_df=False, raw=False)`
 
 Return a rich numeric summary. 21 metrics per column: mean, std, var,
 coefficient of variation, min, Q1, median, mean-vs-median gap, Q3, max,
 IQR, Tukey lower/upper bounds, outlier count & %, count, missing, unique,
 skewness, kurtosis, modes.
 
-### `plot_histograms(df, cols=None, bins=20, decimals=2, iqr_multiplier=1.5, fig_width=17.0, fig_row_height=4.8, width_ratios=(3, 1), dpi=120, hist_color='skyblue', hist_edgecolor='black', alpha=0.85, kde=True, kde_color='blue', kde_linewidth=2.2, title=..., save=False, output_dir='plots', filename='histograms_with_summary.png', show=True, return_fig=False, return_df=False)`
+### `plot_histograms(df, cols=None, bins='auto', decimals=2, iqr_multiplier=1.5, fig_width=17.0, fig_row_height=4.8, width_ratios=(3, 1), dpi=120, hist_color='skyblue', hist_edgecolor='black', alpha=0.85, kde=True, kde_color='blue', kde_linewidth=2.2, title=..., save=False, output_dir='plots', filename='histograms_with_summary.png', show=True, return_fig=False, return_df=False)`
 
 Matplotlib histograms with KDE overlay and a monospace stats panel next to
 each plot. Mean (red dashed) and median (green dash-dot) are highlighted.
@@ -103,10 +113,15 @@ Interactive Plotly box-plots, one row per column, horizontal orientation,
 with dashed lines at the Tukey lower/upper bounds and a per-row annotation
 summarising the distribution.
 
-### Backwards-compatible aliases
+### Discoverability and aliases
 
-`numdesc`, `hister`, and `boxpl` from the pre-0.1.0 API still work and
-simply forward to the new names.
+Call `dx.functions()` to list every public function with its one-line summary.
+Long descriptive names each have a short alias (e.g. `numdesc`, `zsc`, `corrmat`,
+`na_fix`, `redun`, `selpipe`); the pre-0.1.0 names still forward to the new ones.
+
+For the full per-module API, see the philosophy documents in the repository
+(`FEATURES_PHILOSOPHY.md`, `SELECTION_PHILOSOPHY.md`, `CLEANING_PHILOSOPHY.md`)
+and the walkthrough notebook in `notebooks/`.
 
 ---
 

@@ -1,0 +1,166 @@
+{
+  "id": "M03-L01",
+  "module": 3,
+  "type": "lesson",
+  "title_en": "Chapter Introduction - Descriptive Statistics",
+  "title_ar": "مقدمة الفصل - الإحصاء الوصفى",
+  "objectives_en": [
+    "Understand what descriptive statistics does — and what it doesn't.",
+    "See the three families: central tendency, dispersion, shape.",
+    "Get a roadmap of the 12 lessons ahead."
+  ],
+  "objectives_ar": [
+    "فهم ماذا يفعل الإحصاء الوصفى — وماذا لا يفعل.",
+    "رؤية العائلات الثلاثة: النزعة المركزية، التشتت، الشكل.",
+    "الحصول على خريطة طريق للدروس الـ 12 القادمة."
+  ],
+  "sources": [
+    "03 Descriptive Statistics/Chapter Introduction.mp4",
+    "Slides PDF: pages 17-19",
+    "Translation: ترجمة الشريحة.docx pages 17-19",
+    "Excel: 02 - Descriptive Statistics.xlsx"
+  ],
+  "sections": [
+    {
+      "key": "intro",
+      "title_en": "1 · What Descriptive Statistics Does",
+      "title_ar": "1 · ماذا يفعل الإحصاء الوصفى"
+    },
+    {
+      "key": "definitions",
+      "title_en": "2 · The Three Big Families",
+      "title_ar": "2 · العائلات الثلاثة"
+    },
+    {
+      "key": "practice",
+      "title_en": "3 · Roadmap of the 12 Lessons",
+      "title_ar": "3 · خريطة الدروس الـ 12"
+    }
+  ],
+  "formulas": [],
+  "examples": [],
+  "memory_aid": [
+    {
+      "en": "Three questions: Where is the centre? How spread? What shape?",
+      "ar": "ثلاثة أسئلة: أين المركز؟ ما التشتت؟ ما الشكل؟"
+    }
+  ],
+  "summary": {
+    "en": "Descriptive statistics organises and summarises the data you have. It answers three questions — centre, spread, shape — and gives you the vocabulary to talk about any dataset before you make decisions on it.",
+    "ar": "الإحصاء الوصفى ينظم البيانات التى لديك ويلخّصها. يجيب على ثلاثة أسئلة — المركز، التشتت، الشكل — ويمنحك المفردات لتتحدث عن أى بيانات قبل أن تتخذ قرارات عليها."
+  },
+  "quiz": [
+    {
+      "id": "M03-L01-Q1",
+      "topic": "M03-L01",
+      "type": "MCQ",
+      "q_en": "Descriptive statistics primarily answers:",
+      "q_ar": "الإحصاء الوصفى يجيب أساساً على:",
+      "opts_en": [
+        "What will happen tomorrow?",
+        "What does my data look like?",
+        "Is the difference real?",
+        "What is the prior probability?"
+      ],
+      "opts_ar": [
+        "ماذا سيحدث غداً؟",
+        "كيف تبدو بياناتى؟",
+        "هل الفرق حقيقى؟",
+        "ما الاحتمال المسبق؟"
+      ],
+      "ans": "B",
+      "exp_en": "Pure description of the data on hand.",
+      "exp_ar": "مجرد وصف للبيانات التى بين يديك.",
+      "formula_used": ""
+    },
+    {
+      "id": "M03-L01-Q2",
+      "topic": "M03-L01",
+      "type": "MCQ",
+      "q_en": "The three families of descriptive statistics are:",
+      "q_ar": "العائلات الثلاثة للإحصاء الوصفى هى:",
+      "opts_en": [
+        "Mean, mode, p-value",
+        "Centre, spread, shape",
+        "Classical, frequentist, Bayesian",
+        "Sample, population, statistic"
+      ],
+      "opts_ar": [
+        "متوسط، منوال، قيمة p",
+        "المركز، التشتت، الشكل",
+        "كلاسيكى، تكرارى، بيزى",
+        "عينة، مجتمع، إحصاء"
+      ],
+      "ans": "B",
+      "exp_en": "Centre + Spread + Shape.",
+      "exp_ar": "مركز + تشتت + شكل.",
+      "formula_used": ""
+    },
+    {
+      "id": "M03-L01-Q3",
+      "topic": "M03-L01",
+      "type": "MCQ",
+      "q_en": "A measure of central tendency is:",
+      "q_ar": "مقياس نزعة مركزية هو:",
+      "opts_en": [
+        "Standard deviation",
+        "Skewness",
+        "Median",
+        "Range"
+      ],
+      "opts_ar": [
+        "الانحراف المعيارى",
+        "الالتواء",
+        "الوسيط",
+        "المدى"
+      ],
+      "ans": "C",
+      "exp_en": "Median is a centre measure (50th percentile).",
+      "exp_ar": "الوسيط مقياس مركز (الربيع الـ 50).",
+      "formula_used": ""
+    },
+    {
+      "id": "M03-L01-Q4",
+      "topic": "M03-L01",
+      "type": "TrueFalse",
+      "q_en": "True or False: Descriptive statistics tells us about uncertainty in our estimates of a population.",
+      "q_ar": "صح أم خطأ: الإحصاء الوصفى يخبرنا عن عدم اليقين فى تقديرات المجتمع.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "That's the job of INFERENTIAL statistics. Descriptive only describes the sample.",
+      "exp_ar": "هذه وظيفة الإحصاء الاستدلالى. الوصفى فقط يصف العينة.",
+      "formula_used": ""
+    },
+    {
+      "id": "M03-L01-Q5",
+      "topic": "M03-L01",
+      "type": "MCQ",
+      "q_en": "In a retail company, monthly KPIs (revenue, returns, items per order) shown on a dashboard are an example of:",
+      "q_ar": "فى متجر، مؤشرات الأداء الشهرية (إيرادات، إرجاع، أصناف لكل طلب) على لوحة بيانات هى مثال على:",
+      "opts_en": [
+        "Inferential statistics",
+        "Descriptive statistics",
+        "Machine learning",
+        "Hypothesis testing"
+      ],
+      "opts_ar": [
+        "إحصاء استدلالى",
+        "إحصاء وصفى",
+        "تعلم آلى",
+        "اختبار فرضيات"
+      ],
+      "ans": "B",
+      "exp_en": "Summary metrics from data on hand = descriptive.",
+      "exp_ar": "مقاييس ملخصة من البيانات الحالية = وصفى.",
+      "formula_used": ""
+    }
+  ],
+  "created": "2026-05-16"
+}

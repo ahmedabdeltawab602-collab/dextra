@@ -1,0 +1,186 @@
+{
+  "id": "M03-L06",
+  "module": 3,
+  "type": "lesson",
+  "title_en": "Kurtosis",
+  "title_ar": "التفرطح",
+  "objectives_en": [
+    "Understand what kurtosis measures (tail-heaviness).",
+    "Distinguish Mesokurtic, Leptokurtic, Platykurtic distributions.",
+    "Connect high kurtosis to tail-risk in finance and operations."
+  ],
+  "objectives_ar": [
+    "فهم ما يقيسه التفرطح (ثقل الذيول).",
+    "التمييز بين Mesokurtic و Leptokurtic و Platykurtic.",
+    "ربط التفرطح المرتفع بمخاطر الذيول فى المالية والعمليات."
+  ],
+  "sources": [
+    "03 Descriptive Statistics/Kurtosis.mp4",
+    "Slides PDF: page 28",
+    "Glossary: Kurtosis"
+  ],
+  "sections": [
+    {
+      "key": "intro",
+      "title_en": "1 · What Kurtosis Measures",
+      "title_ar": "1 · ما يقيسه التفرطح"
+    },
+    {
+      "key": "definitions",
+      "title_en": "2 · The Three Types",
+      "title_ar": "2 · الأنواع الثلاثة"
+    },
+    {
+      "key": "example",
+      "title_en": "3 · Worked Example - Fat Tails Kill",
+      "title_ar": "3 · مثال محلول - الذيول السمينة قاتلة"
+    },
+    {
+      "key": "practice",
+      "title_en": "4 · Business Uses",
+      "title_ar": "4 · استخدامات أعمال"
+    },
+    {
+      "key": "traps",
+      "title_en": "5 · Common Trap",
+      "title_ar": "5 · فخّ شائع"
+    }
+  ],
+  "formulas": [
+    {
+      "id": "F-M03-L06-01",
+      "name_en": "Excess kurtosis",
+      "name_ar": "التفرطح الزائد",
+      "expr": "Excess kurtosis = Kurtosis − 3",
+      "where_en": "Normal distribution has kurtosis = 3, so excess = 0",
+      "where_ar": "الطبيعى تفرطحه = 3، فالزائد = 0",
+      "when_en": "Comparing tail risk across distributions.",
+      "when_ar": "مقارنة مخاطر الذيول بين توزيعات."
+    }
+  ],
+  "examples": [],
+  "memory_aid": [
+    {
+      "en": "Kurtosis = tail fatness. Leptokurtic = fat tails (risk!). Platykurtic = thin tails (stable).",
+      "ar": "التفرطح = سمنة الذيول. Leptokurtic = ذيول سمينة (مخاطرة!). Platykurtic = ذيول رفيعة (مستقر)."
+    }
+  ],
+  "summary": {
+    "en": "Kurtosis is about tails, not peaks. Leptokurtic distributions hide rare but catastrophic events; platykurtic distributions are predictable and uniform. In finance and operations, ignoring kurtosis means underestimating tail-risk — the very disasters statistics is supposed to warn you about.",
+    "ar": "التفرطح عن الذيول لا القمم. التوزيعات leptokurtic تخفى أحداثاً نادرة لكن كارثية؛ platykurtic متوقعة ومنتظمة. فى المالية والعمليات، تجاهل التفرطح يعنى الاستهانة بمخاطر الذيول — الكوارث التى من المفترض أن ينذرنا عنها الإحصاء."
+  },
+  "quiz": [
+    {
+      "id": "M03-L06-Q1",
+      "topic": "M03-L06",
+      "type": "MCQ",
+      "q_en": "Leptokurtic distributions have:",
+      "q_ar": "التوزيعات leptokurtic لها:",
+      "opts_en": [
+        "Thin tails (rare extremes)",
+        "Fat tails (frequent extremes)",
+        "Equal tails",
+        "No tails"
+      ],
+      "opts_ar": [
+        "ذيول رفيعة (تطرف نادر)",
+        "ذيول سمينة (تطرف متكرر)",
+        "ذيول متساوية",
+        "لا ذيول"
+      ],
+      "ans": "B",
+      "exp_en": "Leptokurtic = high kurtosis = fat tails.",
+      "exp_ar": "Leptokurtic = تفرطح مرتفع = ذيول سمينة.",
+      "formula_used": ""
+    },
+    {
+      "id": "M03-L06-Q2",
+      "topic": "M03-L06",
+      "type": "MCQ",
+      "q_en": "Normal distribution kurtosis is:",
+      "q_ar": "تفرطح التوزيع الطبيعى:",
+      "opts_en": [
+        "0",
+        "1",
+        "3",
+        "100"
+      ],
+      "opts_ar": [
+        "0",
+        "1",
+        "3",
+        "100"
+      ],
+      "ans": "C",
+      "exp_en": "Kurtosis of Normal = 3 (excess kurtosis = 0).",
+      "exp_ar": "تفرطح الطبيعى = 3 (الزائد = 0).",
+      "formula_used": ""
+    },
+    {
+      "id": "M03-L06-Q3",
+      "topic": "M03-L06",
+      "type": "MCQ",
+      "q_en": "A platykurtic distribution is:",
+      "q_ar": "التوزيع platykurtic:",
+      "opts_en": [
+        "High kurtosis, fat tails",
+        "Low kurtosis, thin tails",
+        "Mean = Median",
+        "Always Normal"
+      ],
+      "opts_ar": [
+        "تفرطح مرتفع، ذيول سمينة",
+        "تفرطح منخفض، ذيول رفيعة",
+        "المتوسط = الوسيط",
+        "طبيعى دائماً"
+      ],
+      "ans": "B",
+      "exp_en": "Platykurtic = flat tails, fewer extremes.",
+      "exp_ar": "Platykurtic = ذيول مسطحة، تطرفات أقل.",
+      "formula_used": ""
+    },
+    {
+      "id": "M03-L06-Q4",
+      "topic": "M03-L06",
+      "type": "TrueFalse",
+      "q_en": "True or False: Kurtosis describes the height of the peak.",
+      "q_ar": "صح أم خطأ: التفرطح يصف ارتفاع القمة.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "Kurtosis is about tail-weight, not peak height.",
+      "exp_ar": "التفرطح عن ثقل الذيول، لا ارتفاع القمة.",
+      "formula_used": ""
+    },
+    {
+      "id": "M03-L06-Q5",
+      "topic": "M03-L06",
+      "type": "MCQ",
+      "q_en": "In risk management, a high-kurtosis return distribution implies:",
+      "q_ar": "فى إدارة المخاطر، توزيع عوائد عالى التفرطح يعنى:",
+      "opts_en": [
+        "Smooth predictable returns",
+        "Higher chance of extreme events than a Normal model predicts",
+        "No risk",
+        "Always positive returns"
+      ],
+      "opts_ar": [
+        "عوائد ناعمة متوقعة",
+        "فرصة أعلى لأحداث متطرفة أكثر مما يتوقعه نموذج طبيعى",
+        "لا مخاطر",
+        "عوائد موجبة دائماً"
+      ],
+      "ans": "B",
+      "exp_en": "Fat tails = real-world tail risk that Normal models miss.",
+      "exp_ar": "ذيول سمينة = مخاطر ذيول حقيقية تفوّتها نماذج الطبيعى.",
+      "formula_used": ""
+    }
+  ],
+  "created": "2026-05-16"
+}

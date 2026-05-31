@@ -1,0 +1,219 @@
+{
+  "id": "M03-L02",
+  "module": 3,
+  "type": "lesson",
+  "title_en": "Measures of Central Tendency",
+  "title_ar": "مقاييس النزعة المركزية",
+  "objectives_en": [
+    "Calculate Mean, Median, and Mode by hand and understand each.",
+    "Choose the right measure for the data shape.",
+    "See how outliers distort the Mean but spare the Median."
+  ],
+  "objectives_ar": [
+    "حساب المتوسط والوسيط والمنوال يدوياً وفهم كل منها.",
+    "اختيار المقياس المناسب حسب شكل البيانات.",
+    "رؤية كيف تشوّه القيم المتطرفة المتوسط دون الوسيط."
+  ],
+  "sources": [
+    "03 Descriptive Statistics/Measures of Central Tendency.mp4",
+    "Slides PDF: page 20",
+    "Glossary: Mean, Median, Mode",
+    "OpenStax: 2.5 Measures of the Center of the Data"
+  ],
+  "sections": [
+    {
+      "key": "intro",
+      "title_en": "1 · The Question of 'A Typical Value'",
+      "title_ar": "1 · سؤال 'القيمة النموذجية'"
+    },
+    {
+      "key": "definitions",
+      "title_en": "2 · The Three Measures Side-by-Side",
+      "title_ar": "2 · المقاييس الثلاثة جنباً إلى جنب"
+    },
+    {
+      "key": "formulas",
+      "title_en": "3 · Formulas",
+      "title_ar": "3 · الصيغ"
+    },
+    {
+      "key": "example",
+      "title_en": "4 · Worked Example - Customer Spend",
+      "title_ar": "4 · مثال محلول - إنفاق العملاء"
+    },
+    {
+      "key": "interpret",
+      "title_en": "5 · Reading Shape from the Three Measures",
+      "title_ar": "5 · قراءة الشكل من المقاييس الثلاثة"
+    },
+    {
+      "key": "traps",
+      "title_en": "6 · Common Traps",
+      "title_ar": "6 · الفخاخ الشائعة"
+    },
+    {
+      "key": "practice",
+      "title_en": "7 · Real Business Uses",
+      "title_ar": "7 · استخدامات أعمال حقيقية"
+    }
+  ],
+  "formulas": [
+    {
+      "id": "F-M03-L02-01",
+      "name_en": "Population mean",
+      "name_ar": "متوسط المجتمع",
+      "expr": "μ = (Σ xᵢ) / N",
+      "where_en": "N = total population size",
+      "where_ar": "N = حجم المجتمع",
+      "when_en": "Have data for entire population.",
+      "when_ar": "تملك بيانات المجتمع كاملاً."
+    },
+    {
+      "id": "F-M03-L02-02",
+      "name_en": "Sample mean",
+      "name_ar": "متوسط العينة",
+      "expr": "x̄ = (Σ xᵢ) / n",
+      "where_en": "n = sample size",
+      "where_ar": "n = حجم العينة",
+      "when_en": "Working with a sample (most real cases).",
+      "when_ar": "عند العمل بعينة (معظم الحالات)."
+    }
+  ],
+  "examples": [],
+  "memory_aid": [
+    {
+      "en": "Mean = arithmetic average. Median = middle. Mode = most common.",
+      "ar": "المتوسط = حسابى. الوسيط = الوسط. المنوال = الأكثر شيوعاً."
+    },
+    {
+      "en": "Outliers distort the Mean and pull it toward themselves. The Median doesn't budge.",
+      "ar": "القيم المتطرفة تشوّه المتوسط وتجذبه نحوها. الوسيط لا يتحرك."
+    },
+    {
+      "en": "In skewed business data (revenue, time, salary): always show Mean AND Median.",
+      "ar": "فى بيانات الأعمال المنحرفة (إيرادات، وقت، راتب): اعرض المتوسط والوسيط معاً دائماً."
+    }
+  ],
+  "summary": {
+    "en": "Mean, Median, and Mode each describe 'the centre' from a different angle. Mean uses every value but is sensitive to outliers. Median is robust. Mode tells you the most common value (or category). Smart analysts report at least two of them whenever the data is skewed.",
+    "ar": "المتوسط والوسيط والمنوال يصفون 'المركز' من زاوية مختلفة. المتوسط يستخدم كل القيم لكنه حسّاس للقيم المتطرفة. الوسيط مقاوم. المنوال يخبرك بالأكثر شيوعاً (أو الفئة الأكثر تكراراً). المحلل الذكى يقدّم اثنَين منهم على الأقل حين تكون البيانات منحرفة."
+  },
+  "quiz": [
+    {
+      "id": "M03-L02-Q1",
+      "topic": "M03-L02",
+      "type": "Calc",
+      "q_en": "A small shop's daily sales (units) for a week: 12, 14, 13, 15, 14, 16, 14. What is the Mode?",
+      "q_ar": "مبيعات محل صغير يومياً (وحدات) لأسبوع: 12, 14, 13, 15, 14, 16, 14. ما المنوال؟",
+      "opts_en": [
+        "12",
+        "13",
+        "14",
+        "15"
+      ],
+      "opts_ar": [
+        "12",
+        "13",
+        "14",
+        "15"
+      ],
+      "ans": "C",
+      "exp_en": "14 appears 3 times — most often.",
+      "exp_ar": "القيمة 14 تظهر 3 مرات — الأكثر تكراراً.",
+      "formula_used": ""
+    },
+    {
+      "id": "M03-L02-Q2",
+      "topic": "M03-L02",
+      "type": "Calc",
+      "q_en": "Data: 4, 8, 6, 10, 12. What is the Mean?",
+      "q_ar": "بيانات: 4, 8, 6, 10, 12. ما المتوسط؟",
+      "opts_en": [
+        "6",
+        "8",
+        "10",
+        "12"
+      ],
+      "opts_ar": [
+        "6",
+        "8",
+        "10",
+        "12"
+      ],
+      "ans": "B",
+      "exp_en": "(4+8+6+10+12)/5 = 40/5 = 8.",
+      "exp_ar": "(4+8+6+10+12)/5 = 40/5 = 8.",
+      "formula_used": "x̄ = Σxᵢ / n"
+    },
+    {
+      "id": "M03-L02-Q3",
+      "topic": "M03-L02",
+      "type": "Calc",
+      "q_en": "Salaries (k EGP): 8, 9, 10, 11, 80. Which measure best represents a typical salary?",
+      "q_ar": "رواتب (ألف ج.م): 8, 9, 10, 11, 80. أى مقياس يمثل الراتب النموذجى أفضل؟",
+      "opts_en": [
+        "Mean (23.6)",
+        "Median (10)",
+        "Mode (none)",
+        "Range (72)"
+      ],
+      "opts_ar": [
+        "المتوسط (23.6)",
+        "الوسيط (10)",
+        "المنوال (لا يوجد)",
+        "المدى (72)"
+      ],
+      "ans": "B",
+      "exp_en": "The 80k outlier pulls the mean far from where typical salaries lie. Median = 10 is far more honest.",
+      "exp_ar": "القيمة المتطرفة 80 ألف تجذب المتوسط بعيداً عن الرواتب النموذجية. الوسيط = 10 أكثر صدقاً.",
+      "formula_used": ""
+    },
+    {
+      "id": "M03-L02-Q4",
+      "topic": "M03-L02",
+      "type": "MCQ",
+      "q_en": "In a right-skewed (positive) distribution:",
+      "q_ar": "فى توزيع منحرف لليمين (موجب):",
+      "opts_en": [
+        "Mean > Median > Mode",
+        "Mean = Median = Mode",
+        "Mode > Median > Mean",
+        "Median > Mean > Mode"
+      ],
+      "opts_ar": [
+        "متوسط > وسيط > منوال",
+        "متوسط = وسيط = منوال",
+        "منوال > وسيط > متوسط",
+        "وسيط > متوسط > منوال"
+      ],
+      "ans": "A",
+      "exp_en": "The long right tail drags the mean rightward, past the median.",
+      "exp_ar": "الذيل الأيمن الطويل يسحب المتوسط لليمين، بعيداً عن الوسيط.",
+      "formula_used": ""
+    },
+    {
+      "id": "M03-L02-Q5",
+      "topic": "M03-L02",
+      "type": "MCQ",
+      "q_en": "A favourite colour survey (Red, Blue, Blue, Green, Red, Blue) - the relevant measure is:",
+      "q_ar": "استبيان اللون المفضّل (أحمر، أزرق، أزرق، أخضر، أحمر، أزرق) - المقياس المناسب:",
+      "opts_en": [
+        "Mean",
+        "Median",
+        "Mode",
+        "Variance"
+      ],
+      "opts_ar": [
+        "المتوسط",
+        "الوسيط",
+        "المنوال",
+        "التباين"
+      ],
+      "ans": "C",
+      "exp_en": "Categorical data → Mode. Blue appears 3 times.",
+      "exp_ar": "بيانات فئوية ← المنوال. الأزرق يظهر 3 مرات.",
+      "formula_used": ""
+    }
+  ],
+  "created": "2026-05-16"
+}

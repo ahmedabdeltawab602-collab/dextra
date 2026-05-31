@@ -1,0 +1,178 @@
+{
+  "id": "M05-L07",
+  "module": 5,
+  "type": "lesson",
+  "title_en": "The One-Tailed Test",
+  "title_ar": "اختبار ذيل واحد",
+  "objectives_en": [
+    "Set up a one-tailed hypothesis test correctly.",
+    "Identify when a one-tailed test is justified.",
+    "Visualise the single rejection region."
+  ],
+  "objectives_ar": [
+    "إعداد اختبار ذيل واحد بشكل صحيح.",
+    "تحديد متى يكون اختبار ذيل واحد مبرراً.",
+    "تصوّر منطقة الرفض الواحدة."
+  ],
+  "sources": [
+    "05 Hypothesis Testing/One-Tailed Test.mp4",
+    "Slides PDF: pages 73-74"
+  ],
+  "sections": [
+    {
+      "key": "intro",
+      "title_en": "1 · When Direction Matters",
+      "title_ar": "1 · حين يهمّ الاتجاه"
+    },
+    {
+      "key": "example",
+      "title_en": "2 · Worked Example - Re-framing the Warranty",
+      "title_ar": "2 · مثال محلول - إعادة صياغة الضمان"
+    },
+    {
+      "key": "definitions",
+      "title_en": "3 · Right vs Left",
+      "title_ar": "3 · أيمن مقابل أيسر"
+    },
+    {
+      "key": "practice",
+      "title_en": "4 · When to Use One-Tailed",
+      "title_ar": "4 · متى تستخدم ذيل واحد"
+    },
+    {
+      "key": "traps",
+      "title_en": "5 · The Two Big Traps",
+      "title_ar": "5 · الفخّان الكبيران"
+    }
+  ],
+  "formulas": [],
+  "examples": [],
+  "memory_aid": [
+    {
+      "en": "One-tail: more power but only if direction is pre-committed.",
+      "ar": "ذيل واحد: قوة أعلى لكن فقط مع التزام مسبق بالاتجاه."
+    },
+    {
+      "en": "Right-tailed: Ha has >. Left-tailed: Ha has <.",
+      "ar": "أيمن: Ha بـ >. أيسر: Ha بـ <."
+    }
+  ],
+  "summary": {
+    "en": "One-tailed tests focus all of alpha in a single direction — making them more sensitive to detecting a specific kind of change. They are appropriate when the business question itself is directional ('Is the drug better?' / 'Did time decrease?'). They are NEVER appropriate when chosen after seeing data, and they cannot reject H0 if the data go the other direction.",
+    "ar": "اختبار ذيل واحد يركّز كل ألفا فى اتجاه واحد — مما يجعله أكثر حساسية لكشف نوع محدد من التغيير. مناسب حين يكون السؤال التجارى نفسه اتجاهياً ('هل الدواء أفضل؟' / 'هل الزمن انخفض؟'). لا يصلح أبداً إذا اخترته بعد رؤية البيانات، ولا يمكنه رفض H0 إذا ذهبت البيانات فى الاتجاه الآخر."
+  },
+  "quiz": [
+    {
+      "id": "M05-L07-Q1",
+      "topic": "M05-L07",
+      "type": "MCQ",
+      "q_en": "A one-tailed test puts all of alpha:",
+      "q_ar": "اختبار ذيل واحد يضع كل ألفا:",
+      "opts_en": [
+        "Equally in both tails",
+        "In one specific tail",
+        "In the middle",
+        "Outside the distribution"
+      ],
+      "opts_ar": [
+        "بالتساوى فى الذيلَين",
+        "فى ذيل محدد",
+        "فى الوسط",
+        "خارج التوزيع"
+      ],
+      "ans": "B",
+      "exp_en": "All in one tail = more sensitive there.",
+      "exp_ar": "كل ألفا فى ذيل واحد = أكثر حساسية هناك.",
+      "formula_used": ""
+    },
+    {
+      "id": "M05-L07-Q2",
+      "topic": "M05-L07",
+      "type": "MCQ",
+      "q_en": "Ha: μ > 100 indicates:",
+      "q_ar": "Ha: μ > 100 تشير إلى:",
+      "opts_en": [
+        "Two-tailed",
+        "Right-tailed",
+        "Left-tailed",
+        "Bayesian"
+      ],
+      "opts_ar": [
+        "ذيلَين",
+        "ذيل أيمن",
+        "ذيل أيسر",
+        "بيزى"
+      ],
+      "ans": "B",
+      "exp_en": "> = right-tailed.",
+      "exp_ar": "> = أيمن.",
+      "formula_used": ""
+    },
+    {
+      "id": "M05-L07-Q3",
+      "topic": "M05-L07",
+      "type": "TrueFalse",
+      "q_en": "True or False: A one-tailed test can reject H0 even if data goes the opposite direction.",
+      "q_ar": "صح أم خطأ: ذيل واحد يمكنه رفض H0 حتى لو ذهبت البيانات فى الاتجاه المعاكس.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "One-tail can only reject in its committed direction.",
+      "exp_ar": "ذيل واحد يرفض فقط فى اتجاهه الملتزَم.",
+      "formula_used": ""
+    },
+    {
+      "id": "M05-L07-Q4",
+      "topic": "M05-L07",
+      "type": "MCQ",
+      "q_en": "A bank wants to confirm new fraud system DETECTS MORE fraud. Right Ha:",
+      "q_ar": "بنك يريد التأكد من نظام احتيال جديد يكشف فعلاً أكثر. Ha الصحيحة:",
+      "opts_en": [
+        "p_new = p_old",
+        "p_new ≠ p_old",
+        "p_new > p_old",
+        "p_new < p_old"
+      ],
+      "opts_ar": [
+        "p_جديد = p_قديم",
+        "p_جديد ≠ p_قديم",
+        "p_جديد > p_قديم",
+        "p_جديد < p_قديم"
+      ],
+      "ans": "C",
+      "exp_en": "'More fraud detected' = right-tailed.",
+      "exp_ar": "'احتيال أكثر' = ذيل أيمن.",
+      "formula_used": ""
+    },
+    {
+      "id": "M05-L07-Q5",
+      "topic": "M05-L07",
+      "type": "MCQ",
+      "q_en": "The biggest ethical risk of one-tailed tests is:",
+      "q_ar": "أكبر مخاطر أخلاقية لذيل واحد:",
+      "opts_en": [
+        "Excel can't handle them",
+        "Picking the direction after seeing data (p-hacking)",
+        "More math required",
+        "Bad font in output"
+      ],
+      "opts_ar": [
+        "Excel لا يستطيع",
+        "اختيار الاتجاه بعد البيانات (تلاعب)",
+        "رياضيات أكثر",
+        "خط سيئ"
+      ],
+      "ans": "B",
+      "exp_en": "The classical p-hacking trap.",
+      "exp_ar": "فخ التلاعب الكلاسيكى.",
+      "formula_used": ""
+    }
+  ],
+  "created": "2026-05-16"
+}

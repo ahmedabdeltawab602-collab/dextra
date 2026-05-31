@@ -1,0 +1,18 @@
+{
+  "id": "M06",
+  "module": 6,
+  "type": "module",
+  "title_en": "Conclusion",
+  "title_ar": "الخلاصة",
+  "lessons": [
+    {
+      "id": "M06-L01",
+      "title_en": "Course Summary and the Statistical Toolbox",
+      "title_ar": "ملخص الدورة وصندوق الأدوات"
+    }
+  ],
+  "sources": [
+    "06 Conclusion/Course Summary.mp4",
+    "Slides PDF page 80"
+  ]
+}

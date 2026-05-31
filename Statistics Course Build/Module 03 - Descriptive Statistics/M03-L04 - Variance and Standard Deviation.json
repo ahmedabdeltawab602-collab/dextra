@@ -1,0 +1,225 @@
+{
+  "id": "M03-L04",
+  "module": 3,
+  "type": "lesson",
+  "title_en": "Variance and Standard Deviation",
+  "title_ar": "التباين والانحراف المعيارى",
+  "objectives_en": [
+    "Compute Variance (σ², s²) and Standard Deviation (σ, s) by hand.",
+    "Understand WHY we square deviations.",
+    "Interpret std dev in the units of the original data."
+  ],
+  "objectives_ar": [
+    "حساب التباين (σ², s²) والانحراف المعيارى (σ, s) يدوياً.",
+    "فهم لماذا نربّع الانحرافات.",
+    "تفسير الانحراف المعيارى بوحدات البيانات الأصلية."
+  ],
+  "sources": [
+    "03 Descriptive Statistics/Measures of Dispersion.mp4",
+    "Slides PDF: pages 24-25",
+    "Glossary: Standard Deviation",
+    "OpenStax: 2.7 Measures of the Spread of the Data"
+  ],
+  "sections": [
+    {
+      "key": "intro",
+      "title_en": "1 · The Key Idea",
+      "title_ar": "1 · الفكرة الجوهرية"
+    },
+    {
+      "key": "formulas",
+      "title_en": "2 · The Formulas",
+      "title_ar": "2 · الصيغ"
+    },
+    {
+      "key": "concept",
+      "title_en": "3 · Why Squaring, and Why n−1",
+      "title_ar": "3 · لماذا التربيع، ولماذا n−1"
+    },
+    {
+      "key": "example",
+      "title_en": "4 · Worked Example - Daily Sales",
+      "title_ar": "4 · مثال محلول - مبيعات يومية"
+    },
+    {
+      "key": "interpret",
+      "title_en": "5 · Reading Std Dev in Business",
+      "title_ar": "5 · قراءة الانحراف فى الأعمال"
+    },
+    {
+      "key": "practice",
+      "title_en": "6 · Business Uses",
+      "title_ar": "6 · استخدامات أعمال"
+    },
+    {
+      "key": "traps",
+      "title_en": "7 · Common Traps",
+      "title_ar": "7 · الفخاخ الشائعة"
+    }
+  ],
+  "formulas": [
+    {
+      "id": "F-M03-L04-01",
+      "name_en": "Population variance",
+      "name_ar": "تباين المجتمع",
+      "expr": "σ² = Σ(xᵢ − μ)² / N",
+      "where_en": "Mean of squared deviations",
+      "where_ar": "متوسط الانحرافات المربّعة",
+      "when_en": "Whole population available.",
+      "when_ar": "المجتمع كله متوفر."
+    },
+    {
+      "id": "F-M03-L04-02",
+      "name_en": "Sample variance",
+      "name_ar": "تباين العينة",
+      "expr": "s² = Σ(xᵢ − x̄)² / (n − 1)",
+      "where_en": "Bessel's correction n−1",
+      "where_ar": "تصحيح بِسِل n−1",
+      "when_en": "Working with a sample (most cases).",
+      "when_ar": "عند العمل بعينة (معظم الحالات)."
+    },
+    {
+      "id": "F-M03-L04-03",
+      "name_en": "Standard deviation",
+      "name_ar": "الانحراف المعيارى",
+      "expr": "σ = √σ²    or    s = √s²",
+      "where_en": "Returns to original units",
+      "where_ar": "يُعيد الوحدات الأصلية",
+      "when_en": "Always - it's the headline measure.",
+      "when_ar": "دائماً - هو المقياس الرئيسى."
+    }
+  ],
+  "examples": [],
+  "memory_aid": [
+    {
+      "en": "Variance = average squared deviation. Std Dev = √variance (in original units).",
+      "ar": "التباين = متوسط الانحرافات المربّعة. الانحراف = √التباين (بالوحدات الأصلية)."
+    },
+    {
+      "en": "Sample → divide by n−1. Population → divide by N.",
+      "ar": "عينة ← اقسم على n−1. مجتمع ← اقسم على N."
+    },
+    {
+      "en": "In finance and ops, lower std dev = lower risk = easier to plan.",
+      "ar": "فى المالية والعمليات، انحراف أقل = مخاطرة أقل = تخطيط أسهل."
+    }
+  ],
+  "summary": {
+    "en": "Variance and Standard Deviation tell you 'on average, how far do data points sit from the mean'. Squaring eliminates negative-positive cancellation; the square root then returns to the original units. For samples, divide by n−1 (Bessel's correction). Std dev is the single most useful number for comparing volatility, risk, and predictability across two datasets.",
+    "ar": "التباين والانحراف يخبرانك 'فى المعدل، كم تبتعد النقاط عن المتوسط'. التربيع يلغى تعارض الإشارات، والجذر يُعيد الوحدات الأصلية. للعينات، اقسم على n−1 (تصحيح بِسِل). الانحراف المعيارى هو أكثر رقم مفيد لمقارنة التقلب والمخاطرة والقدرة على التنبؤ بين بيانات."
+  },
+  "quiz": [
+    {
+      "id": "M03-L04-Q1",
+      "topic": "M03-L04",
+      "type": "Calc",
+      "q_en": "For sample {2, 4, 6}, mean = 4. What is sample variance s²?",
+      "q_ar": "لعينة {2, 4, 6}، المتوسط = 4. ما تباين العينة s²؟",
+      "opts_en": [
+        "4",
+        "2.67",
+        "8",
+        "6"
+      ],
+      "opts_ar": [
+        "4",
+        "2.67",
+        "8",
+        "6"
+      ],
+      "ans": "A",
+      "exp_en": "Deviations: −2, 0, 2 → squared 4, 0, 4 → sum 8 → /(n−1)=/2 → 4.",
+      "exp_ar": "الانحرافات: −2, 0, 2 ← مربّعة 4, 0, 4 ← مجموع 8 ← /(n−1)=/2 ← 4.",
+      "formula_used": "s² = Σ(xᵢ−x̄)² / (n−1)"
+    },
+    {
+      "id": "M03-L04-Q2",
+      "topic": "M03-L04",
+      "type": "Calc",
+      "q_en": "If sample variance = 25, what is sample standard deviation?",
+      "q_ar": "إذا كان تباين العينة = 25، فما الانحراف المعيارى؟",
+      "opts_en": [
+        "12.5",
+        "5",
+        "25",
+        "625"
+      ],
+      "opts_ar": [
+        "12.5",
+        "5",
+        "25",
+        "625"
+      ],
+      "ans": "B",
+      "exp_en": "s = √s² = √25 = 5.",
+      "exp_ar": "s = √s² = √25 = 5.",
+      "formula_used": ""
+    },
+    {
+      "id": "M03-L04-Q3",
+      "topic": "M03-L04",
+      "type": "MCQ",
+      "q_en": "Why do we square the deviations when computing variance?",
+      "q_ar": "لماذا نربّع الانحرافات عند حساب التباين؟",
+      "opts_en": [
+        "To make calculations harder",
+        "Positive and negative deviations would cancel out otherwise",
+        "To convert units",
+        "Because Excel requires it"
+      ],
+      "opts_ar": [
+        "لجعل الحسابات أصعب",
+        "وإلا تلغى الموجبة والسالبة بعضها",
+        "لتحويل الوحدات",
+        "لأن Excel يتطلبها"
+      ],
+      "ans": "B",
+      "exp_en": "Squaring eliminates sign cancellation; the deviations would otherwise average to zero.",
+      "exp_ar": "التربيع يلغى التعارض؛ وإلا فمتوسط الانحرافات المُوقّعة يساوى صفر.",
+      "formula_used": ""
+    },
+    {
+      "id": "M03-L04-Q4",
+      "topic": "M03-L04",
+      "type": "MCQ",
+      "q_en": "A stock with std dev 30% is — relative to one with std dev 10%:",
+      "q_ar": "سهم بانحراف 30% — مقارنة بـ 10%:",
+      "opts_en": [
+        "Less risky",
+        "Equally risky",
+        "About 3× more volatile",
+        "Cheaper"
+      ],
+      "opts_ar": [
+        "أقل مخاطرة",
+        "نفس المخاطرة",
+        "أكثر تقلباً بـ 3 مرات",
+        "أرخص"
+      ],
+      "ans": "C",
+      "exp_en": "Higher std dev = higher volatility = higher risk.",
+      "exp_ar": "انحراف أعلى = تقلب أعلى = مخاطرة أعلى.",
+      "formula_used": ""
+    },
+    {
+      "id": "M03-L04-Q5",
+      "topic": "M03-L04",
+      "type": "TrueFalse",
+      "q_en": "True or False: Variance and standard deviation are in the same units.",
+      "q_ar": "صح أم خطأ: التباين والانحراف بنفس الوحدات.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "Variance is squared units (e.g., EGP²); std dev is in original units (EGP).",
+      "exp_ar": "التباين بوحدات مربّعة (ج.م²)؛ الانحراف بالوحدات الأصلية (ج.م).",
+      "formula_used": ""
+    }
+  ],
+  "created": "2026-05-16"
+}

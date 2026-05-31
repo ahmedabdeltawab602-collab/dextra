@@ -1,0 +1,74 @@
+{
+  "id": "M03",
+  "module": 3,
+  "type": "module",
+  "title_en": "Descriptive Statistics",
+  "title_ar": "الإحصاء الوصفى",
+  "lessons": [
+    {
+      "id": "M03-L01",
+      "title_en": "Chapter Introduction - Descriptive Statistics",
+      "title_ar": "مقدمة الفصل"
+    },
+    {
+      "id": "M03-L02",
+      "title_en": "Measures of Central Tendency",
+      "title_ar": "مقاييس النزعة المركزية"
+    },
+    {
+      "id": "M03-L03",
+      "title_en": "Measures of Dispersion - Range and Quartiles",
+      "title_ar": "المدى والربيعيات"
+    },
+    {
+      "id": "M03-L04",
+      "title_en": "Variance and Standard Deviation",
+      "title_ar": "التباين والانحراف المعيارى"
+    },
+    {
+      "id": "M03-L05",
+      "title_en": "The Normal Distribution",
+      "title_ar": "التوزيع الطبيعى"
+    },
+    {
+      "id": "M03-L06",
+      "title_en": "Kurtosis",
+      "title_ar": "التفرطح"
+    },
+    {
+      "id": "M03-L07",
+      "title_en": "Asymmetric Distributions and Skewness",
+      "title_ar": "الالتواء"
+    },
+    {
+      "id": "M03-L08",
+      "title_en": "Excel Workshop - Univariate Analysis",
+      "title_ar": "ورشة Excel - أحادى المتغير"
+    },
+    {
+      "id": "M03-L09",
+      "title_en": "Univariate vs Bivariate Analysis",
+      "title_ar": "أحادى مقابل ثنائى"
+    },
+    {
+      "id": "M03-L10",
+      "title_en": "Correlation and the Correlation Coefficient",
+      "title_ar": "الارتباط ومعامله"
+    },
+    {
+      "id": "M03-L11",
+      "title_en": "Simple Linear Regression",
+      "title_ar": "الانحدار الخطى البسيط"
+    },
+    {
+      "id": "M03-L12",
+      "title_en": "Excel Workshop - Bivariate Analysis",
+      "title_ar": "ورشة Excel - ثنائى المتغير"
+    }
+  ],
+  "sources": [
+    "03 Descriptive Statistics/*",
+    "Slides PDF pages 17-35",
+    "Workbook: 02 - Descriptive Statistics.xlsx"
+  ]
+}

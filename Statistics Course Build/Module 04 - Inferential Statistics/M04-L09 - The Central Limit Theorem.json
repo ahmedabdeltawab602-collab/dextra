@@ -1,0 +1,216 @@
+{
+  "id": "M04-L09",
+  "module": 4,
+  "type": "lesson",
+  "title_en": "The Central Limit Theorem",
+  "title_ar": "نظرية النهاية المركزية",
+  "objectives_en": [
+    "State the Central Limit Theorem (CLT).",
+    "Distinguish CLT from LLN (they answer different questions).",
+    "Use CLT to justify using Normal-based tests on non-Normal data."
+  ],
+  "objectives_ar": [
+    "صياغة نظرية النهاية المركزية (CLT).",
+    "التمييز بين CLT و LLN (يجيبان عن أسئلة مختلفة).",
+    "استخدام CLT لتبرير اختبارات تعتمد على الطبيعى على بيانات غير طبيعية."
+  ],
+  "sources": [
+    "04 Inferential Statistics/Central Limit Theorem.mp4",
+    "04 Inferential Statistics/Excel - Central Limit Theorem.mp4",
+    "Slides PDF: pages 57-60",
+    "Glossary: Central Limit Theorem",
+    "Workbook: 03 - CLT & LLN.xlsx"
+  ],
+  "sections": [
+    {
+      "key": "intro",
+      "title_en": "1 · The Magic Statement",
+      "title_ar": "1 · النص السحرى"
+    },
+    {
+      "key": "formulas",
+      "title_en": "2 · The Math",
+      "title_ar": "2 · الرياضيات"
+    },
+    {
+      "key": "example",
+      "title_en": "3 · CLT in Action - From Uniform to Normal",
+      "title_ar": "3 · CLT فى الفعل - من المنتظم إلى الطبيعى"
+    },
+    {
+      "key": "practice",
+      "title_en": "4 · Excel Hands-on",
+      "title_ar": "4 · تطبيق Excel"
+    },
+    {
+      "key": "interpret",
+      "title_en": "5 · Why CLT is the Backbone of Inference",
+      "title_ar": "5 · لماذا CLT العمود الفقرى للاستدلال"
+    },
+    {
+      "key": "definitions",
+      "title_en": "6 · LLN vs CLT - Two Different Theorems",
+      "title_ar": "6 · LLN مقابل CLT - نظريتان مختلفتان"
+    },
+    {
+      "key": "traps",
+      "title_en": "7 · Common Traps",
+      "title_ar": "7 · الفخاخ الشائعة"
+    }
+  ],
+  "formulas": [
+    {
+      "id": "F-M04-L09-01",
+      "name_en": "Central Limit Theorem",
+      "name_ar": "نظرية النهاية المركزية",
+      "expr": "x̄ ~ N(μ, σ²/n) for large n",
+      "where_en": "Sample mean approximately Normal",
+      "where_ar": "متوسط العينة طبيعى تقريباً",
+      "when_en": "Inference on means with large samples.",
+      "when_ar": "الاستدلال عن المتوسطات بعينات كبيرة."
+    },
+    {
+      "id": "F-M04-L09-02",
+      "name_en": "Standard error of mean",
+      "name_ar": "الخطأ المعيارى للمتوسط",
+      "expr": "SE = σ / √n",
+      "where_en": "Spread of the sampling distribution of x̄",
+      "where_ar": "تشتت توزيع متوسطات العينات",
+      "when_en": "Building confidence intervals.",
+      "when_ar": "بناء فترات الثقة."
+    }
+  ],
+  "examples": [],
+  "memory_aid": [
+    {
+      "en": "CLT: distribution of sample means becomes Normal as n grows, no matter the original data.",
+      "ar": "CLT: توزيع متوسطات العينات يصبح طبيعياً مع زيادة n، مهما كانت البيانات الأصلية."
+    },
+    {
+      "en": "LLN tells you WHERE x̄ goes. CLT tells you HOW SPREAD OUT x̄ is around there.",
+      "ar": "LLN يخبرك أين يذهب x̄. CLT يخبرك كم ينتشر x̄ حوله."
+    },
+    {
+      "en": "Rule of thumb: n ≥ 30 is 'large enough' for CLT in most cases.",
+      "ar": "قاعدة عامة: n ≥ 30 'كبير كاف' لـ CLT فى معظم الحالات."
+    }
+  ],
+  "summary": {
+    "en": "The Central Limit Theorem is what lets statistics work in messy real-world data. No matter how skewed, lumpy, or weird your underlying data, the distribution of sample means is approximately Normal for n ≥ 30. This unlocks the entire toolkit of Normal-based tests (Z-tests, t-tests, confidence intervals). CLT is different from LLN: LLN says the mean converges; CLT describes its distribution.",
+    "ar": "نظرية النهاية المركزية هى ما يجعل الإحصاء يعمل فى البيانات الفوضوية. مهما كانت بياناتك منحرفة أو غريبة، توزيع متوسطات العينات يكون طبيعياً تقريباً لـ n ≥ 30. هذا يفتح كل أدوات الطبيعى (اختبارات z، t، فترات الثقة). CLT يختلف عن LLN: LLN يقول إن المتوسط يقترب؛ CLT يصف توزيعه."
+  },
+  "quiz": [
+    {
+      "id": "M04-L09-Q1",
+      "topic": "M04-L09",
+      "type": "MCQ",
+      "q_en": "The Central Limit Theorem states that as n grows, the distribution of:",
+      "q_ar": "نظرية النهاية المركزية تقول إنه مع زيادة n، توزيع:",
+      "opts_en": [
+        "Original data becomes Normal",
+        "Sample means becomes approximately Normal",
+        "Variance becomes zero",
+        "Population grows"
+      ],
+      "opts_ar": [
+        "البيانات الأصلية يصبح طبيعياً",
+        "متوسطات العينات يصبح طبيعياً تقريباً",
+        "التباين يصبح صفراً",
+        "المجتمع يكبر"
+      ],
+      "ans": "B",
+      "exp_en": "CLT is about the distribution of SAMPLE MEANS.",
+      "exp_ar": "CLT عن توزيع متوسطات العينات.",
+      "formula_used": ""
+    },
+    {
+      "id": "M04-L09-Q2",
+      "topic": "M04-L09",
+      "type": "MCQ",
+      "q_en": "The rule-of-thumb sample size for CLT to kick in is approximately:",
+      "q_ar": "حجم العينة كقاعدة عامة لتفعيل CLT تقريباً:",
+      "opts_en": [
+        "n ≥ 5",
+        "n ≥ 30",
+        "n ≥ 100",
+        "n ≥ 1000"
+      ],
+      "opts_ar": [
+        "n ≥ 5",
+        "n ≥ 30",
+        "n ≥ 100",
+        "n ≥ 1000"
+      ],
+      "ans": "B",
+      "exp_en": "n ≥ 30 is the common threshold.",
+      "exp_ar": "n ≥ 30 هو الحد الشائع.",
+      "formula_used": ""
+    },
+    {
+      "id": "M04-L09-Q3",
+      "topic": "M04-L09",
+      "type": "Calc",
+      "q_en": "A population has σ = 20. For n = 100, what is the Standard Error of the Mean?",
+      "q_ar": "مجتمع σ = 20. لـ n = 100، ما الخطأ المعيارى للمتوسط؟",
+      "opts_en": [
+        "20",
+        "2",
+        "0.2",
+        "200"
+      ],
+      "opts_ar": [
+        "20",
+        "2",
+        "0.2",
+        "200"
+      ],
+      "ans": "B",
+      "exp_en": "SE = σ/√n = 20/10 = 2.",
+      "exp_ar": "SE = σ/√n = 20/10 = 2.",
+      "formula_used": "SE = σ / √n"
+    },
+    {
+      "id": "M04-L09-Q4",
+      "topic": "M04-L09",
+      "type": "TrueFalse",
+      "q_en": "True or False: CLT requires the original population to be Normally distributed.",
+      "q_ar": "صح أم خطأ: CLT يتطلب أن يكون المجتمع طبيعياً.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "CLT works regardless of the original distribution (with finite variance).",
+      "exp_ar": "CLT يعمل بغض النظر عن التوزيع الأصلى (بتباين محدود).",
+      "formula_used": ""
+    },
+    {
+      "id": "M04-L09-Q5",
+      "topic": "M04-L09",
+      "type": "MCQ",
+      "q_en": "A company tracks daily revenue (highly right-skewed). Wants an A/B test on monthly mean revenue. CLT is helpful because:",
+      "q_ar": "شركة تتتبع إيرادات يومية (منحرفة بشدة). تريد اختبار A/B على متوسط الإيراد الشهرى. CLT مفيد لأن:",
+      "opts_en": [
+        "It makes the daily data Normal",
+        "It makes the monthly mean Normal-distributed across many months",
+        "It increases revenue",
+        "It removes skew from data"
+      ],
+      "opts_ar": [
+        "يجعل البيانات اليومية طبيعية",
+        "يجعل المتوسط الشهرى طبيعى التوزيع عبر شهور كثيرة",
+        "يزيد الإيراد",
+        "يحذف الانحراف"
+      ],
+      "ans": "B",
+      "exp_en": "The mean of 30 daily values is approximately Normal even when daily data isn't.",
+      "exp_ar": "متوسط 30 قيمة يومية طبيعى تقريباً حتى لو لم تكن البيانات اليومية كذلك.",
+      "formula_used": ""
+    }
+  ],
+  "created": "2026-05-16"
+}

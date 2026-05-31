@@ -1,0 +1,174 @@
+{
+  "id": "M02-L05",
+  "module": 2,
+  "type": "lesson",
+  "title_en": "Assumptions in Inferential Statistics",
+  "title_ar": "الافتراضات فى الإحصاء الاستدلالى",
+  "objectives_en": [
+    "Understand why every inferential method rests on assumptions.",
+    "See how different assumptions can lead to different conclusions on the same data.",
+    "Develop the habit of checking assumptions before trusting results."
+  ],
+  "objectives_ar": [
+    "فهم لماذا يقوم كل منهج استدلالى على افتراضات.",
+    "رؤية كيف يمكن لافتراضات مختلفة أن تنتج نتائج مختلفة على نفس البيانات.",
+    "بناء عادة التحقق من الافتراضات قبل الوثوق بالنتائج."
+  ],
+  "sources": [
+    "02 The Statistical Landscape/Assumptions in Inferential Statistics.mp4",
+    "Slides PDF: page 13"
+  ],
+  "sections": [
+    {
+      "key": "intro",
+      "title_en": "1 · No Method Is Assumption-Free",
+      "title_ar": "1 · لا منهج يخلو من الافتراضات"
+    },
+    {
+      "key": "example",
+      "title_en": "2 · Same Data, Three Conclusions",
+      "title_ar": "2 · نفس البيانات، ثلاثة استنتاجات"
+    },
+    {
+      "key": "concept",
+      "title_en": "3 · The Big Assumptions to Watch",
+      "title_ar": "3 · الافتراضات الكبرى الواجب مراقبتها"
+    },
+    {
+      "key": "practice",
+      "title_en": "4 · Why Assumptions Matter in Business",
+      "title_ar": "4 · لماذا تهمّ الافتراضات فى الأعمال"
+    },
+    {
+      "key": "traps",
+      "title_en": "5 · Common Traps",
+      "title_ar": "5 · الفخاخ الشائعة"
+    }
+  ],
+  "formulas": [],
+  "examples": [],
+  "memory_aid": [
+    {
+      "en": "Every test has assumptions. State them. Check them. Wrong assumptions = wrong p-values.",
+      "ar": "كل اختبار له افتراضات. اذكرها. افحصها. الافتراضات الخاطئة = قيم p خاطئة."
+    }
+  ],
+  "summary": {
+    "en": "Inferential statistics is only as trustworthy as its assumptions. A perfect calculation built on bad assumptions gives confidently wrong answers. The professional skill is not just running tests but examining whether each test's assumptions actually hold in your specific data.",
+    "ar": "الإحصاء الاستدلالى موثوق بقدر افتراضاته. حسابات مثالية فوق افتراضات خاطئة تعطى إجابات خاطئة بثقة. المهارة الاحترافية ليست تشغيل الاختبارات فقط، بل فحص ما إذا كانت افتراضات الاختبار صحيحة فى بياناتك تحديداً."
+  },
+  "quiz": [
+    {
+      "id": "M02-L05-Q1",
+      "topic": "M02-L05",
+      "type": "MCQ",
+      "q_en": "Different inferential approaches sometimes give different answers on the same data because:",
+      "q_ar": "المناهج الاستدلالية المختلفة تعطى أحياناً إجابات مختلفة على نفس البيانات لأن:",
+      "opts_en": [
+        "The math is wrong",
+        "They rest on different assumptions",
+        "Statistics is broken",
+        "Random chance"
+      ],
+      "opts_ar": [
+        "الرياضيات خاطئة",
+        "تقوم على افتراضات مختلفة",
+        "الإحصاء معطّل",
+        "الصدفة"
+      ],
+      "ans": "B",
+      "exp_en": "Assumptions, not math, drive the divergence.",
+      "exp_ar": "الافتراضات لا الرياضيات هى السبب فى الاختلاف.",
+      "formula_used": ""
+    },
+    {
+      "id": "M02-L05-Q2",
+      "topic": "M02-L05",
+      "type": "TrueFalse",
+      "q_en": "True or False: A test with valid math always gives valid conclusions.",
+      "q_ar": "صح أم خطأ: الاختبار صحيح الرياضيات يعطى استنتاجات صحيحة دائماً.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "If the assumptions don't hold, the conclusions are wrong regardless of math.",
+      "exp_ar": "إذا لم تتحقق الافتراضات، الاستنتاجات خاطئة مهما صحّت الرياضيات.",
+      "formula_used": ""
+    },
+    {
+      "id": "M02-L05-Q3",
+      "topic": "M02-L05",
+      "type": "MCQ",
+      "q_en": "Which is NOT a typical assumption in frequentist hypothesis tests?",
+      "q_ar": "أى مما يلى ليس افتراضاً نموذجياً فى اختبارات الفرضيات التكرارية؟",
+      "opts_en": [
+        "Random sampling",
+        "Independence",
+        "Normality (often)",
+        "The analyst believes the result"
+      ],
+      "opts_ar": [
+        "عشوائية العينة",
+        "الاستقلال",
+        "التوزيع الطبيعى (غالباً)",
+        "يعتقد المحلل بالنتيجة"
+      ],
+      "ans": "D",
+      "exp_en": "The analyst's beliefs are not a statistical assumption.",
+      "exp_ar": "معتقدات المحلل ليست افتراضاً إحصائياً.",
+      "formula_used": ""
+    },
+    {
+      "id": "M02-L05-Q4",
+      "topic": "M02-L05",
+      "type": "MCQ",
+      "q_en": "A bank's credit-risk model assumed defaults were independent. In 2008 this assumption broke because:",
+      "q_ar": "نموذج مخاطر ائتمان بنكى افترض أن التعثرات مستقلة. فى 2008 انكسر هذا الافتراض لأن:",
+      "opts_en": [
+        "The math was wrong",
+        "Defaults clustered together during the crash",
+        "Banks stopped using statistics",
+        "Customers became smarter"
+      ],
+      "opts_ar": [
+        "كانت الرياضيات خاطئة",
+        "تجمعت حالات التعثر فى الانهيار",
+        "تخلّت البنوك عن الإحصاء",
+        "أصبح العملاء أذكى"
+      ],
+      "ans": "B",
+      "exp_en": "Systemic shock broke independence — defaults correlated heavily across borrowers.",
+      "exp_ar": "الصدمة النظامية كسرت الاستقلال — ارتبطت التعثرات بشدة بين المقترضين.",
+      "formula_used": ""
+    },
+    {
+      "id": "M02-L05-Q5",
+      "topic": "M02-L05",
+      "type": "MCQ",
+      "q_en": "The best response when you suspect an assumption is violated is:",
+      "q_ar": "الاستجابة الأفضل حين تشك فى انتهاك افتراض هى:",
+      "opts_en": [
+        "Ignore it - the test is robust",
+        "Run the test anyway and report the p-value",
+        "Diagnose, fix data, or switch to a method that fits",
+        "Stop doing statistics"
+      ],
+      "opts_ar": [
+        "تجاهلها - الاختبار قوى",
+        "شغّل الاختبار وأبلغ عن قيمة p",
+        "شخّص، عالج البيانات، أو غيّر المنهج",
+        "توقف عن الإحصاء"
+      ],
+      "ans": "C",
+      "exp_en": "Diagnose → repair → re-run, or switch methods.",
+      "exp_ar": "شخّص ← عالج ← أعد التشغيل، أو غيّر المنهج.",
+      "formula_used": ""
+    }
+  ],
+  "created": "2026-05-16"
+}

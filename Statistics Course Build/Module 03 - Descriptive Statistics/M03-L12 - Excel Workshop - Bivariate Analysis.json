@@ -1,0 +1,175 @@
+{
+  "id": "M03-L12",
+  "module": 3,
+  "type": "lesson",
+  "title_en": "Excel Workshop - Bivariate Analysis",
+  "title_ar": "ورشة Excel - التحليل ثنائى المتغير",
+  "objectives_en": [
+    "Compute correlation in Excel.",
+    "Build a scatter plot.",
+    "Run simple linear regression and read the output."
+  ],
+  "objectives_ar": [
+    "حساب الارتباط فى Excel.",
+    "بناء مخطط تشتت.",
+    "تشغيل انحدار خطى بسيط وقراءة المخرجات."
+  ],
+  "sources": [
+    "03 Descriptive Statistics/Excel - Bivariate Analysis.mp4",
+    "Workbook: 02 - Descriptive Statistics.xlsx (Bivariate sheet)",
+    "Solution: 02 - Complete - Descriptive Statistics.xlsx"
+  ],
+  "sections": [
+    {
+      "key": "intro",
+      "title_en": "1 · From Theory to Spreadsheet",
+      "title_ar": "1 · من النظرية إلى الجدول"
+    },
+    {
+      "key": "concept",
+      "title_en": "2 · Step-by-Step Workflow",
+      "title_ar": "2 · سير العمل خطوة بخطوة"
+    },
+    {
+      "key": "interpret",
+      "title_en": "3 · Understanding R²",
+      "title_ar": "3 · فهم R²"
+    },
+    {
+      "key": "practice",
+      "title_en": "4 · Bring This Anywhere",
+      "title_ar": "4 · طبّقها فى أى مكان"
+    },
+    {
+      "key": "formulas",
+      "title_en": "5 · Excel Function Reference",
+      "title_ar": "5 · مرجع دوال Excel"
+    }
+  ],
+  "formulas": [],
+  "examples": [],
+  "memory_aid": [
+    {
+      "en": "CORREL → scatter + trendline → Regression in ToolPak. Three clicks tell the whole story.",
+      "ar": "CORREL ← مخطط تشتت + خط ← Regression فى ToolPak. ثلاث نقرات تروى القصة."
+    }
+  ],
+  "summary": {
+    "en": "Excel gives you a complete bivariate workflow in minutes: =CORREL for the coefficient, a scatter plot with trendline for the shape, and Data → Regression for the full output (R², coefficients, p-values). Practise on the course workbook with Volume vs Change (r ≈ −0.244), then apply this to your own business data.",
+    "ar": "Excel يعطيك سير عمل ثنائى المتغير كاملاً فى دقائق: =CORREL للمعامل، مخطط تشتت مع خط للشكل، و Data → Regression للمخرجات الكاملة (R²، معاملات، قيم p). تدرّب على ملف الدورة بـ الحجم مقابل التغير (r ≈ −0.244)، ثم طبّق هذا على بياناتك."
+  },
+  "quiz": [
+    {
+      "id": "M03-L12-Q1",
+      "topic": "M03-L12",
+      "type": "MCQ",
+      "q_en": "To get correlation in Excel:",
+      "q_ar": "للحصول على الارتباط فى Excel:",
+      "opts_en": [
+        "=CORREL(X,Y)",
+        "=AVERAGE(X,Y)",
+        "=SUM(X*Y)",
+        "=DEVSQ(X)"
+      ],
+      "opts_ar": [
+        "=CORREL(X,Y)",
+        "=AVERAGE(X,Y)",
+        "=SUM(X*Y)",
+        "=DEVSQ(X)"
+      ],
+      "ans": "A",
+      "exp_en": "CORREL returns Pearson r.",
+      "exp_ar": "CORREL يعيد r لبيرسون.",
+      "formula_used": ""
+    },
+    {
+      "id": "M03-L12-Q2",
+      "topic": "M03-L12",
+      "type": "MCQ",
+      "q_en": "In =SLOPE(A,B), which range is Y?",
+      "q_ar": "فى =SLOPE(A,B)، أيهما Y؟",
+      "opts_en": [
+        "A (first)",
+        "B (second)",
+        "Either",
+        "Neither"
+      ],
+      "opts_ar": [
+        "A (الأول)",
+        "B (الثانى)",
+        "أى",
+        "لا أحد"
+      ],
+      "ans": "A",
+      "exp_en": "In SLOPE and INTERCEPT, Y comes first, then X.",
+      "exp_ar": "فى SLOPE و INTERCEPT، Y أولاً ثم X.",
+      "formula_used": ""
+    },
+    {
+      "id": "M03-L12-Q3",
+      "topic": "M03-L12",
+      "type": "MCQ",
+      "q_en": "R² = 0.85 means:",
+      "q_ar": "R² = 0.85 يعنى:",
+      "opts_en": [
+        "X causes 85% of Y",
+        "X explains 85% of Y's variance",
+        "85% chance the relationship is real",
+        "R = 0.85"
+      ],
+      "opts_ar": [
+        "X يسبب 85% من Y",
+        "X يفسّر 85% من تباين Y",
+        "85% احتمال العلاقة حقيقية",
+        "R = 0.85"
+      ],
+      "ans": "B",
+      "exp_en": "R² is variance explained, not causation, not the same as r.",
+      "exp_ar": "R² تباين مُفسَّر، ليس سببية، ليس مثل r.",
+      "formula_used": ""
+    },
+    {
+      "id": "M03-L12-Q4",
+      "topic": "M03-L12",
+      "type": "Calc",
+      "q_en": "If r = 0.6, R² = ?",
+      "q_ar": "إذا كان r = 0.6، فما R²؟",
+      "opts_en": [
+        "0.6",
+        "0.36",
+        "0.4",
+        "0.8"
+      ],
+      "opts_ar": [
+        "0.6",
+        "0.36",
+        "0.4",
+        "0.8"
+      ],
+      "ans": "B",
+      "exp_en": "R² = r² = 0.6² = 0.36.",
+      "exp_ar": "R² = r² = 0.6² = 0.36.",
+      "formula_used": ""
+    },
+    {
+      "id": "M03-L12-Q5",
+      "topic": "M03-L12",
+      "type": "TrueFalse",
+      "q_en": "True or False: A scatter plot is essential before trusting a correlation number.",
+      "q_ar": "صح أم خطأ: مخطط التشتت ضرورى قبل الوثوق برقم الارتباط.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "A",
+      "exp_en": "Always visualise — outliers and curves are invisible in r alone.",
+      "exp_ar": "ارسم دائماً — المتطرفات والمنحنيات غير مرئية فى r وحده.",
+      "formula_used": ""
+    }
+  ],
+  "created": "2026-05-16"
+}

@@ -1,0 +1,206 @@
+{
+  "id": "M06-L01",
+  "module": 6,
+  "type": "lesson",
+  "title_en": "Course Summary and the Statistical Toolbox",
+  "title_ar": "ملخص الدورة وصندوق الأدوات الإحصائية",
+  "objectives_en": [
+    "Review the full arc of the course in one lesson.",
+    "Match each business question to the right tool from the toolbox.",
+    "Take an honest look at the frequentist approach's strengths and weaknesses.",
+    "Know your next steps after this course."
+  ],
+  "objectives_ar": [
+    "مراجعة الدورة كاملة فى درس واحد.",
+    "ربط كل سؤال أعمال بالأداة المناسبة من الصندوق.",
+    "نظرة أمينة على نقاط قوة وضعف المنهج التكرارى.",
+    "معرفة الخطوات التالية بعد الدورة."
+  ],
+  "sources": [
+    "06 Conclusion/Course Summary.mp4",
+    "Slides PDF: page 80 (Chapter Review)"
+  ],
+  "sections": [
+    {
+      "key": "intro",
+      "title_en": "1 · The Arc You've Travelled",
+      "title_ar": "1 · الرحلة التى قطعتها"
+    },
+    {
+      "key": "concept",
+      "title_en": "2 · The Statistical Toolbox Decision Flow",
+      "title_ar": "2 · مسار قرار صندوق الأدوات"
+    },
+    {
+      "key": "example",
+      "title_en": "3 · The Toolbox by Business Question",
+      "title_ar": "3 · صندوق الأدوات حسب السؤال"
+    },
+    {
+      "key": "interpret",
+      "title_en": "4 · Honest Strengths and Weaknesses of the Frequentist Approach",
+      "title_ar": "4 · نقاط قوة وضعف المنهج التكرارى"
+    },
+    {
+      "key": "practice",
+      "title_en": "5 · What This Course Did NOT Cover (and Where to Go Next)",
+      "title_ar": "5 · ما لم تغطه الدورة (والوجهة التالية)"
+    },
+    {
+      "key": "traps",
+      "title_en": "6 · A Working Analyst's Philosophy",
+      "title_ar": "6 · فلسفة المحلل العامل"
+    },
+    {
+      "key": "summary",
+      "title_en": "7 · A Final Word",
+      "title_ar": "7 · كلمة أخيرة"
+    }
+  ],
+  "formulas": [],
+  "examples": [],
+  "memory_aid": [
+    {
+      "en": "Describe → Infer → Decide. That's all statistics, in three words.",
+      "ar": "صف ← استدل ← قرّر. هذا كل الإحصاء فى ثلاث كلمات."
+    },
+    {
+      "en": "The right tool depends on the question — not on what you happen to know.",
+      "ar": "الأداة الصحيحة تعتمد على السؤال — لا على ما تعرفه صدفة."
+    },
+    {
+      "en": "p-value never proves anything. It just measures how surprised H0 should be.",
+      "ar": "قيمة p لا تثبت شيئاً. تقيس فقط كم يجب أن تتفاجأ H0."
+    },
+    {
+      "en": "Effect size matters more than p. Always report both.",
+      "ar": "حجم التأثير أهم من p. اذكرهما معاً دائماً."
+    },
+    {
+      "en": "Random > big. A small random sample beats a huge biased one.",
+      "ar": "العشوائية > الحجم. عينة صغيرة عشوائية تفوز على ضخمة متحيزة."
+    }
+  ],
+  "summary": {
+    "en": "You've walked the full statistical landscape: from describing data, to inferring from samples, to running formal hypothesis tests. Match the question to the tool: descriptive for KPIs, inferential for single big decisions, machine learning for automated decisions at scale. The frequentist approach you mastered is the industry default — objective, well-supported, hungry for data. It is not the only approach (Bayesian and non-parametric methods extend it), but it is the foundation everything else builds on. The hardest part of becoming a real analyst isn't the math — it's the discipline of pre-registering, reporting effect size, and resisting the urge to manipulate data until it says what you want.",
+    "ar": "لقد جلت المشهد الإحصائى كاملاً: من وصف البيانات، إلى الاستدلال من العينات، إلى تشغيل اختبارات فرضيات رسمية. اربط السؤال بالأداة: وصفى للمؤشرات، استدلالى للقرارات الكبيرة الفردية، تعلم آلى للقرارات الآلية على نطاق واسع. المنهج التكرارى الذى أتقنته هو افتراضى الصناعة — موضوعى، مدعوم بقوة، نهم للبيانات. ليس المنهج الوحيد (البيزى واللاباراميترى يمدّانه)، لكنه الأساس الذى يبنى عليه كل ما عداه. أصعب جزء فى أن تصبح محللاً حقيقياً ليس الرياضيات — بل انضباط التسجيل المسبق، وذكر حجم التأثير، ومقاومة إغراء التلاعب بالبيانات."
+  },
+  "quiz": [
+    {
+      "id": "M06-L01-Q1",
+      "topic": "M06-L01",
+      "type": "MCQ",
+      "q_en": "Which is descriptive, NOT inferential?",
+      "q_ar": "أى مما يلى وصفى، لا استدلالى؟",
+      "opts_en": [
+        "Computing last month's average revenue from full records",
+        "Estimating population mean from a sample",
+        "Running an A/B test",
+        "Computing a p-value"
+      ],
+      "opts_ar": [
+        "حساب متوسط إيراد الشهر الماضى من السجلات الكاملة",
+        "تقدير متوسط المجتمع من عينة",
+        "تشغيل اختبار A/B",
+        "حساب قيمة p"
+      ],
+      "ans": "A",
+      "exp_en": "Computing a value from full data on hand is descriptive.",
+      "exp_ar": "حساب قيمة من البيانات الموجودة وصفى.",
+      "formula_used": ""
+    },
+    {
+      "id": "M06-L01-Q2",
+      "topic": "M06-L01",
+      "type": "MCQ",
+      "q_en": "A right-skewed business metric (like revenue per customer) is best summarised with:",
+      "q_ar": "مقياس أعمال منحرف يميناً (مثل الإيراد لكل عميل) يلخّص أفضل بـ:",
+      "opts_en": [
+        "Mean only",
+        "Median (and mention mean for context)",
+        "Range only",
+        "Standard deviation only"
+      ],
+      "opts_ar": [
+        "المتوسط فقط",
+        "الوسيط (مع ذكر المتوسط)",
+        "المدى فقط",
+        "الانحراف المعيارى فقط"
+      ],
+      "ans": "B",
+      "exp_en": "Median resists the long right tail. Mean alone misleads.",
+      "exp_ar": "الوسيط مقاوم للذيل الأيمن. المتوسط وحده مضلّل.",
+      "formula_used": ""
+    },
+    {
+      "id": "M06-L01-Q3",
+      "topic": "M06-L01",
+      "type": "MCQ",
+      "q_en": "Power of a test is increased most reliably by:",
+      "q_ar": "قوة الاختبار تُزاد بشكل موثوق بـ:",
+      "opts_en": [
+        "Lowering alpha",
+        "Increasing sample size",
+        "Changing the alternative",
+        "Picking nicer colours"
+      ],
+      "opts_ar": [
+        "خفض ألفا",
+        "زيادة n",
+        "تغيير البديلة",
+        "ألوان أجمل"
+      ],
+      "ans": "B",
+      "exp_en": "Bigger n is the universal lever for power.",
+      "exp_ar": "n أكبر هى الذراع العالمية للقوة.",
+      "formula_used": ""
+    },
+    {
+      "id": "M06-L01-Q4",
+      "topic": "M06-L01",
+      "type": "MCQ",
+      "q_en": "An A/B test on millions of users shows p = 0.0001 with a +0.05% conversion lift. The honest report says:",
+      "q_ar": "اختبار A/B على ملايين المستخدمين p=0.0001 لكن +0.05% فقط. التقرير الأمين يقول:",
+      "opts_en": [
+        "Big effect, roll out",
+        "Statistically significant but practically tiny — decide based on cost/benefit",
+        "Re-run the test",
+        "Discard the result"
+      ],
+      "opts_ar": [
+        "تأثير كبير، أطلق",
+        "ذو دلالة إحصائية لكن ضئيل عملياً — قرّر بحسب التكلفة/الفائدة",
+        "أعد التشغيل",
+        "تجاهل"
+      ],
+      "ans": "B",
+      "exp_en": "Statistical significance ≠ business value.",
+      "exp_ar": "الدلالة الإحصائية ≠ القيمة التجارية.",
+      "formula_used": ""
+    },
+    {
+      "id": "M06-L01-Q5",
+      "topic": "M06-L01",
+      "type": "MCQ",
+      "q_en": "A non-statistical decision-maker asks: 'Should we launch?' Your job as analyst is to:",
+      "q_ar": "صانع قرار غير متخصص يسأل: 'هل نطلق؟' دورك كمحلل:",
+      "opts_en": [
+        "Hand them a p-value and walk away",
+        "Translate the test result into a clear business recommendation with uncertainty",
+        "Refuse to answer until they learn statistics",
+        "Always recommend launch"
+      ],
+      "opts_ar": [
+        "أعطه قيمة p وامش",
+        "ترجم النتيجة لتوصية أعمال واضحة مع عدم اليقين",
+        "ارفض حتى يتعلم الإحصاء",
+        "انصح بالإطلاق دائماً"
+      ],
+      "ans": "B",
+      "exp_en": "Statistics serves business decisions, not the other way around.",
+      "exp_ar": "الإحصاء يخدم قرارات الأعمال، لا العكس.",
+      "formula_used": ""
+    }
+  ],
+  "created": "2026-05-16"
+}

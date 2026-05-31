@@ -1,4 +1,4 @@
-﻿[build-system]
+[build-system]
 requires = ["setuptools>=64"]
 build-backend = "setuptools.build_meta"
 
@@ -34,6 +34,7 @@ dependencies = [
   "matplotlib>=3.6",
   "seaborn>=0.12",
   "plotly>=5.10",
+  "scipy>=1.10",
 ]
 
 [project.optional-dependencies]
@@ -47,6 +48,11 @@ dev = [
 notebook = [
   "jupyter>=1.0",
   "ipykernel>=6.0",
+]
+# Phase 5 model-based selectors (importance, rfe) and relevance(method=
+# 'mutualinfo') import scikit-learn lazily; install this extra to enable them.
+ml = [
+  "scikit-learn>=1.1",
 ]
 
 [project.urls]
@@ -73,4 +79,5 @@ target-version = "py39"
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "B", "UP"]
 ignore = ["E501"]
+
 

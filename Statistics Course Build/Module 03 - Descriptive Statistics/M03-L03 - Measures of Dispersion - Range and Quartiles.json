@@ -1,0 +1,215 @@
+{
+  "id": "M03-L03",
+  "module": 3,
+  "type": "lesson",
+  "title_en": "Measures of Dispersion - Range and Quartiles",
+  "title_ar": "مقاييس التشتت - المدى والربيعيات",
+  "objectives_en": [
+    "Calculate Min, Max, Range, and Quartiles.",
+    "Compute and interpret the Interquartile Range (IQR).",
+    "Spot outliers with the 1.5 × IQR rule."
+  ],
+  "objectives_ar": [
+    "حساب الحد الأدنى والأقصى والمدى والربيعيات.",
+    "حساب وتفسير المدى الربيعى (IQR).",
+    "اكتشاف القيم المتطرفة بقاعدة 1.5 × IQR."
+  ],
+  "sources": [
+    "03 Descriptive Statistics/Measures of Dispersion.mp4",
+    "Slides PDF: pages 21-23",
+    "Glossary: Range, Standard Deviation"
+  ],
+  "sections": [
+    {
+      "key": "intro",
+      "title_en": "1 · Why Spread Matters",
+      "title_ar": "1 · لماذا الانتشار مهم"
+    },
+    {
+      "key": "definitions",
+      "title_en": "2 · The Spread Family",
+      "title_ar": "2 · عائلة التشتت"
+    },
+    {
+      "key": "formulas",
+      "title_en": "3 · Formulas",
+      "title_ar": "3 · الصيغ"
+    },
+    {
+      "key": "example",
+      "title_en": "4 · Worked Example - Customer Ages",
+      "title_ar": "4 · مثال محلول - أعمار العملاء"
+    },
+    {
+      "key": "practice",
+      "title_en": "5 · Business Uses",
+      "title_ar": "5 · استخدامات أعمال"
+    },
+    {
+      "key": "traps",
+      "title_en": "6 · Common Traps",
+      "title_ar": "6 · الفخاخ الشائعة"
+    }
+  ],
+  "formulas": [
+    {
+      "id": "F-M03-L03-01",
+      "name_en": "Range",
+      "name_ar": "المدى",
+      "expr": "Range = Max − Min",
+      "where_en": "Spread of full data",
+      "where_ar": "انتشار البيانات كاملاً",
+      "when_en": "Quick first look; small data.",
+      "when_ar": "نظرة أولى سريعة؛ بيانات صغيرة."
+    },
+    {
+      "id": "F-M03-L03-02",
+      "name_en": "IQR",
+      "name_ar": "المدى الربيعى",
+      "expr": "IQR = Q3 − Q1",
+      "where_en": "Robust spread (middle 50%)",
+      "where_ar": "تشتت مقاوم للنصف الأوسط",
+      "when_en": "Skewed data or outliers present.",
+      "when_ar": "بيانات منحرفة أو فيها متطرفات."
+    },
+    {
+      "id": "F-M03-L03-03",
+      "name_en": "Outlier fence",
+      "name_ar": "حد القيم المتطرفة",
+      "expr": "Lower: Q1 − 1.5·IQR  ·  Upper: Q3 + 1.5·IQR",
+      "where_en": "1.5 × IQR rule",
+      "where_ar": "قاعدة 1.5 × IQR",
+      "when_en": "Identifying outliers in skewed data.",
+      "when_ar": "لاكتشاف المتطرفات فى بيانات منحرفة."
+    }
+  ],
+  "examples": [],
+  "memory_aid": [
+    {
+      "en": "Range = Max − Min (sensitive). IQR = Q3 − Q1 (robust).",
+      "ar": "المدى = الأقصى − الأدنى (حسّاس). IQR = Q3 − Q1 (مقاوم)."
+    },
+    {
+      "en": "Outlier fence: 1.5 × IQR beyond Q1 or Q3.",
+      "ar": "حد المتطرفات: 1.5 × IQR خارج Q1 أو Q3."
+    }
+  ],
+  "summary": {
+    "en": "Range and IQR both measure spread, but they're not interchangeable. Range is simple and sensitive — one outlier blows it up. IQR is robust — it ignores extremes and shows the spread of the middle 50%. In real-world business data (often skewed), IQR is your trustworthy companion, and the 1.5×IQR rule flags suspect values.",
+    "ar": "المدى و IQR يقيسان التشتت لكنهما ليسا متبادلَين. المدى بسيط وحسّاس — قيمة متطرفة واحدة تفجّره. IQR مقاوم — يتجاهل الأطراف ويظهر تشتت النصف الأوسط 50%. فى بيانات الأعمال (غالباً منحرفة)، IQR هو رفيقك الموثوق، وقاعدة 1.5×IQR ترصد القيم المشبوهة."
+  },
+  "quiz": [
+    {
+      "id": "M03-L03-Q1",
+      "topic": "M03-L03",
+      "type": "Calc",
+      "q_en": "Data: 5, 7, 8, 11, 14, 17, 22. What is the Range?",
+      "q_ar": "بيانات: 5, 7, 8, 11, 14, 17, 22. ما المدى؟",
+      "opts_en": [
+        "5",
+        "17",
+        "22",
+        "-17"
+      ],
+      "opts_ar": [
+        "5",
+        "17",
+        "22",
+        "-17"
+      ],
+      "ans": "B",
+      "exp_en": "Max 22 − Min 5 = 17.",
+      "exp_ar": "الأقصى 22 − الأدنى 5 = 17.",
+      "formula_used": "Range = Max − Min"
+    },
+    {
+      "id": "M03-L03-Q2",
+      "topic": "M03-L03",
+      "type": "MCQ",
+      "q_en": "The IQR represents the spread of:",
+      "q_ar": "IQR يمثل تشتت:",
+      "opts_en": [
+        "The whole dataset",
+        "The middle 50% of data",
+        "The bottom 25%",
+        "The top 25%"
+      ],
+      "opts_ar": [
+        "كل البيانات",
+        "النصف الأوسط 50% من البيانات",
+        "الأدنى 25%",
+        "الأعلى 25%"
+      ],
+      "ans": "B",
+      "exp_en": "IQR = Q3 − Q1 captures the middle half.",
+      "exp_ar": "IQR يلتقط النصف الأوسط.",
+      "formula_used": ""
+    },
+    {
+      "id": "M03-L03-Q3",
+      "topic": "M03-L03",
+      "type": "Calc",
+      "q_en": "If Q1 = 20 and Q3 = 50, what is the IQR and which values are outliers?",
+      "q_ar": "إذا كان Q1 = 20 و Q3 = 50، فما IQR وأى القيم متطرفة؟",
+      "opts_en": [
+        "IQR=30; outliers below -25 or above 95",
+        "IQR=70; outliers below 0 or above 100",
+        "IQR=30; outliers above 50 only",
+        "IQR=10; outliers any value"
+      ],
+      "opts_ar": [
+        "IQR=30؛ متطرفات أقل من -25 أو أكبر من 95",
+        "IQR=70؛ متطرفات أقل من 0 أو أكبر من 100",
+        "IQR=30؛ متطرفات فوق 50 فقط",
+        "IQR=10؛ متطرفات أى قيمة"
+      ],
+      "ans": "A",
+      "exp_en": "IQR=30. Lower fence=20−45=−25. Upper=50+45=95.",
+      "exp_ar": "IQR=30. حد سفلى=20−45=−25. علوى=50+45=95.",
+      "formula_used": ""
+    },
+    {
+      "id": "M03-L03-Q4",
+      "topic": "M03-L03",
+      "type": "TrueFalse",
+      "q_en": "True or False: Range is more resistant to outliers than IQR.",
+      "q_ar": "صح أم خطأ: المدى أكثر مقاومة للمتطرفات من IQR.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "Range USES the extremes; IQR ignores them.",
+      "exp_ar": "المدى يستخدم الأطراف، IQR يتجاهلها.",
+      "formula_used": ""
+    },
+    {
+      "id": "M03-L03-Q5",
+      "topic": "M03-L03",
+      "type": "MCQ",
+      "q_en": "Two stores have the same average daily revenue. Store A's range is $5,000; Store B's range is $25,000. What does this say?",
+      "q_ar": "متجران لهما نفس متوسط الإيرادات اليومية. مدى A = 5,000 دولار؛ مدى B = 25,000. ماذا يعنى ذلك؟",
+      "opts_en": [
+        "A has more variability",
+        "B has more variability — less predictable",
+        "They're identical",
+        "Range doesn't tell us anything"
+      ],
+      "opts_ar": [
+        "A أكثر تباين",
+        "B أكثر تباين — أقل قدرة على التنبؤ",
+        "متطابقان",
+        "المدى لا يخبرنا بشىء"
+      ],
+      "ans": "B",
+      "exp_en": "Wider range = wilder swings = harder to plan staffing, inventory, cash flow.",
+      "exp_ar": "مدى أوسع = تقلبات أعنف = أصعب فى التخطيط للموارد والمخزون والسيولة.",
+      "formula_used": ""
+    }
+  ],
+  "created": "2026-05-16"
+}

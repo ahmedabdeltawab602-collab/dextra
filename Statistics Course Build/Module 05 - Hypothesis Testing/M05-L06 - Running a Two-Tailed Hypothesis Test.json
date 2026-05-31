@@ -1,0 +1,185 @@
+{
+  "id": "M05-L06",
+  "module": 5,
+  "type": "lesson",
+  "title_en": "Running a Two-Tailed Hypothesis Test",
+  "title_ar": "تشغيل اختبار فرضيات ذيلَين",
+  "objectives_en": [
+    "Walk end-to-end through a two-tailed test.",
+    "Use Excel ToolPak (Two-Sample t-test) to compute the result.",
+    "Interpret the output and write a defensible conclusion."
+  ],
+  "objectives_ar": [
+    "المرور من البداية للنهاية باختبار ذيلَين.",
+    "استخدام Excel ToolPak لحساب النتيجة.",
+    "تفسير المخرج وكتابة استنتاج قابل للدفاع."
+  ],
+  "sources": [
+    "05 Hypothesis Testing/Running a Two-Tailed Hypothesis Test.mp4",
+    "Slides PDF: page 71-72",
+    "Workbook: 04 - Hypothesis Testing.xlsx (Two-Tail sheet)"
+  ],
+  "sections": [
+    {
+      "key": "intro",
+      "title_en": "1 · The Setup",
+      "title_ar": "1 · الإعداد"
+    },
+    {
+      "key": "example",
+      "title_en": "2 · The Full Five-Step Walk-Through",
+      "title_ar": "2 · المرور الكامل عبر الخمس خطوات"
+    },
+    {
+      "key": "interpret",
+      "title_en": "3 · The Big Lesson",
+      "title_ar": "3 · الدرس الكبير"
+    },
+    {
+      "key": "practice",
+      "title_en": "4 · Pattern for Any A/B Test",
+      "title_ar": "4 · نمط لأى اختبار A/B"
+    }
+  ],
+  "formulas": [
+    {
+      "id": "F-M05-L06-01",
+      "name_en": "Two-sample t-statistic",
+      "name_ar": "إحصاء t لعينتَين",
+      "expr": "t = (x̄₁ − x̄₂) / √(s₁²/n₁ + s₂²/n₂)",
+      "where_en": "x̄ᵢ = sample means, sᵢ = sample std devs, nᵢ = sample sizes",
+      "where_ar": "x̄ᵢ متوسطات، sᵢ انحرافات، nᵢ أحجام",
+      "when_en": "Comparing means of two independent groups.",
+      "when_ar": "مقارنة متوسطَى مجموعتَين مستقلتَين."
+    }
+  ],
+  "examples": [],
+  "memory_aid": [
+    {
+      "en": "Two-sample two-tailed t-test = the everyday A/B test.",
+      "ar": "اختبار t لعينتَين ذيلَين = اختبار A/B اليومى."
+    },
+    {
+      "en": "Big raw difference ≠ statistical significance. Run the test.",
+      "ar": "فرق خام كبير ≠ دلالة إحصائية. شغّل الاختبار."
+    }
+  ],
+  "summary": {
+    "en": "A two-tailed test compares two groups for any difference. Five steps: state H0/Ha, set alpha, choose the two-sample t-test, compute in Excel ToolPak, read the two-tail p-value, decide. The warranty example shows that a raw 13% mean gap can fail to reject H0 when within-group variance is high — proof that hypothesis testing protects you from spurious conclusions.",
+    "ar": "اختبار ذيلَين يقارن مجموعتَين بحثاً عن أى فرق. خمس خطوات: صِغ H0/Ha، حدد ألفا، اختر اختبار t لعينتَين، احسب فى Excel، اقرأ p ذيلَين، قرر. مثال الضمان يُظهر أن فجوة 13% خام قد تفشل فى رفض H0 حين يكون التباين الداخلى مرتفعاً — دليل على أن اختبار الفرضيات يحميك من الاستنتاجات الزائفة."
+  },
+  "quiz": [
+    {
+      "id": "M05-L06-Q1",
+      "topic": "M05-L06",
+      "type": "MCQ",
+      "q_en": "For comparing two A/B variants' means in Excel, use:",
+      "q_ar": "لمقارنة متوسطَى نسختَى A/B فى Excel، استخدم:",
+      "opts_en": [
+        "F-test",
+        "Z-test for one sample",
+        "t-Test: Two-Sample Assuming Unequal Variances",
+        "Chi-square"
+      ],
+      "opts_ar": [
+        "F-test",
+        "Z-test لعينة واحدة",
+        "t-Test: Two-Sample Assuming Unequal Variances",
+        "Chi-square"
+      ],
+      "ans": "C",
+      "exp_en": "Two-sample t-test is the workhorse for comparing two means.",
+      "exp_ar": "t لعينتَين هو الحصان لمقارنة متوسطَين.",
+      "formula_used": ""
+    },
+    {
+      "id": "M05-L06-Q2",
+      "topic": "M05-L06",
+      "type": "TrueFalse",
+      "q_en": "True or False: A 13% raw gap between means always means statistical significance.",
+      "q_ar": "صح أم خطأ: فجوة 13% خام بين متوسطَين تعنى دلالة إحصائية دائماً.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "Depends on variance and n. Run the test.",
+      "exp_ar": "تعتمد على التباين و n. شغّل الاختبار.",
+      "formula_used": ""
+    },
+    {
+      "id": "M05-L06-Q3",
+      "topic": "M05-L06",
+      "type": "MCQ",
+      "q_en": "The Excel output shows p (two-tail) = 0.08. At α = 0.05:",
+      "q_ar": "مخرج Excel: p ذيلَين = 0.08. عند ألفا = 0.05:",
+      "opts_en": [
+        "Reject H0",
+        "Fail to reject H0",
+        "Inconclusive",
+        "Bug"
+      ],
+      "opts_ar": [
+        "ارفض H0",
+        "لا ترفض H0",
+        "غير حاسم",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "p > α → fail to reject.",
+      "exp_ar": "p > ألفا ← لا ترفض.",
+      "formula_used": ""
+    },
+    {
+      "id": "M05-L06-Q4",
+      "topic": "M05-L06",
+      "type": "Calc",
+      "q_en": "If x̄₁=84, x̄₂=80, s₁=15, s₂=15, n₁=n₂=200. t ≈?",
+      "q_ar": "إذا x̄₁=84، x̄₂=80، s₁=15، s₂=15، n₁=n₂=200. t ≈؟",
+      "opts_en": [
+        "1.0",
+        "2.0",
+        "2.67",
+        "4.0"
+      ],
+      "opts_ar": [
+        "1.0",
+        "2.0",
+        "2.67",
+        "4.0"
+      ],
+      "ans": "C",
+      "exp_en": "(84-80)/√(225/200+225/200) = 4/√2.25 = 4/1.5 ≈ 2.67.",
+      "exp_ar": "(84-80)/√(225/200+225/200) = 4/1.5 ≈ 2.67.",
+      "formula_used": "t = (x̄₁ − x̄₂)/√(s₁²/n₁ + s₂²/n₂)"
+    },
+    {
+      "id": "M05-L06-Q5",
+      "topic": "M05-L06",
+      "type": "MCQ",
+      "q_en": "If you fail to reject H0 in a two-tailed test, you can say:",
+      "q_ar": "إذا فشلت فى رفض H0 فى ذيلَين، يمكنك القول:",
+      "opts_en": [
+        "The variants are equal",
+        "H0 is true",
+        "No evidence of a difference in this test",
+        "Ha is wrong"
+      ],
+      "opts_ar": [
+        "النسختان متساويتان",
+        "H0 صحيحة",
+        "لا دليل على فرق فى هذا الاختبار",
+        "Ha خاطئة"
+      ],
+      "ans": "C",
+      "exp_en": "Defensible language.",
+      "exp_ar": "لغة قابلة للدفاع.",
+      "formula_used": ""
+    }
+  ],
+  "created": "2026-05-16"
+}

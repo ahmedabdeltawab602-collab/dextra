@@ -1,0 +1,64 @@
+{
+  "id": "M04",
+  "module": 4,
+  "type": "module",
+  "title_en": "Inferential Statistics",
+  "title_ar": "الإحصاء الاستدلالى",
+  "lessons": [
+    {
+      "id": "M04-L01",
+      "title_en": "Chapter Introduction - Inferential Statistics",
+      "title_ar": "مقدمة الفصل"
+    },
+    {
+      "id": "M04-L02",
+      "title_en": "Populations and Samples",
+      "title_ar": "المجتمعات والعينات"
+    },
+    {
+      "id": "M04-L03",
+      "title_en": "P-values - The Concept",
+      "title_ar": "قيم p - المفهوم"
+    },
+    {
+      "id": "M04-L04",
+      "title_en": "Calculating P-values",
+      "title_ar": "حساب قيم p"
+    },
+    {
+      "id": "M04-L05",
+      "title_en": "Alphas and Confidence Levels",
+      "title_ar": "ألفا ومستويات الثقة"
+    },
+    {
+      "id": "M04-L06",
+      "title_en": "Proving a Difference vs Rejecting No Difference",
+      "title_ar": "إثبات الفرق مقابل رفض عدم الفرق"
+    },
+    {
+      "id": "M04-L07",
+      "title_en": "Determining Sample Size",
+      "title_ar": "تحديد حجم العينة"
+    },
+    {
+      "id": "M04-L08",
+      "title_en": "The Law of Large Numbers",
+      "title_ar": "قانون الأعداد الكبيرة"
+    },
+    {
+      "id": "M04-L09",
+      "title_en": "The Central Limit Theorem",
+      "title_ar": "نظرية النهاية المركزية"
+    },
+    {
+      "id": "M04-L10",
+      "title_en": "Controlling for Bias in Sampling",
+      "title_ar": "التحكم فى التحيز"
+    }
+  ],
+  "sources": [
+    "04 Inferential Statistics/*",
+    "Slides PDF pages 36-64",
+    "Workbook: 03 - CLT & LLN.xlsx"
+  ]
+}

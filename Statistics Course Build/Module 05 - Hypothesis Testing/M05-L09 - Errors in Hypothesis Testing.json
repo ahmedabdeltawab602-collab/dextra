@@ -1,0 +1,228 @@
+{
+  "id": "M05-L09",
+  "module": 5,
+  "type": "lesson",
+  "title_en": "Errors in Hypothesis Testing",
+  "title_ar": "الأخطاء فى اختبار الفرضيات",
+  "objectives_en": [
+    "Define Type I and Type II errors.",
+    "Understand the trade-off between alpha (α) and beta (β).",
+    "Recognise Power = 1 − β and how to increase it."
+  ],
+  "objectives_ar": [
+    "تعريف الخطأ من النوع الأول والثانى.",
+    "فهم المقايضة بين ألفا (α) و بيتا (β).",
+    "إدراك القوة = 1 − β وكيف تزيدها."
+  ],
+  "sources": [
+    "05 Hypothesis Testing/Errors in Hypothesis Testing.mp4",
+    "Slides PDF: pages 75-78",
+    "Glossary: False Negative"
+  ],
+  "sections": [
+    {
+      "key": "intro",
+      "title_en": "1 · Two Ways to Be Wrong",
+      "title_ar": "1 · طريقتان للخطأ"
+    },
+    {
+      "key": "definitions",
+      "title_en": "2 · The 2×2 Error Table",
+      "title_ar": "2 · جدول الخطأ 2×2"
+    },
+    {
+      "key": "formulas",
+      "title_en": "3 · The Math of α, β, Power",
+      "title_ar": "3 · رياضيات ألفا وبيتا والقوة"
+    },
+    {
+      "key": "example",
+      "title_en": "4 · Worked Example - Justice System Analogy",
+      "title_ar": "4 · مثال محلول - تشبيه القضاء"
+    },
+    {
+      "key": "concept",
+      "title_en": "5 · Increasing Power",
+      "title_ar": "5 · زيادة القوة"
+    },
+    {
+      "key": "practice",
+      "title_en": "6 · Real-World Power Considerations",
+      "title_ar": "6 · اعتبارات القوة الواقعية"
+    },
+    {
+      "key": "traps",
+      "title_en": "7 · Common Traps",
+      "title_ar": "7 · الفخاخ الشائعة"
+    }
+  ],
+  "formulas": [
+    {
+      "id": "F-M05-L09-01",
+      "name_en": "Type I error rate",
+      "name_ar": "معدل الخطأ من النوع الأول",
+      "expr": "α = P(reject H0 | H0 true)",
+      "where_en": "Set by analyst",
+      "where_ar": "يحدّده المحلل",
+      "when_en": "Always.",
+      "when_ar": "دائماً."
+    },
+    {
+      "id": "F-M05-L09-02",
+      "name_en": "Type II error rate",
+      "name_ar": "معدل الخطأ من النوع الثانى",
+      "expr": "β = P(fail to reject H0 | H0 false)",
+      "where_en": "Function of n, effect size, α",
+      "where_ar": "دالة فى n، حجم التأثير، ألفا",
+      "when_en": "Power analysis.",
+      "when_ar": "تحليل القوة."
+    },
+    {
+      "id": "F-M05-L09-03",
+      "name_en": "Power of a test",
+      "name_ar": "قوة الاختبار",
+      "expr": "Power = 1 − β",
+      "where_en": "Often targeted at 0.80",
+      "where_ar": "غالباً يُستهدف 0.80",
+      "when_en": "Designing experiments.",
+      "when_ar": "تصميم التجارب."
+    }
+  ],
+  "examples": [],
+  "memory_aid": [
+    {
+      "en": "Type I = false alarm (reject true H0). Type II = miss the effect (fail to reject false H0).",
+      "ar": "نوع 1 = إنذار كاذب. نوع 2 = فقدان التأثير."
+    },
+    {
+      "en": "α controls Type I. Sample size controls Type II.",
+      "ar": "ألفا يضبط النوع 1. حجم العينة يضبط النوع 2."
+    },
+    {
+      "en": "Power = 1 − β. Industry standard target: 0.80 or higher.",
+      "ar": "القوة = 1 − β. هدف صناعى: 0.80 أو أعلى."
+    }
+  ],
+  "summary": {
+    "en": "Every hypothesis test risks two kinds of error: rejecting a true H0 (Type I, probability = α) or failing to reject a false H0 (Type II, probability = β). Power = 1 − β is the chance of catching a real effect. You control Type I by setting α; you control Type II mainly by sample size. Plan for both — and especially do a Power analysis BEFORE running an underpowered test.",
+    "ar": "كل اختبار فرضيات يخاطر بخطأَين: رفض H0 صحيحة (نوع 1، احتماله ألفا) أو عدم رفض H0 خاطئة (نوع 2، احتماله β). القوة = 1 − β فرصة اصطياد تأثير حقيقى. تتحكم فى النوع 1 بضبط ألفا؛ وفى النوع 2 أساساً بحجم العينة. خطّط لكليهما — وخصوصاً نفّذ تحليل قوة قبل تشغيل اختبار منخفض القوة."
+  },
+  "quiz": [
+    {
+      "id": "M05-L09-Q1",
+      "topic": "M05-L09",
+      "type": "MCQ",
+      "q_en": "A Type I error is:",
+      "q_ar": "الخطأ من النوع الأول:",
+      "opts_en": [
+        "Rejecting H0 when H0 is true",
+        "Failing to reject H0 when H0 is false",
+        "Not running a test",
+        "Using the wrong formula"
+      ],
+      "opts_ar": [
+        "رفض H0 وهى صحيحة",
+        "عدم رفض H0 وهى خاطئة",
+        "عدم تشغيل اختبار",
+        "صيغة خاطئة"
+      ],
+      "ans": "A",
+      "exp_en": "False positive.",
+      "exp_ar": "إيجابى كاذب.",
+      "formula_used": ""
+    },
+    {
+      "id": "M05-L09-Q2",
+      "topic": "M05-L09",
+      "type": "MCQ",
+      "q_en": "A Type II error is also called:",
+      "q_ar": "الخطأ من النوع الثانى يُسمى أيضاً:",
+      "opts_en": [
+        "False positive",
+        "False negative",
+        "Standard error",
+        "Variance"
+      ],
+      "opts_ar": [
+        "إيجابى كاذب",
+        "سالب كاذب",
+        "خطأ معيارى",
+        "تباين"
+      ],
+      "ans": "B",
+      "exp_en": "False negative = missed real effect.",
+      "exp_ar": "سالب كاذب = تأثير حقيقى مفقود.",
+      "formula_used": ""
+    },
+    {
+      "id": "M05-L09-Q3",
+      "topic": "M05-L09",
+      "type": "Calc",
+      "q_en": "Power of a test is defined as:",
+      "q_ar": "قوة الاختبار تُعرَّف بـ:",
+      "opts_en": [
+        "α",
+        "β",
+        "1 − α",
+        "1 − β"
+      ],
+      "opts_ar": [
+        "α",
+        "β",
+        "1 − α",
+        "1 − β"
+      ],
+      "ans": "D",
+      "exp_en": "Power = chance of detecting a real effect = 1 − β.",
+      "exp_ar": "القوة = فرصة كشف تأثير حقيقى = 1 − β.",
+      "formula_used": ""
+    },
+    {
+      "id": "M05-L09-Q4",
+      "topic": "M05-L09",
+      "type": "MCQ",
+      "q_en": "The single best lever to reduce Type II error is:",
+      "q_ar": "أفضل ذراع لتقليل خطأ النوع الثانى:",
+      "opts_en": [
+        "Lower alpha",
+        "Increase sample size n",
+        "Change H0",
+        "Use a different test name"
+      ],
+      "opts_ar": [
+        "خفض ألفا",
+        "زيادة n",
+        "تغيير H0",
+        "اسم اختبار مختلف"
+      ],
+      "ans": "B",
+      "exp_en": "Bigger n = lower β = higher power.",
+      "exp_ar": "n أكبر = β أقل = قوة أعلى.",
+      "formula_used": ""
+    },
+    {
+      "id": "M05-L09-Q5",
+      "topic": "M05-L09",
+      "type": "MCQ",
+      "q_en": "In the justice system analogy, a Type I error is:",
+      "q_ar": "فى تشبيه القضاء، خطأ النوع الأول:",
+      "opts_en": [
+        "A guilty person goes free",
+        "An innocent person is punished",
+        "A trial is delayed",
+        "Defendant doesn't show up"
+      ],
+      "opts_ar": [
+        "مذنب يفلت",
+        "برىء يُعاقب",
+        "تأخير المحاكمة",
+        "غياب المتهم"
+      ],
+      "ans": "B",
+      "exp_en": "Reject 'innocent' when actually innocent = punish innocent.",
+      "exp_ar": "رفض 'برىء' عندما هو فعلاً برىء = معاقبة البرىء.",
+      "formula_used": ""
+    }
+  ],
+  "created": "2026-05-16"
+}

@@ -1,0 +1,199 @@
+{
+  "id": "M03-L10",
+  "module": 3,
+  "type": "lesson",
+  "title_en": "Correlation and the Correlation Coefficient",
+  "title_ar": "الارتباط ومعامل الارتباط",
+  "objectives_en": [
+    "Define correlation and the correlation coefficient r.",
+    "Read r values: strength and direction.",
+    "Avoid the most famous statistical fallacy: correlation ≠ causation."
+  ],
+  "objectives_ar": [
+    "تعريف الارتباط ومعامل الارتباط r.",
+    "قراءة قيم r: القوة والاتجاه.",
+    "تجنّب أشهر مغالطة إحصائية: الارتباط ليس سببية."
+  ],
+  "sources": [
+    "03 Descriptive Statistics/Correlation.mp4",
+    "Slides PDF: pages 32-33",
+    "Glossary: Correlation, Correlation coefficient"
+  ],
+  "sections": [
+    {
+      "key": "intro",
+      "title_en": "1 · One Number That Says A Lot",
+      "title_ar": "1 · رقم واحد يقول الكثير"
+    },
+    {
+      "key": "definitions",
+      "title_en": "2 · The r Scale",
+      "title_ar": "2 · مقياس r"
+    },
+    {
+      "key": "concept",
+      "title_en": "3 · Three Properties of r",
+      "title_ar": "3 · ثلاث خصائص لـ r"
+    },
+    {
+      "key": "example",
+      "title_en": "4 · Worked Example - S&P 500 Volume vs Returns",
+      "title_ar": "4 · مثال محلول - حجم S&P 500 والعوائد"
+    },
+    {
+      "key": "traps",
+      "title_en": "5 · The Three Big Pitfalls",
+      "title_ar": "5 · الفخاخ الثلاثة الكبرى"
+    },
+    {
+      "key": "practice",
+      "title_en": "6 · Business Uses",
+      "title_ar": "6 · استخدامات أعمال"
+    }
+  ],
+  "formulas": [
+    {
+      "id": "F-M03-L10-01",
+      "name_en": "Pearson correlation r",
+      "name_ar": "معامل ارتباط بيرسون",
+      "expr": "r = Σ(xᵢ−x̄)(yᵢ−ȳ) / [(n−1)·sₓ·s_y]",
+      "where_en": "sₓ, s_y are sample std devs",
+      "where_ar": "sₓ, s_y انحرافا العينة",
+      "when_en": "Measuring linear association between two numeric variables.",
+      "when_ar": "قياس علاقة خطية بين متغيرَين رقمَيين."
+    }
+  ],
+  "examples": [],
+  "memory_aid": [
+    {
+      "en": "r ranges from −1 to +1. Sign = direction. Magnitude = strength.",
+      "ar": "r من -1 إلى +1. الإشارة = الاتجاه. الحجم = القوة."
+    },
+    {
+      "en": "Correlation ≠ Causation. Always check for a hidden third variable.",
+      "ar": "الارتباط ليس سببية. ابحث عن متغير ثالث خفى دائماً."
+    },
+    {
+      "en": "Always plot before reporting r. A scatter plot saves you from many fallacies.",
+      "ar": "ارسم قبل أن تعرض r. مخطط التشتت ينقذك من مغالطات كثيرة."
+    }
+  ],
+  "summary": {
+    "en": "Correlation coefficient r is a unit-free, scale-invariant measure of the linear relationship between two variables, bounded by [−1, +1]. It is one of the most useful descriptive statistics — and one of the most abused. Always pair r with a scatter plot, watch for outliers, and never claim causation from correlation alone.",
+    "ar": "معامل الارتباط r مقياس بلا وحدة، ثابت المقياس، للعلاقة الخطية بين متغيرَين، محصور بين -1 و +1. هو واحد من أكثر المقاييس الوصفية فائدة — وأكثرها إساءة استخدام. اربط r دائماً بمخطط تشتت، انتبه للمتطرفات، ولا تدّعى السببية من الارتباط وحده."
+  },
+  "quiz": [
+    {
+      "id": "M03-L10-Q1",
+      "topic": "M03-L10",
+      "type": "MCQ",
+      "q_en": "r = −0.85 means:",
+      "q_ar": "r = −0.85 يعنى:",
+      "opts_en": [
+        "Strong positive linear relationship",
+        "Strong negative linear relationship",
+        "Weak negative",
+        "No linear relationship"
+      ],
+      "opts_ar": [
+        "علاقة خطية موجبة قوية",
+        "علاقة خطية سالبة قوية",
+        "سالبة ضعيفة",
+        "لا علاقة خطية"
+      ],
+      "ans": "B",
+      "exp_en": "|r| close to 1 = strong; negative sign = inverse.",
+      "exp_ar": "|r| قرب 1 = قوى؛ الإشارة السالبة = عكسى.",
+      "formula_used": ""
+    },
+    {
+      "id": "M03-L10-Q2",
+      "topic": "M03-L10",
+      "type": "MCQ",
+      "q_en": "The famous saying about correlation is:",
+      "q_ar": "القول الشهير عن الارتباط:",
+      "opts_en": [
+        "Correlation = Causation",
+        "Correlation implies causation",
+        "Correlation does NOT imply causation",
+        "Correlation is always wrong"
+      ],
+      "opts_ar": [
+        "الارتباط = السببية",
+        "الارتباط يعنى السببية",
+        "الارتباط لا يعنى السببية",
+        "الارتباط دائماً خاطئ"
+      ],
+      "ans": "C",
+      "exp_en": "The classic warning every analyst learns.",
+      "exp_ar": "التحذير الكلاسيكى لكل محلل.",
+      "formula_used": ""
+    },
+    {
+      "id": "M03-L10-Q3",
+      "topic": "M03-L10",
+      "type": "MCQ",
+      "q_en": "A scatter plot shows a clear U-shape. r ≈ 0. What's true?",
+      "q_ar": "مخطط تشتت يظهر شكل U واضح. r ≈ 0. ما الصحيح؟",
+      "opts_en": [
+        "No relationship exists",
+        "A relationship exists but is non-linear",
+        "Data is wrong",
+        "r should be 1"
+      ],
+      "opts_ar": [
+        "لا توجد علاقة",
+        "علاقة موجودة لكنها غير خطية",
+        "البيانات خاطئة",
+        "r يجب أن يكون 1"
+      ],
+      "ans": "B",
+      "exp_en": "r captures linear only. A parabola has near-zero r despite a perfect non-linear relationship.",
+      "exp_ar": "r يلتقط الخطى فقط. القطع المكافئ r ~ 0 رغم وجود علاقة غير خطية مثالية.",
+      "formula_used": ""
+    },
+    {
+      "id": "M03-L10-Q4",
+      "topic": "M03-L10",
+      "type": "Calc",
+      "q_en": "Marketing finds r = 0.92 between TV ad spend and weekly sales. The best conclusion:",
+      "q_ar": "التسويق وجد r = 0.92 بين الإنفاق على إعلانات التلفزيون والمبيعات الأسبوعية. الاستنتاج الأفضل:",
+      "opts_en": [
+        "TV ads cause sales perfectly",
+        "Strong positive linear association; further testing needed for causation",
+        "Coincidence; r doesn't matter",
+        "Stop advertising"
+      ],
+      "opts_ar": [
+        "إعلانات التلفزيون تسبب المبيعات بشكل مثالى",
+        "ارتباط خطى موجب قوى؛ يحتاج اختبار سببية إضافى",
+        "صدفة؛ r لا يهم",
+        "أوقف الإعلانات"
+      ],
+      "ans": "B",
+      "exp_en": "Strong correlation supports investigating, but doesn't prove cause.",
+      "exp_ar": "ارتباط قوى يدعم البحث، لكن لا يثبت السببية.",
+      "formula_used": ""
+    },
+    {
+      "id": "M03-L10-Q5",
+      "topic": "M03-L10",
+      "type": "TrueFalse",
+      "q_en": "True or False: Correlation has the same units as the original variables.",
+      "q_ar": "صح أم خطأ: الارتباط له نفس وحدات المتغيرات الأصلية.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "r is dimensionless (unit-free). That's a huge advantage.",
+      "exp_ar": "r بلا وحدة. وهذه ميزة كبيرة.",
+      "formula_used": ""
+    }
+  ],
+  "created": "2026-05-16"
+}

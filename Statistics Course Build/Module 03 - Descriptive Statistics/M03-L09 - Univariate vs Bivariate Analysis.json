@@ -1,0 +1,169 @@
+{
+  "id": "M03-L09",
+  "module": 3,
+  "type": "lesson",
+  "title_en": "Univariate vs Bivariate Analysis",
+  "title_ar": "التحليل أحادى ومثنوى المتغير",
+  "objectives_en": [
+    "Distinguish univariate from bivariate analysis.",
+    "Choose the right visualisation for each.",
+    "Recognise when a question requires looking at two variables together."
+  ],
+  "objectives_ar": [
+    "التمييز بين التحليل أحادى المتغير ومثنوى المتغير.",
+    "اختيار التصور المناسب لكل منهما.",
+    "إدراك متى يتطلب السؤال النظر فى متغيرَين معاً."
+  ],
+  "sources": [
+    "03 Descriptive Statistics/Univariate vs Bivariate.mp4",
+    "Slides PDF: page 31"
+  ],
+  "sections": [
+    {
+      "key": "intro",
+      "title_en": "1 · From One Variable to Two",
+      "title_ar": "1 · من متغير واحد إلى اثنَين"
+    },
+    {
+      "key": "definitions",
+      "title_en": "2 · Side-by-Side",
+      "title_ar": "2 · جنباً إلى جنب"
+    },
+    {
+      "key": "practice",
+      "title_en": "3 · Why Bivariate Matters in Business",
+      "title_ar": "3 · لماذا يهم الثنائى فى الأعمال"
+    },
+    {
+      "key": "concept",
+      "title_en": "4 · The Visual Workhorse",
+      "title_ar": "4 · حصان العمل البصرى"
+    }
+  ],
+  "formulas": [],
+  "examples": [],
+  "memory_aid": [
+    {
+      "en": "Univariate = one column. Bivariate = two columns + relationship.",
+      "ar": "أحادى = عمود واحد. ثنائى = عمودان + علاقة."
+    }
+  ],
+  "summary": {
+    "en": "Univariate analysis describes one variable; bivariate analysis explores how two variables move together. The pivot from one to the other is the gateway to predicting, correlating, and modelling — which is what the next lessons (correlation, regression) build on.",
+    "ar": "الأحادى يصف متغيراً واحداً؛ الثنائى يستكشف كيف يتحرك متغيران معاً. هذه القفزة هى بوابة التنبؤ والارتباط والنمذجة — وهو ما يبنى عليه الدرس التالى (الارتباط، الانحدار)."
+  },
+  "quiz": [
+    {
+      "id": "M03-L09-Q1",
+      "topic": "M03-L09",
+      "type": "MCQ",
+      "q_en": "Calculating the standard deviation of one column is:",
+      "q_ar": "حساب الانحراف المعيارى لعمود واحد:",
+      "opts_en": [
+        "Bivariate",
+        "Univariate",
+        "Correlation",
+        "Regression"
+      ],
+      "opts_ar": [
+        "ثنائى",
+        "أحادى",
+        "ارتباط",
+        "انحدار"
+      ],
+      "ans": "B",
+      "exp_en": "One variable at a time = univariate.",
+      "exp_ar": "متغير واحد = أحادى.",
+      "formula_used": ""
+    },
+    {
+      "id": "M03-L09-Q2",
+      "topic": "M03-L09",
+      "type": "MCQ",
+      "q_en": "A scatter plot of age vs spend is:",
+      "q_ar": "مخطط تشتت العمر مقابل الإنفاق:",
+      "opts_en": [
+        "Univariate",
+        "Bivariate",
+        "Histogram",
+        "Box plot"
+      ],
+      "opts_ar": [
+        "أحادى",
+        "ثنائى",
+        "رسم تكرار",
+        "صندوقى"
+      ],
+      "ans": "B",
+      "exp_en": "Two variables on two axes = bivariate.",
+      "exp_ar": "متغيران على محورَين = ثنائى.",
+      "formula_used": ""
+    },
+    {
+      "id": "M03-L09-Q3",
+      "topic": "M03-L09",
+      "type": "MCQ",
+      "q_en": "Which question is bivariate?",
+      "q_ar": "أى سؤال ثنائى؟",
+      "opts_en": [
+        "What is the average order value?",
+        "Does discount level affect order value?",
+        "What is the median age?",
+        "What is the mode response?"
+      ],
+      "opts_ar": [
+        "ما متوسط قيمة الطلب؟",
+        "هل يؤثر مستوى الخصم على قيمة الطلب؟",
+        "ما الوسيط العمرى؟",
+        "ما المنوال؟"
+      ],
+      "ans": "B",
+      "exp_en": "Two variables: discount and order value.",
+      "exp_ar": "متغيران: خصم وقيمة طلب.",
+      "formula_used": ""
+    },
+    {
+      "id": "M03-L09-Q4",
+      "topic": "M03-L09",
+      "type": "TrueFalse",
+      "q_en": "True or False: A histogram is a bivariate visualisation.",
+      "q_ar": "صح أم خطأ: الرسم التكرارى تصور ثنائى.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "Histogram shows one variable's distribution = univariate.",
+      "exp_ar": "الرسم التكرارى يظهر توزيع متغير واحد = أحادى.",
+      "formula_used": ""
+    },
+    {
+      "id": "M03-L09-Q5",
+      "topic": "M03-L09",
+      "type": "MCQ",
+      "q_en": "Marketing wants to know which channel drives most signups. They should start with:",
+      "q_ar": "التسويق يريد معرفة أى قناة تأتى بأكبر تسجيلات. يجب البدء بـ:",
+      "opts_en": [
+        "Univariate count of signups",
+        "Bivariate: signups grouped by channel",
+        "Bivariate: signups vs revenue",
+        "Skip statistics"
+      ],
+      "opts_ar": [
+        "عدّ أحادى للتسجيلات",
+        "ثنائى: تسجيلات مجمّعة بالقناة",
+        "ثنائى: تسجيلات مقابل إيرادات",
+        "تخطى الإحصاء"
+      ],
+      "ans": "B",
+      "exp_en": "Channel × signups → bivariate breakdown.",
+      "exp_ar": "قناة × تسجيلات ← تحليل ثنائى.",
+      "formula_used": ""
+    }
+  ],
+  "created": "2026-05-16"
+}

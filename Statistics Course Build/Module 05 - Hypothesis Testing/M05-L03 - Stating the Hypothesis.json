@@ -1,0 +1,184 @@
+{
+  "id": "M05-L03",
+  "module": 5,
+  "type": "lesson",
+  "title_en": "Stating the Hypothesis",
+  "title_ar": "صياغة الفرضيات",
+  "objectives_en": [
+    "Write null (H0) and alternative (Ha) hypotheses correctly.",
+    "Recognise that we test H0, not Ha.",
+    "Translate a business question into a statistical hypothesis pair."
+  ],
+  "objectives_ar": [
+    "كتابة الفرضية الصفرية (H0) والبديلة (Ha) بشكل صحيح.",
+    "إدراك أننا نختبر H0، لا Ha.",
+    "ترجمة سؤال أعمال إلى زوج فرضيات إحصائى."
+  ],
+  "sources": [
+    "05 Hypothesis Testing/Stating the Hypothesis.mp4",
+    "Slides PDF: page 69",
+    "Glossary: Null Hypothesis, Alternative hypothesis"
+  ],
+  "sections": [
+    {
+      "key": "intro",
+      "title_en": "1 · Two Statements, Always",
+      "title_ar": "1 · بيانان دائماً"
+    },
+    {
+      "key": "definitions",
+      "title_en": "2 · The H0 / Ha Pair",
+      "title_ar": "2 · زوج H0 / Ha"
+    },
+    {
+      "key": "example",
+      "title_en": "3 · Worked Example - Warranty Hypotheses",
+      "title_ar": "3 · مثال محلول - فرضيات الضمان"
+    },
+    {
+      "key": "concept",
+      "title_en": "4 · Direction of the Alternative",
+      "title_ar": "4 · اتجاه البديلة"
+    },
+    {
+      "key": "traps",
+      "title_en": "5 · Common Traps",
+      "title_ar": "5 · فخاخ شائعة"
+    },
+    {
+      "key": "practice",
+      "title_en": "6 · Business Examples",
+      "title_ar": "6 · أمثلة أعمال"
+    }
+  ],
+  "formulas": [],
+  "examples": [],
+  "memory_aid": [
+    {
+      "en": "H0 = no effect. Ha = the change we're testing for.",
+      "ar": "H0 = لا تأثير. Ha = التغيير الذى نختبره."
+    },
+    {
+      "en": "Pre-commit to direction. Don't switch one-tail after seeing data.",
+      "ar": "ثبّت الاتجاه مسبقاً. لا تغيّر إلى ذيل واحد بعد رؤية البيانات."
+    }
+  ],
+  "summary": {
+    "en": "The null hypothesis (H0) is the default 'no effect' statement. The alternative (Ha) is what you would conclude if H0 is rejected. Three forms of Ha exist: ≠ (two-tailed), > (right-tailed), < (left-tailed). Always pick H0/Ha — and the direction — BEFORE looking at the data. Writing them clearly is half the battle of a clean hypothesis test.",
+    "ar": "الفرضية الصفرية (H0) هى البيان الافتراضى 'لا تأثير'. البديلة (Ha) هى ما ستستنتجه إذا رُفضت H0. ثلاثة أشكال لـ Ha: ≠ (ذيلَين)، > (ذيل أيمن)، < (ذيل أيسر). اختر دائماً H0/Ha — والاتجاه — قبل النظر للبيانات. كتابتها بوضوح نصف المعركة."
+  },
+  "quiz": [
+    {
+      "id": "M05-L03-Q1",
+      "topic": "M05-L03",
+      "type": "MCQ",
+      "q_en": "The null hypothesis typically states:",
+      "q_ar": "الفرضية الصفرية تذكر عادة:",
+      "opts_en": [
+        "The effect we hope to find",
+        "No effect / no difference",
+        "A strong opinion",
+        "An uncertain guess"
+      ],
+      "opts_ar": [
+        "التأثير الذى نأمل إيجاده",
+        "لا تأثير / لا فرق",
+        "رأى قوى",
+        "تخمين"
+      ],
+      "ans": "B",
+      "exp_en": "H0 is the boring default.",
+      "exp_ar": "H0 الافتراض المملّ.",
+      "formula_used": ""
+    },
+    {
+      "id": "M05-L03-Q2",
+      "topic": "M05-L03",
+      "type": "MCQ",
+      "q_en": "For 'Did the new homepage increase signups above 5%?', Ha is:",
+      "q_ar": "لـ 'هل رفعت الصفحة الجديدة التسجيلات فوق 5%؟'، Ha:",
+      "opts_en": [
+        "p = 0.05",
+        "p ≠ 0.05",
+        "p > 0.05",
+        "p < 0.05"
+      ],
+      "opts_ar": [
+        "p = 0.05",
+        "p ≠ 0.05",
+        "p > 0.05",
+        "p < 0.05"
+      ],
+      "ans": "C",
+      "exp_en": "'Above' = right-sided test.",
+      "exp_ar": "'فوق' = اختبار جانب أيمن.",
+      "formula_used": ""
+    },
+    {
+      "id": "M05-L03-Q3",
+      "topic": "M05-L03",
+      "type": "MCQ",
+      "q_en": "For 'Are revenues of A and B different?', Ha is:",
+      "q_ar": "لـ 'هل إيرادات A و B مختلفة؟'، Ha:",
+      "opts_en": [
+        "μ_A = μ_B",
+        "μ_A ≠ μ_B",
+        "μ_A > μ_B",
+        "μ_A < μ_B"
+      ],
+      "opts_ar": [
+        "μ_A = μ_B",
+        "μ_A ≠ μ_B",
+        "μ_A > μ_B",
+        "μ_A < μ_B"
+      ],
+      "ans": "B",
+      "exp_en": "'Different' = two-tailed ≠.",
+      "exp_ar": "'مختلف' = ذيلَين ≠.",
+      "formula_used": ""
+    },
+    {
+      "id": "M05-L03-Q4",
+      "topic": "M05-L03",
+      "type": "TrueFalse",
+      "q_en": "True or False: You should pick the test direction (one-tail / two-tail) after looking at the data.",
+      "q_ar": "صح أم خطأ: اختيار اتجاه الاختبار بعد النظر للبيانات.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "Pre-register the direction. After-the-fact picking inflates false positives.",
+      "exp_ar": "سجّل الاتجاه مسبقاً. الاختيار اللاحق يضخّم الإيجابيات الكاذبة.",
+      "formula_used": ""
+    },
+    {
+      "id": "M05-L03-Q5",
+      "topic": "M05-L03",
+      "type": "MCQ",
+      "q_en": "A pharmaceutical company tests if their drug LOWERS blood pressure. The right Ha is:",
+      "q_ar": "شركة دواء تختبر هل دواؤها يخفّض ضغط الدم. Ha الصحيحة:",
+      "opts_en": [
+        "μ_after = μ_before",
+        "μ_after > μ_before",
+        "μ_after < μ_before",
+        "μ_after ≠ μ_before"
+      ],
+      "opts_ar": [
+        "μ_after = μ_before",
+        "μ_after > μ_before",
+        "μ_after < μ_before",
+        "μ_after ≠ μ_before"
+      ],
+      "ans": "C",
+      "exp_en": "'Lowers' = left-sided.",
+      "exp_ar": "'يخفض' = جانب أيسر.",
+      "formula_used": ""
+    }
+  ],
+  "created": "2026-05-16"
+}

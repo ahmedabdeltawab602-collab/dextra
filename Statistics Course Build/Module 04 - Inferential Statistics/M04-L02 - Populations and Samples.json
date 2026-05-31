@@ -1,0 +1,183 @@
+{
+  "id": "M04-L02",
+  "module": 4,
+  "type": "lesson",
+  "title_en": "Populations and Samples",
+  "title_ar": "المجتمعات والعينات",
+  "objectives_en": [
+    "Distinguish a population from a sample.",
+    "Understand why random sampling matters more than size.",
+    "See how sampling variation produces different results from different samples."
+  ],
+  "objectives_ar": [
+    "التمييز بين المجتمع والعينة.",
+    "فهم لماذا تكون العشوائية أهم من الحجم.",
+    "رؤية كيف يُنتج التباين فى المعاينة نتائج مختلفة من عينات مختلفة."
+  ],
+  "sources": [
+    "04 Inferential Statistics/Population & Samples.mp4",
+    "Slides PDF: pages 37-38"
+  ],
+  "sections": [
+    {
+      "key": "intro",
+      "title_en": "1 · The Two Worlds",
+      "title_ar": "1 · العالمان"
+    },
+    {
+      "key": "definitions",
+      "title_en": "2 · The Vocabulary",
+      "title_ar": "2 · المفردات"
+    },
+    {
+      "key": "concept",
+      "title_en": "3 · Why Random Matters More Than Size",
+      "title_ar": "3 · لماذا العشوائية أهم من الحجم"
+    },
+    {
+      "key": "example",
+      "title_en": "4 · Worked Example - Sampling Variation",
+      "title_ar": "4 · مثال محلول - تباين المعاينة"
+    },
+    {
+      "key": "practice",
+      "title_en": "5 · Real-World Business Uses",
+      "title_ar": "5 · استخدامات واقعية"
+    },
+    {
+      "key": "traps",
+      "title_en": "6 · Common Trap",
+      "title_ar": "6 · فخّ شائع"
+    }
+  ],
+  "formulas": [],
+  "examples": [],
+  "memory_aid": [
+    {
+      "en": "μ, σ = population (unknown). x̄, s = sample (computed).",
+      "ar": "μ، σ = المجتمع (مجهول). x̄، s = العينة (محسوبة)."
+    },
+    {
+      "en": "Random + large enough = representative. Big and biased = useless.",
+      "ar": "عشوائى + كبير كاف = تمثيلى. كبير ومتحيز = عديم النفع."
+    }
+  ],
+  "summary": {
+    "en": "Inferential statistics relies on samples to learn about populations. The population's parameters (μ, σ) are usually unknown; sample statistics (x̄, s) are our estimates. Random selection is more important than size. Different random samples give different estimates — that's sampling variation, the central problem that p-values and confidence intervals exist to manage.",
+    "ar": "الإحصاء الاستدلالى يعتمد على العينات لمعرفة المجتمعات. معاملات المجتمع (μ، σ) غالباً مجهولة؛ إحصاءات العينة (x̄، s) هى تقديراتنا. الاختيار العشوائى أهم من الحجم. عينات عشوائية مختلفة تعطى تقديرات مختلفة — هذا تباين المعاينة، وهو المشكلة المركزية التى توجد قيم p وفترات الثقة لإدارتها."
+  },
+  "quiz": [
+    {
+      "id": "M04-L02-Q1",
+      "topic": "M04-L02",
+      "type": "MCQ",
+      "q_en": "μ refers to:",
+      "q_ar": "μ تشير إلى:",
+      "opts_en": [
+        "Sample mean",
+        "Population mean",
+        "Sample size",
+        "Population size"
+      ],
+      "opts_ar": [
+        "متوسط العينة",
+        "متوسط المجتمع",
+        "حجم العينة",
+        "حجم المجتمع"
+      ],
+      "ans": "B",
+      "exp_en": "Greek = population.",
+      "exp_ar": "يونانى = مجتمع.",
+      "formula_used": ""
+    },
+    {
+      "id": "M04-L02-Q2",
+      "topic": "M04-L02",
+      "type": "MCQ",
+      "q_en": "A sample that is REPRESENTATIVE of the population is:",
+      "q_ar": "عينة ممثّلة للمجتمع هى:",
+      "opts_en": [
+        "Very large",
+        "Carefully picked friends",
+        "Random and large enough",
+        "Always 30 items"
+      ],
+      "opts_ar": [
+        "كبيرة جداً",
+        "أصدقاء مختارون بعناية",
+        "عشوائية وكبيرة كافية",
+        "30 دائماً"
+      ],
+      "ans": "C",
+      "exp_en": "Random + enough size = representative.",
+      "exp_ar": "عشوائى + حجم كاف = تمثيلى.",
+      "formula_used": ""
+    },
+    {
+      "id": "M04-L02-Q3",
+      "topic": "M04-L02",
+      "type": "TrueFalse",
+      "q_en": "True or False: A large biased sample is generally better than a small random one.",
+      "q_ar": "صح أم خطأ: عينة كبيرة متحيزة عموماً أفضل من صغيرة عشوائية.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "Bias is far more dangerous than small size.",
+      "exp_ar": "التحيز أخطر بكثير من صغر الحجم.",
+      "formula_used": ""
+    },
+    {
+      "id": "M04-L02-Q4",
+      "topic": "M04-L02",
+      "type": "MCQ",
+      "q_en": "Two random samples from the same population give different means because:",
+      "q_ar": "عينتان عشوائيتان من نفس المجتمع تعطيان متوسطات مختلفة لأن:",
+      "opts_en": [
+        "The population changed",
+        "Random chance — sampling variation",
+        "One of them is wrong",
+        "Different units"
+      ],
+      "opts_ar": [
+        "المجتمع تغيّر",
+        "الصدفة العشوائية — تباين المعاينة",
+        "أحدهما خاطئ",
+        "وحدات مختلفة"
+      ],
+      "ans": "B",
+      "exp_en": "Different draws → different points → different means.",
+      "exp_ar": "سحبات مختلفة ← نقاط مختلفة ← متوسطات مختلفة.",
+      "formula_used": ""
+    },
+    {
+      "id": "M04-L02-Q5",
+      "topic": "M04-L02",
+      "type": "MCQ",
+      "q_en": "A bank wants to estimate average loan default rate. Best approach:",
+      "q_ar": "بنك يريد تقدير معدل التعثر. الأفضل:",
+      "opts_en": [
+        "Sample only VIP loans",
+        "Sample only failed loans",
+        "Random sample across all loans",
+        "Use only last month's data"
+      ],
+      "opts_ar": [
+        "عينة قروض VIP فقط",
+        "عينة القروض الفاشلة فقط",
+        "عينة عشوائية من كل القروض",
+        "شهر الماضى فقط"
+      ],
+      "ans": "C",
+      "exp_en": "Representativeness requires randomness across the full population.",
+      "exp_ar": "التمثيلية تتطلب عشوائية عبر المجتمع كاملاً.",
+      "formula_used": ""
+    }
+  ],
+  "created": "2026-05-16"
+}

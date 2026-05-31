@@ -1,0 +1,182 @@
+{
+  "id": "M01-L01",
+  "module": 1,
+  "type": "lesson",
+  "title_en": "Course Introduction & Roadmap",
+  "title_ar": "مقدمة الدورة وخريطة الطريق",
+  "objectives_en": [
+    "Understand what Statistics actually is — and what it's not.",
+    "Recognise how Statistics powers everyday business decisions.",
+    "See the journey: from describing data to testing hypotheses.",
+    "Get familiar with the six modules ahead of you."
+  ],
+  "objectives_ar": [
+    "أن تفهم ما هو الإحصاء حقاً — وما ليس كذلك.",
+    "أن تدرك كيف يقود الإحصاء قرارات الأعمال اليومية.",
+    "أن ترى الرحلة: من وصف البيانات إلى اختبار الفرضيات.",
+    "أن تتعرف على الموديولات الستة القادمة."
+  ],
+  "sources": [
+    "Folder: 01 Introduction/Course Introduction.mp4",
+    "Slides PDF: pages 1–4",
+    "Translation: ترجمة الشريحة.docx pages 1–4",
+    "OpenStax: Chapter 1.1 — Definitions of Statistics"
+  ],
+  "sections": [
+    {
+      "key": "intro",
+      "title_en": "1 · What Is Statistics?",
+      "title_ar": "1 · ما هو الإحصاء؟"
+    },
+    {
+      "key": "definitions",
+      "title_en": "2 · The Three Big Branches",
+      "title_ar": "2 · الفروع الثلاثة الكبرى"
+    },
+    {
+      "key": "concept",
+      "title_en": "3 · Why Statistics Matters in Data Analysis",
+      "title_ar": "3 · لماذا يهمّ الإحصاء فى تحليل البيانات"
+    },
+    {
+      "key": "practice",
+      "title_en": "4 · The Roadmap Ahead",
+      "title_ar": "4 · خريطة الطريق"
+    },
+    {
+      "key": "traps",
+      "title_en": "5 · How to Get the Most Out of This Course",
+      "title_ar": "5 · كيف تستفيد أقصى استفادة من الدورة"
+    }
+  ],
+  "formulas": [],
+  "examples": [],
+  "memory_aid": [
+    {
+      "en": "Statistics = Description + Inference. Description tells you what is. Inference tells you what probably is true beyond what you see.",
+      "ar": "الإحصاء = وصف + استدلال. الوصف يخبرك بما هو موجود. الاستدلال يخبرك بما يُرجَّح أنه صحيح فيما لا تراه."
+    },
+    {
+      "en": "Without statistics, every business decision is a guess wearing a confident smile.",
+      "ar": "بدون الإحصاء، كل قرار عمل هو مجرد تخمين يرتدى ابتسامة واثقة."
+    }
+  ],
+  "summary": {
+    "en": "Statistics is the bridge between raw data and confident decisions. In the six modules ahead, you'll move from describing what you see (mean, std, distribution shape) to inferring what you can't see (population behavior, true effects) to formally testing whether a change is real. Each lesson is bilingual, example-driven, and tied back to real business problems — customers, sales, products, prices.",
+    "ar": "الإحصاء هو الجسر بين البيانات الخام والقرارات الواثقة. عبر الموديولات الستة القادمة، ستنتقل من وصف ما تراه (المتوسط، الانحراف، شكل التوزيع) إلى الاستدلال عمّا لا تراه (سلوك المجتمع، التأثيرات الحقيقية) إلى الاختبار الرسمى لما إذا كان أى تغيير حقيقياً. كل درس ثنائى اللغة، مدعوم بالأمثلة، ومربوط بمشاكل أعمال حقيقية — عملاء، مبيعات، منتجات، أسعار."
+  },
+  "quiz": [
+    {
+      "id": "M01-L01-Q1",
+      "topic": "M01-L01",
+      "type": "MCQ",
+      "q_en": "Statistics is best described as the science of:",
+      "q_ar": "يُوصَف الإحصاء بأنه علم:",
+      "opts_en": [
+        "Memorising large datasets.",
+        "Collecting, summarising, analysing and interpreting data to make decisions.",
+        "Building dashboards in Excel.",
+        "Forecasting stock prices."
+      ],
+      "opts_ar": [
+        "حفظ مجموعات البيانات الكبيرة.",
+        "جمع البيانات وتلخيصها وتحليلها وتفسيرها لاتخاذ القرارات.",
+        "بناء لوحات بيانات فى Excel.",
+        "التنبؤ بأسعار الأسهم."
+      ],
+      "ans": "B",
+      "exp_en": "Statistics is end-to-end: from collecting raw data to interpreting it for decisions. Dashboards and forecasts are downstream applications.",
+      "exp_ar": "الإحصاء عملية متكاملة من جمع البيانات الخام إلى تفسيرها لاتخاذ القرارات. أما لوحات البيانات والتوقعات فهى تطبيقات لاحقة عليه.",
+      "formula_used": ""
+    },
+    {
+      "id": "M01-L01-Q2",
+      "topic": "M01-L01",
+      "type": "MCQ",
+      "q_en": "Which question is INFERENTIAL rather than descriptive?",
+      "q_ar": "أى سؤال من هذه يُعدّ استدلالياً وليس وصفياً؟",
+      "opts_en": [
+        "What was our average order value last month?",
+        "How many customers bought Product A in Q3?",
+        "Does our new ad increase clicks compared to the old one?",
+        "What is the median age of our subscribers?"
+      ],
+      "opts_ar": [
+        "ما متوسط قيمة الطلب الشهر الماضى؟",
+        "كم عميلاً اشترى المنتج A فى الربع الثالث؟",
+        "هل يزيد إعلاننا الجديد من النقرات مقارنة بالقديم؟",
+        "ما الوسيط العمرى للمشتركين لدينا؟"
+      ],
+      "ans": "C",
+      "exp_en": "A, B and D describe what already happened. C goes beyond the observed data to ask whether the ad has a real effect — that is inference.",
+      "exp_ar": "الخيارات A و B و D تصف ما حدث بالفعل. أما C فيتجاوز البيانات المرصودة ليسأل: هل للإعلان تأثير حقيقى؟ هذا استدلال.",
+      "formula_used": ""
+    },
+    {
+      "id": "M01-L01-Q3",
+      "topic": "M01-L01",
+      "type": "TrueFalse",
+      "q_en": "True or False: A descriptive statistic such as the mean can be calculated from any sample, no matter how biased the sample is.",
+      "q_ar": "صح أم خطأ: يمكن حساب الإحصاء الوصفى مثل المتوسط من أى عينة مهما كانت متحيزة.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "A",
+      "exp_en": "You can always *compute* the mean of any list of numbers. The catch is interpretation: a biased sample's mean does not represent the population. Statistics is computable; inference is what gets tricky.",
+      "exp_ar": "يمكنك دائماً حساب المتوسط لأى قائمة من الأرقام. لكن الإشكال فى التفسير: متوسط عينة متحيزة لا يمثل المجتمع. الحساب ممكن، أما الاستدلال فهو الجزء الصعب.",
+      "formula_used": ""
+    },
+    {
+      "id": "M01-L01-Q4",
+      "topic": "M01-L01",
+      "type": "MCQ",
+      "q_en": "A marketing team launches an A/B test on a sales page. The most natural module to study FIRST in this course is:",
+      "q_ar": "فريق تسويق يجرى اختبار A/B على صفحة مبيعات. الموديول الأنسب للبدء به فى هذه الدورة هو:",
+      "opts_en": [
+        "Module 05 — Hypothesis Testing directly.",
+        "Module 03 — Descriptive Statistics, to first understand the data.",
+        "Module 06 — Conclusion.",
+        "Skip the course; go to ChatGPT."
+      ],
+      "opts_ar": [
+        "الموديول الخامس — اختبار الفرضيات مباشرة.",
+        "الموديول الثالث — الإحصاء الوصفى، لفهم البيانات أولاً.",
+        "الموديول السادس — الخلاصة.",
+        "تجاهل الدورة واسأل ChatGPT."
+      ],
+      "ans": "B",
+      "exp_en": "You can't test hypotheses on data you don't understand. Start with descriptive statistics: distribution shape, central tendency, spread. Only then design a meaningful hypothesis test.",
+      "exp_ar": "لا يمكنك اختبار فرضية على بيانات لا تفهمها. ابدأ بالإحصاء الوصفى: شكل التوزيع، النزعة المركزية، التشتت. ثم صمّم اختبار فرضية مفيد.",
+      "formula_used": ""
+    },
+    {
+      "id": "M01-L01-Q5",
+      "topic": "M01-L01",
+      "type": "MCQ",
+      "q_en": "Which statement BEST captures the spirit of inferential statistics?",
+      "q_ar": "أى عبارة تعبّر أفضل عن روح الإحصاء الاستدلالى؟",
+      "opts_en": [
+        "I will study every customer who ever existed.",
+        "From a sample, I can make defensible claims about a population.",
+        "I trust my gut more than the numbers.",
+        "I never make decisions without 100% certainty."
+      ],
+      "opts_ar": [
+        "سأدرس كل عميل وُجد فى التاريخ.",
+        "من عينة، يمكنى تقديم ادعاءات مدعومة حول المجتمع كله.",
+        "أثق بحدسى أكثر من الأرقام.",
+        "لا أتخذ قراراً دون يقين 100%."
+      ],
+      "ans": "B",
+      "exp_en": "The whole point of inference: drawing supportable conclusions about a population from a sample, while quantifying the uncertainty.",
+      "exp_ar": "جوهر الاستدلال: استخلاص استنتاجات مدعومة عن المجتمع من عينة، مع قياس عدم اليقين فى الادعاء.",
+      "formula_used": ""
+    }
+  ],
+  "created": "2026-05-16"
+}

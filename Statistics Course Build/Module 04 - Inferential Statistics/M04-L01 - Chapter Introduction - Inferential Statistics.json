@@ -1,0 +1,164 @@
+{
+  "id": "M04-L01",
+  "module": 4,
+  "type": "lesson",
+  "title_en": "Chapter Introduction - Inferential Statistics",
+  "title_ar": "مقدمة الفصل - الإحصاء الاستدلالى",
+  "objectives_en": [
+    "Define inferential statistics and how it differs from descriptive.",
+    "Map out the journey: sample size, p-values, alpha, confidence.",
+    "Build intuition for why we can trust a small sample at all."
+  ],
+  "objectives_ar": [
+    "تعريف الإحصاء الاستدلالى والفرق بينه وبين الوصفى.",
+    "رسم خريطة الرحلة: حجم العينة، قيم p، ألفا، الثقة.",
+    "بناء حدس لماذا يمكن أن نثق فى عينة صغيرة أصلاً."
+  ],
+  "sources": [
+    "04 Inferential Statistics/Chapter Introduction - Inferential Statistics.mp4",
+    "Slides PDF: page 36"
+  ],
+  "sections": [
+    {
+      "key": "intro",
+      "title_en": "1 · Why We Need Inference",
+      "title_ar": "1 · لماذا نحتاج الاستدلال"
+    },
+    {
+      "key": "concept",
+      "title_en": "2 · Roadmap of This Module",
+      "title_ar": "2 · خريطة الموديول"
+    },
+    {
+      "key": "practice",
+      "title_en": "3 · Where This Lives in the Real World",
+      "title_ar": "3 · أين يعيش هذا فى العالم الحقيقى"
+    }
+  ],
+  "formulas": [],
+  "examples": [],
+  "memory_aid": [
+    {
+      "en": "Inference = generalising from a sample to a population, with quantified uncertainty.",
+      "ar": "الاستدلال = التعميم من عينة إلى مجتمع، مع قياس عدم اليقين."
+    }
+  ],
+  "summary": {
+    "en": "Inferential statistics extends what we see in a sample to what is probably true in the population. This module walks you through the entire toolkit: how big a sample, how to compute a p-value, how to set an alpha, and how to use the two pillars (LLN and CLT) that make it all work.",
+    "ar": "الإحصاء الاستدلالى يمدّ ما نراه فى عينة إلى ما هو الأرجح فى المجتمع. هذا الموديول يأخذك عبر كل الأدوات: كم حجم العينة، كيف تحسب قيمة p، كيف تضع ألفا، وكيف تستخدم العمودَين (LLN و CLT) اللذَين يجعلان هذا ممكناً."
+  },
+  "quiz": [
+    {
+      "id": "M04-L01-Q1",
+      "topic": "M04-L01",
+      "type": "MCQ",
+      "q_en": "Inferential statistics is mainly about:",
+      "q_ar": "الإحصاء الاستدلالى يدور أساساً حول:",
+      "opts_en": [
+        "Describing my data",
+        "Generalising from a sample to a population",
+        "Building dashboards",
+        "Cleaning data"
+      ],
+      "opts_ar": [
+        "وصف بياناتى",
+        "التعميم من عينة إلى مجتمع",
+        "بناء لوحات بيانات",
+        "تنظيف البيانات"
+      ],
+      "ans": "B",
+      "exp_en": "Going beyond the sample is inference.",
+      "exp_ar": "تجاوز العينة هو الاستدلال.",
+      "formula_used": ""
+    },
+    {
+      "id": "M04-L01-Q2",
+      "topic": "M04-L01",
+      "type": "TrueFalse",
+      "q_en": "True or False: Inferential statistics produces certain conclusions.",
+      "q_ar": "صح أم خطأ: الإحصاء الاستدلالى ينتج استنتاجات يقينية.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "B",
+      "exp_en": "Inference always has uncertainty — quantified by p-values and confidence levels.",
+      "exp_ar": "الاستدلال دائماً فيه عدم يقين — مقيّس بقيم p ومستويات الثقة.",
+      "formula_used": ""
+    },
+    {
+      "id": "M04-L01-Q3",
+      "topic": "M04-L01",
+      "type": "MCQ",
+      "q_en": "An A/B test for a new website is an application of:",
+      "q_ar": "اختبار A/B لموقع جديد تطبيق لـ:",
+      "opts_en": [
+        "Descriptive",
+        "Inferential",
+        "Web design",
+        "Project management"
+      ],
+      "opts_ar": [
+        "وصفى",
+        "استدلالى",
+        "تصميم ويب",
+        "إدارة مشاريع"
+      ],
+      "ans": "B",
+      "exp_en": "Testing whether the new design is really better = inference.",
+      "exp_ar": "اختبار هل التصميم الجديد أفضل = استدلال.",
+      "formula_used": ""
+    },
+    {
+      "id": "M04-L01-Q4",
+      "topic": "M04-L01",
+      "type": "MCQ",
+      "q_en": "Two pillars that make inference from samples possible are:",
+      "q_ar": "العمودان اللذان يجعلان الاستدلال من العينات ممكناً:",
+      "opts_en": [
+        "Mean and median",
+        "LLN and CLT",
+        "p-value and alpha",
+        "Excel and Python"
+      ],
+      "opts_ar": [
+        "المتوسط والوسيط",
+        "LLN و CLT",
+        "قيمة p و ألفا",
+        "Excel و Python"
+      ],
+      "ans": "B",
+      "exp_en": "Law of Large Numbers + Central Limit Theorem.",
+      "exp_ar": "قانون الأعداد الكبيرة + النظرية المركزية.",
+      "formula_used": ""
+    },
+    {
+      "id": "M04-L01-Q5",
+      "topic": "M04-L01",
+      "type": "MCQ",
+      "q_en": "The biggest practical advantage of inference over a census is:",
+      "q_ar": "أكبر ميزة عملية للاستدلال على الإحصاء الشامل:",
+      "opts_en": [
+        "More accurate",
+        "Faster and cheaper using a sample",
+        "Eliminates uncertainty",
+        "Avoids using mean"
+      ],
+      "opts_ar": [
+        "أكثر دقة",
+        "أسرع وأرخص باستخدام عينة",
+        "يلغى عدم اليقين",
+        "يتجنب المتوسط"
+      ],
+      "ans": "B",
+      "exp_en": "Sampling makes statistics economical and feasible.",
+      "exp_ar": "المعاينة تجعل الإحصاء اقتصادياً ممكناً.",
+      "formula_used": ""
+    }
+  ],
+  "created": "2026-05-16"
+}

@@ -1,0 +1,18 @@
+{
+  "id": "M01",
+  "module": 1,
+  "type": "module",
+  "title_en": "Introduction",
+  "title_ar": "المقدمة",
+  "lessons": [
+    {
+      "id": "M01-L01",
+      "title_en": "Course Introduction & Roadmap",
+      "title_ar": "مقدمة الدورة وخريطة الطريق"
+    }
+  ],
+  "sources": [
+    "01 Introduction/Course Introduction.mp4",
+    "Stats Fundamentals Course Slides.pdf pages 1–4"
+  ]
+}

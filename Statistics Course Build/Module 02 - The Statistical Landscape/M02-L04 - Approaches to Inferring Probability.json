@@ -1,0 +1,210 @@
+{
+  "id": "M02-L04",
+  "module": 2,
+  "type": "lesson",
+  "title_en": "Approaches to Inferring Probability",
+  "title_ar": "مناهج الاستدلال الاحتمالى",
+  "objectives_en": [
+    "Define the three approaches to inference: Classical, Frequentist, Bayesian.",
+    "Pick the right one for a given problem.",
+    "Recognise how each interprets the word 'probability'."
+  ],
+  "objectives_ar": [
+    "تعريف المناهج الثلاثة للاستدلال: الكلاسيكى، التكرارى، البيزى.",
+    "اختيار المنهج المناسب لكل مشكلة.",
+    "إدراك كيف يفسّر كل منهج كلمة 'احتمال'."
+  ],
+  "sources": [
+    "02 The Statistical Landscape/Approaches to Inferring Probability.mp4",
+    "Slides PDF: pages 12-13",
+    "Glossary: Bayesian"
+  ],
+  "sections": [
+    {
+      "key": "intro",
+      "title_en": "1 · Three Lenses on Probability",
+      "title_ar": "1 · ثلاث عدسات للاحتمال"
+    },
+    {
+      "key": "formulas",
+      "title_en": "2 · The Three Approaches Side-by-Side",
+      "title_ar": "2 · المناهج الثلاثة جنباً إلى جنب"
+    },
+    {
+      "key": "example",
+      "title_en": "3 · Worked Example - Rock, Paper, Scissors",
+      "title_ar": "3 · مثال محلول - حجر ورق مقص"
+    },
+    {
+      "key": "practice",
+      "title_en": "4 · Picking the Right Approach in Practice",
+      "title_ar": "4 · اختيار المنهج فى الواقع"
+    },
+    {
+      "key": "traps",
+      "title_en": "5 · Common Traps",
+      "title_ar": "5 · الفخاخ الشائعة"
+    }
+  ],
+  "formulas": [
+    {
+      "id": "F-M02-L04-01",
+      "name_en": "Classical probability",
+      "name_ar": "الاحتمال الكلاسيكى",
+      "expr": "P = Favorable / Possible",
+      "where_en": "All outcomes equally likely.",
+      "where_ar": "كل النتائج متساوية الاحتمال.",
+      "when_en": "Symmetric setups: coins, dice, lottery.",
+      "when_ar": "حالات متناظرة: عملة، نرد، يانصيب."
+    },
+    {
+      "id": "F-M02-L04-02",
+      "name_en": "Frequentist probability",
+      "name_ar": "الاحتمال التكرارى",
+      "expr": "P = Favorable observed / Total observations",
+      "where_en": "Estimated from observed data.",
+      "where_ar": "يُقدّر من البيانات المرصودة.",
+      "when_en": "Repeated experiments, large samples.",
+      "when_ar": "تجارب متكررة، عينات كبيرة."
+    },
+    {
+      "id": "F-M02-L04-03",
+      "name_en": "Bayes' theorem",
+      "name_ar": "نظرية بايز",
+      "expr": "P(A | B) = P(B | A) · P(A) / P(B)",
+      "where_en": "Combines prior P(A) with likelihood P(B|A).",
+      "where_ar": "يجمع المسبق P(A) مع الاحتمال P(B|A).",
+      "when_en": "Have prior knowledge + new evidence.",
+      "when_ar": "عندما تتوفر معرفة مسبقة + دليل جديد."
+    }
+  ],
+  "examples": [],
+  "memory_aid": [
+    {
+      "en": "Classical = symmetry. Frequentist = repetition. Bayesian = update beliefs with evidence.",
+      "ar": "الكلاسيكى = التناظر. التكرارى = التكرار. البيزى = حدّث معرفتك بالأدلة."
+    }
+  ],
+  "summary": {
+    "en": "The three approaches differ in what 'probability' means. Classical assumes symmetric outcomes; Frequentist relies on long-run observations; Bayesian updates prior belief with new data. This course mostly uses the Frequentist lens (Modules 04 and 05), the dominant approach in classical hypothesis testing and business A/B testing.",
+    "ar": "المناهج الثلاثة تختلف فى معنى الاحتمال. الكلاسيكى يفترض نتائج متناظرة، التكرارى يعتمد على الملاحظات طويلة المدى، البيزى يحدث المعرفة المسبقة بالبيانات الجديدة. الدورة تعتمد غالباً على العدسة التكرارية (الموديولات 04 و 05) لأنها السائدة فى اختبار الفرضيات الكلاسيكى واختبارات A/B فى الأعمال."
+  },
+  "quiz": [
+    {
+      "id": "M02-L04-Q1",
+      "topic": "M02-L04",
+      "type": "MCQ",
+      "q_en": "Saying 'a fair coin lands heads 50% of the time' is which approach?",
+      "q_ar": "القول 'عملة عادلة تظهر صورتها 50% من الوقت' من أى منهج؟",
+      "opts_en": [
+        "Frequentist",
+        "Bayesian",
+        "Classical",
+        "None"
+      ],
+      "opts_ar": [
+        "تكرارى",
+        "بيزى",
+        "كلاسيكى",
+        "لا شىء"
+      ],
+      "ans": "C",
+      "exp_en": "Equal possible outcomes — classic classical setup.",
+      "exp_ar": "نتائج متساوية الاحتمال — وضع كلاسيكى بحت.",
+      "formula_used": ""
+    },
+    {
+      "id": "M02-L04-Q2",
+      "topic": "M02-L04",
+      "type": "MCQ",
+      "q_en": "A casino tracks 100,000 spins and finds red showed 47.9% of the time. Concluding P(red) ≈ 0.479 is:",
+      "q_ar": "كازينو يسجل 100,000 دورة فتظهر الحمراء 47.9% من الوقت. استنتاج P(حمراء) ≈ 0.479 هو:",
+      "opts_en": [
+        "Classical",
+        "Frequentist",
+        "Bayesian",
+        "Wrong"
+      ],
+      "opts_ar": [
+        "كلاسيكى",
+        "تكرارى",
+        "بيزى",
+        "خاطئ"
+      ],
+      "ans": "B",
+      "exp_en": "Estimating probability from observed long-run frequency = frequentist.",
+      "exp_ar": "تقدير الاحتمال من التكرار المرصود طويل المدى = تكرارى.",
+      "formula_used": ""
+    },
+    {
+      "id": "M02-L04-Q3",
+      "topic": "M02-L04",
+      "type": "MCQ",
+      "q_en": "A spam filter starts believing P(spam)=0.4, sees 'win money now' in the email, and updates to P(spam|words)=0.95. This is:",
+      "q_ar": "فلتر سبام يبدأ بالاعتقاد P(سبام)=0.4، يرى 'اربح المال الآن' فى الرسالة، فيحدّث إلى 0.95. هذا:",
+      "opts_en": [
+        "Classical",
+        "Frequentist",
+        "Bayesian",
+        "Heuristic"
+      ],
+      "opts_ar": [
+        "كلاسيكى",
+        "تكرارى",
+        "بيزى",
+        "استدلالى"
+      ],
+      "ans": "C",
+      "exp_en": "Updating prior with new evidence is the heart of Bayes.",
+      "exp_ar": "تحديث المعرفة المسبقة بالأدلة الجديدة هو جوهر بايز.",
+      "formula_used": ""
+    },
+    {
+      "id": "M02-L04-Q4",
+      "topic": "M02-L04",
+      "type": "Calc",
+      "q_en": "A bag has 3 red and 7 blue balls. Probability of drawing red?",
+      "q_ar": "كيس به 3 كرات حمراء و 7 زرقاء. احتمال سحب الحمراء؟",
+      "opts_en": [
+        "0.30",
+        "0.50",
+        "0.70",
+        "0.43"
+      ],
+      "opts_ar": [
+        "0.30",
+        "0.50",
+        "0.70",
+        "0.43"
+      ],
+      "ans": "A",
+      "exp_en": "Classical: favorable=3, possible=10 → 3/10 = 0.30.",
+      "exp_ar": "كلاسيكى: المرغوب=3، الكل=10 → 3/10 = 0.30.",
+      "formula_used": "P = Favorable / Possible"
+    },
+    {
+      "id": "M02-L04-Q5",
+      "topic": "M02-L04",
+      "type": "MCQ",
+      "q_en": "Which approach is dominant in business A/B testing?",
+      "q_ar": "أى منهج هو السائد فى اختبارات A/B فى الأعمال؟",
+      "opts_en": [
+        "Classical",
+        "Frequentist",
+        "Bayesian",
+        "Machine learning"
+      ],
+      "opts_ar": [
+        "كلاسيكى",
+        "تكرارى",
+        "بيزى",
+        "تعلم آلى"
+      ],
+      "ans": "B",
+      "exp_en": "Frequentist p-value testing dominates online A/B testing platforms.",
+      "exp_ar": "اختبار قيم p التكرارى يسيطر على منصات اختبار A/B.",
+      "formula_used": ""
+    }
+  ],
+  "created": "2026-05-16"
+}

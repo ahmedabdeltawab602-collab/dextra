@@ -1,0 +1,174 @@
+{
+  "id": "M05-L05",
+  "module": 5,
+  "type": "lesson",
+  "title_en": "Selecting the Hypothesis Test",
+  "title_ar": "اختيار الاختبار",
+  "objectives_en": [
+    "Distinguish two-tailed from one-tailed tests.",
+    "Know when each is appropriate.",
+    "Visualise the rejection regions for each."
+  ],
+  "objectives_ar": [
+    "التمييز بين اختبار ذيلَين وذيل واحد.",
+    "معرفة متى يناسب كل منهما.",
+    "تصوّر مناطق الرفض لكل منهما."
+  ],
+  "sources": [
+    "05 Hypothesis Testing/Selecting the Hypothesis Test.mp4",
+    "Slides PDF: pages 71-72"
+  ],
+  "sections": [
+    {
+      "key": "intro",
+      "title_en": "1 · Two-Tail or One-Tail?",
+      "title_ar": "1 · ذيلَين أم ذيل واحد؟"
+    },
+    {
+      "key": "definitions",
+      "title_en": "2 · The Three Shapes",
+      "title_ar": "2 · الأشكال الثلاثة"
+    },
+    {
+      "key": "example",
+      "title_en": "3 · Worked Example - The Warranty",
+      "title_ar": "3 · مثال محلول - الضمان"
+    },
+    {
+      "key": "traps",
+      "title_en": "4 · Common Traps",
+      "title_ar": "4 · فخاخ شائعة"
+    },
+    {
+      "key": "practice",
+      "title_en": "5 · Real Decision Patterns",
+      "title_ar": "5 · أنماط قرار حقيقية"
+    }
+  ],
+  "formulas": [],
+  "examples": [],
+  "memory_aid": [
+    {
+      "en": "Two-tail = any difference. One-tail = specific direction. Pre-commit always.",
+      "ar": "ذيلَين = أى فرق. ذيل واحد = اتجاه محدد. التزم مسبقاً دائماً."
+    }
+  ],
+  "summary": {
+    "en": "Two-tailed tests check for any difference; one-tailed tests check for a specific direction. The choice MUST be made before looking at the data — afterwards is data-snooping. Two-tailed is the safe default for exploratory work; one-tailed is more powerful when you have a strong directional hypothesis (and the cost of being wrong in the other direction is acceptable).",
+    "ar": "اختبار ذيلَين يفحص أى فرق؛ ذيل واحد يفحص اتجاهاً محدداً. الاختيار يجب قبل البيانات — بعدها تجسس. ذيلَين الافتراضى الآمن للاستكشاف؛ ذيل واحد أقوى عندما توجد فرضية اتجاهية قوية (وتكلفة الخطأ فى الاتجاه الآخر مقبولة)."
+  },
+  "quiz": [
+    {
+      "id": "M05-L05-Q1",
+      "topic": "M05-L05",
+      "type": "MCQ",
+      "q_en": "A two-tailed test rejects H0 if the test statistic falls in:",
+      "q_ar": "اختبار ذيلَين يرفض H0 إذا وقع إحصاء الاختبار فى:",
+      "opts_en": [
+        "Right tail only",
+        "Left tail only",
+        "Either tail",
+        "Neither"
+      ],
+      "opts_ar": [
+        "الأيمن فقط",
+        "الأيسر فقط",
+        "أى منهما",
+        "لا منهما"
+      ],
+      "ans": "C",
+      "exp_en": "Two tails: extreme either direction.",
+      "exp_ar": "ذيلَين: متطرف فى أى اتجاه.",
+      "formula_used": ""
+    },
+    {
+      "id": "M05-L05-Q2",
+      "topic": "M05-L05",
+      "type": "MCQ",
+      "q_en": "An online store wants to test if a new banner increases (specifically increases) click-through. Best test:",
+      "q_ar": "متجر يريد اختبار هل لافتة جديدة تزيد (تحديداً تزيد) النقرات. الأفضل:",
+      "opts_en": [
+        "Two-tailed",
+        "Right-tailed (one-tailed)",
+        "Left-tailed",
+        "No test"
+      ],
+      "opts_ar": [
+        "ذيلَين",
+        "ذيل أيمن (واحد)",
+        "ذيل أيسر",
+        "لا اختبار"
+      ],
+      "ans": "B",
+      "exp_en": "Directional hope of increase → one-tailed right.",
+      "exp_ar": "اتجاه متوقع للزيادة ← ذيل أيمن.",
+      "formula_used": ""
+    },
+    {
+      "id": "M05-L05-Q3",
+      "topic": "M05-L05",
+      "type": "TrueFalse",
+      "q_en": "True or False: A one-tailed test has higher statistical power than two-tailed at the same alpha.",
+      "q_ar": "صح أم خطأ: اختبار ذيل واحد له قوة أعلى من ذيلَين عند نفس ألفا.",
+      "opts_en": [
+        "True",
+        "False"
+      ],
+      "opts_ar": [
+        "صح",
+        "خطأ"
+      ],
+      "ans": "A",
+      "exp_en": "All alpha in one tail = easier to reach significance there.",
+      "exp_ar": "كل ألفا فى ذيل واحد = أسهل بلوغ الدلالة هناك.",
+      "formula_used": ""
+    },
+    {
+      "id": "M05-L05-Q4",
+      "topic": "M05-L05",
+      "type": "MCQ",
+      "q_en": "The biggest risk of one-tailed tests is:",
+      "q_ar": "أكبر مخاطر اختبار ذيل واحد:",
+      "opts_en": [
+        "More math",
+        "Choosing direction after seeing data (data-snooping)",
+        "Worse names",
+        "Excel can't do them"
+      ],
+      "opts_ar": [
+        "رياضيات أكثر",
+        "اختيار الاتجاه بعد رؤية البيانات (تجسس)",
+        "أسماء أسوأ",
+        "Excel لا يستطيع"
+      ],
+      "ans": "B",
+      "exp_en": "Post-hoc direction inflates false positives.",
+      "exp_ar": "الاتجاه اللاحق يضخّم الإيجابيات الكاذبة.",
+      "formula_used": ""
+    },
+    {
+      "id": "M05-L05-Q5",
+      "topic": "M05-L05",
+      "type": "MCQ",
+      "q_en": "For 'Is the new design's conversion DIFFERENT from the old?', the test is:",
+      "q_ar": "لـ 'هل تحويل التصميم الجديد مختلف عن القديم؟'، الاختبار:",
+      "opts_en": [
+        "One-tail right",
+        "One-tail left",
+        "Two-tail",
+        "Bayesian"
+      ],
+      "opts_ar": [
+        "ذيل أيمن",
+        "ذيل أيسر",
+        "ذيلَين",
+        "بيزى"
+      ],
+      "ans": "C",
+      "exp_en": "'Different' (no direction) → two-tailed.",
+      "exp_ar": "'مختلف' (لا اتجاه) ← ذيلَين.",
+      "formula_used": ""
+    }
+  ],
+  "created": "2026-05-16"
+}
