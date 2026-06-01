@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use dextra in your work, please cite it as below."
+title: "dextra: one-line exploratory analysis, cleaning, feature engineering, selection and baseline modeling for pandas"
+type: software
+authors:
+  - family-names: "Abd El Tawab"
+    given-names: "Ahmed"
+repository-code: "https://github.com/ahmedabdeltawab602-collab/dextra"
+url: "https://github.com/ahmedabdeltawab602-collab/dextra"
+license: MIT
+version: "0.2.0"
+date-released: "2026-06-01"
+keywords:
+  - pandas
+  - exploratory-data-analysis
+  - feature-engineering
+  - scikit-learn
+  - machine-learning

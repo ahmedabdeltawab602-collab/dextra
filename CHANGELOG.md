@@ -50,6 +50,11 @@ property-based tests and an informational mypy gate. Backward-compatible.
   clone-able). scikit-learn stays an optional (`ml`) extra.
 - **PEP 561:** the package now ships a `py.typed` marker so downstream type
   checkers consume dextra's annotations.
+- **Docs site:** a MkDocs-Material site with an auto-generated API reference
+  (mkdocstrings) and a `docs` GitHub Actions workflow that deploys to GitHub
+  Pages. `CITATION.cff` and a PyPI version badge added.
+- **CI `build` job:** builds the sdist + wheel and runs `twine check` so the
+  package stays PyPI-publishable on every push.
 - **polars / pyarrow input (extra `perf`):** the data-processing and modeling
   entry points now accept any table exposing `.to_pandas()` (polars DataFrame,
   pyarrow Table) and convert it at the boundary via the shared `_ensure_pandas`
@@ -84,6 +89,8 @@ property-based tests and an informational mypy gate. Backward-compatible.
 - Phase 6 stage suites (`regress`/`classify`/`cluster`), `tests/test_compat.py`
   for the sklearn wrappers, and Hypothesis property-based tests
   (`tests/test_property.py`). mypy runs informationally (non-blocking) in CI.
+- `tests/test_io_backends.py` (polars/pyarrow input) and `tests/test_coverage_boost.py`
+  (breadth tests across cleaning / stats / features / modeling) raise coverage.
 
 ### Planned
 - `describe_categorical` - summaries for object/category columns.

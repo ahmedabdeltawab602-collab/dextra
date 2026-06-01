@@ -3,6 +3,7 @@
 [![Python](https://img.shields.io/badge/python-3.9%2B-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Tests](https://github.com/ahmedabdeltawab602-collab/dextra/actions/workflows/tests.yml/badge.svg)](https://github.com/ahmedabdeltawab602-collab/dextra/actions/workflows/tests.yml)
+[![PyPI](https://img.shields.io/pypi/v/dextra.svg)](https://pypi.org/project/dextra/)
 
 > *Lightweight exploratory-data-analysis helpers built on top of pandas,
 > seaborn and plotly.*
@@ -11,8 +12,8 @@
 
 `dextra` is a choice-first toolkit for the whole exploratory workflow. Every
 function follows one contract: **one line of code -> a rich numeric table + a
-multi-panel figure + a one-sentence `Decision:`**. It currently ships **48
-public functions** across six modules:
+multi-panel figure + a one-sentence `Decision:`**. It currently ships **51 public functions** across six modules (plus
+scikit-learn-compatible wrappers):
 
 | Module | Functions | What it covers |
 |---|---|---|
@@ -21,6 +22,8 @@ public functions** across six modules:
 | `cleaning` | 10 functions (`clean_report`, `na_show`/`na_fix`, `dedupe`, `clip_outliers`, ...) | Data-quality auditing and cleaning across the DAMA-DMBOK stages. |
 | `features` | 8 functions (`transform`, `scale`, `bin`, `encode`, `dtfeats`, `cross`, `aggfeat`, `featpipe`) | Leakage-safe feature engineering with a fit/apply contract. |
 | `selection` | 5 functions (`redundancy`, `relevance`, `importance`, `rfe`, `selectpipe`) | Filter / Embedded / Wrapper feature selection, leakage-safe. |
+| `modeling` | 3 functions (`regress`, `classify`, `cluster`) | Instant baselines: fit / apply / compare with a hybrid (JSON + fitted estimator) artifact. |
+| `compat` | `DextraFeaturePipeline` / `DextraSelectPipeline`, `DextraRegressor` / `DextraClassifier` / `DextraClusterer` | scikit-learn-compatible wrappers that drop into `Pipeline` / `GridSearchCV`. |
 
 Run `dx.functions()` to print the whole public API with one-line summaries.
 Most functions expose a `method='compare'` mode that ranks every option and

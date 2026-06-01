@@ -146,3 +146,4 @@ auditing trivial.
 | 2026-06-01 | Hardening sprint (post Phase 6): `dextra.compat` sklearn wrappers; Plotly made optional (`viz` extra) + lazy; PEP 561 `py.typed`; Hypothesis property tests; non-blocking mypy in CI; mkdocs-material docs scaffold; version bumped to 0.2.0. |
 | 2026-06-01 | Performance sprint 1A: polars/pyarrow input accepted at all data/model entry points via `_ensure_pandas` (extra `perf`); `benchmarks/` suite + non-blocking CI bench job. |
 | 2026-06-01 | Performance sprint 1B: monolithic `features.py` (~3.8k lines) split into 5 focused sibling modules behind a thin re-export facade; no API change (structurally validated: symtable name-resolution + import + signature parity). |
+| 2026-06-01 | Distribution/docs sprint 2: MkDocs-Material site + GitHub Pages workflow; `CITATION.cff`; CI `build` job (sdist/wheel + twine check); PyPI badge; coverage-boost tests. |
