@@ -184,19 +184,30 @@ def z_scores(
     summary = pd.DataFrame(rows, index=[c for c in cols_resolved if not z[c].dropna().empty])
     summary.index.name = "column"
 
-    total_extreme = int(summary[f"n_above_{threshold:g}sigma"].sum())
-    n_cols_with_extremes = int((summary[f"n_above_{threshold:g}sigma"] > 0).sum())
+    metric_col = f"n_above_{threshold:g}sigma"
+    # A fully constant (zero-variance) selection yields an all-NaN Z and an
+    # empty summary; guard so the function reports "no extremes" instead of
+    # raising a KeyError on the missing metric column.
+    if summary.empty:
+        total_extreme = 0
+        n_cols_with_extremes = 0
+    else:
+        total_extreme = int(summary[metric_col].sum())
+        n_cols_with_extremes = int((summary[metric_col] > 0).sum())
 
     if show:
         _print_header(f"Z-scores for: {df_name}  (extreme threshold |Z| > {threshold})")
-        int_cols = ("n", "n_above_1sigma", "n_above_2sigma",
-                    f"n_above_{threshold:g}sigma")
-        pct_cols = (f"pct_above_{threshold:g}sigma",)
-        _display(_format_summary(summary, decimals, int_cols, pct_cols))
-        print(
-            f"\nDecision: {total_extreme} extreme value(s) across "
-            f"{n_cols_with_extremes} column(s) with |Z| > {threshold}sigma.\n"
-        )
+        if summary.empty:
+            print("\nDecision: no extremes -- all selected column(s) are "
+                  "constant (zero variance).\n")
+        else:
+            int_cols = ("n", "n_above_1sigma", "n_above_2sigma", metric_col)
+            pct_cols = (f"pct_above_{threshold:g}sigma",)
+            _display(_format_summary(summary, decimals, int_cols, pct_cols))
+            print(
+                f"\nDecision: {total_extreme} extreme value(s) across "
+                f"{n_cols_with_extremes} column(s) with |Z| > {threshold}sigma.\n"
+            )
 
     fig = None
     if plot:

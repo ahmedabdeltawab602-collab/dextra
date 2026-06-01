@@ -69,6 +69,11 @@ property-based tests and an informational mypy gate. Backward-compatible.
   / server installs are lighter. `plot_boxplots` imports Plotly lazily and
   raises a clear error if it is missing.
 
+### Fixed
+- `z_scores` no longer raises `KeyError` on a constant / zero-variance column:
+  a fully degenerate selection now reports "no extremes" instead of crashing
+  (found by the new Hypothesis property tests).
+
 ### Testing
 - The staged verification suites for Phases 2-5 (~600 assertions) are vendored
   into `tests/legacy/` and now run under pytest in CI, alongside a coverage gate.

@@ -1,12 +1,12 @@
 ﻿**********************
 Windows PowerShell transcript start
-Start time: 20260601113713
+Start time: 20260601115445
 Username: MSI\manim
 RunAs User: MSI\manim
 Configuration Name: 
 Machine: MSI (Microsoft Windows NT 10.0.26200.0)
 Host Application: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File .\run_validation.ps1
-Process ID: 37340
+Process ID: 29592
 PSVersion: 5.1.26100.8457
 PSEdition: Desktop
 PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.8457
@@ -39,88 +39,7 @@ All checks passed!
 ========================================================
 Running the FULL suite (Phases 1-6 + consolidation + legacy)...
 ................................................................................................................ [ 83%]
-..........F...........                                                                                           [100%]
-====================================================== FAILURES =======================================================
-__________________________________________ test_zscore_extreme_count_bounded __________________________________________
-
-    @settings(max_examples=40, deadline=None)
->   @given(_floats)
-                   ^
-
-tests\test_property.py:38:
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-tests\test_property.py:41: in test_zscore_extreme_count_bounded
-    res = dx.z_scores(df, cols=["x"], return_df=True, **KW)
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-src\dextra\stats_advanced.py:187: in z_scores
-    total_extreme = int(summary[f"n_above_{threshold:g}sigma"].sum())
-                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.venv\Lib\site-packages\pandas\core\frame.py:4378: in __getitem__
-    indexer = self.columns.get_loc(key)
-              ^^^^^^^^^^^^^^^^^^^^^^^^^
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-
-self = RangeIndex(start=0, stop=0, step=1), key = 'n_above_3sigma'
-
-    def get_loc(self, key) -> int:
-        """
-        Get integer location for requested label.
-
-        Parameters
-        ----------
-        key : int or float
-            Label to locate. Integer-like floats (e.g. 3.0) are accepted and
-            treated as the corresponding integer. Non-integer floats and other
-            non-integer labels are not valid and will raise KeyError or
-            InvalidIndexError.
-
-        Returns
-        -------
-        int
-            Integer location of the label within the RangeIndex.
-
-        Raises
-        ------
-        KeyError
-            If the label is not present in the RangeIndex or the label is a
-            non-integer value.
-        InvalidIndexError
-            If the label is of an invalid type for the RangeIndex.
-
-        See Also
-        --------
-        RangeIndex.get_slice_bound : Calculate slice bound that corresponds to
-            given label.
-        RangeIndex.get_indexer : Computes indexer and mask for new index given
-            the current index.
-        RangeIndex.get_non_unique : Returns indexer and masks for new index given
-            the current index.
-        RangeIndex.get_indexer_for : Returns an indexer even when non-unique.
-
-        Examples
-        --------
-        >>> idx = pd.RangeIndex(5)
-        >>> idx.get_loc(3)
-        3
-
-        >>> idx = pd.RangeIndex(2, 10, 2)  # values [2, 4, 6, 8]
-        >>> idx.get_loc(6)
-        2
-        """
-        if is_integer(key) or (is_float(key) and key.is_integer()):
-            new_key = int(key)
-            try:
-                return self._range.index(new_key)
-            except ValueError as err:
-                raise KeyError(key) from err
-        if isinstance(key, Hashable):
->           raise KeyError(key)
-E           KeyError: 'n_above_3sigma'
-E           Falsifying example: test_zscore_extreme_count_bounded(
-E               values=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
-E           )
-
-.venv\Lib\site-packages\pandas\core\indexes\range.py:525: KeyError
+......................                                                                                           [100%]
 ================================================== warnings summary ===================================================
 tests/test_legacy_suites.py::test_legacy_suite[test_phase4_stage2]
 tests/test_legacy_suites.py::test_legacy_suite[test_phase4_stage2]
@@ -191,30 +110,30 @@ src\dextra\selection.py          970    177    82%   71-74, 78-79, 91, 104, 118-
 , 1481, 1494-1495, 1499-1500, 1624, 1683-1686, 1705-1707, 1718-1720, 1724, 1765, 1771, 1794-1798, 2038-2041, 2055-2057,
 2062, 2073, 2077, 2082, 2120-2123, 2127
 src\dextra\stats.py               87     10    89%   45-49, 117, 128, 233-236
-src\dextra\stats_advanced.py    1570    638    59%   38-39, 53, 70, 76-77, 81-82, 109-111, 116, 120, 122, 152, 154, 161,
- 203, 207, 209, 211, 213, 218-261, 281, 288, 307, 330, 341-381, 405, 412, 418, 421-426, 455, 466-509, 536, 545, 562, 591
-, 597, 609-667, 712, 714, 720, 739-742, 749-750, 761, 785, 802, 818-876, 915, 917, 919, 925, 933, 960-962, 995, 1003, 10
-12-1055, 1122-1124, 1128, 1160, 1164, 1174-1214, 1244, 1285, 1295-1320, 1363, 1365, 1367, 1373, 1378, 1395, 1399-1402, 1
-410, 1430-1444, 1472, 1477-1480, 1482, 1488, 1527, 1538-1568, 1586, 1616, 1620, 1649, 1660-1679, 1706, 1708, 1710, 1712,
- 1749, 1760-1780, 1803, 1805, 1807, 1830, 1841-1858, 1885, 1887, 1889, 1916, 1927-1962, 1980-2010, 2043, 2047, 2053-2060
-, 2087, 2098-2121, 2143, 2147, 2188, 2223, 2228, 2274, 2286-2322, 2345, 2349, 2354, 2391, 2396, 2407-2429, 2451, 2453, 2
-462, 2510, 2522-2555, 2577, 2579, 2587, 2595, 2616, 2621, 2632-2649, 2681, 2684, 2719, 2725, 2728, 2737, 2741, 2743, 276
-1, 2768, 2778-2801, 2834, 2837, 2847, 2849, 2881, 2892-2925
+src\dextra\stats_advanced.py    1576    641    59%   38-39, 53, 70, 76-77, 81-82, 109-111, 116, 120, 122, 152, 154, 161,
+ 171, 192-193, 201, 214, 218, 220, 224, 229-272, 292, 299, 318, 341, 352-392, 416, 423, 429, 432-437, 466, 477-520, 547,
+ 556, 573, 602, 608, 620-678, 723, 725, 731, 750-753, 760-761, 772, 796, 813, 829-887, 926, 928, 930, 936, 944, 971-973,
+ 1006, 1014, 1023-1066, 1133-1135, 1139, 1171, 1175, 1185-1225, 1255, 1296, 1306-1331, 1374, 1376, 1378, 1384, 1389, 140
+6, 1410-1413, 1421, 1441-1455, 1483, 1488-1491, 1493, 1499, 1538, 1549-1579, 1597, 1627, 1631, 1660, 1671-1690, 1717, 17
+19, 1721, 1723, 1760, 1771-1791, 1814, 1816, 1818, 1841, 1852-1869, 1896, 1898, 1900, 1927, 1938-1973, 1991-2021, 2054,
+2058, 2064-2071, 2098, 2109-2132, 2154, 2158, 2199, 2234, 2239, 2285, 2297-2333, 2356, 2360, 2365, 2402, 2407, 2418-2440
+, 2462, 2464, 2473, 2521, 2533-2566, 2588, 2590, 2598, 2606, 2627, 2632, 2643-2660, 2692, 2695, 2730, 2736, 2739, 2748,
+2752, 2754, 2772, 2779, 2789-2812, 2845, 2848, 2858, 2860, 2892, 2903-2936
 ------------------------------------------------------------
-TOTAL                           6927   2113    69%
-Required test coverage of 60% reached. Total coverage: 69.50%
-=============================================== short test summary info ===============================================
-FAILED tests/test_property.py::test_zscore_extreme_count_bounded - KeyError: 'n_above_3sigma'
-1 failed, 133 passed, 13 warnings in 29.99s
+TOTAL                           6933   2116    69%
+Required test coverage of 60% reached. Total coverage: 69.48%
+134 passed, 13 warnings in 28.99s
 
 ========================================================
   3. SUMMARY
 ========================================================
   LINT  : PASS  (ruff clean)
-  TESTS : FAIL  (pytest exit 1 -- see section 2 above)
+  TESTS : PASS
 
-  NOT GREEN -- paste validation_log.txt (or the red section) back to Claude.
+  ALL GREEN -- ready to commit & push (CI gate should pass).
+  Next:
+     git add -A; git commit -m "Phase 6.1 + lint clean"; git push --set-upstream origin main
 **********************
 Windows PowerShell transcript end
-End time: 20260601113752
+End time: 20260601115523
 **********************

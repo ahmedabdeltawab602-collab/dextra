@@ -37,6 +37,7 @@ def test_describe_count_matches_n(values):
 @settings(max_examples=40, deadline=None)
 @given(_floats)
 def test_zscore_extreme_count_bounded(values):
+    assume(np.nanstd(np.asarray(values, dtype=float)) > 0)   # constant -> empty by design
     df = pd.DataFrame({"x": values})
     res = dx.z_scores(df, cols=["x"], return_df=True, **KW)
     # count of points beyond 2 sigma can never exceed the sample size
