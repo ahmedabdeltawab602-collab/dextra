@@ -50,6 +50,12 @@ property-based tests and an informational mypy gate. Backward-compatible.
   clone-able). scikit-learn stays an optional (`ml`) extra.
 - **PEP 561:** the package now ships a `py.typed` marker so downstream type
   checkers consume dextra's annotations.
+- **polars / pyarrow input (extra `perf`):** the data-processing and modeling
+  entry points now accept any table exposing `.to_pandas()` (polars DataFrame,
+  pyarrow Table) and convert it at the boundary via the shared `_ensure_pandas`
+  helper; pandas frames pass through unchanged (zero-copy).
+- **Benchmarks:** a `benchmarks/` micro-benchmark suite (pytest-benchmark) and a
+  non-blocking CI job track performance of hot paths over time.
 - `dx.functions()` - prints every public function with its one-line summary.
 - `describe_numeric(..., ddof=1)` - choose sample (1) or population (0) std/var.
 - `plot_histograms(..., bins='auto')` - bins now default to NumPy's automatic

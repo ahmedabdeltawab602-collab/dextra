@@ -76,6 +76,31 @@ def to_numeric_frame(df_subset: pd.DataFrame) -> pd.DataFrame:
     return df_subset.apply(pd.to_numeric, errors="coerce")
 
 
+def _ensure_pandas(df):
+    """Accept a pandas / polars / pyarrow table and return a pandas DataFrame.
+
+    pandas frames pass through unchanged (zero overhead). polars DataFrames and
+    pyarrow Tables are converted via their ``.to_pandas()`` method (both are
+    optional ``perf`` extras). Any other type raises :class:`TypeError`,
+    preserving dextra's original input contract.
+    """
+    if isinstance(df, pd.DataFrame):
+        return df
+    to_pandas = getattr(df, "to_pandas", None)
+    if callable(to_pandas):
+        try:
+            converted = to_pandas()
+        except Exception as exc:  # pragma: no cover - defensive
+            raise TypeError(
+                f"could not convert {type(df).__name__} to a pandas "
+                f"DataFrame via .to_pandas(): {exc}") from exc
+        if isinstance(converted, pd.DataFrame):
+            return converted
+    raise TypeError(
+        f"'df' must be a pandas DataFrame (or a polars / pyarrow table exposing "
+        f".to_pandas()), got {type(df).__name__}")
+
+
 # ---------------------------------------------------------------------------
 # Variable-name sniffing (best-effort)
 # ---------------------------------------------------------------------------

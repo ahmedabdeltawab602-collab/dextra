@@ -33,7 +33,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 
-from ._utils import get_variable_name
+from ._utils import _ensure_pandas, get_variable_name
 
 try:
     from IPython.display import display as _ipy_display
@@ -254,8 +254,7 @@ def clean_report(
     """
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
-    if not isinstance(df, pd.DataFrame):
-        raise TypeError(f"'df' must be a pandas DataFrame, got {type(df).__name__}")
+    df = _ensure_pandas(df)
 
     n_rows = len(df)
     n_cols = df.shape[1]
@@ -527,8 +526,7 @@ def standardize_columns(
     """
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
-    if not isinstance(df, pd.DataFrame):
-        raise TypeError(f"'df' must be a pandas DataFrame, got {type(df).__name__}")
+    df = _ensure_pandas(df)
 
     original_names = list(df.columns)
 
@@ -813,8 +811,7 @@ def cast_types(
     """
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
-    if not isinstance(df, pd.DataFrame):
-        raise TypeError(f"'df' must be a pandas DataFrame, got {type(df).__name__}")
+    df = _ensure_pandas(df)
     if not (0 < parse_threshold <= 1):
         raise ValueError(f"'parse_threshold' must be in (0, 1], got {parse_threshold}")
 
@@ -1024,8 +1021,7 @@ def validate_rules(
     """
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
-    if not isinstance(df, pd.DataFrame):
-        raise TypeError(f"'df' must be a pandas DataFrame, got {type(df).__name__}")
+    df = _ensure_pandas(df)
     if not rules:
         raise ValueError("'rules' must be a non-empty sequence of rule dicts.")
 
@@ -1326,8 +1322,7 @@ def handle_missing(
     """
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
-    if not isinstance(df, pd.DataFrame):
-        raise TypeError(f"'df' must be a pandas DataFrame, got {type(df).__name__}")
+    df = _ensure_pandas(df)
 
     n_before_rows, n_before_cols = df.shape
     missing_before = df.isna().sum()
@@ -1583,8 +1578,7 @@ def dedupe(
     """
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
-    if not isinstance(df, pd.DataFrame):
-        raise TypeError(f"'df' must be a pandas DataFrame, got {type(df).__name__}")
+    df = _ensure_pandas(df)
     if keep not in ("first", "last", False):
         raise ValueError(f"'keep' must be 'first', 'last' or False, got {keep!r}")
     if subset is not None:
@@ -1752,8 +1746,7 @@ def clip_outliers(
     """
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
-    if not isinstance(df, pd.DataFrame):
-        raise TypeError(f"'df' must be a pandas DataFrame, got {type(df).__name__}")
+    df = _ensure_pandas(df)
     if method not in _VALID_OUTLIER_METHODS_CLEAN:
         raise ValueError(f"'method' must be one of {_VALID_OUTLIER_METHODS_CLEAN}, got {method!r}")
     if action not in _VALID_OUTLIER_ACTIONS:
@@ -1955,8 +1948,7 @@ def na_show(
     """
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
-    if not isinstance(df, pd.DataFrame):
-        raise TypeError(f"'df' must be a pandas DataFrame, got {type(df).__name__}")
+    df = _ensure_pandas(df)
 
     n_total = len(df)
     col_rows = []
@@ -2094,8 +2086,7 @@ def dup_show(
     """
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
-    if not isinstance(df, pd.DataFrame):
-        raise TypeError(f"'df' must be a pandas DataFrame, got {type(df).__name__}")
+    df = _ensure_pandas(df)
     if subset is not None:
         bad = [c for c in subset if c not in df.columns]
         if bad:
@@ -2216,8 +2207,7 @@ def out_show(
     """
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
-    if not isinstance(df, pd.DataFrame):
-        raise TypeError(f"'df' must be a pandas DataFrame, got {type(df).__name__}")
+    df = _ensure_pandas(df)
     if method not in ("iqr", "zscore"):
         raise ValueError(f"method must be 'iqr' or 'zscore', got {method!r}")
 

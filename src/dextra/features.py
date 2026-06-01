@@ -46,7 +46,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 
-from ._utils import get_variable_name
+from ._utils import _ensure_pandas, get_variable_name
 from ._version import __version__
 
 try:
@@ -315,8 +315,7 @@ def transform(
     >>> df_te = dx.transform(df_test, params=p)        # apply, no re-fit
     >>> dx.transform(df, cols=['price'], method='compare')   # explore options
     """
-    if not isinstance(df, pd.DataFrame):
-        raise TypeError(f"'df' must be a pandas DataFrame, got {type(df).__name__}")
+    df = _ensure_pandas(df)
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
 
@@ -658,8 +657,7 @@ def scale(
     >>> df_te = dx.scale(df_test, params=p)            # apply, no re-fit
     >>> dx.scale(df, cols=['price'], method='compare')  # explore options
     """
-    if not isinstance(df, pd.DataFrame):
-        raise TypeError(f"'df' must be a pandas DataFrame, got {type(df).__name__}")
+    df = _ensure_pandas(df)
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
 
@@ -1168,8 +1166,7 @@ def bin(
     >>> df_te = dx.bin(df_test, params=p)              # apply, no re-fit
     >>> dx.bin(df, cols=['price'], method='compare')   # explore options
     """
-    if not isinstance(df, pd.DataFrame):
-        raise TypeError(f"'df' must be a pandas DataFrame, got {type(df).__name__}")
+    df = _ensure_pandas(df)
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
 
@@ -1702,8 +1699,7 @@ def encode(
     >>> df_te = dx.encode(df_test, params=p)              # apply, no re-fit
     >>> dx.encode(df, cols=['city'], method='compare')    # explore options
     """
-    if not isinstance(df, pd.DataFrame):
-        raise TypeError(f"'df' must be a pandas DataFrame, got {type(df).__name__}")
+    df = _ensure_pandas(df)
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
 
@@ -2260,8 +2256,7 @@ def dtfeats(
     >>> df_te = dx.dtfeats(df_test, params=p)            # apply, same columns
     >>> dx.dtfeats(df, cols=['signup'], method='compare')
     """
-    if not isinstance(df, pd.DataFrame):
-        raise TypeError(f"'df' must be a pandas DataFrame, got {type(df).__name__}")
+    df = _ensure_pandas(df)
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
 
@@ -2602,8 +2597,7 @@ def cross(
     >>> df_te = dx.cross(df_test, params=p)              # apply, same recipe
     >>> dx.cross(df, cols=['price', 'area'], method='compare')
     """
-    if not isinstance(df, pd.DataFrame):
-        raise TypeError(f"'df' must be a pandas DataFrame, got {type(df).__name__}")
+    df = _ensure_pandas(df)
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
 
@@ -2932,8 +2926,7 @@ def aggfeat(
     >>> df_te = dx.aggfeat(df_test, params=p)            # apply, no re-fit
     >>> dx.aggfeat(df, group='city', value='price', agg='compare')
     """
-    if not isinstance(df, pd.DataFrame):
-        raise TypeError(f"'df' must be a pandas DataFrame, got {type(df).__name__}")
+    df = _ensure_pandas(df)
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
 
@@ -3586,8 +3579,7 @@ def featpipe(
     >>> df_te = dx.featpipe(df_test, params=p)            # apply, no re-fit
     >>> df_te2 = dx.featpipe(df_test, load_path='pipeline.json')  # same result
     """
-    if not isinstance(df, pd.DataFrame):
-        raise TypeError(f"'df' must be a pandas DataFrame, got {type(df).__name__}")
+    df = _ensure_pandas(df)
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
 

@@ -27,6 +27,7 @@ import seaborn as sns
 from scipy import stats as _sst
 
 from ._utils import (
+    _ensure_pandas,
     get_variable_name,
     resolve_columns,
     to_numeric_frame,
@@ -1105,8 +1106,7 @@ def missing_report(
     """
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
-    if not isinstance(df, pd.DataFrame):
-        raise TypeError(f"'df' must be a pandas DataFrame, got {type(df).__name__}")
+    df = _ensure_pandas(df)
     n_total = len(df)
     rows = []
     for c in df.columns:

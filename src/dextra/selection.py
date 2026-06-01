@@ -44,7 +44,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 
-from ._utils import get_variable_name
+from ._utils import _ensure_pandas, get_variable_name
 from ._version import __version__
 
 try:
@@ -360,8 +360,7 @@ def redundancy(
     >>> df_te = dx.redundancy(df_test, params=p)          # apply, no re-score
     >>> dx.redundancy(df, method='compare')               # explore
     """
-    if not isinstance(df, pd.DataFrame):
-        raise TypeError(f"'df' must be a pandas DataFrame, got {type(df).__name__}")
+    df = _ensure_pandas(df)
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
 
@@ -789,8 +788,7 @@ def relevance(
     >>> df_te = dx.relevance(df_test, params=p)           # apply, no re-score
     >>> dx.relevance(df, y='churn', method='compare')     # explore
     """
-    if not isinstance(df, pd.DataFrame):
-        raise TypeError(f"'df' must be a pandas DataFrame, got {type(df).__name__}")
+    df = _ensure_pandas(df)
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
 
@@ -1297,8 +1295,7 @@ def importance(
     >>> df_te = dx.importance(df_test, params=p)          # apply, no re-train
     >>> dx.importance(df, y='churn', method='compare')    # explore
     """
-    if not isinstance(df, pd.DataFrame):
-        raise TypeError(f"'df' must be a pandas DataFrame, got {type(df).__name__}")
+    df = _ensure_pandas(df)
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
 
@@ -1593,8 +1590,7 @@ def rfe(
     >>> df_te = dx.rfe(df_test, params=p)                 # apply, no re-fit
     >>> dx.rfe(df, y='churn', estimator='compare')        # explore
     """
-    if not isinstance(df, pd.DataFrame):
-        raise TypeError(f"'df' must be a pandas DataFrame, got {type(df).__name__}")
+    df = _ensure_pandas(df)
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
 
@@ -1919,8 +1915,7 @@ def selectpipe(
     >>> df_te = dx.selectpipe(df_test, params=p)          # apply, no re-score
     >>> df_te2 = dx.selectpipe(df_test, load_path='select.json')  # same result
     """
-    if not isinstance(df, pd.DataFrame):
-        raise TypeError(f"'df' must be a pandas DataFrame, got {type(df).__name__}")
+    df = _ensure_pandas(df)
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
 

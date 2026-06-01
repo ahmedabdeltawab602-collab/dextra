@@ -43,6 +43,13 @@ dependencies = [
 viz = [
   "plotly>=5.10",
 ]
+# Optional high-performance / alternative data backends. dextra accepts polars
+# DataFrames and pyarrow Tables at its public entry points and converts them to
+# pandas via .to_pandas(); install this extra to use them.
+perf = [
+  "polars>=0.20",
+  "pyarrow>=14",
+]
 # scikit-learn powers the model-based selectors (importance, rfe), the Phase 6
 # models (regress, classify, cluster) and the sklearn-compatible wrappers in
 # dextra.compat. Imported lazily so the rest of the library works without it.
@@ -63,6 +70,7 @@ dev = [
   "ruff>=0.4",
   "mypy>=1.8",
   "hypothesis>=6.90",
+  "pytest-benchmark>=4.0",
   "build>=1.0",
   "twine>=4.0",
   "plotly>=5.10",

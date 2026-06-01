@@ -42,7 +42,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 
-from ._utils import get_variable_name
+from ._utils import _ensure_pandas, get_variable_name
 from ._version import __version__
 
 try:
@@ -376,8 +376,7 @@ def regress(
     >>> preds = dx.regress(df_test, params=p)            # apply, no re-fit
     >>> dx.regress(df_train, y='price', method='compare')  # rank baselines
     """
-    if not isinstance(df, pd.DataFrame):
-        raise TypeError(f"'df' must be a pandas DataFrame, got {type(df).__name__}")
+    df = _ensure_pandas(df)
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
 
@@ -857,8 +856,7 @@ def classify(
     >>> preds = dx.classify(df_test, params=p)              # apply, no re-fit
     >>> dx.classify(df_train, y='churn', method='compare')  # rank baselines
     """
-    if not isinstance(df, pd.DataFrame):
-        raise TypeError(f"'df' must be a pandas DataFrame, got {type(df).__name__}")
+    df = _ensure_pandas(df)
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
 
@@ -1305,8 +1303,7 @@ def cluster(
     >>> labels = dx.cluster(df_new, params=p)            # apply, no re-fit
     >>> dx.cluster(df, method='compare')                 # rank baselines
     """
-    if not isinstance(df, pd.DataFrame):
-        raise TypeError(f"'df' must be a pandas DataFrame, got {type(df).__name__}")
+    df = _ensure_pandas(df)
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
 

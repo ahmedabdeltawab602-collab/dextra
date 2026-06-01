@@ -37,3 +37,24 @@ jobs:
 
       - name: Run tests
         run: pytest --cov=dextra --cov-report=term-missing --cov-fail-under=60
+
+  benchmarks:
+    runs-on: ubuntu-latest
+    # Performance tracking only; never blocks the build.
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install package and dev dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev,ml]"
+
+      - name: Run micro-benchmarks
+        run: pytest benchmarks/ --benchmark-only --benchmark-min-rounds=3
