@@ -76,3 +76,5 @@ desktop.ini
 plots/
 dextra_output/
 .backups/
+# stray file created by tooling on a read-only-delete mount; remove manually
+src/dextra/_deltest.txt

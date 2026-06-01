@@ -68,6 +68,10 @@ property-based tests and an informational mypy gate. Backward-compatible.
 - **Plotly is now optional** (extra `viz`), not a core dependency, so headless
   / server installs are lighter. `plot_boxplots` imports Plotly lazily and
   raises a clear error if it is missing.
+- **`features.py` refactored into focused modules** (`_features_common`,
+  `_features_numeric`, `_features_discretize`, `_features_derive`,
+  `_features_pipeline`); `dextra.features` is now a thin re-export facade. No
+  public API change -- imports and behaviour are identical.
 
 ### Fixed
 - `z_scores` no longer raises `KeyError` on a constant / zero-variance column:
