@@ -222,7 +222,7 @@ Three staged deliveries, each tested before the next begins:
 |-------|----------|--------|
 | 6.1 | `regress` (`reg`) | Regression + compare | ✅ done |
 | 6.2 | `classify` (`clf`) | Classification + compare | ✅ done |
-| 6.3 | `cluster` (`clus`) | Clustering + compare (k selection) | next |
+| 6.3 | `cluster` (`clus`) | Clustering + compare (k selection) | ✅ done |
 
 Every public name is underscore-free and short; each has a short alias,
 consistent with Phases 2–5.
@@ -253,3 +253,4 @@ Any function violating any of these is rewritten before shipping.
 | 2026-05-31 | Hybrid artifact contract locked (JSON descriptor + fitted estimator). Expanded-baseline compare scope set. 3-stage delivery plan set. |
 | 2026-05-31 | Stage 6.1 (regress) shipped. Return contract formalised (4.7) and verified across 7 scenarios; metrics standardised to {split:{metric}}; folds moved to metadata. |
 | 2026-05-31 | Stage 6.2 (classify) shipped on the same contract: logistic/tree/forest/knn, binary+multiclass, accuracy/F1/ROC-AUC, StratifiedKFold; reused all shared helpers. |
+| 2026-06-01 | Stage 6.3 (cluster) shipped — Phase 6 complete: kmeans/agglomerative + compare, automatic k by silhouette (elbow/inertia for kmeans), unsupervised (no y), `pred_col="cluster"`. Added target-free `_clean_x`; reused every shared helper. Agglomerative apply uses a NearestCentroid fitted on its labels so the persisted Pipeline predicts uniformly. |

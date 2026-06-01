@@ -32,6 +32,12 @@ tagged **0.2.0** (new features, backward-compatible).
 - **Phase 6 Stage 6.2 - `classify`** (alias `clf`) - one-line cross-validated
   classification baseline (logistic / tree / forest / knn / compare), binary and
   multiclass, with accuracy / F1 / ROC-AUC and the same hybrid artifact contract.
+- **Phase 6 Stage 6.3 - `cluster`** (alias `clus`) - one-line UNSUPERVISED
+  clustering baseline (kmeans / agglomerative / compare) with automatic k
+  selection by silhouette (elbow / inertia for kmeans). Never accepts a target;
+  appends a `"cluster"` label column; same hybrid artifact contract (JSON
+  descriptor + fitted sklearn Pipeline). Agglomerative apply assigns new rows via
+  a NearestCentroid fitted on its cluster labels. **Phase 6 complete.**
 - `dx.functions()` - prints every public function with its one-line summary.
 - `describe_numeric(..., ddof=1)` - choose sample (1) or population (0) std/var.
 - `plot_histograms(..., bins='auto')` - bins now default to NumPy's automatic

@@ -1121,3 +1121,483 @@ def _plot_classify_compare(summary, fig_width, fig_height, dpi):
 
 # Short alias (consistent with the rest of dextra).
 clf = classify
+
+
+# ===========================================================================
+# Stage 6.3 -- cluster  (instant clustering baseline: fit/apply/compare)
+# ===========================================================================
+
+# Unsupervised: never accepts a target y (see MODELING_PHILOSOPHY 2.3 / 4.7).
+_CLUSTER_METHODS = ("kmeans", "agglomerative")
+_VALID_CLUSTER_METHODS = _CLUSTER_METHODS + ("compare",)
+
+
+def _clean_x(df, features, func_name):
+    """Like :func:`_clean_xy` but target-free: coerce features, drop NaN rows.
+
+    Clustering has no target, so this is the unsupervised cleaning helper the
+    contract calls for. Needs >= 3 complete rows (silhouette requires at least
+    2 clusters and ``2 <= n_labels <= n_samples - 1``).
+    """
+    X = df[features].apply(pd.to_numeric, errors="coerce")
+    mask = X.notna().all(axis=1)
+    X = X.loc[mask]
+    if len(X) < 3:
+        raise ValueError(
+            f"{func_name}: need >= 3 complete (non-NaN) rows after cleaning; "
+            f"got {len(X)}.")
+    return X
+
+
+def _cluster_hyperparams(method: str, k: int) -> dict:
+    if method == "kmeans":
+        return {"n_clusters": int(k), "n_init": 10, "random_state": 0}
+    if method == "agglomerative":
+        return {"n_clusters": int(k), "linkage": "ward"}
+    raise ValueError(f"cluster: unknown method {method!r}")  # pragma: no cover
+
+
+def _k_grid(k_range, n: int) -> list:
+    """The candidate k values, clamped so silhouette stays well-defined."""
+    lo, hi = int(k_range[0]), int(k_range[1])
+    if lo < 2:
+        raise ValueError(f"cluster: k_range lower bound must be >= 2, got {lo}")
+    if hi < lo:
+        raise ValueError(
+            f"cluster: k_range must be (lo, hi) with hi >= lo, got {k_range}")
+    hi = min(hi, n - 1)            # silhouette needs n_labels <= n_samples - 1
+    if hi < lo:
+        hi = lo
+    return list(range(lo, hi + 1))
+
+
+def _fit_cluster_core(method: str, k: int, Xs):
+    """Fit one clusterer on already-scaled data.
+
+    Returns ``(predictor, labels, inertia)``. ``agglomerative`` has no native
+    ``predict``; a :class:`~sklearn.neighbors.NearestCentroid` is fitted on its
+    labels so the persisted estimator can assign new points by the same
+    nearest-centroid rule used to deploy hierarchical clustering. ``inertia`` is
+    ``None`` for agglomerative (undefined) and rendered ``-`` / ``n/a``.
+    """
+    if method == "kmeans":
+        from sklearn.cluster import KMeans
+        km = KMeans(n_clusters=int(k), n_init=10, random_state=0)
+        labels = km.fit_predict(Xs)
+        return km, labels, _json_safe_num(km.inertia_)
+    if method == "agglomerative":
+        from sklearn.cluster import AgglomerativeClustering
+        from sklearn.neighbors import NearestCentroid
+        ag = AgglomerativeClustering(n_clusters=int(k))
+        labels = ag.fit_predict(Xs)
+        nc = NearestCentroid()
+        nc.fit(Xs, labels)
+        return nc, labels, None
+    raise ValueError(f"cluster: unknown method {method!r}")  # pragma: no cover
+
+
+def _silhouette(Xs, labels):
+    """Silhouette score, or ``None`` when undefined (< 2 distinct labels)."""
+    if len(np.unique(labels)) < 2:
+        return None
+    from sklearn.metrics import silhouette_score
+    try:
+        return _json_safe_num(silhouette_score(Xs, labels))
+    except Exception:
+        return None
+
+
+def _assemble_cluster_pipeline(scaler, predictor):
+    """Wrap (optional fitted scaler) + fitted predictor in an sklearn Pipeline.
+
+    Both steps are already fitted; the Pipeline is never re-fit. This keeps the
+    artifact joblib-persistable and droppable into Pipeline/GridSearchCV, and
+    gives a uniform ``predict`` for both kmeans and agglomerative.
+    """
+    from sklearn.pipeline import Pipeline
+    steps = []
+    if scaler is not None:
+        steps.append(("scaler", scaler))
+    steps.append(("model", predictor))
+    return Pipeline(steps)
+
+
+def _select_k(method: str, Xs, k_grid):
+    """Fit at every candidate k and pick the k with the best silhouette.
+
+    Returns ``(best_k, best_labels, best_inertia, best_predictor, curve)`` where
+    ``curve`` maps k -> {'silhouette', 'inertia'} for the elbow / silhouette
+    plot. The winning predictor is kept so no re-fit is needed.
+    """
+    curve = {}
+    best = None
+    for k in k_grid:
+        predictor, labels, inertia = _fit_cluster_core(method, k, Xs)
+        sil = _silhouette(Xs, labels)
+        curve[k] = {"silhouette": sil, "inertia": inertia}
+        score = sil if sil is not None else -np.inf
+        if best is None or score > best[0]:
+            best = (score, k, labels, inertia, predictor)
+    _, best_k, best_labels, best_inertia, best_predictor = best
+    return int(best_k), best_labels, best_inertia, best_predictor, curve
+
+
+def cluster(
+    df: pd.DataFrame,
+    cols: Optional[Sequence[str]] = None,
+    method: str = "kmeans",
+    *,
+    k: Optional[int] = None,
+    k_range: Sequence[int] = (2, 10),
+    standardize: Optional[bool] = None,
+    params: Optional[dict] = None,
+    return_params: bool = False,
+    show: bool = True,
+    plot: bool = True,
+    return_df: bool = True,
+    return_fig: bool = False,
+    decimals: int = 4,
+    df_name: Optional[str] = None,
+    fig_width: float = 13.0,
+    fig_height: float = 5.0,
+    dpi: int = 110,
+):
+    """Fit an instant clustering baseline in one line (unsupervised; no target).
+
+    Mirrors :func:`regress` / :func:`classify` (fit / apply / compare, hybrid
+    artifact) but takes **no** ``y`` -- clustering finds the data's own
+    structure. In FIT mode the cluster label of each row is appended as
+    ``"cluster"``; if ``k`` is ``None`` the number of clusters is chosen
+    automatically by maximising the silhouette over ``k_range``. APPLY mode
+    assigns clusters to new data with the saved estimator (no re-fit); COMPARE
+    mode evaluates every candidate over ``k_range`` and writes nothing.
+
+    Parameters
+    ----------
+    df : pandas.DataFrame
+        Input data. Never mutated.
+    cols : sequence of str, optional
+        Feature columns. Defaults to every numeric (non-boolean) column.
+        Ignored in apply mode.
+    method : {'kmeans', 'agglomerative', 'compare'}
+        The baseline clusterer, or 'compare' to rank them all.
+    k : int, optional
+        Fixed number of clusters. If ``None`` (default) k is selected by
+        silhouette over ``k_range``.
+    k_range : (int, int), default (2, 10)
+        Inclusive search range for k when ``k`` is ``None`` (upper bound is
+        clamped to ``n_rows - 1``).
+    standardize : bool, optional
+        Whether to z-score features before clustering. Default ``True`` (both
+        algorithms are distance-based).
+    params, return_params, show, plot, return_df, return_fig, decimals, df_name
+        Standard dextra flags (see :func:`regress`).
+
+    Returns
+    -------
+    pandas.DataFrame
+        The input frame plus a ``"cluster"`` label column, and -- when
+        requested -- the hybrid ``params`` artifact and/or the figure.
+
+    Examples
+    --------
+    >>> out, p = dx.cluster(df, method='kmeans', return_params=True)   # auto-k
+    >>> labels = dx.cluster(df_new, params=p)            # apply, no re-fit
+    >>> dx.cluster(df, method='compare')                 # rank baselines
+    """
+    if not isinstance(df, pd.DataFrame):
+        raise TypeError(f"'df' must be a pandas DataFrame, got {type(df).__name__}")
+    if df_name is None:
+        df_name = get_variable_name(df, depth=2)
+
+    # ---- APPLY MODE -----------------------------------------------------
+    if params is not None:
+        return _cluster_apply(df, params, show, plot, return_df,
+                              return_params, return_fig, decimals, df_name,
+                              fig_width, fig_height, dpi)
+
+    # ---- FIT / COMPARE guards (before importing sklearn) ----------------
+    if method not in _VALID_CLUSTER_METHODS:
+        raise ValueError(
+            f"cluster: 'method' must be one of {_VALID_CLUSTER_METHODS}, "
+            f"got {method!r}")
+    if method == "compare" and return_params:
+        raise ValueError(
+            "cluster: method='compare' fits no single model and writes no "
+            "artifact; call with a concrete method to get params.")
+    if k is not None and int(k) < 2:
+        raise ValueError(f"cluster: 'k' must be >= 2, got {k}")
+
+    features = _resolve_features(df, cols, "cluster", exclude=[])
+
+    _require_sklearn("cluster")
+    X = _clean_x(df, features, "cluster")
+    if k is not None and int(k) > len(X) - 1:
+        raise ValueError(
+            f"cluster: k={k} too large for {len(X)} usable rows (need "
+            f"k <= n - 1).")
+    Xa = X.to_numpy(dtype=float)
+
+    use_scaler = True if standardize is None else bool(standardize)
+    scaler = None
+    if use_scaler:
+        from sklearn.preprocessing import StandardScaler
+        scaler = StandardScaler()
+        Xs = scaler.fit_transform(Xa)
+    else:
+        Xs = Xa
+
+    k_grid = [int(k)] if k is not None else _k_grid(k_range, len(X))
+
+    if method == "compare":
+        return _cluster_compare(df, Xs, scaler, features, k_grid, use_scaler,
+                                show, plot, return_df, return_fig, decimals,
+                                df_name, fig_width, fig_height, dpi)
+
+    k_selected_by = "user" if k is not None else "silhouette"
+    best_k, labels, inertia, predictor, curve = _select_k(method, Xs, k_grid)
+    sil = curve[best_k]["silhouette"]
+    estimator = _assemble_cluster_pipeline(scaler, predictor)
+
+    out = df.copy()
+    out.attrs = dict(df.attrs)
+    pred_col = "cluster"
+    full_X = (df[features].apply(pd.to_numeric, errors="coerce")
+              .fillna(X.mean()).to_numpy(dtype=float))
+    out[pred_col] = pd.Series(estimator.predict(full_X), index=df.index,
+                              name=pred_col)
+
+    metrics = {"fit": {"silhouette": sil, "inertia": inertia,
+                       "n_clusters": int(best_k)}}
+    params_out = {
+        "function": "cluster",
+        "task": "clustering",
+        "algorithm": method,
+        "version": __version__,
+        "fit_at": _now_iso(),
+        "features": list(features),
+        "target": None,
+        "hyperparams": _cluster_hyperparams(method, best_k),
+        "metrics": metrics,
+        "pred_col": pred_col,
+        "metadata": {"n": int(len(X)), "n_features": len(features),
+                     "k": int(best_k), "standardize": bool(use_scaler),
+                     "k_range": ([k_grid[0], k_grid[-1]] if k is None else None),
+                     "k_selected_by": k_selected_by},
+        "estimator": estimator,
+    }
+
+    inertia_txt = ("" if inertia is None
+                   else f", inertia={_fmt_metric(inertia, decimals)}")
+    decision = (
+        f"'{method}' clustering baseline -- {best_k} clusters "
+        f"(k by {k_selected_by}); silhouette={_fmt_metric(sil, decimals)}"
+        f"{inertia_txt}. Cluster labels added as '{pred_col}'. "
+        f"Persist with joblib.dump(params['estimator'], ...).")
+
+    _append_audit(out, {
+        "stage": "modeling",
+        "function": "cluster",
+        "timestamp": params_out["fit_at"],
+        "mode": "fit",
+        "params": {"method": method, "features": list(features),
+                   "k": int(best_k), "k_selected_by": k_selected_by},
+        "decision": decision,
+    })
+
+    summary = _metrics_table(params_out["metrics"])
+    if show:
+        _print_header(f"Clustering baseline for: {df_name}  "
+                      f"(method={method}, k={best_k}, mode=fit)")
+        _display(_fmt_table(summary, decimals))
+        print(f"\nDecision: {decision}\n")
+
+    fig = None
+    if plot:
+        fig = _plot_cluster(Xs, labels, curve, best_k, method, features,
+                            fig_width, fig_height, dpi)
+    _finalize_figure(fig, return_fig)
+    return _ret_pack(out, params_out, fig, return_df, return_params, return_fig)
+
+
+def _cluster_apply(df, params, show, plot, return_df, return_params,
+                   return_fig, decimals, df_name, fig_width, fig_height, dpi):
+    if not isinstance(params, dict) or params.get("function") != "cluster":
+        got = (params.get("function") if isinstance(params, dict)
+               else type(params).__name__)
+        raise ValueError(f"params dict is not for 'cluster' (function={got!r}).")
+    estimator = params.get("estimator")
+    if estimator is None or not hasattr(estimator, "predict"):
+        raise ValueError(
+            "cluster apply: params has no fitted estimator. Re-fit and pass the "
+            "full params (the artifact carries params['estimator']).")
+    features = params["features"]
+    missing = [c for c in features if c not in df.columns]
+    if missing:
+        raise KeyError(
+            f"cluster apply failed: params expects feature column(s) {missing} "
+            f"which are not present in this DataFrame.")
+    X = df[features].apply(pd.to_numeric, errors="coerce")
+    if X.isna().any().any():
+        raise ValueError(
+            "cluster apply: feature columns contain NaN/non-numeric values. "
+            "Clean / impute (Phase 3) before predicting.")
+    pred_col = params.get("pred_col", "cluster")
+    out = df.copy()
+    out.attrs = dict(df.attrs)
+    out[pred_col] = pd.Series(estimator.predict(X.to_numpy(dtype=float)),
+                              index=df.index, name=pred_col)
+
+    decision = (f"Applied saved '{params.get('algorithm', '?')}' clustering "
+                f"model (fitted {params.get('fit_at', '?')}); assigned "
+                f"{len(out)} row(s) into '{pred_col}' -- no re-fit, "
+                f"leakage-safe.")
+    _append_audit(out, {
+        "stage": "modeling",
+        "function": "cluster",
+        "timestamp": _now_iso(),
+        "mode": "apply",
+        "params": {"algorithm": params.get("algorithm"),
+                   "fit_at": params.get("fit_at")},
+        "decision": decision,
+    })
+    if show:
+        _print_header(f"Cluster assignment for: {df_name}  "
+                      f"(algorithm={params.get('algorithm')}, mode=apply)")
+        _display(_fmt_table(_metrics_table(params["metrics"]), decimals))
+        print(f"\nDecision: {decision}\n")
+    fig = None
+    _finalize_figure(fig, return_fig)
+    return _ret_pack(out, params, fig, return_df, return_params, return_fig)
+
+
+def _cluster_compare(df, Xs, scaler, features, k_grid, use_scaler, show, plot,
+                     return_df, return_fig, decimals, df_name,
+                     fig_width, fig_height, dpi):
+    rows = {}
+    curves = {}
+    for m in _CLUSTER_METHODS:
+        best_k, _labels, inertia, _pred, curve = _select_k(m, Xs, k_grid)
+        rows[m] = {"silhouette": curve[best_k]["silhouette"],
+                   "n_clusters": int(best_k), "inertia": inertia}
+        curves[m] = curve
+    summary = pd.DataFrame(
+        {"silhouette": {m: rows[m]["silhouette"] for m in _CLUSTER_METHODS},
+         "n_clusters": {m: rows[m]["n_clusters"] for m in _CLUSTER_METHODS},
+         "inertia": {m: rows[m]["inertia"] for m in _CLUSTER_METHODS}})
+    summary = summary.sort_values(
+        "silhouette", ascending=False, na_position="last")
+    best = summary.index[0]
+    best_sil = summary.loc[best, "silhouette"]
+    best_k = summary.loc[best, "n_clusters"]
+
+    out = df.copy()
+    out.attrs = dict(df.attrs)
+    krange_txt = f"[{k_grid[0]}, {k_grid[-1]}]"
+    decision = (
+        f"Compared {len(_CLUSTER_METHODS)} clustering algorithms over k in "
+        f"{krange_txt}; best by silhouette is '{best}' "
+        f"(silhouette={_fmt_metric(best_sil, decimals)}, k={int(best_k)}). "
+        f"Nothing written -- choose a method to fit.")
+    _append_audit(out, {
+        "stage": "modeling",
+        "function": "cluster",
+        "timestamp": _now_iso(),
+        "mode": "compare",
+        "params": {"candidates": list(_CLUSTER_METHODS),
+                   "k_range": [k_grid[0], k_grid[-1]]},
+        "decision": decision,
+    })
+    if show:
+        _print_header(f"Clustering model comparison for: {df_name}  "
+                      f"(k in {krange_txt})")
+        _display(_fmt_table(summary, decimals))
+        print(f"\nDecision: {decision}\n")
+    fig = None
+    if plot:
+        fig = _plot_cluster_compare(summary, curves, fig_width, fig_height, dpi)
+    _finalize_figure(fig, return_fig)
+    return _ret_pack(out, None, fig, return_df, False, return_fig)
+
+
+# ---------------------------------------------------------------------------
+# Cluster plots
+# ---------------------------------------------------------------------------
+
+def _project_2d(Xs):
+    """A 2-D view of the scaled features for the scatter (PCA if > 2 dims)."""
+    Xs = np.asarray(Xs, dtype=float)
+    if Xs.shape[1] == 1:
+        return np.column_stack([Xs[:, 0], np.zeros(len(Xs))]), ("feature 1", "")
+    if Xs.shape[1] == 2:
+        return Xs[:, :2], ("feature 1", "feature 2")
+    from sklearn.decomposition import PCA
+    proj = PCA(n_components=2, random_state=0).fit_transform(Xs)
+    return proj, ("PC 1", "PC 2")
+
+
+def _plot_cluster(Xs, labels, curve, best_k, method, features,
+                  fig_width, fig_height, dpi):
+    proj, (xlab, ylab) = _project_2d(Xs)
+    fig, axes = plt.subplots(1, 2, figsize=(fig_width, fig_height), dpi=dpi)
+    fig.suptitle(f"Clustering diagnostics -- {method} (k={best_k})",
+                 fontsize=13, fontweight="bold")
+    # (1) cluster scatter
+    ax = axes[0]
+    sc = ax.scatter(proj[:, 0], proj[:, 1], c=labels, cmap="tab10", s=20,
+                    alpha=0.75, edgecolor="white", linewidth=0.3)
+    ax.set_xlabel(xlab)
+    ax.set_ylabel(ylab)
+    ax.set_title(f"Clusters ({len(np.unique(labels))} found)")
+    try:
+        fig.colorbar(sc, ax=ax, label="cluster", fraction=0.046, pad=0.04)
+    except Exception:
+        pass
+    # (2) silhouette (and inertia/elbow for kmeans) vs k
+    ax2 = axes[1]
+    ks = sorted(curve.keys())
+    sil = [curve[k]["silhouette"] if curve[k]["silhouette"] is not None
+           else np.nan for k in ks]
+    ax2.plot(ks, sil, marker="o", color="#2E75B6", label="silhouette")
+    ax2.axvline(best_k, color="#d62728", linestyle="--", linewidth=1.4,
+                label=f"selected k={best_k}")
+    ax2.set_xlabel("k (number of clusters)")
+    ax2.set_ylabel("silhouette")
+    ax2.set_title("Model selection across k")
+    inertia = [curve[k]["inertia"] for k in ks]
+    if any(v is not None for v in inertia):
+        ax3 = ax2.twinx()
+        iv = [v if v is not None else np.nan for v in inertia]
+        ax3.plot(ks, iv, marker="s", color="#ff7f0e", alpha=0.7,
+                 label="inertia (elbow)")
+        ax3.set_ylabel("inertia")
+    ax2.legend(loc="best", fontsize=9)
+    return fig
+
+
+def _plot_cluster_compare(summary, curves, fig_width, fig_height, dpi):
+    fig, axes = plt.subplots(1, 2, figsize=(fig_width, fig_height), dpi=dpi)
+    fig.suptitle("Clustering baselines -- comparison",
+                 fontsize=13, fontweight="bold")
+    order = list(summary.index)
+    sil = [summary.loc[m, "silhouette"] if summary.loc[m, "silhouette"]
+           is not None else 0.0 for m in order]
+    axes[0].barh(order, sil, color="#2E75B6")
+    axes[0].set_xlabel("silhouette (higher is better)")
+    axes[0].invert_yaxis()
+    axes[0].set_title("Best silhouette by algorithm")
+    for m in order:
+        curve = curves[m]
+        ks = sorted(curve.keys())
+        sv = [curve[k]["silhouette"] if curve[k]["silhouette"] is not None
+              else np.nan for k in ks]
+        axes[1].plot(ks, sv, marker="o", label=m)
+    axes[1].set_xlabel("k (number of clusters)")
+    axes[1].set_ylabel("silhouette")
+    axes[1].set_title("Silhouette across k")
+    axes[1].legend(loc="best", fontsize=9)
+    return fig
+
+
+# Short alias (consistent with the rest of dextra).
+clus = cluster

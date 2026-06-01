@@ -62,6 +62,8 @@ from .features import (
 from .modeling import (
     classify,
     clf,
+    clus,
+    cluster,
     reg,
     regress,
 )
@@ -185,4 +187,6 @@ __all__ = [
     "regress", "reg",
     # Phase 6 Stage 6.2
     "classify", "clf",
+    # Phase 6 Stage 6.3
+    "cluster", "clus",
 ]
