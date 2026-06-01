@@ -11,7 +11,7 @@ _Nothing yet._
 
 ## [0.2.0] - 2026-06-01
 
-Completes the modeling phase (Phase 6) and a hardening sprint (Phase 6.5):
+Completes the modeling phase (Phase 6) and a post-Phase-6 hardening sprint:
 scikit-learn-compatible wrappers, optional Plotly, PEP 561 typing markers,
 property-based tests and an informational mypy gate. Backward-compatible.
 
@@ -43,7 +43,7 @@ property-based tests and an informational mypy gate. Backward-compatible.
   appends a `"cluster"` label column; same hybrid artifact contract (JSON
   descriptor + fitted sklearn Pipeline). Agglomerative apply assigns new rows via
   a NearestCentroid fitted on its cluster labels. **Phase 6 complete.**
-- **Phase 6.5 - `dextra.compat`:** scikit-learn-compatible wrappers so dextra's
+- **Hardening sprint - `dextra.compat`:** scikit-learn-compatible wrappers so dextra's
   pipelines and models drop into `sklearn.pipeline.Pipeline` / `GridSearchCV`:
   `DextraFeaturePipeline`, `DextraSelectPipeline`, `DextraRegressor`,
   `DextraClassifier`, `DextraClusterer` (fit/transform/predict, get/set_params,

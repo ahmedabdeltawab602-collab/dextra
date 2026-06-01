@@ -1,4 +1,4 @@
-"""Micro-benchmarks for dextra hot paths (Phase 6.5 performance sprint).
+"""Micro-benchmarks for dextra hot paths (hardening / performance sprint).
 
 Run locally / in CI with:  pytest benchmarks/ --benchmark-only
 These are NOT part of the default test run (testpaths = ["tests"]); they exist

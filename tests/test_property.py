@@ -1,4 +1,4 @@
-"""Phase 6.5 -- property-based tests (Hypothesis).
+"""Hardening sprint -- property-based tests (Hypothesis).
 
 Invariants that must hold for arbitrary finite numeric input, complementing the
 example-based suites. Skipped if Hypothesis is absent.

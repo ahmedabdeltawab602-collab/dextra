@@ -143,5 +143,5 @@ auditing trivial.
 | 2026-05-31 | Phase 6 Stage 6.1 delivered: regress (linear/ridge/lasso/tree/forest + compare), hybrid artifact, tests. |
 | 2026-05-31 | Phase 6 Stage 6.2 delivered: classify (logistic/tree/forest/knn + compare), binary+multiclass, accuracy/F1/ROC-AUC, tests. |
 | 2026-06-01 | Phase 6 Stage 6.3 delivered: cluster (kmeans/agglomerative + compare), automatic k by silhouette, unsupervised, hybrid artifact, tests. **Phase 6 complete: 3/3 modeling functions.** |
-| 2026-06-01 | Phase 6.5 hardening sprint: `dextra.compat` sklearn wrappers; Plotly made optional (`viz` extra) + lazy; PEP 561 `py.typed`; Hypothesis property tests; non-blocking mypy in CI; mkdocs-material docs scaffold; version bumped to 0.2.0. |
+| 2026-06-01 | Hardening sprint (post Phase 6): `dextra.compat` sklearn wrappers; Plotly made optional (`viz` extra) + lazy; PEP 561 `py.typed`; Hypothesis property tests; non-blocking mypy in CI; mkdocs-material docs scaffold; version bumped to 0.2.0. |
 | 2026-06-01 | Performance sprint 1A: polars/pyarrow input accepted at all data/model entry points via `_ensure_pandas` (extra `perf`); `benchmarks/` suite + non-blocking CI bench job. |

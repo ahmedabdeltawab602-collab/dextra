@@ -1,4 +1,4 @@
-"""Phase 6.5 -- scikit-learn compatibility wrappers (dextra.compat).
+"""Hardening sprint -- scikit-learn compatibility wrappers (dextra.compat).
 
 Verifies the wrappers honour the sklearn estimator API: get_params/set_params,
 clone-ability, fit/transform/predict, predict_proba + classes_ for the

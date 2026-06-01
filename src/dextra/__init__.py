@@ -196,7 +196,7 @@ __all__ = [
     "classify", "clf",
     # Phase 6 Stage 6.3
     "cluster", "clus",
-    # Phase 6.5 - scikit-learn compatible wrappers (dextra.compat)
+    # Hardening sprint - scikit-learn compatible wrappers (dextra.compat)
     "DextraFeaturePipeline", "DextraSelectPipeline",
     "DextraRegressor", "DextraClassifier", "DextraClusterer",
 ]

@@ -1,4 +1,4 @@
-"""Phase 6.5 -- polars / pyarrow input acceptance via _ensure_pandas.
+"""Hardening sprint -- polars / pyarrow input acceptance via _ensure_pandas.
 
 dextra's data-processing and modeling entry points accept any table exposing
 ``.to_pandas()`` (polars DataFrame, pyarrow Table) and convert it to pandas at
