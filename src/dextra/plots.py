@@ -15,7 +15,7 @@ compatibility.
 from __future__ import annotations
 
 import os
-from typing import List, Mapping, Optional, Sequence, Tuple, Union
+from typing import TYPE_CHECKING, List, Mapping, Optional, Sequence, Tuple, Union
 
 # Matplotlib / seaborn are used lazily so importing dextra doesn't open a
 # GUI backend unexpectedly.
@@ -31,6 +31,9 @@ from ._utils import (
     safe_divide,
     to_numeric_frame,
 )
+
+if TYPE_CHECKING:  # pragma: no cover - typing only, not a runtime dependency
+    import plotly.graph_objects as go
 
 sns.set_style("whitegrid")
 

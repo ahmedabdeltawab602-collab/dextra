@@ -1,12 +1,12 @@
 ﻿**********************
 Windows PowerShell transcript start
-Start time: 20260601112921
+Start time: 20260601113713
 Username: MSI\manim
 RunAs User: MSI\manim
 Configuration Name: 
 Machine: MSI (Microsoft Windows NT 10.0.26200.0)
 Host Application: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File .\run_validation.ps1
-Process ID: 25928
+Process ID: 37340
 PSVersion: 5.1.26100.8457
 PSEdition: Desktop
 PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.8457
@@ -29,50 +29,10 @@ python 3.13.13 | pandas 3.0.3 | numpy 2.4.5 | scikit-learn 1.8.0
   1. Lint  --  ruff auto-fix then strict check
 ========================================================
 1a) ruff check . --fix  (auto-fixes import order, unused imports, f-strings)
-F821 Undefined name `go`
-   --> src\dextra\plots.py:370:18
-    |
-368 |     return_fig: bool = False,
-369 |     return_df: bool = False,
-370 | ) -> Union[None, go.Figure, pd.DataFrame, Tuple[go.Figure, pd.DataFrame]]:
-    |                  ^^
-371 |     """Stacked horizontal box-plots with annotated statistics (Plotly).
-    |
-
-F821 Undefined name `go`
-   --> src\dextra\plots.py:370:49
-    |
-368 |     return_fig: bool = False,
-369 |     return_df: bool = False,
-370 | ) -> Union[None, go.Figure, pd.DataFrame, Tuple[go.Figure, pd.DataFrame]]:
-    |                                                 ^^
-371 |     """Stacked horizontal box-plots with annotated statistics (Plotly).
-    |
-
-Found 2 errors.
+All checks passed!
 
 1b) ruff check .  (strict gate -- must be clean)
-F821 Undefined name `go`
-   --> src\dextra\plots.py:370:18
-    |
-368 |     return_fig: bool = False,
-369 |     return_df: bool = False,
-370 | ) -> Union[None, go.Figure, pd.DataFrame, Tuple[go.Figure, pd.DataFrame]]:
-    |                  ^^
-371 |     """Stacked horizontal box-plots with annotated statistics (Plotly).
-    |
-
-F821 Undefined name `go`
-   --> src\dextra\plots.py:370:49
-    |
-368 |     return_fig: bool = False,
-369 |     return_df: bool = False,
-370 | ) -> Union[None, go.Figure, pd.DataFrame, Tuple[go.Figure, pd.DataFrame]]:
-    |                                                 ^^
-371 |     """Stacked horizontal box-plots with annotated statistics (Plotly).
-    |
-
-Found 2 errors.
+All checks passed!
 
 ========================================================
   2. Tests  --  pytest + coverage
@@ -222,8 +182,8 @@ src\dextra\modeling.py           773    122    84%   73-74, 91, 104, 121, 123, 1
 -175, 184, 191, 194, 290, 304-305, 399, 430-431, 519, 531, 605, 644-660, 680, 682, 684, 696, 795-796, 879, 908-909, 963-
 966, 984, 995, 1017-1020, 1062-1065, 1068, 1099-1117, 1162, 1164, 1168, 1200, 1204-1205, 1407-1410, 1428, 1462-1465, 150
 9-1512, 1515, 1528, 1530, 1551-1552, 1576-1596
-src\dextra\plots.py              187     24    87%   192, 196, 218-224, 302-305, 308, 318, 333-334, 347, 349-350, 407, 4
-11, 430-437, 545, 548, 553
+src\dextra\plots.py              187     24    87%   195, 199, 221-227, 305-308, 311, 321, 336-337, 350, 352-353, 410, 4
+14, 433-440, 548, 551, 556
 src\dextra\selection.py          970    177    82%   71-74, 78-79, 91, 104, 118-129, 136-137, 141, 163, 170, 188, 211, 2
 23-226, 234, 238, 262, 266, 375, 386, 440-443, 467-469, 503-506, 510, 528-529, 538-540, 544, 560, 564, 583, 587, 593, 62
 2, 632, 648-649, 662, 668, 706-711, 803, 807, 820, 876-879, 903-905, 941-944, 948, 977-983, 987, 999, 1006, 1030-1035, 1
@@ -245,16 +205,16 @@ TOTAL                           6927   2113    69%
 Required test coverage of 60% reached. Total coverage: 69.50%
 =============================================== short test summary info ===============================================
 FAILED tests/test_property.py::test_zscore_extreme_count_bounded - KeyError: 'n_above_3sigma'
-1 failed, 133 passed, 13 warnings in 25.35s
+1 failed, 133 passed, 13 warnings in 29.99s
 
 ========================================================
   3. SUMMARY
 ========================================================
-  LINT  : FAIL  (ruff exit 1 -- see section 1b above)
+  LINT  : PASS  (ruff clean)
   TESTS : FAIL  (pytest exit 1 -- see section 2 above)
 
   NOT GREEN -- paste validation_log.txt (or the red section) back to Claude.
 **********************
 Windows PowerShell transcript end
-End time: 20260601112953
+End time: 20260601113752
 **********************
