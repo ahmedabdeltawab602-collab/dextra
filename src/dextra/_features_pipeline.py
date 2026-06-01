@@ -1,4 +1,5 @@
 """dextra features - the featpipe pipeline wrapper."""
+
 from __future__ import annotations
 
 import warnings
@@ -8,20 +9,19 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 from ._features_common import (
-    _display,
-    _print_header,
-    _now_iso,
-    _finalize_figure,
-    _ret_pack,
     _append_audit,
+    _display,
+    _finalize_figure,
     _fmt_table,
+    _now_iso,
+    _print_header,
+    _ret_pack,
 )
 from ._features_derive import aggfeat, cross, dtfeats
 from ._features_discretize import bin, encode
 from ._features_numeric import scale, transform
 from ._utils import _ensure_pandas, get_variable_name
 from ._version import __version__
-
 
 _FEATPIPE_DISPATCH = {
     "transform": transform,
@@ -33,16 +33,20 @@ _FEATPIPE_DISPATCH = {
     "aggfeat": aggfeat,
 }
 
+
 _FEATPIPE_CONTROL_FLAGS = (
     "return_params", "return_df", "return_fig", "show", "plot", "params",
     "df_name", "decimals", "fig_width", "fig_height", "dpi",
 )
 
+
 _FEATPIPE_INPLACE_FNS = ("transform", "scale", "bin")
+
 
 def _featpipe_compare_key(fn_name: str) -> str:
     """Return the keyword that selects the method for a given function."""
     return "agg" if fn_name == "aggfeat" else "method"
+
 
 def _featpipe_validate_steps(steps) -> list:
     """Validate a steps list; return a clean list of ``(fn_name, kwargs)``.
@@ -92,6 +96,7 @@ def _featpipe_validate_steps(steps) -> list:
         clean.append((fn_name, kwargs))
     return clean
 
+
 def _plot_featpipe(summary_rows, input_cols, df_name, mode,
                    fig_width, fig_height, dpi):
     """Two-panel visual: columns added per step + DataFrame width growth."""
@@ -124,6 +129,7 @@ def _plot_featpipe(summary_rows, input_cols, df_name, mode,
     fig.suptitle(f"featpipe  (mode={mode})  --  {df_name}",
                  fontsize=14, fontweight="bold")
     return fig
+
 
 def featpipe(
     df: pd.DataFrame,
@@ -250,6 +256,7 @@ def featpipe(
                          return_params, return_fig, decimals, df_name,
                          fig_width, fig_height, dpi)
 
+
 def _featpipe_fit(df, steps, save_path, show, plot, return_df,
                   return_params, return_fig, decimals, df_name,
                   fig_width, fig_height, dpi):
@@ -333,6 +340,7 @@ def _featpipe_fit(df, steps, save_path, show, plot, return_df,
                              fig_width, fig_height, dpi)
     _finalize_figure(fig, return_fig)
     return _ret_pack(out, combined, fig, return_df, return_params, return_fig)
+
 
 def _featpipe_apply(df, params, show, plot, return_df, return_params,
                     return_fig, decimals, df_name, fig_width, fig_height, dpi):

@@ -1,4 +1,5 @@
 """dextra features - shared internal helpers (Phase 4)."""
+
 from __future__ import annotations
 
 from datetime import datetime, timezone
@@ -8,15 +9,17 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 
-
 try:
     from IPython.display import display as _ipy_display
 except ImportError:  # pragma: no cover
     _ipy_display = None
 
+
 sns.set_style("whitegrid")
 
+
 AUDIT_KEY = "dextra_audit"
+
 
 def _get_scipy_stats(method: str):
     """Lazily import scipy.stats; only boxcox / yeojohnson need it.
@@ -34,18 +37,22 @@ def _get_scipy_stats(method: str):
             f"method='log' / 'log1p' / 'sqrt' which need only NumPy."
         ) from exc
 
+
 def _display(frame: pd.DataFrame) -> None:
     if _ipy_display is not None:
         _ipy_display(frame)
     else:
         print(frame.to_string())
 
+
 def _print_header(title: str) -> None:
     print(title)
     print("-" * len(title))
 
+
 def _now_iso() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
 
 def _finalize_figure(fig, return_fig: bool) -> None:
     """Display the figure when one was created.
@@ -59,6 +66,7 @@ def _finalize_figure(fig, return_fig: bool) -> None:
     fig.tight_layout(rect=(0, 0, 1, 0.96))
     if not return_fig:
         plt.show()
+
 
 def _ret_pack(out, params, fig, return_df, return_params, return_fig):
     """Pack outputs in the fixed order: dataframe, params, figure.
@@ -79,10 +87,12 @@ def _ret_pack(out, params, fig, return_df, return_params, return_fig):
         return results[0]
     return tuple(results)
 
+
 def _append_audit(out: pd.DataFrame, entry: dict) -> None:
     out.attrs.setdefault(AUDIT_KEY, [])
     out.attrs[AUDIT_KEY] = list(out.attrs[AUDIT_KEY])
     out.attrs[AUDIT_KEY].append(entry)
+
 
 def _fmt_table(frame: pd.DataFrame, decimals: int) -> pd.DataFrame:
     """Format every cell of a summary table for readable display."""
@@ -99,11 +109,13 @@ def _fmt_table(frame: pd.DataFrame, decimals: int) -> pd.DataFrame:
             return str(v)
     return frame.map(_fmt)
 
+
 def _auto_numeric_cols(df: pd.DataFrame) -> list:
     """Return numeric, non-boolean column names."""
     return [c for c in df.columns
             if pd.api.types.is_numeric_dtype(df[c])
             and not pd.api.types.is_bool_dtype(df[c])]
+
 
 def _resolve_cols(df: pd.DataFrame, cols, func_name: str) -> list:
     """Validate an explicit cols selector or auto-pick numeric columns."""
@@ -122,6 +134,7 @@ def _resolve_cols(df: pd.DataFrame, cols, func_name: str) -> list:
         raise TypeError(
             f"{func_name} requires numeric columns; non-numeric passed: {non_num}")
     return chosen
+
 
 def _hist_bins(n: int) -> int:
     if n <= 1:

@@ -1,4 +1,5 @@
 """dextra features - datetime / interaction / aggregation features."""
+
 from __future__ import annotations
 
 import warnings
@@ -9,21 +10,21 @@ import numpy as np
 import pandas as pd
 
 from ._features_common import (
-    _display,
-    _print_header,
-    _now_iso,
-    _finalize_figure,
-    _ret_pack,
     _append_audit,
+    _display,
+    _finalize_figure,
     _fmt_table,
-    _resolve_cols,
     _hist_bins,
+    _now_iso,
+    _print_header,
+    _resolve_cols,
+    _ret_pack,
 )
 from ._utils import _ensure_pandas, get_variable_name
 from ._version import __version__
 
-
 _VALID_DTFEATS_METHODS = ("calendar", "cyclical", "both", "compare")
+
 
 _DT_CALENDAR_ALL = ("year", "month", "day", "dayofweek", "dayofyear",
                     "quarter", "weekofyear", "hour", "minute", "second",
@@ -31,15 +32,19 @@ _DT_CALENDAR_ALL = ("year", "month", "day", "dayofweek", "dayofyear",
                     "is_quarter_start", "is_quarter_end",
                     "is_year_start", "is_year_end")
 
+
 _DT_CALENDAR_DEFAULT = ("year", "month", "day", "dayofweek", "dayofyear",
                         "quarter", "hour", "is_weekend",
                         "is_month_start", "is_month_end")
+
 
 _DT_CYCLICAL_PERIODS = {"month": 12.0, "dayofweek": 7.0, "hour": 24.0,
                         "dayofyear": 365.0, "quarter": 4.0, "minute": 60.0,
                         "day": 31.0, "second": 60.0}
 
+
 _DT_CYCLICAL_DEFAULT = ("month", "dayofweek", "hour")
+
 
 def _resolve_dt_cols(df, cols, func_name):
     """Validate explicit cols or auto-pick datetime columns."""
@@ -57,6 +62,7 @@ def _resolve_dt_cols(df, cols, func_name):
         raise KeyError(f"{func_name}: cols references columns not in df: {bad}")
     return chosen
 
+
 def _as_datetime(s, c):
     """Coerce a Series to datetime64 or raise a clear error."""
     if pd.api.types.is_datetime64_any_dtype(s):
@@ -67,6 +73,7 @@ def _as_datetime(s, c):
         raise TypeError(
             f"dtfeats: column '{c}' is not datetime and could not be parsed "
             f"as one ({exc}). Convert it with pd.to_datetime first.") from exc
+
 
 def _dt_component(s, name):
     """Raw calendar component Series for a datetime Series."""
@@ -90,11 +97,13 @@ def _dt_component(s, name):
         raise ValueError(f"dtfeats: unknown calendar feature {name!r}")
     return table[name]()
 
+
 def _dt_numeric(s, name):
     """Calendar component as float64 with NaN where the source is NaT."""
     comp = pd.Series(_dt_component(s, name), index=s.index)
     out = pd.to_numeric(comp, errors="coerce").astype("float64")
     return out.mask(s.isna())
+
 
 def _dtfeats_extract(s, calendar_feats, cyclical_feats, col):
     """Return an ordered {new_col_name: Series} dict for one datetime column."""
@@ -107,6 +116,7 @@ def _dtfeats_extract(s, calendar_feats, cyclical_feats, col):
         new[f"{col}_{comp}_sin"] = np.sin(ang)
         new[f"{col}_{comp}_cos"] = np.cos(ang)
     return new
+
 
 def dtfeats(
     df: pd.DataFrame,
@@ -268,6 +278,7 @@ def dtfeats(
     _finalize_figure(fig, return_fig)
     return _ret_pack(out, params_out, fig, return_df, return_params, return_fig)
 
+
 def _dtfeats_apply(df, params, show, plot, return_df, return_params,
                    return_fig, decimals, df_name, fig_width, fig_height, dpi):
     if not isinstance(params, dict) or params.get("function") != "dtfeats":
@@ -329,6 +340,7 @@ def _dtfeats_apply(df, params, show, plot, return_df, return_params,
     _finalize_figure(fig, return_fig)
     return _ret_pack(out, params, fig, return_df, return_params, return_fig)
 
+
 def _dtfeats_compare(df, cols, cal_all, cyc_all, show, plot, return_df,
                      return_params, return_fig, decimals, df_name,
                      fig_width, fig_height, dpi):
@@ -357,11 +369,15 @@ def _dtfeats_compare(df, cols, cal_all, cyc_all, show, plot, return_df,
     _finalize_figure(fig, return_fig)
     return _ret_pack(df, None, fig, return_df, return_params, return_fig)
 
+
 _VALID_CROSS_METHODS = ("ratio", "product", "diff", "polynomial", "compare")
+
 
 _CROSS_PAIR_METHODS = ("ratio", "product", "diff")
 
+
 _CROSS_OP_NAMING = {"ratio": "div", "product": "x", "diff": "minus"}
+
 
 def _resolve_cross_pairs(df, pairs, cols, method, func_name):
     """Resolve the (a, b) pairs or the single-column list for an interaction.
@@ -401,6 +417,7 @@ def _resolve_cross_pairs(df, pairs, cols, method, func_name):
             f"form interactions.")
     return list(combinations(chosen, 2)), None
 
+
 def _cross_compute(df, op, inputs, power=None):
     """Compute one interaction Series from a recipe."""
     if op == "ratio":
@@ -421,6 +438,7 @@ def _cross_compute(df, op, inputs, power=None):
         return pd.to_numeric(df[a], errors="coerce") ** power
     raise ValueError(f"cross: unknown op {op!r}")
 
+
 def _cross_recipe(method, pair_list, poly_cols, degree):
     """Build the ordered {new_col: recipe} dict for a cross method."""
     from itertools import combinations
@@ -439,6 +457,7 @@ def _cross_recipe(method, pair_list, poly_cols, degree):
             recipe[f"{a}_x_{b}"] = {"op": "product", "inputs": [a, b],
                                     "power": None}
     return recipe
+
 
 def cross(
     df: pd.DataFrame,
@@ -589,6 +608,7 @@ def cross(
     _finalize_figure(fig, return_fig)
     return _ret_pack(out, params_out, fig, return_df, return_params, return_fig)
 
+
 def _cross_apply(df, params, show, plot, return_df, return_params,
                  return_fig, decimals, df_name, fig_width, fig_height, dpi):
     if not isinstance(params, dict) or params.get("function") != "cross":
@@ -648,6 +668,7 @@ def _cross_apply(df, params, show, plot, return_df, return_params,
     _finalize_figure(fig, return_fig)
     return _ret_pack(out, params, fig, return_df, return_params, return_fig)
 
+
 def _cross_compare(df, pairs, cols, show, plot, return_df, return_params,
                    return_fig, decimals, df_name, fig_width, fig_height, dpi):
     pair_list, _ = _resolve_cross_pairs(df, pairs, cols, "ratio", "cross")
@@ -678,13 +699,17 @@ def _cross_compare(df, pairs, cols, show, plot, return_df, return_params,
     _finalize_figure(fig, return_fig)
     return _ret_pack(df, None, fig, return_df, return_params, return_fig)
 
+
 _VALID_AGG_METHODS = ("mean", "median", "sum", "std", "min", "max",
                       "count", "nunique", "compare")
+
 
 _AGG_CANDIDATES = ("mean", "median", "sum", "std", "min", "max",
                    "count", "nunique")
 
+
 _AGG_NUMERIC = ("mean", "median", "sum", "std", "min", "max")
+
 
 def _as_list(x):
     """Normalise a str / sequence / None argument to a list (or None)."""
@@ -694,6 +719,7 @@ def _as_list(x):
         return [x]
     return list(x)
 
+
 def _group_key_series(df, group):
     """A single string key per row built from one or more group columns."""
     parts = [df[g].astype(str) for g in group]
@@ -701,6 +727,7 @@ def _group_key_series(df, group):
     for p in parts[1:]:
         key = key.str.cat(p, sep=" | ")
     return key
+
 
 def _agg_compute(values, name):
     """Aggregate an array-like to one scalar (NaN-safe)."""
@@ -718,11 +745,13 @@ def _agg_compute(values, name):
         raise ValueError(f"aggfeat: unknown agg {name!r}")
     return float(funcs[name]())
 
+
 def _iso_or_num(x, is_dt):
     """JSON-safe representation of an as_of value."""
     if is_dt:
         return pd.Timestamp(x).isoformat()
     return float(x)
+
 
 def _json_val(v):
     """JSON-safe representation of a value-column entry."""
@@ -731,6 +760,7 @@ def _json_val(v):
     if isinstance(v, (int, float, np.integer, np.floating)):
         return float(v)
     return str(v)
+
 
 def _aggfeat_validate(df, group, value, as_of, agg):
     """Shared argument checks for aggfeat fit."""
@@ -751,6 +781,7 @@ def _aggfeat_validate(df, group, value, as_of, agg):
             raise TypeError(
                 f"aggfeat: agg='{agg}' needs numeric value column(s); "
                 f"non-numeric passed: {non_num}.")
+
 
 def aggfeat(
     df: pd.DataFrame,
@@ -967,6 +998,7 @@ def aggfeat(
     _finalize_figure(fig, return_fig)
     return _ret_pack(out, params_out, fig, return_df, return_params, return_fig)
 
+
 def _aggfeat_apply(df, params, show, plot, return_df, return_params,
                    return_fig, decimals, df_name, fig_width, fig_height, dpi):
     if not isinstance(params, dict) or params.get("function") != "aggfeat":
@@ -1068,6 +1100,7 @@ def _aggfeat_apply(df, params, show, plot, return_df, return_params,
     _finalize_figure(fig, return_fig)
     return _ret_pack(out, params, fig, return_df, return_params, return_fig)
 
+
 def _aggfeat_compare(df, group, value, show, plot, return_df, return_params,
                      return_fig, decimals, df_name, fig_width, fig_height, dpi):
     gk = _group_key_series(df, group)
@@ -1105,6 +1138,7 @@ def _aggfeat_compare(df, group, value, show, plot, return_df, return_params,
                                     fig_width, fig_height, dpi)
     _finalize_figure(fig, return_fig)
     return _ret_pack(df, None, fig, return_df, return_params, return_fig)
+
 
 def _plot_dtfeats(out, plot_items, method, fig_width, fig_height, dpi):
     items = plot_items[:3]
@@ -1152,6 +1186,7 @@ def _plot_dtfeats(out, plot_items, method, fig_width, fig_height, dpi):
                  fontsize=14, fontweight="bold")
     return fig
 
+
 def _plot_dtfeats_compare(df, cols, cal_all, cyc_all,
                           fig_width, fig_height, dpi):
     methods = ["calendar", "cyclical", "both"]
@@ -1167,6 +1202,7 @@ def _plot_dtfeats_compare(df, cols, cal_all, cyc_all,
     fig.suptitle("dtfeats COMPARE  (Stage 4.3)",
                  fontsize=14, fontweight="bold")
     return fig
+
 
 def _plot_cross(out, new_cols, method, fig_width, fig_height, dpi):
     names = list(new_cols)[:6]
@@ -1192,6 +1228,7 @@ def _plot_cross(out, new_cols, method, fig_width, fig_height, dpi):
                  fontsize=14, fontweight="bold")
     return fig
 
+
 def _plot_cross_compare(df, pair_list, fig_width, fig_height, dpi):
     a, b = pair_list[0]
     fig, axes = plt.subplots(1, 3, figsize=(fig_width, fig_height * 1.2),
@@ -1208,6 +1245,7 @@ def _plot_cross_compare(df, pair_list, fig_width, fig_height, dpi):
     fig.suptitle(f"cross COMPARE -- pair '{a}' , '{b}'  (Stage 4.3)",
                  fontsize=14, fontweight="bold")
     return fig
+
 
 def _plot_aggfeat(df, plot_items, agg, fig_width, fig_height, dpi):
     items = plot_items[:3]
@@ -1237,6 +1275,7 @@ def _plot_aggfeat(df, plot_items, agg, fig_width, fig_height, dpi):
     fig.suptitle(f"Aggregation features -- {agg}  (Stage 4.3)",
                  fontsize=14, fontweight="bold")
     return fig
+
 
 def _plot_aggfeat_compare(df, group, value, gk, fig_width, fig_height, dpi):
     fig, ax = plt.subplots(1, 1, figsize=(fig_width, fig_height * 1.4), dpi=dpi)

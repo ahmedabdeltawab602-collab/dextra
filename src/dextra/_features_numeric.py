@@ -1,4 +1,5 @@
 """dextra features - numeric transforms & scaling (transform, scale)."""
+
 from __future__ import annotations
 
 import warnings
@@ -9,29 +10,32 @@ import numpy as np
 import pandas as pd
 
 from ._features_common import (
-    _get_scipy_stats,
-    _display,
-    _print_header,
-    _now_iso,
-    _finalize_figure,
-    _ret_pack,
     _append_audit,
+    _display,
+    _finalize_figure,
     _fmt_table,
-    _resolve_cols,
+    _get_scipy_stats,
     _hist_bins,
+    _now_iso,
+    _print_header,
+    _resolve_cols,
+    _ret_pack,
 )
 from ._utils import _ensure_pandas, get_variable_name
 from ._version import __version__
 
-
 _VALID_TRANSFORM_METHODS = ("log", "log1p", "sqrt", "boxcox", "yeojohnson",
                             "compare")
 
+
 _TRANSFORM_CANDIDATES = ("log", "log1p", "sqrt", "boxcox", "yeojohnson")
+
 
 _VALID_SCALE_METHODS = ("standard", "minmax", "robust", "maxabs", "compare")
 
+
 _SCALE_CANDIDATES = ("standard", "minmax", "robust", "maxabs")
+
 
 def _check_transform_domain(df: pd.DataFrame, cols: Sequence[str],
                              method: str) -> None:
@@ -61,6 +65,7 @@ def _check_transform_domain(df: pd.DataFrame, cols: Sequence[str],
             raise ValueError(
                 f"transform: column '{c}' has {n_bad} value(s) <= -1; "
                 f"'log1p' requires input > -1. Use method='yeojohnson'.")
+
 
 def _transform_one(s: pd.Series, method: str, lmbda=None):
     """Apply one transform to a Series, preserving index and NaN positions.
@@ -100,6 +105,7 @@ def _transform_one(s: pd.Series, method: str, lmbda=None):
     result = pd.Series(np.nan, index=s.index, dtype="float64")
     result.loc[mask] = np.asarray(tvals, dtype="float64")
     return result, fitted
+
 
 def transform(
     df: pd.DataFrame,
@@ -258,6 +264,7 @@ def transform(
     _finalize_figure(fig, return_fig)
     return _ret_pack(out, params_out, fig, return_df, return_params, return_fig)
 
+
 def _transform_apply(df, params, inplace, show, plot, return_df,
                      return_params, return_fig, decimals, df_name,
                      fig_width, fig_height, dpi):
@@ -325,6 +332,7 @@ def _transform_apply(df, params, inplace, show, plot, return_df,
     _finalize_figure(fig, return_fig)
     return _ret_pack(out, params, fig, return_df, return_params, return_fig)
 
+
 def _transform_compare(df, cols, show, plot, return_df, return_params,
                        return_fig, decimals, df_name,
                        fig_width, fig_height, dpi):
@@ -375,6 +383,7 @@ def _transform_compare(df, cols, show, plot, return_df, return_params,
     _finalize_figure(fig, return_fig)
     return _ret_pack(df, None, fig, return_df, return_params, return_fig)
 
+
 def _scale_fit_one(vals: np.ndarray, method: str) -> dict:
     """Learn scaler parameters from a 1-D array of non-NaN floats."""
     if method == "standard":
@@ -388,6 +397,7 @@ def _scale_fit_one(vals: np.ndarray, method: str) -> dict:
     if method == "maxabs":
         return {"max_abs": float(np.max(np.abs(vals)))}
     raise ValueError(f"Unknown scale method {method!r}")
+
 
 def _scale_apply_one(num: pd.Series, method: str, cp: dict) -> pd.Series:
     """Apply scaler parameters to a numeric Series (NaN preserved)."""
@@ -406,6 +416,7 @@ def _scale_apply_one(num: pd.Series, method: str, cp: dict) -> pd.Series:
         return num / denom
     raise ValueError(f"Unknown scale method {method!r}")
 
+
 def _scale_warn_degenerate(c: str, method: str, cp: dict) -> None:
     if method == "standard" and cp["std"] == 0:
         warnings.warn(f"scale: column '{c}' has zero variance; "
@@ -420,6 +431,7 @@ def _scale_warn_degenerate(c: str, method: str, cp: dict) -> None:
         warnings.warn(f"scale: column '{c}' is all zeros; "
                       f"maxabs output is unchanged.")
 
+
 def _scale_metrics(num: pd.Series, scaled: pd.Series) -> dict:
     return {
         "mean_before": float(num.mean()), "std_before": float(num.std(ddof=0)),
@@ -427,6 +439,7 @@ def _scale_metrics(num: pd.Series, scaled: pd.Series) -> dict:
         "mean_after": float(scaled.mean()), "std_after": float(scaled.std(ddof=0)),
         "min_after": float(scaled.min()), "max_after": float(scaled.max()),
     }
+
 
 def scale(
     df: pd.DataFrame,
@@ -573,6 +586,7 @@ def scale(
     _finalize_figure(fig, return_fig)
     return _ret_pack(out, params_out, fig, return_df, return_params, return_fig)
 
+
 def _scale_apply(df, params, inplace, show, plot, return_df,
                  return_params, return_fig, decimals, df_name,
                  fig_width, fig_height, dpi):
@@ -627,6 +641,7 @@ def _scale_apply(df, params, inplace, show, plot, return_df,
     _finalize_figure(fig, return_fig)
     return _ret_pack(out, params, fig, return_df, return_params, return_fig)
 
+
 def _scale_compare(df, cols, show, plot, return_df, return_params,
                    return_fig, decimals, df_name,
                    fig_width, fig_height, dpi):
@@ -664,6 +679,7 @@ def _scale_compare(df, cols, show, plot, return_df, return_params,
     _finalize_figure(fig, return_fig)
     return _ret_pack(df, None, fig, return_df, return_params, return_fig)
 
+
 def _plot_transform(df_before, out, col_map, method,
                     fig_width, fig_height, dpi):
     items = list(col_map.items())[:4]
@@ -692,6 +708,7 @@ def _plot_transform(df_before, out, col_map, method,
     fig.suptitle(f"Numeric transform -- {method}  (Stage 4.1)",
                  fontsize=14, fontweight="bold")
     return fig
+
 
 def _plot_transform_compare(df, cols, fig_width, fig_height, dpi):
     c = cols[0]
@@ -735,6 +752,7 @@ def _plot_transform_compare(df, cols, fig_width, fig_height, dpi):
                  fontsize=14, fontweight="bold")
     return fig
 
+
 def _plot_scale(df_before, out, col_map, method,
                 fig_width, fig_height, dpi):
     items = list(col_map.items())[:4]
@@ -766,6 +784,7 @@ def _plot_scale(df_before, out, col_map, method,
     fig.suptitle(f"Numeric scaling -- {method}  (shape preserved, axis rescaled)"
                  f"  (Stage 4.1)", fontsize=14, fontweight="bold")
     return fig
+
 
 def _plot_scale_compare(df, cols, fig_width, fig_height, dpi):
     c = cols[0]

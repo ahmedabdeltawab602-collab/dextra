@@ -1,4 +1,5 @@
 """dextra features - binning & categorical encoding (bin, encode)."""
+
 from __future__ import annotations
 
 import warnings
@@ -9,23 +10,24 @@ import numpy as np
 import pandas as pd
 
 from ._features_common import (
-    _display,
-    _print_header,
-    _now_iso,
-    _finalize_figure,
-    _ret_pack,
     _append_audit,
+    _display,
+    _finalize_figure,
     _fmt_table,
-    _resolve_cols,
     _hist_bins,
+    _now_iso,
+    _print_header,
+    _resolve_cols,
+    _ret_pack,
 )
 from ._utils import _ensure_pandas, get_variable_name
 from ._version import __version__
 
-
 _VALID_BIN_METHODS = ("equal_width", "quantile", "kmeans", "compare")
 
+
 _BIN_CANDIDATES = ("equal_width", "quantile", "kmeans")
+
 
 def _kmeans_1d(vals: np.ndarray, k: int, n_iter: int = 100,
                tol: float = 1e-9) -> np.ndarray:
@@ -65,6 +67,7 @@ def _kmeans_1d(vals: np.ndarray, k: int, n_iter: int = 100,
             break
         centres = new
     return np.sort(centres)
+
 
 def _bin_fit_one(vals: np.ndarray, method: str, n_bins: int):
     """Learn bin edges from a 1-D array of non-NaN floats.
@@ -108,6 +111,7 @@ def _bin_fit_one(vals: np.ndarray, method: str, n_bins: int):
                 f"{actual} distinct bin(s) for this column")
     return [float(e) for e in edges], note
 
+
 def _bin_labels(n_bins_actual: int, labels):
     """Resolve bin labels: default ``B1..Bk`` or validate a caller list."""
     if labels is None:
@@ -122,6 +126,7 @@ def _bin_labels(n_bins_actual: int, labels):
         raise ValueError("bin: 'labels' must be unique (bins are ordered).")
     return labels
 
+
 def _bin_apply_one(num: pd.Series, edges, labels) -> pd.Series:
     """Assign each value to an ordered bin.
 
@@ -133,6 +138,7 @@ def _bin_apply_one(num: pd.Series, edges, labels) -> pd.Series:
     clipped = num.clip(lower=edges[0], upper=edges[-1])
     return pd.cut(clipped, bins=edges, labels=labels,
                   include_lowest=True, ordered=True)
+
 
 def bin(
     df: pd.DataFrame,
@@ -302,6 +308,7 @@ def bin(
     _finalize_figure(fig, return_fig)
     return _ret_pack(out, params_out, fig, return_df, return_params, return_fig)
 
+
 def _bin_apply(df, params, inplace, show, plot, return_df,
                return_params, return_fig, decimals, df_name,
                fig_width, fig_height, dpi):
@@ -375,6 +382,7 @@ def _bin_apply(df, params, inplace, show, plot, return_df,
     _finalize_figure(fig, return_fig)
     return _ret_pack(out, params, fig, return_df, return_params, return_fig)
 
+
 def _bin_compare(df, cols, n_bins, show, plot, return_df, return_params,
                  return_fig, decimals, df_name, fig_width, fig_height, dpi):
     rows, index = [], []
@@ -422,11 +430,15 @@ def _bin_compare(df, cols, n_bins, show, plot, return_df, return_params,
     _finalize_figure(fig, return_fig)
     return _ret_pack(df, None, fig, return_df, return_params, return_fig)
 
+
 _VALID_ENCODE_METHODS = ("onehot", "ordinal", "target", "frequency", "compare")
+
 
 _ENCODE_CANDIDATES = ("onehot", "ordinal", "target", "frequency")
 
+
 _CARDINALITY_WARN = 50
+
 
 def _auto_categorical_cols(df: pd.DataFrame) -> list:
     """Return object / string / categorical column names."""
@@ -439,6 +451,7 @@ def _auto_categorical_cols(df: pd.DataFrame) -> list:
               or pd.api.types.is_string_dtype(dt)):
             out.append(c)
     return out
+
 
 def _resolve_cat_cols(df: pd.DataFrame, cols, func_name: str) -> list:
     """Validate an explicit cols selector or auto-pick categorical columns."""
@@ -456,6 +469,7 @@ def _resolve_cat_cols(df: pd.DataFrame, cols, func_name: str) -> list:
             f"{func_name}: cols references columns not in df: {bad}")
     return chosen
 
+
 def _encode_categories(col: pd.Series) -> list:
     """Sorted list of string category keys present (non-null) in a column."""
     keys = col[col.notna()].astype(str)
@@ -464,6 +478,7 @@ def _encode_categories(col: pd.Series) -> list:
         return sorted(uniq)
     except TypeError:  # pragma: no cover - defensive
         return sorted(uniq, key=str)
+
 
 def _resolve_y(df: pd.DataFrame, y) -> pd.Series:
     """Resolve the target ``y`` to a numeric Series aligned with ``df``."""
@@ -491,6 +506,7 @@ def _resolve_y(df: pd.DataFrame, y) -> pd.Series:
             "numeric (regression or 0/1) target.")
     return yv
 
+
 def _resolve_order(order, cols, c):
     """Pick the explicit category order for column ``c`` (or None)."""
     if order is None:
@@ -502,6 +518,7 @@ def _resolve_order(order, cols, c):
     raise ValueError(
         "encode: 'order' as a flat list is only allowed for a single column; "
         "pass a dict {column: [ordered categories]} for multiple columns.")
+
 
 def _target_oof(key_arr: np.ndarray, y_arr: np.ndarray, valid_pos: np.ndarray,
                 n_folds: int, global_mean: float) -> np.ndarray:
@@ -530,6 +547,7 @@ def _target_oof(key_arr: np.ndarray, y_arr: np.ndarray, valid_pos: np.ndarray,
             result[j] = means.get(key_arr[j], global_mean)
     return result
 
+
 def _encode_map_apply_series(col: pd.Series, mapping: dict, default):
     """Map a column through a category->number dict (apply-style).
 
@@ -548,6 +566,7 @@ def _encode_map_apply_series(col: pd.Series, mapping: dict, default):
         mapped = mapped.mask(unknown_mask, default)
     mapped = mapped.where(notna, other=np.nan)
     return mapped.astype("float64"), n_unknown
+
 
 def _encode_fit_column(df, c, method, drop_first, order_for_col,
                        y_resolved, n_folds, inplace):
@@ -641,6 +660,7 @@ def _encode_fit_column(df, c, method, drop_first, order_for_col,
         raise ValueError(f"Unknown encode method {method!r}")
 
     return entry, new_cols
+
 
 def encode(
     df: pd.DataFrame,
@@ -828,6 +848,7 @@ def encode(
     _finalize_figure(fig, return_fig)
     return _ret_pack(out, params_out, fig, return_df, return_params, return_fig)
 
+
 def _encode_apply(df, params, show, plot, return_df, return_params,
                   return_fig, decimals, df_name, fig_width, fig_height, dpi):
     if not isinstance(params, dict) or params.get("function") != "encode":
@@ -930,6 +951,7 @@ def _encode_apply(df, params, show, plot, return_df, return_params,
     _finalize_figure(fig, return_fig)
     return _ret_pack(out, params, fig, return_df, return_params, return_fig)
 
+
 def _encode_compare(df, cols, y, show, plot, return_df, return_params,
                     return_fig, decimals, df_name, fig_width, fig_height, dpi):
     yv = None
@@ -975,6 +997,7 @@ def _encode_compare(df, cols, y, show, plot, return_df, return_params,
     _finalize_figure(fig, return_fig)
     return _ret_pack(df, None, fig, return_df, return_params, return_fig)
 
+
 def _plot_bin(df_before, out, plot_items, method,
               fig_width, fig_height, dpi):
     """Per column: continuous histogram with edge lines, then bin counts."""
@@ -1006,6 +1029,7 @@ def _plot_bin(df_before, out, plot_items, method,
     fig.suptitle(f"Binning -- {method}  (Stage 4.2)",
                  fontsize=14, fontweight="bold")
     return fig
+
 
 def _plot_bin_compare(df, cols, n_bins, fig_width, fig_height, dpi):
     c = cols[0]
@@ -1050,6 +1074,7 @@ def _plot_bin_compare(df, cols, n_bins, fig_width, fig_height, dpi):
                  fontsize=14, fontweight="bold")
     return fig
 
+
 def _plot_encode(df_before, plot_items, method, fig_width, fig_height, dpi):
     """Per column: category counts, then the encoded value per category."""
     items = plot_items[:4]
@@ -1093,6 +1118,7 @@ def _plot_encode(df_before, plot_items, method, fig_width, fig_height, dpi):
     fig.suptitle(f"Categorical encoding -- {method}  (Stage 4.2)",
                  fontsize=14, fontweight="bold")
     return fig
+
 
 def _plot_encode_compare(df, cols, fig_width, fig_height, dpi):
     c = cols[0]
