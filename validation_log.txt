@@ -1,12 +1,12 @@
 ﻿**********************
 Windows PowerShell transcript start
-Start time: 20260601123645
+Start time: 20260601130459
 Username: MSI\manim
 RunAs User: MSI\manim
 Configuration Name: 
 Machine: MSI (Microsoft Windows NT 10.0.26200.0)
 Host Application: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File .\run_validation.ps1
-Process ID: 31820
+Process ID: 2424
 PSVersion: 5.1.26100.8457
 PSEdition: Desktop
 PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.8457
@@ -29,7 +29,7 @@ python 3.13.13 | pandas 3.0.3 | numpy 2.4.5 | scikit-learn 1.8.0
   1. Lint  --  ruff auto-fix then strict check
 ========================================================
 1a) ruff check . --fix  (auto-fixes import order, unused imports, f-strings)
-Found 5 errors (5 fixed, 0 remaining).
+All checks passed!
 
 1b) ruff check .  (strict gate -- must be clean)
 All checks passed!
@@ -38,9 +38,28 @@ All checks passed!
   2. Tests  --  pytest + coverage
 ========================================================
 Running the FULL suite (Phases 1-6 + consolidation + legacy)...
-................................................................................................................ [ 83%]
-......................                                                                                           [100%]
+................................................................................................................ [ 65%]
+...........................................................                                                      [100%]
 ================================================== warnings summary ===================================================
+tests/test_coverage_boost.py::test_encode_methods[ordinal]
+  D:\06 PythonProjects\dextra-project\src\dextra\_features_discretize.py:613: UserWarning: encode: ordinal encoding of '
+city' imposes a rank order but no order= was given; used alphabetical order ['Alex', 'Cairo', 'Giza']. Pass order= to se
+t a meaningful ranking.
+    warnings.warn(
+
+tests/test_coverage_boost.py::test_aggfeat_methods[mean]
+tests/test_coverage_boost.py::test_aggfeat_methods[median]
+tests/test_coverage_boost.py::test_aggfeat_methods[sum]
+tests/test_coverage_boost.py::test_aggfeat_methods[max]
+tests/test_legacy_suites.py::test_legacy_suite[test_phase4_stage3]
+tests/test_legacy_suites.py::test_legacy_suite[test_phase4_stage3]
+tests/test_legacy_suites.py::test_legacy_suite[test_phase4_stage3]
+tests/test_legacy_suites.py::test_legacy_suite[test_phase4_stage3]
+  D:\06 PythonProjects\dextra-project\src\dextra\_features_derive.py:890: UserWarning: aggfeat: df has datetime column(s
+) ['signup'] but as_of= was not given. If the rows are time-ordered, pass as_of= for an expanding (past-only) aggregatio
+n to prevent temporal leakage. Proceeding with a static aggregation over all rows.
+    warnings.warn(
+
 tests/test_legacy_suites.py::test_legacy_suite[test_phase4_stage2]
 tests/test_legacy_suites.py::test_legacy_suite[test_phase4_stage2]
   D:\06 PythonProjects\dextra-project\src\dextra\_features_discretize.py:343: UserWarning: bin: column 'price' -- 1 held
@@ -56,15 +75,6 @@ tests/test_legacy_suites.py::test_legacy_suite[test_phase4_stage2]
 tests/test_legacy_suites.py::test_legacy_suite[test_phase4_stage2]
   D:\06 PythonProjects\dextra-project\src\dextra\_features_discretize.py:918: UserWarning: encode: column 'city' had 27
 row(s) with categories unseen during fit; handled via handle_unknown='ignore'.
-    warnings.warn(
-
-tests/test_legacy_suites.py::test_legacy_suite[test_phase4_stage3]
-tests/test_legacy_suites.py::test_legacy_suite[test_phase4_stage3]
-tests/test_legacy_suites.py::test_legacy_suite[test_phase4_stage3]
-tests/test_legacy_suites.py::test_legacy_suite[test_phase4_stage3]
-  D:\06 PythonProjects\dextra-project\src\dextra\_features_derive.py:890: UserWarning: aggfeat: df has datetime column(s
-) ['signup'] but as_of= was not given. If the rows are time-ordered, pass as_of= for an expanding (past-only) aggregatio
-n to prevent temporal leakage. Proceeding with a static aggregation over all rows.
     warnings.warn(
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
@@ -93,13 +103,14 @@ src\dextra\_features_pipeline.py       175     18    90%   60, 67, 90-94, 277-27
 src\dextra\_utils.py                    96     29    70%   58, 119, 122, 149-157, 171-178, 181, 185-186, 191-192, 196-19
 7, 201-202
 src\dextra\_version.py                   1      0   100%
-src\dextra\cleaning.py                1247    603    52%   40-41, 58, 72-74, 78-79, 86, 95-96, 131-133, 162, 165-167, 17
+src\dextra\cleaning.py                1247    488    61%   40-41, 58, 72-74, 78-79, 86, 95-96, 131-133, 162, 165-167, 17
 3, 180, 190, 195, 346, 358-446, 472, 482-483, 573, 600, 612, 617, 629-669, 694, 709, 714-715, 731, 740-741, 760, 763, 76
 6, 816, 827, 830, 837-838, 921, 926, 936-976, 1026, 1038, 1046, 1054-1059, 1096, 1123-1125, 1137-1164, 1187, 1189, 1193,
- 1197-1198, 1213, 1217, 1220-1221, 1230-1231, 1234, 1236, 1241-1242, 1244-1278, 1332-1354, 1387, 1398, 1402-1430, 1440,
-1451-1456, 1505, 1509, 1522-1537, 1583, 1587, 1596-1602, 1604, 1613-1616, 1620-1622, 1626, 1668, 1680-1700, 1751, 1753,
-1755, 1761, 1766, 1778, 1788, 1809-1810, 1820, 1855, 1864-1900, 1949-2016, 2020-2050, 2087-2143, 2147-2167, 2208-2327, 2
-331-2354
+ 1197-1198, 1213, 1217, 1220-1221, 1230-1231, 1234, 1236, 1241-1242, 1244-1278, 1332-1354, 1387, 1398, 1402-1430, 1451-1
+456, 1505, 1509, 1522-1537, 1583, 1587, 1596-1602, 1604, 1613-1616, 1620-1622, 1626, 1668, 1680-1700, 1751, 1753, 1755,
+1761, 1766, 1778, 1788, 1809-1810, 1820, 1855, 1864-1900, 1985, 1991-2006, 2010, 2015-2016, 2020-2050, 2091-2093, 2099-2
+101, 2106, 2123-2133, 2137, 2142-2143, 2147-2167, 2212, 2215, 2222, 2224-2227, 2239, 2249-2254, 2271-2279, 2306-2313, 23
+20, 2326-2327, 2331-2354
 src\dextra\compat.py                   115      2    98%   79, 89
 src\dextra\features.py                   5      0   100%
 src\dextra\modeling.py                 773    122    84%   73-74, 91, 104, 121, 123, 126-127, 135-136, 138, 140, 164, 16
@@ -125,9 +136,9 @@ src\dextra\stats_advanced.py          1576    641    59%   38-39, 53, 70, 76-77,
 8-2440, 2462, 2464, 2473, 2521, 2533-2566, 2588, 2590, 2598, 2606, 2627, 2632, 2643-2660, 2692, 2695, 2730, 2736, 2739,
 2748, 2752, 2754, 2772, 2779, 2789-2812, 2845, 2848, 2858, 2860, 2892, 2903-2936
 ------------------------------------------------------------------
-TOTAL                                 6972   2116    70%
-Required test coverage of 60% reached. Total coverage: 69.65%
-134 passed, 13 warnings in 25.02s
+TOTAL                                 6972   2001    71%
+Required test coverage of 60% reached. Total coverage: 71.30%
+171 passed, 18 warnings in 26.19s
 
 ========================================================
   3. SUMMARY
@@ -140,5 +151,5 @@ Required test coverage of 60% reached. Total coverage: 69.65%
      git add -A; git commit -m "Phase 6.1 + lint clean"; git push --set-upstream origin main
 **********************
 Windows PowerShell transcript end
-End time: 20260601123717
+End time: 20260601130533
 **********************
