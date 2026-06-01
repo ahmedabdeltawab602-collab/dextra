@@ -36,7 +36,7 @@ jobs:
         run: mypy src/dextra
 
       - name: Run tests
-        run: pytest --cov=dextra --cov-report=term-missing --cov-fail-under=60
+        run: pytest --cov=dextra --cov-report=term-missing --cov-fail-under=68
 
   benchmarks:
     runs-on: ubuntu-latest

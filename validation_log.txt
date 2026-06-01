@@ -1,12 +1,12 @@
 ﻿**********************
 Windows PowerShell transcript start
-Start time: 20260601130459
+Start time: 20260601180012
 Username: MSI\manim
 RunAs User: MSI\manim
 Configuration Name: 
 Machine: MSI (Microsoft Windows NT 10.0.26200.0)
 Host Application: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File .\run_validation.ps1
-Process ID: 2424
+Process ID: 8016
 PSVersion: 5.1.26100.8457
 PSEdition: Desktop
 PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.8457
@@ -137,8 +137,8 @@ src\dextra\stats_advanced.py          1576    641    59%   38-39, 53, 70, 76-77,
 2748, 2752, 2754, 2772, 2779, 2789-2812, 2845, 2848, 2858, 2860, 2892, 2903-2936
 ------------------------------------------------------------------
 TOTAL                                 6972   2001    71%
-Required test coverage of 60% reached. Total coverage: 71.30%
-171 passed, 18 warnings in 26.19s
+Required test coverage of 68% reached. Total coverage: 71.30%
+171 passed, 18 warnings in 35.86s
 
 ========================================================
   3. SUMMARY
@@ -151,5 +151,5 @@ Required test coverage of 60% reached. Total coverage: 71.30%
      git add -A; git commit -m "Phase 6.1 + lint clean"; git push --set-upstream origin main
 **********************
 Windows PowerShell transcript end
-End time: 20260601130533
+End time: 20260601180103
 **********************

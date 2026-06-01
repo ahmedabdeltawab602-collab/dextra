@@ -52,7 +52,7 @@ if ($Phase6Only) {
     pytest tests/test_phase6_stage1.py -v --cov=dextra.modeling --cov-report=term-missing
 } else {
     Write-Host "Running the FULL suite (Phases 1-6 + consolidation + legacy)..." -ForegroundColor DarkGray
-    pytest --cov=dextra --cov-report=term-missing --cov-fail-under=60
+    pytest --cov=dextra --cov-report=term-missing --cov-fail-under=68
 }
 $testCode = $LASTEXITCODE
 
