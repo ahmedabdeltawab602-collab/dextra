@@ -147,3 +147,4 @@ auditing trivial.
 | 2026-06-01 | Performance sprint 1A: polars/pyarrow input accepted at all data/model entry points via `_ensure_pandas` (extra `perf`); `benchmarks/` suite + non-blocking CI bench job. |
 | 2026-06-01 | Performance sprint 1B: monolithic `features.py` (~3.8k lines) split into 5 focused sibling modules behind a thin re-export facade; no API change (structurally validated: symtable name-resolution + import + signature parity). |
 | 2026-06-01 | Distribution/docs sprint 2: MkDocs-Material site + GitHub Pages workflow; `CITATION.cff`; CI `build` job (sdist/wheel + twine check); PyPI badge; coverage-boost tests. |
+| 2026-06-01 | Consistency sprint 3: API-contract tests (exports/docstrings/standard-flags/alias-identity), sklearn conformance tests (clone/pickle/fit-self/repr), and phase-grouped `dx.functions()`. Coverage gate raised to 68%. |

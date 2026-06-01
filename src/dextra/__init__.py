@@ -134,20 +134,51 @@ from .stats_advanced import (
     zsc,
 )
 
+_PHASE_LABELS = {
+    "dextra.stats": "Phase 1 - EDA",
+    "dextra.plots": "Phase 1 - EDA",
+    "dextra.stats_advanced": "Phase 2 - statistics",
+    "dextra.cleaning": "Phase 3 - cleaning",
+    "dextra._features_numeric": "Phase 4 - features",
+    "dextra._features_discretize": "Phase 4 - features",
+    "dextra._features_derive": "Phase 4 - features",
+    "dextra._features_pipeline": "Phase 4 - features",
+    "dextra.features": "Phase 4 - features",
+    "dextra.selection": "Phase 5 - selection",
+    "dextra.modeling": "Phase 6 - modeling",
+    "dextra.compat": "scikit-learn compat",
+}
+
+_PHASE_ORDER = [
+    "Phase 1 - EDA", "Phase 2 - statistics", "Phase 3 - cleaning",
+    "Phase 4 - features", "Phase 5 - selection", "Phase 6 - modeling",
+    "scikit-learn compat", "other",
+]
+
 
 def functions() -> None:
-    """Print every public dextra function with its one-line summary.
+    """Print every public dextra function, grouped by phase, with a summary.
 
     A zero-dependency discoverability aid: ``import dextra as dx;
-    dx.functions()`` lists the whole public API and what each entry does.
+    dx.functions()`` lists the whole public API (functions and their short
+    aliases) organised by phase, each with its one-line docstring summary.
     """
     import dextra as _dx
+    groups: dict = {}
     for _name in __all__:
         _obj = getattr(_dx, _name, None)
-        if callable(_obj):
+        if not callable(_obj):
+            continue
+        _label = _PHASE_LABELS.get(getattr(_obj, "__module__", ""), "other")
+        groups.setdefault(_label, []).append((_name, _obj))
+    for _label in _PHASE_ORDER:
+        if _label not in groups:
+            continue
+        print(f"\n# {_label}")
+        for _name, _obj in groups[_label]:
             _doc = (_obj.__doc__ or "").strip().splitlines()
             _summary = _doc[0].strip() if _doc else ""
-            print(f"{_name:<26} {_summary}")
+            print(f"  {_name:<26} {_summary}")
 
 
 __all__ = [

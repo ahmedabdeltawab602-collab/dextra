@@ -73,6 +73,8 @@ property-based tests and an informational mypy gate. Backward-compatible.
 - **Plotly is now optional** (extra `viz`), not a core dependency, so headless
   / server installs are lighter. `plot_boxplots` imports Plotly lazily and
   raises a clear error if it is missing.
+- **`dx.functions()` now groups the API by phase** (and lists aliases) for
+  easier discoverability.
 - **`features.py` refactored into focused modules** (`_features_common`,
   `_features_numeric`, `_features_discretize`, `_features_derive`,
   `_features_pipeline`); `dextra.features` is now a thin re-export facade. No
@@ -91,6 +93,10 @@ property-based tests and an informational mypy gate. Backward-compatible.
   (`tests/test_property.py`). mypy runs informationally (non-blocking) in CI.
 - `tests/test_io_backends.py` (polars/pyarrow input) and `tests/test_coverage_boost.py`
   (breadth tests across cleaning / stats / features / modeling) raise coverage.
+- `tests/test_api_contract.py` (exports resolve, docstrings present, fit/apply
+  families share the 8 standard flags, 55 aliases verified identical) and
+  `tests/test_compat_conformance.py` (fit-returns-self, clone, pickle round-trip,
+  repr) lock in the cross-module contract and sklearn conformance.
 
 ### Planned
 - `describe_categorical` - summaries for object/category columns.
