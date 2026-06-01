@@ -7,8 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
-These changes are merged but not yet released. The next release should be
-tagged **0.2.0** (new features, backward-compatible).
+_Nothing yet._
+
+## [0.2.0] - 2026-06-01
+
+Completes the modeling phase (Phase 6) and a hardening sprint (Phase 6.5):
+scikit-learn-compatible wrappers, optional Plotly, PEP 561 typing markers,
+property-based tests and an informational mypy gate. Backward-compatible.
 
 ### Added
 - **Phase 2 - `stats_advanced`:** 22 statistical functions (+ 22 aliases):
@@ -38,6 +43,13 @@ tagged **0.2.0** (new features, backward-compatible).
   appends a `"cluster"` label column; same hybrid artifact contract (JSON
   descriptor + fitted sklearn Pipeline). Agglomerative apply assigns new rows via
   a NearestCentroid fitted on its cluster labels. **Phase 6 complete.**
+- **Phase 6.5 - `dextra.compat`:** scikit-learn-compatible wrappers so dextra's
+  pipelines and models drop into `sklearn.pipeline.Pipeline` / `GridSearchCV`:
+  `DextraFeaturePipeline`, `DextraSelectPipeline`, `DextraRegressor`,
+  `DextraClassifier`, `DextraClusterer` (fit/transform/predict, get/set_params,
+  clone-able). scikit-learn stays an optional (`ml`) extra.
+- **PEP 561:** the package now ships a `py.typed` marker so downstream type
+  checkers consume dextra's annotations.
 - `dx.functions()` - prints every public function with its one-line summary.
 - `describe_numeric(..., ddof=1)` - choose sample (1) or population (0) std/var.
 - `plot_histograms(..., bins='auto')` - bins now default to NumPy's automatic
@@ -47,10 +59,16 @@ tagged **0.2.0** (new features, backward-compatible).
 - `describe_numeric` no longer floods the `modes` row on continuous data:
   all-unique columns show `-` and long mode lists are capped with `... (N more)`.
 - Plain-terminal output caps column width so wide tables stay readable.
+- **Plotly is now optional** (extra `viz`), not a core dependency, so headless
+  / server installs are lighter. `plot_boxplots` imports Plotly lazily and
+  raises a clear error if it is missing.
 
 ### Testing
 - The staged verification suites for Phases 2-5 (~600 assertions) are vendored
   into `tests/legacy/` and now run under pytest in CI, alongside a coverage gate.
+- Phase 6 stage suites (`regress`/`classify`/`cluster`), `tests/test_compat.py`
+  for the sklearn wrappers, and Hypothesis property-based tests
+  (`tests/test_property.py`). mypy runs informationally (non-blocking) in CI.
 
 ### Planned
 - `describe_categorical` - summaries for object/category columns.
@@ -80,5 +98,6 @@ tagged **0.2.0** (new features, backward-compatible).
 - seaborn >= 0.12
 - plotly >= 5.10
 
-[Unreleased]: https://github.com/ahmedabdeltawab602-collab/dextra/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/ahmedabdeltawab602-collab/dextra/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/ahmedabdeltawab602-collab/dextra/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/ahmedabdeltawab602-collab/dextra/releases/tag/v0.1.0

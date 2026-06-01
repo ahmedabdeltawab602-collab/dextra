@@ -1,12 +1,12 @@
 ﻿**********************
 Windows PowerShell transcript start
-Start time: 20260601102745
+Start time: 20260601111556
 Username: MSI\manim
 RunAs User: MSI\manim
 Configuration Name: 
 Machine: MSI (Microsoft Windows NT 10.0.26200.0)
-Host Application: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File D:\06 PythonProjects\dextra-project\run_validation.ps1
-Process ID: 25424
+Host Application: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File .\run_validation.ps1
+Process ID: 23348
 PSVersion: 5.1.26100.8457
 PSEdition: Desktop
 PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.8457
@@ -29,19 +29,146 @@ python 3.13.13 | pandas 3.0.3 | numpy 2.4.5 | scikit-learn 1.8.0
   1. Lint  --  ruff auto-fix then strict check
 ========================================================
 1a) ruff check . --fix  (auto-fixes import order, unused imports, f-strings)
-warning: Invalid `# noqa` directive on tests\test_phase6_stage3.py:53: expected a comma-separated list of codes (e.g., `
-# noqa: F401, F841`).
-All checks passed!
+F821 Undefined name `go`
+   --> src\dextra\plots.py:370:18
+    |
+368 |     return_fig: bool = False,
+369 |     return_df: bool = False,
+370 | ) -> Union[None, go.Figure, pd.DataFrame, Tuple[go.Figure, pd.DataFrame]]:
+    |                  ^^
+371 |     """Stacked horizontal box-plots with annotated statistics (Plotly).
+    |
+
+F821 Undefined name `go`
+   --> src\dextra\plots.py:370:49
+    |
+368 |     return_fig: bool = False,
+369 |     return_df: bool = False,
+370 | ) -> Union[None, go.Figure, pd.DataFrame, Tuple[go.Figure, pd.DataFrame]]:
+    |                                                 ^^
+371 |     """Stacked horizontal box-plots with annotated statistics (Plotly).
+    |
+
+Found 4 errors (2 fixed, 2 remaining).
 
 1b) ruff check .  (strict gate -- must be clean)
-All checks passed!
+F821 Undefined name `go`
+   --> src\dextra\plots.py:370:18
+    |
+368 |     return_fig: bool = False,
+369 |     return_df: bool = False,
+370 | ) -> Union[None, go.Figure, pd.DataFrame, Tuple[go.Figure, pd.DataFrame]]:
+    |                  ^^
+371 |     """Stacked horizontal box-plots with annotated statistics (Plotly).
+    |
+
+F821 Undefined name `go`
+   --> src\dextra\plots.py:370:49
+    |
+368 |     return_fig: bool = False,
+369 |     return_df: bool = False,
+370 | ) -> Union[None, go.Figure, pd.DataFrame, Tuple[go.Figure, pd.DataFrame]]:
+    |                                                 ^^
+371 |     """Stacked horizontal box-plots with annotated statistics (Plotly).
+    |
+
+Found 2 errors.
 
 ========================================================
   2. Tests  --  pytest + coverage
 ========================================================
 Running the FULL suite (Phases 1-6 + consolidation + legacy)...
-................................................................................................................ [ 97%]
-...                                                                                                              [100%]
+................................................................................................................ [ 86%]
+......F...........                                                                                               [100%]
+====================================================== FAILURES =======================================================
+__________________________________________ test_zscore_extreme_count_bounded __________________________________________
+
+    @settings(max_examples=40, deadline=None)
+>   @given(_floats)
+                   ^
+
+tests\test_property.py:38:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests\test_property.py:41: in test_zscore_extreme_count_bounded
+    res = dx.z_scores(df, cols=["x"], return_df=True, **KW)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src\dextra\stats_advanced.py:186: in z_scores
+    total_extreme = int(summary[f"n_above_{threshold:g}sigma"].sum())
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pandas\core\frame.py:4378: in __getitem__
+    indexer = self.columns.get_loc(key)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = RangeIndex(start=0, stop=0, step=1), key = 'n_above_3sigma'
+
+    def get_loc(self, key) -> int:
+        """
+        Get integer location for requested label.
+
+        Parameters
+        ----------
+        key : int or float
+            Label to locate. Integer-like floats (e.g. 3.0) are accepted and
+            treated as the corresponding integer. Non-integer floats and other
+            non-integer labels are not valid and will raise KeyError or
+            InvalidIndexError.
+
+        Returns
+        -------
+        int
+            Integer location of the label within the RangeIndex.
+
+        Raises
+        ------
+        KeyError
+            If the label is not present in the RangeIndex or the label is a
+            non-integer value.
+        InvalidIndexError
+            If the label is of an invalid type for the RangeIndex.
+
+        See Also
+        --------
+        RangeIndex.get_slice_bound : Calculate slice bound that corresponds to
+            given label.
+        RangeIndex.get_indexer : Computes indexer and mask for new index given
+            the current index.
+        RangeIndex.get_non_unique : Returns indexer and masks for new index given
+            the current index.
+        RangeIndex.get_indexer_for : Returns an indexer even when non-unique.
+
+        Examples
+        --------
+        >>> idx = pd.RangeIndex(5)
+        >>> idx.get_loc(3)
+        3
+
+        >>> idx = pd.RangeIndex(2, 10, 2)  # values [2, 4, 6, 8]
+        >>> idx.get_loc(6)
+        2
+        """
+        if is_integer(key) or (is_float(key) and key.is_integer()):
+            new_key = int(key)
+            try:
+                return self._range.index(new_key)
+            except ValueError as err:
+                raise KeyError(key) from err
+        if isinstance(key, Hashable):
+>           raise KeyError(key)
+E           KeyError: 'n_above_3sigma'
+E           Falsifying example: test_zscore_extreme_count_bounded(
+E               values=[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+E           )
+E           Explanation:
+E               These lines were always and only run by failing examples:
+E                   D:\06 PythonProjects\dextra-project\src\dextra\stats_advanced.py:170
+E                   D:\06 PythonProjects\dextra-project\.venv\Lib\site-packages\pandas\core\frame.py:860
+E                   D:\06 PythonProjects\dextra-project\.venv\Lib\site-packages\pandas\core\frame.py:864
+E                   D:\06 PythonProjects\dextra-project\.venv\Lib\site-packages\pandas\core\frame.py:4376
+E                   D:\06 PythonProjects\dextra-project\.venv\Lib\site-packages\pandas\core\frame.py:4378
+E                   (and 22 more with settings.verbosity >= verbose)
+
+.venv\Lib\site-packages\pandas\core\indexes\range.py:525: KeyError
 ================================================== warnings summary ===================================================
 tests/test_legacy_suites.py::test_legacy_suite[test_phase4_stage2]
 tests/test_legacy_suites.py::test_legacy_suite[test_phase4_stage2]
@@ -75,9 +202,9 @@ __________________________________ coverage: platform win32, python 3.13.13-fina
 
 Name                           Stmts   Miss  Cover   Missing
 ------------------------------------------------------------
-src\dextra\__init__.py            18      0   100%
-src\dextra\_utils.py              86     37    57%   58, 65-71, 94, 97, 124-132, 146-153, 156, 159-161, 166-167, 171-172
-, 176-177
+src\dextra\__init__.py            19      0   100%
+src\dextra\_utils.py              86     29    66%   58, 94, 97, 124-132, 146-153, 156, 160-161, 166-167, 171-172, 176-1
+77
 src\dextra\_version.py             1      0   100%
 src\dextra\cleaning.py          1257    613    51%   40-41, 58, 72-74, 78-79, 86, 95-96, 131-133, 162, 165-167, 173, 180
 , 190, 195, 258, 347, 359-447, 473, 483-484, 531, 575, 602, 614, 619, 631-671, 696, 711, 716-717, 733, 742-743, 762, 765
@@ -86,6 +213,7 @@ src\dextra\cleaning.py          1257    613    51%   40-41, 58, 72-74, 78-79, 86
 03, 1407-1435, 1445, 1456-1461, 1510, 1514, 1527-1542, 1587, 1589, 1593, 1602-1608, 1610, 1619-1622, 1626-1628, 1632, 16
 74, 1686-1706, 1756, 1758, 1760, 1762, 1768, 1773, 1785, 1795, 1816-1817, 1827, 1862, 1871-1907, 1956-2024, 2028-2058, 2
 095-2152, 2156-2176, 2217-2337, 2341-2364
+src\dextra\compat.py             115      2    98%   79, 89
 src\dextra\features.py          1870    516    72%   94, 117, 134, 150, 152, 154, 157-158, 164, 172-176, 180, 183, 202,
 211-212, 216-217, 253-256, 319, 331, 354-355, 375, 408-411, 415, 425-426, 457, 476-479, 483, 500, 502, 504, 506-507, 511
 -512, 535, 556, 574, 579, 582, 585, 588, 662, 674, 677, 684, 695, 736-739, 752-753, 759, 791-794, 798, 806-838, 847, 853
@@ -102,39 +230,39 @@ src\dextra\modeling.py           776    125    84%   73-74, 91, 104, 121, 123, 1
 -175, 184, 191, 194, 290, 304-305, 380, 400, 431-432, 520, 532, 606, 645-661, 681, 683, 685, 697, 796-797, 861, 881, 910
 -911, 965-968, 986, 997, 1019-1022, 1064-1067, 1070, 1101-1119, 1164, 1166, 1170, 1202, 1206-1207, 1309, 1410-1413, 1431
 , 1465-1468, 1512-1515, 1518, 1531, 1533, 1554-1555, 1579-1599
-src\dextra\plots.py              183     24    87%   178, 182, 204-210, 288-291, 294, 304, 319-320, 333, 335-336, 393, 3
-97, 415-422, 530, 533, 538
-src\dextra\selection.py          975    188    81%   71-74, 78-79, 91, 104, 118-129, 136-137, 141, 163, 170, 188, 211, 2
-23-226, 234, 238, 262, 266, 364, 376, 387, 441-444, 468-470, 504-507, 511, 529-530, 539-541, 545, 561, 563-569, 577, 584
-, 588, 594, 623, 633, 649-650, 663, 669, 707-712, 793, 805, 809, 822, 878-881, 905-907, 943-946, 950, 979-985, 989, 1001
-, 1008, 1032-1037, 1045-1063, 1069, 1110-1122, 1189-1191, 1197-1198, 1210, 1301, 1331, 1385-1388, 1406-1408, 1419-1421,
-1425, 1439-1441, 1477-1480, 1484, 1497-1498, 1502-1503, 1597, 1628, 1687-1690, 1709-1711, 1722-1724, 1728, 1769, 1775, 1
-798-1802, 1923, 2043-2046, 2060-2062, 2067, 2078, 2082, 2087, 2125-2128, 2132
+src\dextra\plots.py              187     24    87%   192, 196, 218-224, 302-305, 308, 318, 333-334, 347, 349-350, 407, 4
+11, 430-437, 545, 548, 553
+src\dextra\selection.py          975    182    81%   71-74, 78-79, 91, 104, 118-129, 136-137, 141, 163, 170, 188, 211, 2
+23-226, 234, 238, 262, 266, 364, 376, 387, 441-444, 468-470, 504-507, 511, 529-530, 539-541, 545, 561, 565, 584, 588, 59
+4, 623, 633, 649-650, 663, 669, 707-712, 793, 805, 809, 822, 878-881, 905-907, 943-946, 950, 979-985, 989, 1001, 1008, 1
+032-1037, 1045-1063, 1069, 1110-1122, 1189-1191, 1197-1198, 1210, 1301, 1331, 1385-1388, 1406-1408, 1419-1421, 1425, 143
+9-1441, 1477-1480, 1484, 1497-1498, 1502-1503, 1597, 1628, 1687-1690, 1709-1711, 1722-1724, 1728, 1769, 1775, 1798-1802,
+ 1923, 2043-2046, 2060-2062, 2067, 2078, 2082, 2087, 2125-2128, 2132
 src\dextra\stats.py               87     10    89%   45-49, 117, 128, 233-236
-src\dextra\stats_advanced.py    1571    640    59%   37-38, 52, 69, 75-76, 80-81, 108-110, 115, 119, 121, 151, 153, 160,
- 170, 202, 206, 208, 210, 212, 217-260, 280, 287, 306, 329, 340-380, 404, 411, 417, 420-425, 454, 465-508, 535, 544, 561
-, 590, 596, 608-666, 711, 713, 719, 738-741, 748-749, 760, 784, 801, 817-875, 914, 916, 918, 924, 932, 959-961, 994, 100
-2, 1011-1054, 1109, 1122-1124, 1128, 1160, 1164, 1174-1214, 1244, 1285, 1295-1320, 1363, 1365, 1367, 1373, 1378, 1395, 1
-399-1402, 1410, 1430-1444, 1472, 1477-1480, 1482, 1488, 1527, 1538-1568, 1586, 1616, 1620, 1649, 1660-1679, 1706, 1708,
-1710, 1712, 1749, 1760-1780, 1803, 1805, 1807, 1830, 1841-1858, 1885, 1887, 1889, 1916, 1927-1962, 1980-2010, 2043, 2047
-, 2053-2060, 2087, 2098-2121, 2143, 2147, 2188, 2223, 2228, 2274, 2286-2322, 2345, 2349, 2354, 2391, 2396, 2407-2429, 24
-51, 2453, 2462, 2510, 2522-2555, 2577, 2579, 2587, 2595, 2616, 2621, 2632-2649, 2681, 2684, 2719, 2725, 2728, 2737, 2741
-, 2743, 2761, 2768, 2778-2801, 2834, 2837, 2847, 2849, 2881, 2892-2925
+src\dextra\stats_advanced.py    1571    638    59%   37-38, 52, 69, 75-76, 80-81, 108-110, 115, 119, 121, 151, 153, 160,
+ 202, 206, 208, 212, 217-260, 280, 287, 306, 329, 340-380, 404, 411, 417, 420-425, 454, 465-508, 535, 544, 561, 590, 596
+, 608-666, 711, 713, 719, 738-741, 748-749, 760, 784, 801, 817-875, 914, 916, 918, 924, 932, 959-961, 994, 1002, 1011-10
+54, 1109, 1122-1124, 1128, 1160, 1164, 1174-1214, 1244, 1285, 1295-1320, 1363, 1365, 1367, 1373, 1378, 1395, 1399-1402,
+1410, 1430-1444, 1472, 1477-1480, 1482, 1488, 1527, 1538-1568, 1586, 1616, 1620, 1649, 1660-1679, 1706, 1708, 1710, 1712
+, 1749, 1760-1780, 1803, 1805, 1807, 1830, 1841-1858, 1885, 1887, 1889, 1916, 1927-1962, 1980-2010, 2043, 2047, 2053-206
+0, 2087, 2098-2121, 2143, 2147, 2188, 2223, 2228, 2274, 2286-2322, 2345, 2349, 2354, 2391, 2396, 2407-2429, 2451, 2453,
+2462, 2510, 2522-2555, 2577, 2579, 2587, 2595, 2616, 2621, 2632-2649, 2681, 2684, 2719, 2725, 2728, 2737, 2741, 2743, 27
+61, 2768, 2778-2801, 2834, 2837, 2847, 2849, 2881, 2892-2925
 ------------------------------------------------------------
-TOTAL                           6824   2153    68%
-Required test coverage of 60% reached. Total coverage: 68.45%
-115 passed, 13 warnings in 22.80s
+TOTAL                           6944   2139    69%
+Required test coverage of 60% reached. Total coverage: 69.20%
+=============================================== short test summary info ===============================================
+FAILED tests/test_property.py::test_zscore_extreme_count_bounded - KeyError: 'n_above_3sigma'
+1 failed, 129 passed, 13 warnings in 29.81s
 
 ========================================================
   3. SUMMARY
 ========================================================
-  LINT  : PASS  (ruff clean)
-  TESTS : PASS
+  LINT  : FAIL  (ruff exit 1 -- see section 1b above)
+  TESTS : FAIL  (pytest exit 1 -- see section 2 above)
 
-  ALL GREEN -- ready to commit & push (CI gate should pass).
-  Next:
-     git add -A; git commit -m "Phase 6.1 + lint clean"; git push --set-upstream origin main
+  NOT GREEN -- paste validation_log.txt (or the red section) back to Claude.
 **********************
 Windows PowerShell transcript end
-End time: 20260601102814
+End time: 20260601111632
 **********************

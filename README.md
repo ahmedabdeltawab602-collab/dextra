@@ -52,6 +52,24 @@ cd dextra
 pip install -e ".[dev]"
 ```
 
+### Optional extras
+
+The core install is lightweight (numpy, pandas, matplotlib, seaborn, scipy).
+Enable the rest as needed:
+
+```bash
+pip install "dextra[ml]"    # scikit-learn: regress / classify / cluster, model-based selectors, dextra.compat
+pip install "dextra[viz]"   # plotly: interactive plot_boxplots
+pip install "dextra[docs]"  # mkdocs-material site
+```
+
+### scikit-learn interoperability
+
+dextra's pipelines and models also expose the standard scikit-learn API via
+`dextra.compat` (`DextraFeaturePipeline`, `DextraSelectPipeline`,
+`DextraRegressor`, `DextraClassifier`, `DextraClusterer`), so they drop
+directly into `sklearn.pipeline.Pipeline` and `GridSearchCV`.
+
 ---
 
 ## Quick start

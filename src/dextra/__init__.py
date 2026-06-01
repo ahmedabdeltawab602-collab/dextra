@@ -49,6 +49,13 @@ from .cleaning import (
     vrules,
     winsor,
 )
+from .compat import (
+    DextraClassifier,
+    DextraClusterer,
+    DextraFeaturePipeline,
+    DextraRegressor,
+    DextraSelectPipeline,
+)
 from .features import (
     aggfeat,
     bin,
@@ -189,4 +196,7 @@ __all__ = [
     "classify", "clf",
     # Phase 6 Stage 6.3
     "cluster", "clus",
+    # Phase 6.5 - scikit-learn compatible wrappers (dextra.compat)
+    "DextraFeaturePipeline", "DextraSelectPipeline",
+    "DextraRegressor", "DextraClassifier", "DextraClusterer",
 ]

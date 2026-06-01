@@ -31,5 +31,9 @@ jobs:
       - name: Lint with ruff
         run: ruff check .
 
+      - name: Type-check with mypy (informational, non-blocking)
+        continue-on-error: true
+        run: mypy src/dextra
+
       - name: Run tests
         run: pytest --cov=dextra --cov-report=term-missing --cov-fail-under=60

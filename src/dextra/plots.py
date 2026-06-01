@@ -22,11 +22,7 @@ from typing import List, Mapping, Optional, Sequence, Tuple, Union
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-
-# Plotly imports for the boxplot entry point.
-import plotly.graph_objects as go
 import seaborn as sns
-from plotly.subplots import make_subplots
 
 from ._utils import (
     DEFAULT_BOX_COLORS,
@@ -42,6 +38,24 @@ sns.set_style("whitegrid")
 # ---------------------------------------------------------------------------
 # Shared summary used by both plot functions
 # ---------------------------------------------------------------------------
+
+def _require_plotly():
+    """Import Plotly lazily so it is an optional (viz) dependency, not core.
+
+    Only :func:`plot_boxplots` needs Plotly; importing dextra (or using the
+    matplotlib-based helpers) must not require it. Raises a helpful error if
+    the optional dependency is missing.
+    """
+    try:
+        import plotly.graph_objects as go
+        from plotly.subplots import make_subplots
+    except ImportError as exc:  # pragma: no cover - exercised only without plotly
+        raise ImportError(
+            "plot_boxplots requires Plotly, an optional dependency. Install it "
+            "with `pip install plotly` (or `pip install dextra[viz]`)."
+        ) from exc
+    return go, make_subplots
+
 
 def _summary_frame(
     sub: pd.DataFrame, iqr_multiplier: float = 1.5
@@ -399,6 +413,7 @@ def plot_boxplots(
     sub = to_numeric_frame(df[cols_resolved].copy())
     n_rows = len(cols_resolved)
 
+    go, make_subplots = _require_plotly()
     fig = make_subplots(
         rows=n_rows,
         cols=1,
