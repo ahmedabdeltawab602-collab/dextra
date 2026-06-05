@@ -7,7 +7,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
-_Nothing yet._
+### Added
+- **Phase 7 - `evaluation`:** four deep, multi-metric evaluation functions
+  (each with a short alias), built on the Phase-6 hybrid artifact and the same
+  one-line contract (dense metrics table + multi-panel figure + `Decision:`
+  sentence + audit trail). Each accepts BOTH a label mode (`y_true`/`y_pred`/
+  `scores`) AND an artifact mode (a Phase-6 `params` dict); `return_params=True`
+  yields a JSON-safe evaluation report descriptor (no estimator).
+  - `confusion_report` (`confrep`) - per-class precision/recall/F1/support plus
+    accuracy and macro/weighted averages; confusion-matrix + row-normalised
+    (recall) + per-class-F1 panels.
+  - `roc_pr` (`rocpr`) - per-class ROC-AUC and average-precision (binary and
+    multiclass one-vs-rest, plus macro); ROC + Precision-Recall curve panels.
+  - `residual_analysis` (`residan`) - residual mean/std/skew/kurtosis, R2/RMSE/
+    MAE, Durbin-Watson, a heteroscedasticity hint and a Jarque-Bera normality
+    p-value; residual-vs-fitted + distribution + Normal Q-Q + scale-location
+    panels (scipy.stats lazily; no statsmodels).
+  - `learning_curves` (`learncv`) - train vs cross-validated score across
+    training sizes with a bias/variance verdict; learning-curve + gap panels.
+    Re-fits on CV folds of subsets by design (the only Phase-7 re-fit).
+  See EVALUATION_PHILOSOPHY.md.
+
+### Testing
+- `tests/test_phase7.py` - covers all four evaluation functions in both label
+  and artifact modes (binary + multiclass), the JSON-safe report descriptor,
+  figure rendering, input-DataFrame immutability, alias identity and the
+  guard-error paths, restoring the coverage gate.
+
 
 ## [0.2.0] - 2026-06-01
 

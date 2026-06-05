@@ -38,7 +38,7 @@
 | 4  | `features.py`         | 8 feature-engineering functions: `transform`, `scale`, `bin`, `encode`, `dtfeats`, `cross`, `aggfeat`, `featpipe` — fit/apply framework, leakage-safe, choice-first. | ✅ Complete (8 funcs) |
 | 5  | `selection.py`        | 5 feature-selection functions: `redundancy`, `relevance`, `importance`, `rfe`, `selectpipe` — Filter + Embedded + Wrapper families, fit/apply, leakage-safe. | ✅ Complete (5 funcs) |
 | 6  | `modeling.py`         | `regress`, `classify`, `cluster` — instant baseline models with one call. | ✅ Complete (6.1 regress + 6.2 classify + 6.3 cluster) |
-| 7  | `evaluation.py`       | `confusion_report`, `roc_pr`, `residual_analysis`, `learning_curves` — multi-metric evaluation panels. | 📅 Planned |
+| 7  | `evaluation.py`       | `confusion_report`, `roc_pr`, `residual_analysis`, `learning_curves` — multi-metric evaluation panels. | ✅ Complete (4 funcs + 4 aliases) |
 | 8  | `timeseries.py`       | `ts_decompose`, `ts_stationarity`, `ts_quick_forecast` — time-series basics. (Optional.)| 📅 Planned |
 | 9  | `report.py`           | `eda_report(df, out="report.html")` — one-call full HTML/PDF report. | 📅 Planned |
 | 10 | `dashboard.py`        | `dx.dash(df)` — auto-generated **Streamlit dashboard** in the browser from a single line. | 📅 Planned (final goal) |
@@ -148,3 +148,5 @@ auditing trivial.
 | 2026-06-01 | Performance sprint 1B: monolithic `features.py` (~3.8k lines) split into 5 focused sibling modules behind a thin re-export facade; no API change (structurally validated: symtable name-resolution + import + signature parity). |
 | 2026-06-01 | Distribution/docs sprint 2: MkDocs-Material site + GitHub Pages workflow; `CITATION.cff`; CI `build` job (sdist/wheel + twine check); PyPI badge; coverage-boost tests. |
 | 2026-06-01 | Consistency sprint 3: API-contract tests (exports/docstrings/standard-flags/alias-identity), sklearn conformance tests (clone/pickle/fit-self/repr), and phase-grouped `dx.functions()`. Coverage gate raised to 68%. |
+| 2026-06-05 | EVALUATION_PHILOSOPHY.md authored as Phase 7 blueprint (two-input-mode contract: label / artifact; return shape inherits Phase-6 §4.7). |
+| 2026-06-05 | Phase 7 delivered: `evaluation.py` — confusion_report / roc_pr / residual_analysis / learning_curves (+ confrep / rocpr / residan / learncv). Consumes the Phase-6 hybrid artifact or raw labels/scores; multi-panel diagnostics; JSON-safe report descriptor. **Phase 7 complete: 4/4 evaluation functions.** |

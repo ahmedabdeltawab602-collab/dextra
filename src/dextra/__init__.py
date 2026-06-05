@@ -56,6 +56,16 @@ from .compat import (
     DextraRegressor,
     DextraSelectPipeline,
 )
+from .evaluation import (
+    confrep,
+    confusion_report,
+    learncv,
+    learning_curves,
+    residan,
+    residual_analysis,
+    roc_pr,
+    rocpr,
+)
 from .features import (
     aggfeat,
     bin,
@@ -146,13 +156,14 @@ _PHASE_LABELS = {
     "dextra.features": "Phase 4 - features",
     "dextra.selection": "Phase 5 - selection",
     "dextra.modeling": "Phase 6 - modeling",
+    "dextra.evaluation": "Phase 7 - evaluation",
     "dextra.compat": "scikit-learn compat",
 }
 
 _PHASE_ORDER = [
     "Phase 1 - EDA", "Phase 2 - statistics", "Phase 3 - cleaning",
     "Phase 4 - features", "Phase 5 - selection", "Phase 6 - modeling",
-    "scikit-learn compat", "other",
+    "Phase 7 - evaluation", "scikit-learn compat", "other",
 ]
 
 
@@ -227,6 +238,9 @@ __all__ = [
     "classify", "clf",
     # Phase 6 Stage 6.3
     "cluster", "clus",
+    # Phase 7 - evaluation
+    "confusion_report", "roc_pr", "residual_analysis", "learning_curves",
+    "confrep", "rocpr", "residan", "learncv",
     # Hardening sprint - scikit-learn compatible wrappers (dextra.compat)
     "DextraFeaturePipeline", "DextraSelectPipeline",
     "DextraRegressor", "DextraClassifier", "DextraClusterer",

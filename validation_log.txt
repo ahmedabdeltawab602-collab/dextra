@@ -1,12 +1,12 @@
 ﻿**********************
 Windows PowerShell transcript start
-Start time: 20260601181658
+Start time: 20260605182355
 Username: MSI\manim
 RunAs User: MSI\manim
 Configuration Name: 
 Machine: MSI (Microsoft Windows NT 10.0.26200.0)
 Host Application: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File .\run_validation.ps1
-Process ID: 33136
+Process ID: 28244
 PSVersion: 5.1.26100.8457
 PSEdition: Desktop
 PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.8457
@@ -29,7 +29,7 @@ python 3.13.13 | pandas 3.0.3 | numpy 2.4.5 | scikit-learn 1.8.0
   1. Lint  --  ruff auto-fix then strict check
 ========================================================
 1a) ruff check . --fix  (auto-fixes import order, unused imports, f-strings)
-Found 1 error (1 fixed, 0 remaining).
+All checks passed!
 
 1b) ruff check .  (strict gate -- must be clean)
 All checks passed!
@@ -38,8 +38,8 @@ All checks passed!
   2. Tests  --  pytest + coverage
 ========================================================
 Running the FULL suite (Phases 1-6 + consolidation + legacy)...
-................................................................................................................ [ 61%]
-.......................................................................                                          [100%]
+................................................................................................................ [ 56%]
+........................................................................................                         [100%]
 ================================================== warnings summary ===================================================
 tests/test_coverage_boost.py::test_encode_methods[ordinal]
   D:\06 PythonProjects\dextra-project\src\dextra\_features_discretize.py:613: UserWarning: encode: ordinal encoding of '
@@ -83,7 +83,7 @@ __________________________________ coverage: platform win32, python 3.13.13-fina
 
 Name                                 Stmts   Miss  Cover   Missing
 ------------------------------------------------------------------
-src\dextra\__init__.py                  30      1    97%   176
+src\dextra\__init__.py                  31      1    97%   187
 src\dextra\_features_common.py          79     16    80%   45, 68, 85, 101, 103, 105, 108-109, 115, 123-127, 131, 134, 1
 41
 src\dextra\_features_derive.py         635    186    71%   52-58, 62, 70-73, 97, 194, 204-207, 215, 269-272, 285-286, 30
@@ -112,6 +112,8 @@ src\dextra\cleaning.py                1247    488    61%   40-41, 58, 72-74, 78-
 101, 2106, 2123-2133, 2137, 2142-2143, 2147-2167, 2212, 2215, 2222, 2224-2227, 2239, 2249-2254, 2271-2279, 2306-2313, 23
 20, 2326-2327, 2331-2354
 src\dextra\compat.py                   115      2    98%   79, 89
+src\dextra\evaluation.py               435     48    89%   78-85, 93, 96, 104, 113, 120, 125, 137-139, 225, 308-311, 437
+, 440-441, 501-504, 543, 626, 629, 634, 673, 676-677, 750-753, 868, 871, 875, 878, 883, 895, 902, 953, 956, 999-1002
 src\dextra\features.py                   5      0   100%
 src\dextra\modeling.py                 773    122    84%   73-74, 91, 104, 121, 123, 126-127, 135-136, 138, 140, 164, 16
 7, 169-175, 184, 191, 194, 290, 304-305, 399, 430-431, 519, 531, 605, 644-660, 680, 682, 684, 696, 795-796, 879, 908-909
@@ -136,9 +138,9 @@ src\dextra\stats_advanced.py          1576    641    59%   38-39, 53, 70, 76-77,
 8-2440, 2462, 2464, 2473, 2521, 2533-2566, 2588, 2590, 2598, 2606, 2627, 2632, 2643-2660, 2692, 2695, 2730, 2736, 2739,
 2748, 2752, 2754, 2772, 2779, 2789-2812, 2845, 2848, 2858, 2860, 2892, 2903-2936
 ------------------------------------------------------------------
-TOTAL                                 6983   2002    71%
-Required test coverage of 68% reached. Total coverage: 71.33%
-183 passed, 18 warnings in 29.39s
+TOTAL                                 7419   2050    72%
+Required test coverage of 68% reached. Total coverage: 72.37%
+200 passed, 18 warnings in 65.48s (0:01:05)
 
 ========================================================
   3. SUMMARY
@@ -151,5 +153,5 @@ Required test coverage of 68% reached. Total coverage: 71.33%
      git add -A; git commit -m "Phase 6.1 + lint clean"; git push --set-upstream origin main
 **********************
 Windows PowerShell transcript end
-End time: 20260601181735
+End time: 20260605182509
 **********************
