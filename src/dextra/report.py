@@ -120,12 +120,13 @@ def _run(fn, *args, **kwargs):
     with redirect_stdout(buf):
         ret = _call(fn, *args, **call_kw)
     frame, fig = _split_ret(ret)
-    return frame, fig, _extract_decision(buf.getvalue())
+    img = _fig_to_b64(fig) if fig is not None else None
+    return frame, img, _extract_decision(buf.getvalue())
 
 
 # ---------------------------------------------------------------------------
 # Section builders. Each returns (title, [block, ...]); a block is the tuple
-# (subtitle, table_or_None, fig_or_None, decision_or_None, note_or_None).
+# (subtitle, table_or_None, img_b64_or_None, decision_or_None, note).
 # A builder raises to signal "skip this section" (the reason is recorded).
 # ---------------------------------------------------------------------------
 
@@ -181,7 +182,8 @@ def _sec_univariate(df, ctx):
                     return_fig=True)
         _, fig = _split_ret(ret)
         if fig is not None:
-            blocks.append(("Distributions", None, fig, None, None))
+            blocks.append(("Distributions", None, _fig_to_b64(fig), None,
+                           None))
     cat = df.select_dtypes(exclude="number")
     if cat.shape[1] >= 1:
         from .stats_advanced import frequency_table
@@ -303,7 +305,7 @@ footer { color:var(--muted); font-size:12px; text-align:center; margin-top:24px;
 
 
 def _render_block(block, decimals) -> str:
-    subtitle, table, fig, decision, note = block
+    subtitle, table, img, decision, note = block
     parts = []
     if subtitle:
         parts.append(f"<h3>{_esc(subtitle)}</h3>")
@@ -314,9 +316,9 @@ def _render_block(block, decimals) -> str:
                      f'{_esc(decision)}</p>')
     if table is not None:
         parts.append(f'<div class="table-wrap">{_df_html(table, decimals)}</div>')
-    if fig is not None:
+    if img is not None:
         parts.append(f'<img alt="{_esc(subtitle or "figure")}" '
-                     f'src="data:image/png;base64,{_fig_to_b64(fig)}"/>')
+                     f'src="data:image/png;base64,{img}"/>')
     return "\n".join(parts)
 
 
