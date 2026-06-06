@@ -195,3 +195,4 @@ Any violation is fixed before shipping.
 | Date       | Note                                                          |
 |------------|----------------------------------------------------------------|
 | 2026-06-06 | Document created as Phase 9 blueprint. One function confirmed: `edareport` (`edarep`). Self-contained HTML, no new dependency (PDF deferred to an optional `report` extra); section isolation; optional target-aware model section (lazy scikit-learn). Underscore-free public name. |
+| 2026-06-06 | Hardening: the section builders moved to a neutral `dextra._compose` layer; `edareport` is now the HTML renderer over it, and the Phase-10 dashboard renders the same builders. No behaviour change. |

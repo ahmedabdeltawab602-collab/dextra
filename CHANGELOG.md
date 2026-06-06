@@ -66,6 +66,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   renders); the input DataFrame is never mutated; `return_params=True` yields a
   JSON-safe build manifest. Underscore-free public name. See
   REPORT_PHILOSOPHY.md.
+- **Phase 10 - `dashboard` (final goal):** `dash` (`dashapp`) - generates a
+  self-contained interactive Streamlit app (`dashboard_app.py` + a sidecar data
+  file) that re-runs dextra's analyses live under sidebar controls. It computes
+  nothing new: every tab is a Phase-9 section builder (Overview / Data quality /
+  Univariate / Bivariate / optional Model), rendered to Streamlit widgets.
+  Streamlit is the optional, lazy `dash` extra (the renderer is testable with a
+  stub, so the base install and CI are unaffected); `launch=False` by default
+  (generate only); the input DataFrame is never mutated; tabs are isolated;
+  `return_params=True` yields a JSON-safe manifest. Underscore-free public name.
+  See DASHBOARD_PHILOSOPHY.md. **This completes the 10-phase Roadmap.**
+- **Phase 9/10 hardening:** the report/dashboard section builders were
+  extracted to a neutral `dextra._compose` layer -- a single source of truth
+  that the HTML renderer (`edareport`) and the Streamlit renderer (`dash`) both
+  sit on (the dashboard no longer depends on the report module). `dash` gained
+  `output_dir=` (collect app + data + metadata in one folder), a `parquet`
+  `data_format` (lazy engine, clear error if absent), a `*_meta.json`
+  reproducibility manifest (dextra / Python / pandas versions + settings), and
+  up-front dependency / data-file checks in the generated app.
 
 ### Testing
 - `tests/test_phase7.py` - covers all four evaluation functions in both label
@@ -91,12 +109,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   isolation (skipped-but-still-written), immutability, the sections subset, and
   the optional model section (classification + regression; skipped without
   scikit-learn).
+- `tests/test_phase10.py` - covers `dash`: a runnable generated app + a
+  dtype-preserving sidecar (round-trip), the JSON-safe manifest, immutability,
+  the CSV format and the guard paths; and the renderer `_build_dashboard` with a
+  stubbed Streamlit (tab rendering, model-tab toggle, tab isolation).
 
 ### Dependencies
 - New **optional** extra `ts` (`statsmodels>=0.14`), lazy-imported, for the
   Phase 8 STL decomposition and (upcoming) ADF / KPSS stationarity tests. The
   base install is unchanged; `import dextra` still needs only numpy / pandas /
   matplotlib / seaborn / scipy.
+- New **optional** extra `dash` (`streamlit>=1.30`), lazy-imported, for the
+  Phase 10 interactive dashboard. The base install is unchanged and CI does not
+  require Streamlit (the renderer is tested with a stub).
 
 
 ## [0.2.0] - 2026-06-01

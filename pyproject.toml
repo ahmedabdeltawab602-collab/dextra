@@ -62,6 +62,12 @@ ml = [
 ts = [
   "statsmodels>=0.14",
 ]
+# Streamlit powers the Phase 10 interactive dashboard (`dx.dash`). Imported
+# lazily and only when the generated app runs, so the base install and CI
+# are unaffected (the renderer is tested with a stub).
+dash = [
+  "streamlit>=1.30",
+]
 notebook = [
   "jupyter>=1.0",
   "ipykernel>=6.0",

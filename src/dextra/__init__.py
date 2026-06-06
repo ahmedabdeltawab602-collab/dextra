@@ -56,6 +56,7 @@ from .compat import (
     DextraRegressor,
     DextraSelectPipeline,
 )
+from .dashboard import dash, dashapp
 from .evaluation import (
     confrep,
     confusion_report,
@@ -161,6 +162,7 @@ _PHASE_LABELS = {
     "dextra.evaluation": "Phase 7 - evaluation",
     "dextra.timeseries": "Phase 8 - timeseries",
     "dextra.report": "Phase 9 - report",
+    "dextra.dashboard": "Phase 10 - dashboard",
     "dextra.compat": "scikit-learn compat",
 }
 
@@ -168,7 +170,7 @@ _PHASE_ORDER = [
     "Phase 1 - EDA", "Phase 2 - statistics", "Phase 3 - cleaning",
     "Phase 4 - features", "Phase 5 - selection", "Phase 6 - modeling",
     "Phase 7 - evaluation", "Phase 8 - timeseries", "Phase 9 - report",
-    "scikit-learn compat", "other",
+    "Phase 10 - dashboard", "scikit-learn compat", "other",
 ]
 
 
@@ -250,6 +252,8 @@ __all__ = [
     "tsdecomp", "tsstat", "tsfcast",
     # Phase 9 - report
     "edareport", "edarep",
+    # Phase 10 - dashboard
+    "dash", "dashapp",
     # Hardening sprint - scikit-learn compatible wrappers (dextra.compat)
     "DextraFeaturePipeline", "DextraSelectPipeline",
     "DextraRegressor", "DextraClassifier", "DextraClusterer",

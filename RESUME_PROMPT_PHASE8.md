@@ -1,4 +1,4 @@
-# dextra — Resume Prompt (انسخ هذا في محادثة جديدة)
+﻿# dextra — Resume Prompt (انسخ هذا في محادثة جديدة)
 
 أنت تتعاون معي على مكتبة **dextra** لتحليل البيانات وعلم البيانات. دقة المعلومات
 والكود مطلوبة 100%، ونلتزم بـ«التراكم الهادئ»: أساس مُختبَر وموثَّق وأخضر في CI
@@ -84,3 +84,5 @@
 `ROADMAP.md` ← `MODELING_PHILOSOPHY.md` ← `EVALUATION_PHILOSOPHY.md` ← `CHANGELOG.md`
 ← `dextra_Evaluation_Report.docx` (v1.5) ← `src/dextra/modeling.py` و`evaluation.py`
 كنماذج للعقد، وبنية `src/dextra/_features_*.py`.
+
+
