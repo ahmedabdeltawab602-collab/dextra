@@ -63,6 +63,10 @@ venv.bak/
 Thumbs.db
 desktop.ini
 
+# MS Office temp / owner lock files (e.g. ~$RESUME_PROMPT_PHASE8.md)
+~$*
+*.tmp
+
 # Linters / type checkers
 .mypy_cache/
 .ruff_cache/
