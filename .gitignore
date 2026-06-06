@@ -80,5 +80,7 @@ desktop.ini
 plots/
 dextra_output/
 .backups/
+# generated each run by run_validation.ps1 (transient log; not source)
+validation_log.txt
 # stray file created by tooling on a read-only-delete mount; remove manually
 src/dextra/_deltest.txt
