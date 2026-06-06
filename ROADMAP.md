@@ -40,7 +40,7 @@
 | 6  | `modeling.py`         | `regress`, `classify`, `cluster` — instant baseline models with one call. | ✅ Complete (6.1 regress + 6.2 classify + 6.3 cluster) |
 | 7  | `evaluation.py`       | `confusion_report`, `roc_pr`, `residual_analysis`, `learning_curves` — multi-metric evaluation panels. | ✅ Complete (4 funcs + 4 aliases) |
 | 8  | `timeseries.py`       | `tsdecomp`, `tsstat`, `tsfcast` — time-series basics. (Optional.)| ✅ Complete (3 funcs) |
-| 9  | `report.py`           | `eda_report(df, out="report.html")` — one-call full HTML/PDF report. | 📅 Planned |
+| 9  | `report.py`           | `edareport(df, out="report.html")` — one-call self-contained HTML report. | ✅ Complete (HTML; PDF deferred) |
 | 10 | `dashboard.py`        | `dx.dash(df)` — auto-generated **Streamlit dashboard** in the browser from a single line. | 📅 Planned (final goal) |
 
 ---
@@ -117,6 +117,25 @@ are dependency-free. Public names are underscore-free.
 
 ---
 
+## Phase 9 — Report
+
+Blueprint: `REPORT_PHILOSOPHY.md`. `edareport` (alias `edarep`) composes the
+tested functions of Phases 1–8 into a single self-contained HTML file (figures
+embedded as base64 PNGs, tables inline) — it computes nothing new. Sections:
+Overview, Data quality, Univariate, Bivariate, and an optional target-aware
+Baseline model & evaluation section (`include_model=True`, lazy scikit-learn).
+Sections are isolated (a section that cannot run is skipped with a reason; the
+report still renders); the input DataFrame is never mutated; no new dependency
+(PDF export deferred to an optional `report` extra). Public name underscore-free.
+
+| Stage | Scope | Status |
+|-------|-------|--------|
+| 9.1   | HTML framework + Overview + Data-quality | ✅ Complete |
+| 9.2   | Univariate + Bivariate | ✅ Complete |
+| 9.3   | Optional model / evaluation section (lazy sklearn) | ✅ Complete |
+
+---
+
 ## Source of truth for formulas
 
 All statistical formulas implemented in Phase 2 are matched against
@@ -171,3 +190,4 @@ auditing trivial.
 | 2026-06-06 | Phase 8 Stage 8.1 delivered: `tsdecomp` — classical (dependency-free) + lazy-STL decomposition, additive/multiplicative, period inference, Hyndman strengths, series/artifact modes; `tests/test_phase8.py` (24 tests). 224 tests green, coverage 72.74% (timeseries.py 87%). Public names underscore-free (`tsdecomp`/`tsstat`/`tsfcast`). |
 | 2026-06-06 | Phase 8 Stage 8.2 delivered: `tsstat` — ADF + KPSS via lazy statsmodels, four-case verdict, suggested differencing `d` by iterative differencing until ADF rejects a unit root AND KPSS fails to reject stationarity (capped at `max_diff`), dependency-free ACF panel; series/artifact modes; 15 new tests. |
 | 2026-06-06 | Phase 8 Stage 8.3 delivered: `tsfcast` — naive/snaive/drift/mean baselines + `compare`, validated on a held-out tail (no look-ahead), MASE/RMSE/MAE/MAPE, ~95% band, forward forecast on a continued datetime/integer index; `method='auto'` (snaive if seasonal else naive); dependency-free; 21 new tests. **Phase 8 complete: 3/3 time-series functions, 60 Phase-8 tests.** |
+| 2026-06-06 | REPORT_PHILOSOPHY.md authored as Phase 9 blueprint; Phase 9 delivered: `edareport` (`edarep`) — one-call self-contained HTML report composing Phases 1–8 (Overview / Data-quality / Univariate / Bivariate / optional Model), section isolation, no new dependency; `tests/test_phase9.py` (11 tests). **Phase 9 complete (HTML; PDF deferred).** |

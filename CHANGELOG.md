@@ -53,6 +53,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   naive; `method='compare'` ranks every baseline by MASE and writes no artifact.
   Two-panel figure, series / artifact modes, JSON-safe descriptor, dependency-
   free. **Phase 8 complete: 3/3 time-series functions.**
+- **Phase 9 - `report`:** `edareport` (`edarep`) - a one-call,
+  self-contained HTML EDA report that composes the tested functions of Phases
+  1-8 (it computes nothing new). Sections: Overview, Data quality (missing /
+  duplicates / outliers), Univariate (numeric summary + histograms + top
+  categorical frequencies), Bivariate (correlation + class balance), and an
+  optional target-aware Baseline model & evaluation section
+  (`include_model=True`, lazy scikit-learn). Figures are embedded as base64
+  PNGs and tables inline -- one portable file, no sidecar assets, no new
+  dependency (PDF export deferred to an optional `report` extra). Sections are
+  isolated (a failing section is skipped with a reason; the report still
+  renders); the input DataFrame is never mutated; `return_params=True` yields a
+  JSON-safe build manifest. Underscore-free public name. See
+  REPORT_PHILOSOPHY.md.
 
 ### Testing
 - `tests/test_phase7.py` - covers all four evaluation functions in both label
@@ -73,6 +86,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   validation metrics, the `compare` leaderboard (and its no-artifact rule), the
   forward datetime / integer index, immutability, artifact mode, figure
   rendering and the guard-error paths. 60 Phase-8 tests in total.
+- `tests/test_phase9.py` - covers `edareport`: a self-contained HTML file
+  with embedded figures and no sidecar assets, the JSON-safe manifest, section
+  isolation (skipped-but-still-written), immutability, the sections subset, and
+  the optional model section (classification + regression; skipped without
+  scikit-learn).
 
 ### Dependencies
 - New **optional** extra `ts` (`statsmodels>=0.14`), lazy-imported, for the

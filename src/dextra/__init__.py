@@ -85,6 +85,7 @@ from .modeling import (
     regress,
 )
 from .plots import boxpl, hister, plot_boxplots, plot_histograms
+from .report import edarep, edareport
 from .selection import (
     importance,
     imps,
@@ -159,13 +160,14 @@ _PHASE_LABELS = {
     "dextra.modeling": "Phase 6 - modeling",
     "dextra.evaluation": "Phase 7 - evaluation",
     "dextra.timeseries": "Phase 8 - timeseries",
+    "dextra.report": "Phase 9 - report",
     "dextra.compat": "scikit-learn compat",
 }
 
 _PHASE_ORDER = [
     "Phase 1 - EDA", "Phase 2 - statistics", "Phase 3 - cleaning",
     "Phase 4 - features", "Phase 5 - selection", "Phase 6 - modeling",
-    "Phase 7 - evaluation", "Phase 8 - timeseries",
+    "Phase 7 - evaluation", "Phase 8 - timeseries", "Phase 9 - report",
     "scikit-learn compat", "other",
 ]
 
@@ -246,6 +248,8 @@ __all__ = [
     "confrep", "rocpr", "residan", "learncv",
     # Phase 8 - timeseries
     "tsdecomp", "tsstat", "tsfcast",
+    # Phase 9 - report
+    "edareport", "edarep",
     # Hardening sprint - scikit-learn compatible wrappers (dextra.compat)
     "DextraFeaturePipeline", "DextraSelectPipeline",
     "DextraRegressor", "DextraClassifier", "DextraClusterer",
