@@ -9,7 +9,8 @@ plumbing.
 from __future__ import annotations
 
 import inspect
-from typing import Iterable, List, Optional, Sequence
+from datetime import datetime, timezone
+from typing import Any, Iterable, List, Optional, Sequence
 
 import numpy as np
 import pandas as pd
@@ -131,6 +132,39 @@ def get_variable_name(obj: object, depth: int = 2) -> str:
 # ---------------------------------------------------------------------------
 # Safe arithmetic
 # ---------------------------------------------------------------------------
+
+def now_iso() -> str:
+    """Current UTC time as a compact ISO-8601 string (shared contract helper)."""
+    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+def append_audit(out: pd.DataFrame, entry: dict) -> None:
+    """Append an audit entry to ``out.attrs['dextra_audit']`` (copy-on-write safe).
+
+    Shared, single source of truth for the dextra audit trail. New modules import
+    this instead of re-defining it locally.
+    """
+    out.attrs.setdefault("dextra_audit", [])
+    out.attrs["dextra_audit"] = list(out.attrs["dextra_audit"])
+    out.attrs["dextra_audit"].append(entry)
+
+
+def json_safe(value: Any) -> Any:
+    """Recursively convert numpy scalars / arrays to plain JSON-serialisable types."""
+    if isinstance(value, dict):
+        return {k: json_safe(v) for k, v in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [json_safe(v) for v in value]
+    if isinstance(value, np.ndarray):
+        return [json_safe(v) for v in value.tolist()]
+    if isinstance(value, np.integer):
+        return int(value)
+    if isinstance(value, np.floating):
+        return float(value)
+    if isinstance(value, np.bool_):
+        return bool(value)
+    return value
+
 
 def safe_divide(numerator: pd.Series, denominator: pd.Series) -> pd.Series:
     """Element-wise division that yields NaN instead of inf when dividing by 0.

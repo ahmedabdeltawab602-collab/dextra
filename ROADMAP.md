@@ -42,6 +42,7 @@
 | 8  | `timeseries.py`       | `tsdecomp`, `tsstat`, `tsfcast` — time-series basics. (Optional.)| ✅ Complete (3 funcs) |
 | 9  | `report.py`           | `edareport(df, out="report.html")` — one-call self-contained HTML report. | ✅ Complete (HTML; PDF deferred) |
 | 10 | `dashboard.py`        | `dx.dash(df)` — auto-generated **Streamlit dashboard** from a single line. | ✅ Complete (final goal) |
+| 11 | `_loader.py` (`load`/`peek`) | Smart, transparent, replayable data loader (csv/tsv → Excel → SQL). The pipeline **entry layer** ("Phase 0"). | 🚧 11.1 done; 11.2/11.3 planned |
 
 ---
 
@@ -155,6 +156,26 @@ never mutated; tabs are isolated. Public name underscore-free.
 | 10.3  | Optional Model tab + `launch` auto-run | ✅ Complete |
 
 **🎉 The 10-phase Roadmap is complete.**
+
+---
+
+## Phase 11 — Loader (entry layer / "Phase 0")
+
+Blueprint: `LOADER_PHILOSOPHY.md`; spec: `LOADER_SPEC_11_1.md`. The smart loader
+turns a messy source into a faithful, typed DataFrame while disclosing every
+decision and emitting a JSON-safe, replayable **load plan** (the unified-contract
+`params` artifact). Governing principle: *transparency scales with uncertainty*
+(`on_ambiguous="warn"` default; `"plan"`/`"raise"` for teaching/audit).
+Categorical confidence + reason (no fake floats). Security by default (no
+auto-pickle; SQL parametrised). New optional extra `io`
+(charset-normalizer / clevercsv), lazy with stdlib fallbacks. `load` adopts the
+unified contract in full — the contract's reference implementation.
+
+| Stage | Function | Scope | Status |
+|-------|----------|-------|--------|
+| 11.1  | `load` / `peek` | messy CSV/TSV + typed pass-through | ✅ Complete (309 tests green, cov 76%) |
+| 11.2  | `load` | Excel (sheets, data-block, multi-row headers) | planned |
+| 11.3  | `load` / `peek` | safe SQL + parquet/json convenience | planned |
 
 ---
 

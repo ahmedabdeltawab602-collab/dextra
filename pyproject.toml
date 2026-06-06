@@ -38,6 +38,13 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+# Smart-loader detection helpers (Phase 11 `load` / `peek`). Imported lazily with
+# pure-stdlib fallbacks, so the loader works (with reduced detection quality)
+# without them.
+io = [
+  "charset-normalizer>=3.0",
+  "clevercsv>=0.8",
+]
 # Interactive Plotly figures (currently used by plot_boxplots / boxpl). Kept
 # out of the core install so headless / server deployments stay lightweight.
 viz = [
@@ -88,6 +95,8 @@ dev = [
   "plotly>=5.10",
   "scikit-learn>=1.1",
   "statsmodels>=0.14",
+  "charset-normalizer>=3.0",
+  "clevercsv>=0.8",
 ]
 
 [project.urls]

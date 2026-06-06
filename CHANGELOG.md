@@ -1,5 +1,20 @@
 # Changelog
 
+## [Unreleased] — Phase 11.1 (loader, entry layer)
+
+### Added
+- `dx.load` / `dx.peek` (aliases `dload` / `dpeek`): a smart, transparent,
+  replayable loader for messy CSV/TSV — encoding + delimiter + header
+  detection, measured per-column type inference, categorical confidence
+  with reasons, a JSON-safe replayable **load plan**, and an
+  `on_ambiguous` policy (`warn` default / `raise` / `plan`).
+- Security by default: pickle sources refused unless `allow_pickle=True`.
+- New optional extra `io` (charset-normalizer, clevercsv), lazy with
+  pure-stdlib fallbacks; added to `dev` so CI exercises the high-quality path.
+- Shared contract helpers `now_iso` / `append_audit` / `json_safe` in
+  `dextra._utils` (single source of truth; addresses audit finding #5).
+- `tests/test_phase11.py`.
+
 All notable changes to `dextra` will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),

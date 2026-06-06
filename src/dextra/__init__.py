@@ -11,6 +11,7 @@ Phase 2: 22 statistical helpers.
 Phase 3 v2: 10 cleaning helpers (3 inspectors + 7 actors, short names).
 """
 
+from ._loader import dload, dpeek, load, peek
 from ._utils import DEFAULT_BOX_COLORS
 from ._version import __version__
 from .cleaning import (
@@ -148,6 +149,7 @@ from .stats_advanced import (
 from .timeseries import tsdecomp, tsfcast, tsstat
 
 _PHASE_LABELS = {
+    "dextra._loader": "Phase 11 - loader (entry layer)",
     "dextra.stats": "Phase 1 - EDA",
     "dextra.plots": "Phase 1 - EDA",
     "dextra.stats_advanced": "Phase 2 - statistics",
@@ -167,6 +169,7 @@ _PHASE_LABELS = {
 }
 
 _PHASE_ORDER = [
+    "Phase 11 - loader (entry layer)",
     "Phase 1 - EDA", "Phase 2 - statistics", "Phase 3 - cleaning",
     "Phase 4 - features", "Phase 5 - selection", "Phase 6 - modeling",
     "Phase 7 - evaluation", "Phase 8 - timeseries", "Phase 9 - report",
@@ -201,6 +204,8 @@ def functions() -> None:
 
 __all__ = [
     "__version__", "DEFAULT_BOX_COLORS", "functions",
+    # Phase 11 - loader (entry layer)
+    "load", "dload", "peek", "dpeek",
     "describe_numeric", "plot_histograms", "plot_boxplots",
     "numdesc", "hister", "boxpl",
     # Phase 2
