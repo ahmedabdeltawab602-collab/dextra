@@ -1,6 +1,6 @@
 """dextra Phase 8 -- time series (tsdecomp / tsstat / tsfcast).
 
-Stage 8.1 covers tsdecomp: both input modes (series and artifact), classical
+Stage 8.1 covers tsdecomp; Stage 8.2 covers tsstat (ADF/KPSS): both input modes (series and artifact), classical
 additive + multiplicative decomposition, period inference, the JSON-safe
 descriptor (no estimator), figure rendering, immutability of the input
 DataFrame, and the guard-error paths. The classical path is
@@ -234,3 +234,141 @@ def test_decompose_stl_path(ts_df):
     assert rep["method"] == "stl"
     assert list(comp.columns) == ["observed", "trend", "seasonal", "resid"]
     assert len(comp) == len(ts_df)
+
+
+# ===========================================================================
+# 8.2  tsstat  --  stationarity (ADF / KPSS), needs statsmodels for the tests
+# ===========================================================================
+
+def test_tsstat_exports_no_underscore():
+    assert callable(dx.tsstat)
+    assert not hasattr(dx, "ts_stationarity")   # underscore-free names only
+
+
+def test_tsstat_bad_regression(ts_df):
+    # validated before the statsmodels gate, so runs without statsmodels
+    with pytest.raises(ValueError):
+        dx.tsstat(ts_df, value="sales", regression="bad", **KW)
+
+
+def test_tsstat_bad_alpha(ts_df):
+    with pytest.raises(ValueError):
+        dx.tsstat(ts_df, value="sales", alpha=2.0, **KW)
+
+
+def test_tsstat_bad_max_diff(ts_df):
+    with pytest.raises(ValueError):
+        dx.tsstat(ts_df, value="sales", max_diff=-1, **KW)
+
+
+def test_tsstat_white_noise_is_stationary():
+    pytest.importorskip("statsmodels")
+    rng = np.random.default_rng(3)
+    n = 200
+    idx = pd.date_range("2010-01-01", periods=n, freq="MS")
+    df = pd.DataFrame({"x": rng.normal(0, 1, n)}, index=idx)
+    tbl, rep = dx.tsstat(df, value="x", return_params=True, **KW)
+    assert list(tbl.index) == ["ADF", "KPSS"]
+    assert rep["metrics"]["suggested_d"] == 0
+    assert rep["metrics"]["adf"]["pvalue"] < 0.05      # rejects unit root
+
+
+def test_tsstat_random_walk_needs_differencing():
+    pytest.importorskip("statsmodels")
+    rng = np.random.default_rng(4)
+    n = 200
+    rw = np.cumsum(rng.normal(0, 1, n))
+    idx = pd.date_range("2010-01-01", periods=n, freq="MS")
+    df = pd.DataFrame({"x": rw}, index=idx)
+    _, rep = dx.tsstat(df, value="x", return_params=True, **KW)
+    assert rep["metrics"]["suggested_d"] >= 1
+    assert rep["metrics"]["adf"]["pvalue"] > 0.05      # cannot reject unit root
+
+
+def test_tsstat_descriptor_json_safe():
+    pytest.importorskip("statsmodels")
+    rng = np.random.default_rng(5)
+    n = 120
+    df = pd.DataFrame({"x": rng.normal(0, 1, n)},
+                      index=pd.date_range("2010-01-01", periods=n, freq="MS"))
+    _, rep = dx.tsstat(df, value="x", return_params=True, **KW)
+    assert rep["function"] == "tsstat"
+    assert rep["task"] == "timeseries"
+    assert "estimator" not in rep
+    _json_ok(rep)
+    assert {"adf", "kpss", "verdict", "suggested_d", "differencing_path"} \
+        <= set(rep["metrics"])
+
+
+def test_tsstat_does_not_mutate_input():
+    pytest.importorskip("statsmodels")
+    rng = np.random.default_rng(6)
+    n = 120
+    df = pd.DataFrame({"x": rng.normal(0, 1, n)},
+                      index=pd.date_range("2010-01-01", periods=n, freq="MS"))
+    before = df.copy(deep=True)
+    dx.tsstat(df, value="x", **KW)
+    pd.testing.assert_frame_equal(df, before)
+    assert "dextra_audit" not in df.attrs
+
+
+def test_tsstat_artifact_mode_reproduces():
+    pytest.importorskip("statsmodels")
+    rng = np.random.default_rng(7)
+    n = 120
+    df = pd.DataFrame({"x": rng.normal(0, 1, n)},
+                      index=pd.date_range("2010-01-01", periods=n, freq="MS"))
+    tbl, rep = dx.tsstat(df, value="x", return_params=True, **KW)
+    tbl2 = dx.tsstat(df, params=rep, **KW)
+    pd.testing.assert_frame_equal(tbl, tbl2)
+
+
+def test_tsstat_return_fig_three_panels():
+    pytest.importorskip("statsmodels")
+    rng = np.random.default_rng(8)
+    n = 120
+    df = pd.DataFrame({"x": rng.normal(0, 1, n)},
+                      index=pd.date_range("2010-01-01", periods=n, freq="MS"))
+    tbl, rep, fig = dx.tsstat(df, value="x", return_params=True,
+                              return_fig=True, show=False, plot=True)
+    assert fig is not None
+    assert len(fig.axes) == 3
+    import matplotlib.pyplot as plt
+    plt.close(fig)
+
+
+def test_tsstat_requires_value(ts_df):
+    pytest.importorskip("statsmodels")
+    with pytest.raises(ValueError):
+        dx.tsstat(ts_df, **KW)
+
+
+def test_tsstat_value_not_found(ts_df):
+    pytest.importorskip("statsmodels")
+    with pytest.raises(KeyError):
+        dx.tsstat(ts_df, value="missing", **KW)
+
+
+def test_tsstat_too_short():
+    pytest.importorskip("statsmodels")
+    df = pd.DataFrame({"x": np.arange(6.0)})
+    with pytest.raises(ValueError):
+        dx.tsstat(df, value="x", **KW)
+
+
+def test_tsstat_constant_series():
+    pytest.importorskip("statsmodels")
+    df = pd.DataFrame({"x": np.ones(30)})
+    with pytest.raises(ValueError):
+        dx.tsstat(df, value="x", **KW)
+
+
+def test_tsstat_missing_values_rejected():
+    pytest.importorskip("statsmodels")
+    rng = np.random.default_rng(9)
+    n = 40
+    arr = rng.normal(0, 1, n)
+    arr[5] = np.nan
+    df = pd.DataFrame({"x": arr})
+    with pytest.raises(ValueError):
+        dx.tsstat(df, value="x", **KW)

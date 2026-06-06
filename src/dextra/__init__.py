@@ -143,7 +143,7 @@ from .stats_advanced import (
     z_scores,
     zsc,
 )
-from .timeseries import tsdecomp
+from .timeseries import tsdecomp, tsstat
 
 _PHASE_LABELS = {
     "dextra.stats": "Phase 1 - EDA",
@@ -245,7 +245,7 @@ __all__ = [
     "confusion_report", "roc_pr", "residual_analysis", "learning_curves",
     "confrep", "rocpr", "residan", "learncv",
     # Phase 8 - timeseries
-    "tsdecomp",
+    "tsdecomp", "tsstat",
     # Hardening sprint - scikit-learn compatible wrappers (dextra.compat)
     "DextraFeaturePipeline", "DextraSelectPipeline",
     "DextraRegressor", "DextraClassifier", "DextraClusterer",

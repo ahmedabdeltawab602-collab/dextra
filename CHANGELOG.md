@@ -37,6 +37,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   `method="stl"` uses a lazy statsmodels import. Hyndman trend / seasonal
   strengths reported; the input DataFrame is never mutated. Underscore-free
   public name. See TIMESERIES_PHILOSOPHY.md.
+- **Phase 8 - `timeseries` (Stage 8.2):** `tsstat` - one-line stationarity
+  diagnosis. Runs the ADF (null: unit root) and KPSS (null: stationarity) tests
+  via a lazy statsmodels import, reports both with the classic four-case
+  verdict, and suggests a differencing order `d` by differencing until ADF
+  rejects a unit root AND KPSS fails to reject stationarity (capped at
+  `max_diff`). Two-row test table + three-panel figure (series + rolling mean,
+  rolling std, a dependency-free ACF) + `Decision:` sentence + audit trail;
+  series / artifact modes; JSON-safe descriptor. Underscore-free public name.
 
 ### Testing
 - `tests/test_phase7.py` - covers all four evaluation functions in both label
@@ -47,6 +55,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   classical additive + multiplicative reconstruction, period inference, the
   JSON-safe descriptor, figure rendering, immutability, idempotency and the
   guard-error paths; the STL path is skipped when statsmodels is absent.
+- `tests/test_phase8.py` (Stage 8.2) - covers `tsstat` on white-noise
+  (stationary, `d=0`) and random-walk (needs differencing) series, the
+  four-case verdict, the JSON-safe descriptor, immutability, artifact mode,
+  figure rendering and the guard-error paths; the ADF / KPSS tests are skipped
+  when statsmodels is absent.
 
 ### Dependencies
 - New **optional** extra `ts` (`statsmodels>=0.14`), lazy-imported, for the
