@@ -27,12 +27,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
     training sizes with a bias/variance verdict; learning-curve + gap panels.
     Re-fits on CV folds of subsets by design (the only Phase-7 re-fit).
   See EVALUATION_PHILOSOPHY.md.
+- **Phase 8 - `timeseries` (Stage 8.1):** `tsdecomp` - one-line trend /
+  seasonal / residual decomposition on the same contract (dense components
+  frame + four-panel figure + `Decision:` sentence + audit trail). Two input
+  modes: SERIES (`value` (+ `time`), with the seasonal `period` inferred from a
+  datetime index) and ARTIFACT (`params` from a prior call, replayed without
+  re-deciding). Classical decomposition (centred 2xm moving-average trend,
+  period-averaged seasonal, additive or multiplicative) is dependency-free;
+  `method="stl"` uses a lazy statsmodels import. Hyndman trend / seasonal
+  strengths reported; the input DataFrame is never mutated. Underscore-free
+  public name. See TIMESERIES_PHILOSOPHY.md.
 
 ### Testing
 - `tests/test_phase7.py` - covers all four evaluation functions in both label
   and artifact modes (binary + multiclass), the JSON-safe report descriptor,
   figure rendering, input-DataFrame immutability, alias identity and the
   guard-error paths, restoring the coverage gate.
+- `tests/test_phase8.py` - covers `tsdecomp` in series and artifact modes,
+  classical additive + multiplicative reconstruction, period inference, the
+  JSON-safe descriptor, figure rendering, immutability, idempotency and the
+  guard-error paths; the STL path is skipped when statsmodels is absent.
+
+### Dependencies
+- New **optional** extra `ts` (`statsmodels>=0.14`), lazy-imported, for the
+  Phase 8 STL decomposition and (upcoming) ADF / KPSS stationarity tests. The
+  base install is unchanged; `import dextra` still needs only numpy / pandas /
+  matplotlib / seaborn / scipy.
 
 
 ## [0.2.0] - 2026-06-01

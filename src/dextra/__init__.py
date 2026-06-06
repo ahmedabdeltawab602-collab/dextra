@@ -143,6 +143,7 @@ from .stats_advanced import (
     z_scores,
     zsc,
 )
+from .timeseries import tsdecomp
 
 _PHASE_LABELS = {
     "dextra.stats": "Phase 1 - EDA",
@@ -157,13 +158,15 @@ _PHASE_LABELS = {
     "dextra.selection": "Phase 5 - selection",
     "dextra.modeling": "Phase 6 - modeling",
     "dextra.evaluation": "Phase 7 - evaluation",
+    "dextra.timeseries": "Phase 8 - timeseries",
     "dextra.compat": "scikit-learn compat",
 }
 
 _PHASE_ORDER = [
     "Phase 1 - EDA", "Phase 2 - statistics", "Phase 3 - cleaning",
     "Phase 4 - features", "Phase 5 - selection", "Phase 6 - modeling",
-    "Phase 7 - evaluation", "scikit-learn compat", "other",
+    "Phase 7 - evaluation", "Phase 8 - timeseries",
+    "scikit-learn compat", "other",
 ]
 
 
@@ -241,6 +244,8 @@ __all__ = [
     # Phase 7 - evaluation
     "confusion_report", "roc_pr", "residual_analysis", "learning_curves",
     "confrep", "rocpr", "residan", "learncv",
+    # Phase 8 - timeseries
+    "tsdecomp",
     # Hardening sprint - scikit-learn compatible wrappers (dextra.compat)
     "DextraFeaturePipeline", "DextraSelectPipeline",
     "DextraRegressor", "DextraClassifier", "DextraClusterer",

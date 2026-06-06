@@ -1,12 +1,12 @@
 ﻿**********************
 Windows PowerShell transcript start
-Start time: 20260605182355
+Start time: 20260606120113
 Username: MSI\manim
 RunAs User: MSI\manim
 Configuration Name: 
 Machine: MSI (Microsoft Windows NT 10.0.26200.0)
 Host Application: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File .\run_validation.ps1
-Process ID: 28244
+Process ID: 39900
 PSVersion: 5.1.26100.8457
 PSEdition: Desktop
 PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.8457
@@ -38,8 +38,8 @@ All checks passed!
   2. Tests  --  pytest + coverage
 ========================================================
 Running the FULL suite (Phases 1-6 + consolidation + legacy)...
-................................................................................................................ [ 56%]
-........................................................................................                         [100%]
+................................................................................................................ [ 50%]
+................................................................................................................ [100%]
 ================================================== warnings summary ===================================================
 tests/test_coverage_boost.py::test_encode_methods[ordinal]
   D:\06 PythonProjects\dextra-project\src\dextra\_features_discretize.py:613: UserWarning: encode: ordinal encoding of '
@@ -83,7 +83,7 @@ __________________________________ coverage: platform win32, python 3.13.13-fina
 
 Name                                 Stmts   Miss  Cover   Missing
 ------------------------------------------------------------------
-src\dextra\__init__.py                  31      1    97%   187
+src\dextra\__init__.py                  32      1    97%   190
 src\dextra\_features_common.py          79     16    80%   45, 68, 85, 101, 103, 105, 108-109, 115, 123-127, 131, 134, 1
 41
 src\dextra\_features_derive.py         635    186    71%   52-58, 62, 70-73, 97, 194, 204-207, 215, 269-272, 285-286, 30
@@ -137,10 +137,11 @@ src\dextra\stats_advanced.py          1576    641    59%   38-39, 53, 70, 76-77,
 2054, 2058, 2064-2071, 2098, 2109-2132, 2154, 2158, 2199, 2234, 2239, 2285, 2297-2333, 2356, 2360, 2365, 2402, 2407, 241
 8-2440, 2462, 2464, 2473, 2521, 2533-2566, 2588, 2590, 2598, 2606, 2627, 2632, 2643-2660, 2692, 2695, 2730, 2736, 2739,
 2748, 2752, 2754, 2772, 2779, 2789-2812, 2845, 2848, 2858, 2860, 2892, 2903-2936
+src\dextra\timeseries.py               192     25    87%   107, 122-131, 140-143, 156, 168, 172, 212, 335-337, 416-424
 ------------------------------------------------------------------
-TOTAL                                 7419   2050    72%
-Required test coverage of 68% reached. Total coverage: 72.37%
-200 passed, 18 warnings in 65.48s (0:01:05)
+TOTAL                                 7612   2075    73%
+Required test coverage of 68% reached. Total coverage: 72.74%
+224 passed, 18 warnings in 81.98s (0:01:21)
 
 ========================================================
   3. SUMMARY
@@ -153,5 +154,5 @@ Required test coverage of 68% reached. Total coverage: 72.37%
      git add -A; git commit -m "Phase 6.1 + lint clean"; git push --set-upstream origin main
 **********************
 Windows PowerShell transcript end
-End time: 20260605182509
+End time: 20260606120250
 **********************

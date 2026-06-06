@@ -39,7 +39,7 @@
 | 5  | `selection.py`        | 5 feature-selection functions: `redundancy`, `relevance`, `importance`, `rfe`, `selectpipe` — Filter + Embedded + Wrapper families, fit/apply, leakage-safe. | ✅ Complete (5 funcs) |
 | 6  | `modeling.py`         | `regress`, `classify`, `cluster` — instant baseline models with one call. | ✅ Complete (6.1 regress + 6.2 classify + 6.3 cluster) |
 | 7  | `evaluation.py`       | `confusion_report`, `roc_pr`, `residual_analysis`, `learning_curves` — multi-metric evaluation panels. | ✅ Complete (4 funcs + 4 aliases) |
-| 8  | `timeseries.py`       | `ts_decompose`, `ts_stationarity`, `ts_quick_forecast` — time-series basics. (Optional.)| 📅 Planned |
+| 8  | `timeseries.py`       | `tsdecomp`, `tsstat`, `tsfcast` — time-series basics. (Optional.)| 🚧 In progress (8.1 `tsdecomp` ✅) |
 | 9  | `report.py`           | `eda_report(df, out="report.html")` — one-call full HTML/PDF report. | 📅 Planned |
 | 10 | `dashboard.py`        | `dx.dash(df)` — auto-generated **Streamlit dashboard** in the browser from a single line. | 📅 Planned (final goal) |
 
@@ -100,6 +100,23 @@ passing (47 + 45 + 37).**
 
 ---
 
+## Phase 8 — Time Series
+
+Blueprint: `TIMESERIES_PHILOSOPHY.md`. Split into 3 staged deliveries; each
+passes `run_validation.ps1` before the next begins. Two input modes (series /
+artifact); no look-ahead (validation on a held-out tail; differencing suggested,
+never applied); the input DataFrame is never mutated. `statsmodels` is an
+optional, lazy `ts` extra; classical decomposition and the forecast baselines
+are dependency-free. Public names are underscore-free.
+
+| Stage | Function | Family | Status |
+|-------|----------|--------|--------|
+| 8.1   | `tsdecomp` | decomposition (classical / lazy-STL) | ✅ Complete |
+| 8.2   | `tsstat`   | stationarity (ADF / KPSS, lazy statsmodels) | 📅 Planned |
+| 8.3   | `tsfcast`  | baseline forecast (naive/snaive/drift/mean) | 📅 Planned |
+
+---
+
 ## Source of truth for formulas
 
 All statistical formulas implemented in Phase 2 are matched against
@@ -150,3 +167,5 @@ auditing trivial.
 | 2026-06-01 | Consistency sprint 3: API-contract tests (exports/docstrings/standard-flags/alias-identity), sklearn conformance tests (clone/pickle/fit-self/repr), and phase-grouped `dx.functions()`. Coverage gate raised to 68%. |
 | 2026-06-05 | EVALUATION_PHILOSOPHY.md authored as Phase 7 blueprint (two-input-mode contract: label / artifact; return shape inherits Phase-6 §4.7). |
 | 2026-06-05 | Phase 7 delivered: `evaluation.py` — confusion_report / roc_pr / residual_analysis / learning_curves (+ confrep / rocpr / residan / learncv). Consumes the Phase-6 hybrid artifact or raw labels/scores; multi-panel diagnostics; JSON-safe report descriptor. **Phase 7 complete: 4/4 evaluation functions.** |
+| 2026-06-06 | TIMESERIES_PHILOSOPHY.md authored as Phase 8 blueprint (two-input-mode contract: series / artifact; no look-ahead; return shape inherits §4.7). `statsmodels` approved as an optional, lazy `ts` extra. |
+| 2026-06-06 | Phase 8 Stage 8.1 delivered: `tsdecomp` — classical (dependency-free) + lazy-STL decomposition, additive/multiplicative, period inference, Hyndman strengths, series/artifact modes; `tests/test_phase8.py` (24 tests). 224 tests green, coverage 72.74% (timeseries.py 87%). Public names underscore-free (`tsdecomp`/`tsstat`/`tsfcast`). |
