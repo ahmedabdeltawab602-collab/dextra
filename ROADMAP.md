@@ -39,7 +39,7 @@
 | 5  | `selection.py`        | 5 feature-selection functions: `redundancy`, `relevance`, `importance`, `rfe`, `selectpipe` — Filter + Embedded + Wrapper families, fit/apply, leakage-safe. | ✅ Complete (5 funcs) |
 | 6  | `modeling.py`         | `regress`, `classify`, `cluster` — instant baseline models with one call. | ✅ Complete (6.1 regress + 6.2 classify + 6.3 cluster) |
 | 7  | `evaluation.py`       | `confusion_report`, `roc_pr`, `residual_analysis`, `learning_curves` — multi-metric evaluation panels. | ✅ Complete (4 funcs + 4 aliases) |
-| 8  | `timeseries.py`       | `tsdecomp`, `tsstat`, `tsfcast` — time-series basics. (Optional.)| 🚧 In progress (8.1 `tsdecomp` + 8.2 `tsstat` ✅) |
+| 8  | `timeseries.py`       | `tsdecomp`, `tsstat`, `tsfcast` — time-series basics. (Optional.)| ✅ Complete (3 funcs) |
 | 9  | `report.py`           | `eda_report(df, out="report.html")` — one-call full HTML/PDF report. | 📅 Planned |
 | 10 | `dashboard.py`        | `dx.dash(df)` — auto-generated **Streamlit dashboard** in the browser from a single line. | 📅 Planned (final goal) |
 
@@ -113,7 +113,7 @@ are dependency-free. Public names are underscore-free.
 |-------|----------|--------|--------|
 | 8.1   | `tsdecomp` | decomposition (classical / lazy-STL) | ✅ Complete |
 | 8.2   | `tsstat`   | stationarity (ADF / KPSS, lazy statsmodels) | ✅ Complete |
-| 8.3   | `tsfcast`  | baseline forecast (naive/snaive/drift/mean) | 📅 Planned |
+| 8.3   | `tsfcast`  | baseline forecast (naive/snaive/drift/mean) | ✅ Complete |
 
 ---
 
@@ -170,3 +170,4 @@ auditing trivial.
 | 2026-06-06 | TIMESERIES_PHILOSOPHY.md authored as Phase 8 blueprint (two-input-mode contract: series / artifact; no look-ahead; return shape inherits §4.7). `statsmodels` approved as an optional, lazy `ts` extra. |
 | 2026-06-06 | Phase 8 Stage 8.1 delivered: `tsdecomp` — classical (dependency-free) + lazy-STL decomposition, additive/multiplicative, period inference, Hyndman strengths, series/artifact modes; `tests/test_phase8.py` (24 tests). 224 tests green, coverage 72.74% (timeseries.py 87%). Public names underscore-free (`tsdecomp`/`tsstat`/`tsfcast`). |
 | 2026-06-06 | Phase 8 Stage 8.2 delivered: `tsstat` — ADF + KPSS via lazy statsmodels, four-case verdict, suggested differencing `d` by iterative differencing until ADF rejects a unit root AND KPSS fails to reject stationarity (capped at `max_diff`), dependency-free ACF panel; series/artifact modes; 15 new tests. |
+| 2026-06-06 | Phase 8 Stage 8.3 delivered: `tsfcast` — naive/snaive/drift/mean baselines + `compare`, validated on a held-out tail (no look-ahead), MASE/RMSE/MAE/MAPE, ~95% band, forward forecast on a continued datetime/integer index; `method='auto'` (snaive if seasonal else naive); dependency-free; 21 new tests. **Phase 8 complete: 3/3 time-series functions, 60 Phase-8 tests.** |

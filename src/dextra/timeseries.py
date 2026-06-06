@@ -755,3 +755,351 @@ def _plot_stationarity(index, y, vname, n, period, fig_width, fig_height, dpi):
     axes[2].set_xlabel("lag")
     axes[2].grid(True, alpha=0.3)
     return fig
+
+
+# ===========================================================================
+# 8.3  tsfcast  --  validated baseline forecast (naive/snaive/drift/mean)
+# ===========================================================================
+
+_FC_METHODS = ("naive", "snaive", "drift", "mean")
+
+
+def _baseline_forecast(train, steps, method, m):
+    """Forecast ``steps`` ahead from ``train`` with one baseline. No look-ahead."""
+    train = np.asarray(train, dtype=float)
+    last = float(train[-1])
+    if method == "naive":
+        return np.full(steps, last)
+    if method == "mean":
+        return np.full(steps, float(train.mean()))
+    if method == "drift":
+        if len(train) < 2:
+            return np.full(steps, last)
+        slope = (train[-1] - train[0]) / (len(train) - 1)
+        return last + slope * np.arange(1, steps + 1)
+    if method == "snaive":
+        if not m or m < 2 or len(train) < m:
+            raise ValueError(
+                "tsfcast: snaive needs a seasonal period (>=2) and at least "
+                "one full season of history.")
+        season = train[-m:]
+        return season[np.arange(steps) % m]
+    raise ValueError(f"tsfcast: unknown method {method!r}.")
+
+
+def _mase_scale(train, m):
+    """In-sample seasonal-naive mean absolute error (the MASE denominator)."""
+    train = np.asarray(train, dtype=float)
+    mm = m if (m and m >= 2 and len(train) > m) else 1
+    diffs = np.abs(train[mm:] - train[:-mm])
+    scale = float(diffs.mean()) if len(diffs) else 0.0
+    if scale > 0:
+        return scale
+    d1 = np.abs(np.diff(train))
+    alt = float(d1.mean()) if len(d1) else 0.0
+    return alt if alt > 0 else 1.0
+
+
+def _fc_metrics(actual, pred, scale):
+    """MASE / RMSE / MAE / MAPE for a validation window."""
+    actual = np.asarray(actual, dtype=float)
+    pred = np.asarray(pred, dtype=float)
+    err = actual - pred
+    mae = float(np.mean(np.abs(err)))
+    rmse = float(np.sqrt(np.mean(err ** 2)))
+    nz = actual != 0
+    mape = (float(np.mean(np.abs(err[nz] / actual[nz])) * 100.0)
+            if nz.any() else float("nan"))
+    mase = float(mae / scale) if scale > 0 else float("nan")
+    return {"MASE": mase, "RMSE": rmse, "MAE": mae, "MAPE": mape}
+
+
+def _future_index(tidx, n, horizon):
+    """Continue a datetime index by its frequency, else an integer range."""
+    if tidx is not None and len(tidx) >= 3 and not tidx.isna().any():
+        freq = tidx.freqstr or pd.infer_freq(tidx)
+        if freq:
+            return pd.date_range(start=tidx[-1], periods=horizon + 1,
+                                 freq=freq)[1:]
+    return pd.RangeIndex(n, n + horizon)
+
+
+def tsfcast(
+    df: pd.DataFrame,
+    value=None,
+    *,
+    time=None,
+    horizon: int = 12,
+    valid: Optional[int] = None,
+    period: Optional[int] = None,
+    method: str = "auto",
+    params: Optional[dict] = None,
+    return_params: bool = False,
+    show: bool = True,
+    plot: bool = True,
+    return_df: bool = True,
+    return_fig: bool = False,
+    decimals: int = 4,
+    df_name: Optional[str] = None,
+    fig_width: float = 13.0,
+    fig_height: float = 5.6,
+    dpi: int = 110,
+):
+    """Baseline forecast for a series, validated on a held-out tail, in one line.
+
+    Trains a simple baseline on every observation *before* the last ``valid``
+    points, scores it on that untouched tail (no look-ahead), then re-fits on the
+    full series to project ``horizon`` steps ahead. Baselines: ``naive`` (last
+    value), ``snaive`` (last season), ``drift`` (last value + average slope),
+    ``mean``. ``method="auto"`` picks ``snaive`` when a seasonal period is
+    available else ``naive``. ``method="compare"`` ranks every baseline on the
+    validation window (by MASE) and writes no artifact.
+
+    Two input modes: SERIES (``value`` (+ ``time``)) and ARTIFACT (``params``
+    from a prior call -- settings are replayed on the new data). Dependency-free.
+
+    Parameters
+    ----------
+    df : pandas.DataFrame
+        The data holding the series. Never mutated.
+    value : str or array-like, optional
+        The observed series. Required in series mode.
+    time : str or array-like, optional
+        A datetime column / values for ordering, the x-axis and the future index.
+    horizon : int
+        Number of steps to forecast ahead.
+    valid : int, optional
+        Length of the held-out validation tail (defaults to ``horizon``).
+    period : int, optional
+        Seasonal period for ``snaive`` / MASE; inferred from ``time`` when omitted.
+    method : {"auto", "naive", "snaive", "drift", "mean", "compare"}
+        The baseline (or ``compare`` to rank them all).
+    params, return_params, show, plot, return_df, return_fig, decimals, df_name :
+        see the dextra standard flags.
+    fig_width, fig_height, dpi : figure geometry.
+
+    Returns
+    -------
+    pandas.DataFrame
+        For a named method: a forward-forecast frame (``forecast`` / ``lower`` /
+        ``upper``) indexed by the future periods. For ``compare``: the validation
+        leaderboard (one row per baseline). Plus the descriptor / figure when
+        requested.
+
+    Examples
+    --------
+    >>> dx.tsfcast(df, value='sales', time='month', horizon=12)
+    >>> dx.tsfcast(df, value='sales', method='compare')        # leaderboard
+    >>> fc, p = dx.tsfcast(df, value='sales', method='drift', return_params=True)
+    >>> dx.tsfcast(df_new, params=p)                           # artifact mode
+    """
+    df = _ensure_pandas(df)
+    if df_name is None:
+        df_name = get_variable_name(df, depth=2)
+
+    mode = "artifact" if params is not None else "series"
+    if mode == "artifact":
+        if not isinstance(params, dict):
+            raise ValueError(
+                f"tsfcast: params must be a dextra descriptor dict, "
+                f"got {type(params).__name__}.")
+        value = params.get("value", value)
+        time = params.get("time", time)
+        method = params.get("method", method)
+        meta = params.get("metadata", {})
+        horizon = meta.get("horizon", horizon)
+        valid = meta.get("valid", valid)
+        period = meta.get("period", period)
+
+    method = str(method).lower()
+    allowed = ("auto", "compare") + _FC_METHODS
+    if method not in allowed:
+        raise ValueError(
+            f"tsfcast: method must be one of {allowed}, got {method!r}.")
+    horizon = int(horizon)
+    if horizon < 1:
+        raise ValueError(f"tsfcast: horizon must be >= 1, got {horizon}.")
+    if method == "compare" and return_params:
+        raise ValueError(
+            "tsfcast: method='compare' ranks baselines and writes no artifact; "
+            "drop return_params or pick a single method.")
+
+    vname, s = _resolve_series(df, value, "tsfcast")
+    tname, tidx = _resolve_time(df, time, "tsfcast")
+
+    y = s.to_numpy(dtype=float)
+    n = len(y)
+    if tidx is not None and not tidx.isna().any():
+        if not tidx.is_monotonic_increasing:
+            order = np.argsort(tidx.values, kind="stable")
+            y = y[order]
+            tidx = tidx[order]
+    result_index = tidx if tidx is not None else pd.RangeIndex(n)
+
+    if np.isnan(y).any():
+        raise ValueError(
+            "tsfcast: the series has missing values; clean it first "
+            "(e.g. dx.handle_missing) before forecasting.")
+    if period is None:
+        period = _infer_period(tidx)
+    period = int(period) if period else None
+
+    valid = int(valid) if valid is not None else int(horizon)
+    if valid < 1:
+        raise ValueError(f"tsfcast: valid must be >= 1, got {valid}.")
+    if n - valid < 2:
+        raise ValueError(
+            f"tsfcast: not enough history -- n={n}, valid={valid} leaves "
+            f"{n - valid} training points (need >= 2). Lower valid.")
+
+    resolved = method
+    if method == "auto":
+        resolved = "snaive" if (period and period >= 2 and
+                                n - valid >= period) else "naive"
+
+    train = y[:n - valid]
+    actual = y[n - valid:]
+    scale = _mase_scale(train, period)
+
+    # ---- compare: rank every baseline on the validation tail, write nothing --
+    if method == "compare":
+        cands = ["naive", "drift", "mean"]
+        if period and period >= 2 and len(train) >= period:
+            cands.insert(1, "snaive")
+        rows = {}
+        val_preds = {}
+        for cand in cands:
+            vp = _baseline_forecast(train, valid, cand, period)
+            val_preds[cand] = vp
+            rows[cand] = _fc_metrics(actual, vp, scale)
+        board = pd.DataFrame(rows).T[["MASE", "RMSE", "MAE", "MAPE"]]
+        board = board.sort_values(
+            by=["MASE", "RMSE"], ascending=True, na_position="last")
+        best = str(board.index[0])
+        decision = (
+            f"{n} obs: compared {len(cands)} baselines on the last {valid} pts; "
+            f"best by MASE = '{best}' (MASE="
+            f"{_fmt_metric(board.loc[best, 'MASE'], decimals)}). Re-run "
+            f"tsfcast(method='{best}') to forecast (mode={mode}).")
+        out = df.copy()
+        out.attrs = dict(df.attrs)
+        _append_audit(out, {
+            "stage": "timeseries", "function": "tsfcast",
+            "timestamp": _now_iso(), "mode": mode,
+            "params": {"value": vname, "time": tname, "compare": cands,
+                       "valid": valid, "period": period},
+            "decision": decision})
+        if show:
+            _print_header(f"Forecast comparison for: {df_name}  "
+                          f"(value={vname}, mode={mode})")
+            _display(_fmt_table(board, decimals))
+            print(f"\nDecision: {decision}\n")
+        fig = None
+        if plot:
+            fig = _plot_compare(result_index, y, actual, val_preds, board,
+                                vname, valid, fig_width, fig_height, dpi)
+        _finalize_figure(fig, return_fig)
+        return _ret_pack(board, None, fig, return_df, False, return_fig)
+
+    # ---- named method: validate on the tail, refit on full, forecast ahead ---
+    val_pred = _baseline_forecast(train, valid, resolved, period)
+    vmetrics = _fc_metrics(actual, val_pred, scale)
+    fc = _baseline_forecast(y, horizon, resolved, period)
+    band = 1.96 * vmetrics["RMSE"]
+    fut_index = _future_index(tidx, n, horizon)
+    forecast = pd.DataFrame(
+        {"forecast": fc, "lower": fc - band, "upper": fc + band},
+        index=fut_index)
+
+    report = {
+        "function": "tsfcast",
+        "task": "timeseries",
+        "value": vname,
+        "time": tname,
+        "method": resolved,
+        "metrics": {"validation": {k: _json_safe_num(v)
+                                   for k, v in vmetrics.items()}},
+        "metadata": {"n": int(n), "input_mode": mode, "method_requested": method,
+                     "horizon": int(horizon), "valid": int(valid),
+                     "period": period, "freq": _freq_string(tidx)},
+        "version": __version__,
+        "analyzed_at": _now_iso(),
+    }
+    decision = (
+        f"{n} obs, method={resolved}"
+        f"{' (auto)' if method == 'auto' else ''}: validation "
+        f"MASE={_fmt_metric(vmetrics['MASE'], decimals)}, "
+        f"RMSE={_fmt_metric(vmetrics['RMSE'], decimals)} on the last {valid} "
+        f"pts; forecasting {horizon} steps ahead (mode={mode}).")
+
+    out = df.copy()
+    out.attrs = dict(df.attrs)
+    _append_audit(out, {
+        "stage": "timeseries", "function": "tsfcast",
+        "timestamp": report["analyzed_at"], "mode": mode,
+        "params": {"value": vname, "time": tname, "method": resolved,
+                   "horizon": int(horizon), "valid": int(valid),
+                   "period": period},
+        "decision": decision})
+
+    if show:
+        _print_header(f"Forecast for: {df_name}  "
+                      f"(value={vname}, method={resolved}, mode={mode})")
+        _display(_fmt_table(pd.DataFrame({"validation": vmetrics}), decimals))
+        print(f"\nDecision: {decision}\n")
+
+    fig = None
+    if plot:
+        fig = _plot_forecast(result_index, y, actual, val_pred, forecast,
+                             vname, resolved, valid, fig_width, fig_height, dpi)
+    _finalize_figure(fig, return_fig)
+    return _ret_pack(forecast, report, fig, return_df, return_params, return_fig)
+
+
+def _plot_forecast(index, y, actual, val_pred, forecast, vname, method, valid,
+                   fig_width, fig_height, dpi):
+    """Two panels: full history + forward forecast, and the validation window."""
+    fig, axes = plt.subplots(1, 2, figsize=(fig_width, fig_height), dpi=dpi)
+    fig.suptitle(f"Baseline forecast -- {vname} ({method})", fontsize=13,
+                 fontweight="bold")
+    axes[0].plot(index, y, color="#1f4e79", linewidth=1.2, label="observed")
+    axes[0].plot(forecast.index, forecast["forecast"], color="#c0504d",
+                 linewidth=1.8, linestyle="--", label="forecast")
+    axes[0].fill_between(forecast.index, forecast["lower"], forecast["upper"],
+                         color="#c0504d", alpha=0.18, label="~95% band")
+    axes[0].set_title("History & forward forecast")
+    axes[0].legend(fontsize=8)
+    axes[0].grid(True, alpha=0.3)
+    vx = index[len(index) - valid:]
+    axes[1].plot(vx, actual, color="#1f4e79", marker="o", markersize=3,
+                 linewidth=1.2, label="actual")
+    axes[1].plot(vx, val_pred, color="#c0504d", marker="x", markersize=4,
+                 linewidth=1.4, linestyle="--", label="predicted")
+    axes[1].set_title(f"Validation window (last {valid})")
+    axes[1].legend(fontsize=8)
+    axes[1].grid(True, alpha=0.3)
+    return fig
+
+
+def _plot_compare(index, y, actual, val_preds, board, vname, valid, fig_width,
+                  fig_height, dpi):
+    """Two panels: validation actual vs each baseline, and a MASE bar chart."""
+    fig, axes = plt.subplots(1, 2, figsize=(fig_width, fig_height), dpi=dpi)
+    fig.suptitle(f"Baseline comparison -- {vname}", fontsize=13,
+                 fontweight="bold")
+    vx = index[len(index) - valid:]
+    axes[0].plot(vx, actual, color="black", marker="o", markersize=3,
+                 linewidth=1.6, label="actual")
+    for cand, vp in val_preds.items():
+        axes[0].plot(vx, vp, linewidth=1.2, linestyle="--", label=cand)
+    axes[0].set_title(f"Validation window (last {valid})")
+    axes[0].legend(fontsize=8)
+    axes[0].grid(True, alpha=0.3)
+    names = list(board.index)
+    mase = board["MASE"].to_numpy(dtype=float)
+    axes[1].barh(names, mase, color="#4c72b0")
+    axes[1].invert_yaxis()
+    axes[1].set_xlabel("MASE (lower is better)")
+    axes[1].set_title("Leaderboard")
+    axes[1].grid(True, axis="x", alpha=0.3)
+    return fig

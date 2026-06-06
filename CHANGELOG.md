@@ -45,6 +45,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   `max_diff`). Two-row test table + three-panel figure (series + rolling mean,
   rolling std, a dependency-free ACF) + `Decision:` sentence + audit trail;
   series / artifact modes; JSON-safe descriptor. Underscore-free public name.
+- **Phase 8 - `timeseries` (Stage 8.3):** `tsfcast` - one-line baseline
+  forecast. Trains `naive` / `snaive` / `drift` / `mean` on every point before a
+  held-out tail, scores on that tail (MASE / RMSE / MAE / MAPE; no look-ahead),
+  then re-fits on the full series to project `horizon` steps with an approximate
+  95% band. `method='auto'` picks seasonal-naive when a period is available else
+  naive; `method='compare'` ranks every baseline by MASE and writes no artifact.
+  Two-panel figure, series / artifact modes, JSON-safe descriptor, dependency-
+  free. **Phase 8 complete: 3/3 time-series functions.**
 
 ### Testing
 - `tests/test_phase7.py` - covers all four evaluation functions in both label
@@ -60,6 +68,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   four-case verdict, the JSON-safe descriptor, immutability, artifact mode,
   figure rendering and the guard-error paths; the ADF / KPSS tests are skipped
   when statsmodels is absent.
+- `tests/test_phase8.py` (Stage 8.3) - covers `tsfcast` baselines (exact
+  naive / snaive / drift / mean forecasts), `auto` resolution, the held-out
+  validation metrics, the `compare` leaderboard (and its no-artifact rule), the
+  forward datetime / integer index, immutability, artifact mode, figure
+  rendering and the guard-error paths. 60 Phase-8 tests in total.
 
 ### Dependencies
 - New **optional** extra `ts` (`statsmodels>=0.14`), lazy-imported, for the

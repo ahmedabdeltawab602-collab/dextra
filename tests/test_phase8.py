@@ -1,11 +1,11 @@
 """dextra Phase 8 -- time series (tsdecomp / tsstat / tsfcast).
 
-Stage 8.1 covers tsdecomp; Stage 8.2 covers tsstat (ADF/KPSS): both input modes (series and artifact), classical
-additive + multiplicative decomposition, period inference, the JSON-safe
-descriptor (no estimator), figure rendering, immutability of the input
-DataFrame, and the guard-error paths. The classical path is
-dependency-free (numpy / pandas / matplotlib); the STL path is skipped if
-statsmodels is absent.
+Covers tsdecomp (8.1), tsstat (8.2) and tsfcast (8.3) across both input modes
+(series and artifact): decomposition reconstruction and strengths; ADF/KPSS
+stationarity with suggested differencing; baseline forecasting validated on a
+held-out tail. Each checks the JSON-safe descriptor, figure rendering,
+immutability and the guard-error paths. Dependency-free paths run everywhere;
+the STL and ADF/KPSS paths are skipped when statsmodels is absent.
 """
 from __future__ import annotations
 
@@ -372,3 +372,154 @@ def test_tsstat_missing_values_rejected():
     df = pd.DataFrame({"x": arr})
     with pytest.raises(ValueError):
         dx.tsstat(df, value="x", **KW)
+
+
+# ===========================================================================
+# 8.3  tsfcast  --  baseline forecast (dependency-free)
+# ===========================================================================
+
+def test_tsfcast_exports_no_underscore():
+    assert callable(dx.tsfcast)
+    assert not hasattr(dx, "ts_quick_forecast")   # underscore-free names only
+
+
+def test_tsfcast_auto_picks_snaive_when_seasonal(ts_df):
+    fc, rep = dx.tsfcast(ts_df, value="sales", horizon=12,
+                         return_params=True, **KW)
+    assert rep["method"] == "snaive"
+    assert rep["metadata"]["method_requested"] == "auto"
+    assert list(fc.columns) == ["forecast", "lower", "upper"]
+    assert len(fc) == 12
+    assert (fc["upper"] >= fc["lower"]).all()
+
+
+def test_tsfcast_auto_picks_naive_without_season():
+    df = pd.DataFrame({"x": np.cumsum(np.random.default_rng(1).normal(0, 1, 50))})
+    fc, rep = dx.tsfcast(df, value="x", horizon=4, return_params=True, **KW)
+    assert rep["method"] == "naive"
+    assert isinstance(fc.index, pd.RangeIndex)
+
+
+def test_tsfcast_snaive_repeats_last_season(ts_df):
+    fc = dx.tsfcast(ts_df, value="sales", method="snaive", horizon=12, **KW)
+    assert np.allclose(fc["forecast"].to_numpy(),
+                       ts_df["sales"].to_numpy()[-12:])
+
+
+def test_tsfcast_naive_mean_drift_formulas(ts_df):
+    y = ts_df["sales"].to_numpy()
+    n = len(y)
+    assert np.allclose(dx.tsfcast(ts_df, value="sales", method="naive",
+                                  horizon=3, **KW)["forecast"], y[-1])
+    assert np.allclose(dx.tsfcast(ts_df, value="sales", method="mean",
+                                  horizon=3, **KW)["forecast"], y.mean())
+    slope = (y[-1] - y[0]) / (n - 1)
+    fd = dx.tsfcast(ts_df, value="sales", method="drift", horizon=2, **KW)
+    assert np.allclose(fd["forecast"].to_numpy(), y[-1] + slope * np.array([1, 2]))
+
+
+def test_tsfcast_future_datetime_index(ts_df):
+    fc = dx.tsfcast(ts_df, value="sales", method="naive", horizon=3, **KW)
+    assert isinstance(fc.index, pd.DatetimeIndex)
+    assert fc.index[0] == ts_df.index[-1] + pd.offsets.MonthBegin(1)
+
+
+def test_tsfcast_descriptor_json_safe(ts_df):
+    fc, rep = dx.tsfcast(ts_df, value="sales", method="drift",
+                         return_params=True, **KW)
+    assert rep["function"] == "tsfcast"
+    assert rep["task"] == "timeseries"
+    assert "estimator" not in rep
+    _json_ok(rep)
+    assert set(rep["metrics"]["validation"]) == {"MASE", "RMSE", "MAE", "MAPE"}
+
+
+def test_tsfcast_does_not_mutate_input(ts_df):
+    before = ts_df.copy(deep=True)
+    dx.tsfcast(ts_df, value="sales", method="drift", **KW)
+    pd.testing.assert_frame_equal(ts_df, before)
+    assert "dextra_audit" not in ts_df.attrs
+
+
+def test_tsfcast_artifact_mode_reproduces(ts_df):
+    f1, rep = dx.tsfcast(ts_df, value="sales", method="drift", horizon=5,
+                         return_params=True, **KW)
+    f2 = dx.tsfcast(ts_df, params=rep, **KW)
+    pd.testing.assert_frame_equal(f1, f2)
+
+
+def test_tsfcast_compare_leaderboard(ts_df):
+    board = dx.tsfcast(ts_df, value="sales", method="compare", **KW)
+    assert list(board.columns) == ["MASE", "RMSE", "MAE", "MAPE"]
+    assert "snaive" in board.index
+    assert board["MASE"].is_monotonic_increasing      # sorted best-first
+
+
+def test_tsfcast_compare_rejects_return_params(ts_df):
+    with pytest.raises(ValueError):
+        dx.tsfcast(ts_df, value="sales", method="compare",
+                   return_params=True, **KW)
+
+
+def test_tsfcast_return_fig_two_panels(ts_df):
+    fc, rep, fig = dx.tsfcast(ts_df, value="sales", method="drift",
+                              return_params=True, return_fig=True,
+                              show=False, plot=True)
+    assert fig is not None
+    assert len(fig.axes) == 2
+    import matplotlib.pyplot as plt
+    plt.close(fig)
+
+
+def test_tsfcast_compare_fig_two_panels(ts_df):
+    board, fig = dx.tsfcast(ts_df, value="sales", method="compare",
+                            return_fig=True, show=False, plot=True)
+    assert len(fig.axes) == 2
+    import matplotlib.pyplot as plt
+    plt.close(fig)
+
+
+def test_tsfcast_bad_method(ts_df):
+    with pytest.raises(ValueError):
+        dx.tsfcast(ts_df, value="sales", method="bad", **KW)
+
+
+def test_tsfcast_bad_horizon(ts_df):
+    with pytest.raises(ValueError):
+        dx.tsfcast(ts_df, value="sales", horizon=0, **KW)
+
+
+def test_tsfcast_bad_valid(ts_df):
+    with pytest.raises(ValueError):
+        dx.tsfcast(ts_df, value="sales", valid=0, **KW)
+
+
+def test_tsfcast_not_enough_history():
+    df = pd.DataFrame({"x": np.arange(3.0)})
+    with pytest.raises(ValueError):
+        dx.tsfcast(df, value="x", valid=2, **KW)
+
+
+def test_tsfcast_requires_value(ts_df):
+    with pytest.raises(ValueError):
+        dx.tsfcast(ts_df, **KW)
+
+
+def test_tsfcast_value_not_found(ts_df):
+    with pytest.raises(KeyError):
+        dx.tsfcast(ts_df, value="missing", **KW)
+
+
+def test_tsfcast_snaive_without_period_errors():
+    df = pd.DataFrame({"x": np.cumsum(np.random.default_rng(2).normal(0, 1, 40))})
+    with pytest.raises(ValueError):
+        dx.tsfcast(df, value="x", method="snaive", **KW)
+
+
+def test_tsfcast_missing_values_rejected(ts_df):
+    df = ts_df.copy()
+    arr = df["sales"].to_numpy().copy()
+    arr[4] = np.nan
+    df["sales"] = arr
+    with pytest.raises(ValueError):
+        dx.tsfcast(df, value="sales", **KW)

@@ -261,3 +261,4 @@ Any function violating any of these is rewritten before shipping.
 | Date       | Note                                                          |
 |------------|----------------------------------------------------------------|
 | 2026-06-06 | Document created as Phase 8 blueprint. 3 functions confirmed: tsdecomp / tsstat / tsfcast. Two-input-mode contract (series / artifact) locked; return shape inherits §4.7. `statsmodels` approved as an optional, lazy `ts` extra (ADF/KPSS + STL); classical decomposition and all forecast baselines stay dependency-free. |
+| 2026-06-06 | Phase 8 delivered: `tsdecomp` (classical / lazy-STL decomposition), `tsstat` (ADF/KPSS + iterative suggested differencing), `tsfcast` (naive/snaive/drift/mean baselines + compare, tail-validated, no look-ahead). Underscore-free names; 60 tests. |
