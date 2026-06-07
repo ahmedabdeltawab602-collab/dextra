@@ -513,3 +513,124 @@ def test_json_na_values_and_max_rows(tmp_path):
     df = dx.load(src, na_values=["NA"], max_rows=3, show=False)
     assert df.shape == (3, 1)
     assert df["a"].isna().iloc[1]
+
+
+# --------------------------------------------------------------------------- #
+# Phase 11.3b - safe SQL (parametrised only, read-only files, row guard)
+# --------------------------------------------------------------------------- #
+
+def _make_db(tmp_path, n=30):
+    import sqlite3
+    p = str(tmp_path / "app.db")
+    conn = sqlite3.connect(p)
+    conn.execute("CREATE TABLE t (id INTEGER, name TEXT, price REAL, d TEXT)")
+    conn.executemany(
+        "INSERT INTO t VALUES (?,?,?,?)",
+        [(i, f"n{i}", i * 1.5, f"2024-01-{(i % 28) + 1:02d}") for i in range(n)])
+    conn.commit()
+    conn.close()
+    return p
+
+
+def test_sql_path_named_params_and_types(tmp_path):
+    db = _make_db(tmp_path)
+    with warnings.catch_warnings():
+        warnings.simplefilter("error")  # clean parametrised query -> quiet
+        df, plan = dx.load(db, sql="SELECT * FROM t WHERE id < :k",
+                           sql_params={"k": 5}, return_params=True, show=False)
+    assert df.shape == (5, 4)
+    assert df["id"].dtype.kind == "i" and df["price"].dtype.kind == "f"
+    assert str(df["d"].dtype).startswith("datetime")
+    assert plan["source"]["kind"] == "sql"
+    assert plan["parse"]["read_only"] is True
+    json.dumps(plan)
+
+
+def test_sql_file_opened_read_only(tmp_path):
+    from dextra._loader import DextraLoaderError
+    db = _make_db(tmp_path)
+    with pytest.raises(DextraLoaderError,
+                       match="(?i)readonly|result set"):
+        dx.load(db, sql="DELETE FROM t", show=False)
+
+
+def test_sql_stacked_statements_refused(tmp_path):
+    from dextra._loader import DextraLoaderError
+    db = _make_db(tmp_path)
+    with pytest.raises(DextraLoaderError, match="one SQL statement"):
+        dx.load(db, sql="SELECT * FROM t; DROP TABLE t", show=False)
+
+
+def test_sql_db_without_sql_clear_error(tmp_path):
+    from dextra._loader import DextraLoaderError
+    db = _make_db(tmp_path)
+    with pytest.raises(DextraLoaderError, match="sql="):
+        dx.load(db, show=False)
+
+
+def test_sql_params_bound_as_literals_no_injection(tmp_path):
+    db = _make_db(tmp_path)
+    df = dx.load(db, sql="SELECT * FROM t WHERE name = :v",
+                 sql_params={"v": "x'; DROP TABLE t; --"}, show=False)
+    assert df.shape[0] == 0                      # literal, not interpolated
+    assert dx.load(db, sql="SELECT * FROM t",    # table still alive
+                   show=False).shape[0] == 30
+
+
+def test_sql_row_guard_user_cap_disclosed(tmp_path):
+    db = _make_db(tmp_path)
+    df, plan = dx.load(db, sql="SELECT * FROM t", max_rows=10,
+                       return_params=True, show=False)
+    assert df.shape == (10, 4)
+    assert any(p["kind"] == "row_guard" for p in plan["problems"])
+    assert plan["decisions"]["row_guard"]["confidence"] == "confirmed"
+
+
+def test_sql_replay_plan(tmp_path):
+    db = _make_db(tmp_path)
+    df, plan = dx.load(db, sql="SELECT id, name FROM t WHERE id < :k",
+                       sql_params={"k": 7}, return_params=True, show=False)
+    df2 = dx.load(db, params=plan, show=False)
+    pd.testing.assert_frame_equal(df2, df)
+
+
+def test_sql_live_connection_read_only_disclosed(tmp_path):
+    import sqlite3
+    db = _make_db(tmp_path)
+    conn = sqlite3.connect(db)
+    try:
+        df, plan = dx.load(conn, sql="SELECT id FROM t", return_params=True,
+                           show=False)
+    finally:
+        conn.close()
+    assert df.shape == (30, 1)
+    assert plan["parse"]["read_only"] is False
+    assert "not enforced" in plan["decisions"]["read_only"]["reason"]
+
+
+def test_sql_bad_query_clear_error(tmp_path):
+    from dextra._loader import DextraLoaderError
+    db = _make_db(tmp_path)
+    with pytest.raises(DextraLoaderError, match="SQL execution failed"):
+        dx.load(db, sql="SELECT * FROM no_such_table", show=False)
+
+
+def test_sql_non_db_source_with_sql_clear_error(tmp_path):
+    from dextra._loader import DextraLoaderError
+    src = _write(tmp_path, "x.csv", "a,b\n1,2\n")
+    with pytest.raises(DextraLoaderError, match="SQLite file"):
+        dx.load(src, sql="SELECT 1", show=False)
+
+
+def test_sql_peek_caps_rows(tmp_path):
+    db = _make_db(tmp_path)
+    plan = dx.peek(db, sql="SELECT * FROM t", show=False)
+    assert plan["source"]["kind"] == "sql"
+    assert plan["metadata"]["n_rows"] <= 10
+
+
+def test_sql_audit_entry(tmp_path):
+    db = _make_db(tmp_path)
+    df = dx.load(db, sql="SELECT * FROM t WHERE id < 3", show=False)
+    audit = df.attrs.get("dextra_audit", [])
+    assert audit and audit[-1]["params"]["source"]["kind"] == "sql"

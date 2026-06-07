@@ -5,7 +5,10 @@ delimited text (csv/tsv) plus a typed pass-through for in-memory frames;
 stage 11.2 adds Excel (xlsx/xlsm via openpyxl, lazily): sheet listing and
 selection, data-block detection, multi-row headers, values-not-formulas;
 stage 11.3a adds parquet (typed pass-through via a lazy engine) and
-JSON/NDJSON (records array / one-object-per-line, nested values disclosed).
+JSON/NDJSON (records array / one-object-per-line, nested values disclosed);
+stage 11.3b adds safe SQL: parametrised statements only (one statement,
+values bound via ``sql_params=``), SQLite files opened read-only, and a
+default row guard against runaway result sets.
 
 Governing principle: *transparency scales with uncertainty*. Confident parses
 load in one line and are fully disclosed; ambiguous decisions are flagged and,
@@ -71,6 +74,8 @@ _EXCEL_EXT = {".xlsx", ".xlsm"}
 _XLS_EXT = {".xls"}
 _PARQUET_EXT = {".parquet", ".pq"}
 _JSON_EXT = {".json", ".jsonl", ".ndjson"}
+_SQLITE_EXT = {".db", ".sqlite", ".sqlite3"}
+_SQL_ROW_GUARD = 1_000_000  # default row guard for SQL results
 _BOOL_TOKENS = {"true", "false", "yes", "no", "y", "n", "t", "f", "1", "0"}
 _TRUE_TOKENS = {"true", "yes", "y", "t", "1"}
 _HIGH_RISK_RE = re.compile(r"(^id$|_id$|^key$|key$|target|label|^y$)", re.IGNORECASE)
@@ -374,6 +379,11 @@ def _report_frame(plan: dict, df: pd.DataFrame) -> pd.DataFrame:
 def _banner(plan: dict) -> str:
     d = plan["decisions"]
     src = plan["source"]
+    if src.get("kind") == "sql":
+        ro = d.get("read_only", {}).get("value")
+        return (f"source={src['name']} | kind=sql | "
+                f"read_only={bool(ro)} | "
+                f"{plan['metadata']['n_rows']:,}x{plan['metadata']['n_cols']}")
     if src.get("kind") in ("parquet", "json"):
         extra = ""
         if src["kind"] == "json":
@@ -417,7 +427,10 @@ def _decision_sentence(plan: dict) -> str:
     n_failed = sum(cp["n_failed"] for cp in plan["columns"].values())
     a = m["n_ambiguous"]
     hint = " - re-run with params= to confirm" if a > 0 else ""
-    if plan["source"].get("kind") == "parquet":
+    if plan["source"].get("kind") == "sql":
+        ro = d.get("read_only", {}).get("value")
+        bracket = f"[sql, parametrised, read_only={bool(ro)}]"
+    elif plan["source"].get("kind") == "parquet":
         bracket = "[parquet, typed]"
     elif plan["source"].get("kind") == "json":
         bracket = f"[json, form={d.get('json_form', {}).get('value')}]"
@@ -1117,6 +1130,226 @@ def _apply_plan_json(text, plan, parse_dates):
     return pd.DataFrame(typed)
 
 
+
+# ---------------------------------------------------------------------------
+# Safe SQL (Phase 11.3b): parametrised only, read-only files, row guard
+# ---------------------------------------------------------------------------
+
+def _open_sql_source(source):
+    """Return ``(conn, own_connection, display_name, read_only)``.
+
+    A SQLite file path is opened **read-only** (URI ``mode=ro``); a caller
+    DB-API connection is used as-is (read-only cannot be enforced and is
+    disclosed as such in the plan).
+    """
+    if isinstance(source, (str, os.PathLike)):
+        path = os.fspath(source)
+        ext = os.path.splitext(path)[1].lower()
+        if ext not in _SQLITE_EXT:
+            raise DextraLoaderError(
+                "load: sql= needs a SQLite file "
+                "(.db / .sqlite / .sqlite3) or an open DB-API connection; "
+                f"got {path!r}.")
+        if not os.path.exists(path):
+            raise DextraLoaderError(
+                f"load: database file not found: {path!r}.")
+        import sqlite3
+        from urllib.parse import quote
+        qp = quote(os.path.abspath(path).replace(os.sep, "/"), safe="/:")
+        if not qp.startswith("/"):
+            qp = "/" + qp
+        conn = sqlite3.connect(f"file:{qp}?mode=ro", uri=True)
+        return conn, True, os.path.basename(path), True
+    if hasattr(source, "cursor"):
+        return source, False, type(source).__name__, False
+    raise DextraLoaderError(
+        "load: sql= needs a SQLite file path or an open DB-API connection; "
+        f"got {type(source).__name__}.")
+
+
+def _execute_sql(conn, sql, sql_params, max_rows):
+    """Run ONE parametrised statement; fetch at most the row guard + 1."""
+    if not isinstance(sql, str) or not sql.strip():
+        raise DextraLoaderError("load: sql must be a non-empty string.")
+    if ";" in sql.strip().rstrip(";"):
+        raise DextraLoaderError(
+            "load: one SQL statement only (stacked statements are refused).")
+    guard = _SQL_ROW_GUARD if max_rows is None else int(max_rows)
+    cur = conn.cursor()
+    try:
+        try:
+            cur.execute(sql, sql_params if sql_params is not None else ())
+        except Exception as exc:
+            raise DextraLoaderError(
+                f"load: SQL execution failed ({exc}).") from exc
+        if cur.description is None:
+            raise DextraLoaderError(
+                "load: the SQL statement returned no result set "
+                "(a SELECT is expected).")
+        names = [str(d[0]) for d in cur.description]
+        rows = cur.fetchmany(guard + 1)
+        truncated = len(rows) > guard
+        if truncated:
+            rows = rows[:guard]
+    finally:
+        cur.close()
+    return names, rows, truncated, guard
+
+
+def _build_from_sql(names, rows, truncated, guard, sql, sql_params,
+                    source_name, read_only, on_ambiguous, parse_dates,
+                    decimal, thousands, na_values, max_rows):
+    dec = "." if decimal is None else decimal
+    na_tokens = set(na_values or [])
+    n_params = len(sql_params) if sql_params else 0
+
+    columns, typed = {}, {}
+    for j, name in enumerate(names):
+        colvals = [r[j] for r in rows]
+        ts, cp = _type_excel_column(name, colvals, parse_dates, dec,
+                                    thousands, na_tokens)
+        typed[name] = ts
+        columns[name] = cp
+    out = pd.DataFrame(typed) if typed else pd.DataFrame()
+
+    problems = []
+    guard_conf, guard_reason = _CONFIRMED, "not reached"
+    if truncated:
+        user_cap = max_rows is not None
+        problems.append({
+            "scope": "rows", "kind": "row_guard",
+            "detail": f"result truncated at {guard:,} row(s)",
+            "action": ("user max_rows= cap" if user_cap else
+                       "default row guard; pass max_rows= to raise it")})
+        if not user_cap:
+            guard_conf = _AMBIGUOUS
+            guard_reason = f"default guard hit at {guard:,} rows"
+        else:
+            guard_reason = f"user cap hit at {guard:,} rows"
+
+    n_amb_cols = sum(1 for cp in columns.values()
+                     if cp["confidence"] != _CONFIRMED)
+    n_amb = n_amb_cols + (0 if guard_conf == _CONFIRMED else 1)
+    plan = {
+        "function": "load",
+        "source": {"name": source_name, "kind": "sql", "sha256": None,
+                   "size": None, "mtime": None},
+        "parse": {"sql": sql, "sql_params": sql_params,
+                  "read_only": bool(read_only), "decimal": dec,
+                  "thousands": thousands, "na_values": sorted(na_tokens)},
+        "columns": columns,
+        "problems": problems,
+        "decisions": {
+            "sql": {"value": "parametrised", "confidence": _CONFIRMED,
+                    "reason": (f"{n_params} bound parameter(s)" if n_params
+                               else "no parameters")},
+            "read_only": {"value": bool(read_only), "confidence": _CONFIRMED,
+                          "reason": ("sqlite opened with mode=ro" if read_only
+                                     else "caller-managed connection "
+                                          "(not enforced)")},
+            "row_guard": {"value": guard, "confidence": guard_conf,
+                          "reason": guard_reason},
+        },
+        "policy": {"on_ambiguous": on_ambiguous, "allow_pickle": False,
+                   "max_rows": max_rows},
+        "metadata": {"n_rows": int(out.shape[0]), "n_cols": int(out.shape[1]),
+                     "n_ambiguous": int(n_amb)},
+        "version": __version__,
+        "generated_at": now_iso(),
+    }
+    return out, json_safe(plan)
+
+
+def _load_sql(source, *, sql, sql_params, params, on_ambiguous, parse_dates,
+              decimal, thousands, na_values, max_rows, return_params, show,
+              decimals, interactive):
+    replaying = params is not None
+    if replaying:
+        p = params.get("parse", {})
+        sql = p.get("sql")
+        sql_params = p.get("sql_params")
+        if max_rows is None:
+            max_rows = (params.get("policy") or {}).get("max_rows")
+    if sql is None:
+        raise DextraLoaderError(
+            "load: a database source needs sql= (parametrised; pass values "
+            "via sql_params=, never by string formatting).")
+    conn, own, name, read_only = _open_sql_source(source)
+    try:
+        names, rows, truncated, guard = _execute_sql(
+            conn, sql, sql_params, max_rows)
+    finally:
+        if own:
+            conn.close()
+
+    if replaying:
+        dec_block = params.get("parse", {})
+        na_tokens = set(dec_block.get("na_values") or [])
+        typed = {}
+        for j, cname in enumerate(list(params["columns"].keys())):
+            colvals = [(r[j] if j < len(r) else None) for r in rows]
+            vals = [None if (isinstance(v, str)
+                             and (v.strip() == "" or v.strip() in na_tokens))
+                    else v for v in colvals]
+            dtype = params["columns"].get(cname, {}).get("dtype", "object")
+            typed[cname] = _coerce_replay_column(
+                pd.Series(vals, dtype=object), dtype, dec_block, vals)
+        out = pd.DataFrame(typed) if typed else pd.DataFrame()
+        out.attrs = {}
+        append_audit(out, {"stage": "loader", "function": "load",
+                           "timestamp": now_iso(), "params": params,
+                           "decision": "Replayed a stored SQL load plan."})
+        if show:
+            print(f"Decision: Replayed a stored SQL load plan on {name!r}.")
+        return (out, params) if return_params else out
+
+    out, plan = _build_from_sql(
+        names, rows, truncated, guard, sql, sql_params, name, read_only,
+        on_ambiguous, parse_dates, decimal, thousands, na_values, max_rows)
+    return _disclose_and_finish(out, plan, on_ambiguous, show, decimals,
+                                interactive, return_params)
+
+
+def _disclose_and_finish(out, plan, on_ambiguous, show, decimals,
+                         interactive, return_params):
+    """Shared disclosure tail: report -> policy -> audit -> return."""
+    items = _ambiguous_items(plan)
+    if show:
+        print(_banner(plan))
+        with pd.option_context("display.max_columns", None,
+                               "display.width", 0,
+                               "display.float_format",
+                               lambda v: f"{v:,.{decimals}f}"):
+            print(_report_frame(plan, out).to_string(index=False))
+
+    if on_ambiguous == "plan":
+        if show:
+            print(f"Decision: {_decision_sentence(plan)}")
+        return plan
+
+    if items and on_ambiguous == "raise":
+        raise LoaderAmbiguityError(
+            "ambiguous load decision(s):\n  - " + "\n  - ".join(items)
+            + "\nOverride explicitly (encoding=/sep=/header_row=/dtype) or use "
+              "on_ambiguous='warn'.")
+    if items and on_ambiguous == "warn":
+        warnings.warn("load: ambiguous decision(s): " + "; ".join(items),
+                      DextraLoaderWarning, stacklevel=3)
+
+    if interactive and show:
+        resp = input("Apply this plan? [y]/abort: ").strip().lower()
+        if resp == "abort":
+            raise LoaderAbort("user aborted the load.")
+
+    out.attrs = {}
+    append_audit(out, {"stage": "loader", "function": "load",
+                       "timestamp": plan["generated_at"], "params": plan,
+                       "decision": _decision_sentence(plan)})
+    if show:
+        print(f"Decision: {_decision_sentence(plan)}")
+    return (out, plan) if return_params else out
+
+
 # ---------------------------------------------------------------------------
 # Public API
 # ===========================================================================
@@ -1134,6 +1367,8 @@ def load(
     header_row: Optional[int] = None,
     sheet=None,
     header_rows: Optional[int] = None,
+    sql: Optional[str] = None,
+    sql_params=None,
     parse_dates: bool = True,
     decimal: Optional[str] = None,
     thousands: Optional[str] = None,
@@ -1182,6 +1417,16 @@ def load(
     header_rows : int, optional
         Excel only: force the number of header rows (multi-row headers are
         otherwise detected and combined into ``top_bottom`` names).
+    sql : str, optional
+        SQL only: ONE parametrised statement (stacked statements are
+        refused). Bind values with ``sql_params=`` -- never by string
+        formatting. The source must be a SQLite file (``.db`` / ``.sqlite`` /
+        ``.sqlite3``, opened **read-only**) or an open DB-API connection
+        (read-only not enforceable; disclosed in the plan). Results are
+        capped by ``max_rows`` or a default 1,000,000-row guard (truncation
+        is disclosed and flagged).
+    sql_params : dict | tuple, optional
+        Named (``:name`` + dict) or positional (``?`` + tuple) parameters.
     parse_dates : bool
         Attempt safe datetime inference.
     na_values : list, optional
@@ -1213,6 +1458,8 @@ def load(
     >>> df, plan = dx.load('messy.csv', return_params=True)
     >>> df = dx.load('messy.csv', params=plan)         # deterministic replay
     >>> df = dx.load('book.xlsx', sheet='Q1')          # Excel: pick a sheet
+    >>> df = dx.load('app.db', sql='SELECT * FROM t WHERE d = :d',
+    ...              sql_params={'d': '2026-01-01'})   # safe SQL
     """
     if on_ambiguous not in ("warn", "raise", "plan"):
         raise ValueError("on_ambiguous must be 'warn', 'raise' or 'plan'.")
@@ -1225,6 +1472,20 @@ def load(
                            parse_dates=parse_dates, decimal=decimal,
                            thousands=thousands, return_params=return_params,
                            show=show, df_name=df_name)
+
+    # SQL sources (Phase 11.3b) -- resolved before any byte reading.
+    is_sqlite_path = (isinstance(source, (str, os.PathLike)) and
+                      os.path.splitext(os.fspath(source))[1].lower()
+                      in _SQLITE_EXT)
+    is_db_conn = hasattr(source, "cursor") and not hasattr(source, "read")
+    if sql is not None or is_sqlite_path or is_db_conn:
+        return _load_sql(source, sql=sql, sql_params=sql_params,
+                         params=params, on_ambiguous=on_ambiguous,
+                         parse_dates=parse_dates, decimal=decimal,
+                         thousands=thousands, na_values=na_values,
+                         max_rows=max_rows, return_params=return_params,
+                         show=show, decimals=decimals,
+                         interactive=interactive)
 
     if df_name is None:
         df_name = get_variable_name(source, depth=2)
@@ -1304,41 +1565,8 @@ def load(
             (enc, econf, ereason), sep, header_row, parse_dates,
             decimal, thousands, na_values, max_rows)
 
-    items = _ambiguous_items(plan)
-    if show:
-        print(_banner(plan))
-        with pd.option_context("display.max_columns", None,
-                               "display.width", 0,
-                               "display.float_format",
-                               lambda v: f"{v:,.{decimals}f}"):
-            print(_report_frame(plan, out).to_string(index=False))
-
-    if on_ambiguous == "plan":
-        if show:
-            print(f"Decision: {_decision_sentence(plan)}")
-        return plan
-
-    if items and on_ambiguous == "raise":
-        raise LoaderAmbiguityError(
-            "ambiguous load decision(s):\n  - " + "\n  - ".join(items)
-            + "\nOverride explicitly (encoding=/sep=/header_row=/dtype) or use "
-              "on_ambiguous='warn'.")
-    if items and on_ambiguous == "warn":
-        warnings.warn("load: ambiguous decision(s): " + "; ".join(items),
-                      DextraLoaderWarning, stacklevel=2)
-
-    if interactive and show:
-        resp = input("Apply this plan? [y]/abort: ").strip().lower()
-        if resp == "abort":
-            raise LoaderAbort("user aborted the load.")
-
-    out.attrs = {}
-    append_audit(out, {"stage": "loader", "function": "load",
-                       "timestamp": plan["generated_at"], "params": plan,
-                       "decision": _decision_sentence(plan)})
-    if show:
-        print(f"Decision: {_decision_sentence(plan)}")
-    return (out, plan) if return_params else out
+    return _disclose_and_finish(out, plan, on_ambiguous, show, decimals,
+                                interactive, return_params)
 
 
 def _load_frame(source, *, on_ambiguous, parse_dates, decimal, thousands,

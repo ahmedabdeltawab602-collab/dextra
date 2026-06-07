@@ -1,5 +1,22 @@
 # Changelog
 
+## [Unreleased] — Phase 11.3b (loader: safe SQL) — completes Phase 11
+
+### Added
+- `dx.load` / `dx.peek` run **safe SQL**: one parametrised statement only
+  (stacked statements refused; values bound via `sql_params=` — named
+  `:name` + dict or positional `?` + tuple — never string-formatted).
+  SQLite files (`.db` / `.sqlite` / `.sqlite3`) are opened **read-only**
+  (URI `mode=ro`); caller DB-API connections are accepted with read-only
+  disclosed as not enforced. Results are capped by `max_rows=` or a default
+  1,000,000-row guard (truncation disclosed; default-guard hits are flagged
+  ambiguous under `on_ambiguous`). SQL errors surface as clear
+  `DextraLoaderError`s; plans are replayable (`load(src, params=plan)`
+  re-executes the stored statement and re-applies dtypes).
+- Shared disclosure tail `_disclose_and_finish` (report → policy → audit)
+  now serves every source kind — one contract, zero duplication.
+- 12 SQL tests in `tests/test_phase11.py`.
+
 ## [Unreleased] — Phase 11.3a (loader: parquet + JSON/NDJSON)
 
 ### Added

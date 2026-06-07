@@ -305,7 +305,7 @@ the next begins. Public names underscore-free; coverage stays above the gate.
 |-------|-------|--------|
 | 11.1 | `load` for **messy CSV/TSV**: encoding + dialect detection, real header row, locale-aware numeric/date inference, categorical confidence + reasons, the replayable plan, `on_ambiguous` policy, full disclosure report, audit trail. (≈80% of the pain.) | planned |
 | 11.2 | **Excel**: sheet listing/selection, data-block detection within a sheet, multi-row headers, values-not-formulas, date serials. | done |
-| 11.3 | **Safe SQL** (parametrised, read-only option, row guard) + **`peek`** (inspect-without-load) + parquet/json convenience. | parquet/json done; SQL pending |
+| 11.3 | **Safe SQL** (parametrised, read-only option, row guard) + **`peek`** (inspect-without-load) + parquet/json convenience. | done |
 
 Fixtures of deliberately broken inputs (wrong encoding, junk pre-header rows,
 ragged rows, mixed-type columns, Excel layout traps) are themselves a
