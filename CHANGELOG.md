@@ -1,8 +1,23 @@
 # Changelog
 
-## [Unreleased] — Phase 11.3b (loader: safe SQL) — completes Phase 11
+## [0.4.0] — 2026-06-07 — Phase 11 complete: the smart loader
 
-### Added
+`dx.load` / `dx.peek` now cover csv/tsv + Excel + parquet + JSON/NDJSON +
+safe SQL under one contract: full disclosure, measured type inference,
+an `on_ambiguous` policy, and a replayable JSON-safe load plan.
+
+### Release chores
+
+- Delimiter stability check is now quote-aware and ignores preamble rows
+  (closes the known 11.1 cosmetic limit: no more false "delimiter
+  ambiguous" warnings on quoted commas / title rows).
+- CI: new `perf-extras` job (pyarrow + polars path, audit #8) and a
+  non-blocking `pandas-matrix` job across pandas 2.1/2.2/3.0 with matching
+  numpy pins (audit #8b).
+
+### Phase 11.3b — safe SQL (parametrised only, read-only, row guard)
+
+#### Added
 - `dx.load` / `dx.peek` run **safe SQL**: one parametrised statement only
   (stacked statements refused; values bound via `sql_params=` — named
   `:name` + dict or positional `?` + tuple — never string-formatted).
@@ -17,9 +32,9 @@
   now serves every source kind — one contract, zero duplication.
 - 12 SQL tests in `tests/test_phase11.py`.
 
-## [Unreleased] — Phase 11.3a (loader: parquet + JSON/NDJSON)
+### Phase 11.3a — parquet + JSON/NDJSON
 
-### Added
+#### Added
 - `dx.load` / `dx.peek` read **parquet** (`.parquet` / `.pq`): typed
   pass-through (already-typed columns confirmed at parse_rate 1.0; text
   columns re-inferred measurably) via a lazy engine (pyarrow — `perf`
@@ -32,9 +47,9 @@
   column, `na_values` / `max_rows` honoured, plans replayable.
 - 11 new tests in `tests/test_phase11.py`.
 
-## [Unreleased] — Phase 11.2 (loader: Excel)
+### Phase 11.2 — Excel (xlsx/xlsm)
 
-### Added
+#### Added
 - `dx.load` / `dx.peek` read Excel (`.xlsx` / `.xlsm`) via openpyxl, lazily
   (`io` extra): sheet listing + selection (`sheet=` name or 0-based index;
   several sheets -> flagged ambiguous under `on_ambiguous`), data-block
@@ -48,7 +63,7 @@
 - `openpyxl>=3.1` added to the `io` extra (and to `dev` so CI exercises it).
 - 14 Excel tests in `tests/test_phase11.py`.
 
-### Fixed
+#### Fixed
 - `load`/`peek`: source-kind detection now uses the real file name; `peek`
   used to mis-detect the kind because the inferred display name replaced
   the path before the extension check.

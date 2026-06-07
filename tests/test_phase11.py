@@ -634,3 +634,16 @@ def test_sql_audit_entry(tmp_path):
     df = dx.load(db, sql="SELECT * FROM t WHERE id < 3", show=False)
     audit = df.attrs.get("dextra_audit", [])
     assert audit and audit[-1]["params"]["source"]["kind"] == "sql"
+
+
+def test_delimiter_stable_despite_preamble_and_quotes(tmp_path):
+    # Known 11.1 cosmetic limit, now fixed: the naive split used to flag
+    # quoted commas / preamble rows as "delimiter ambiguous".
+    src = _write(tmp_path, "p.csv",
+                 'note\na,b,c\n1,"x, y",2\n3,"u, v",4\n5,w,6\n')
+    with warnings.catch_warnings():
+        warnings.simplefilter("error")  # must load with no warning at all
+        df = dx.load(src, show=False)
+    assert list(df.columns) == ["a", "b", "c"]
+    assert df.shape == (3, 3)
+    assert df["b"].astype(str).iloc[0] == "x, y"

@@ -191,12 +191,22 @@ def _detect_delimiter(sample_text: str, forced: Optional[str], exclude=()):
                     return cand, _CONFIRMED, "single column (no delimiter detected)"
             return "\x01", _CONFIRMED, "single column"
         sep = max(present, key=head.count)
-    rows = [r for r in sample_text.splitlines()[:30] if r.strip()]
-    counts = [len(r.split(sep)) for r in rows]
-    stable = len(set(counts)) == 1 if counts else False
+    # Stability: quote-aware field counts; rows before the first modal-width
+    # row are treated as preamble (the header detector will skip them too).
+    sample30 = "\n".join(sample_text.splitlines()[:30])
+    rows = [r for r in _parse_rows(sample30, sep) if r]
+    counts = [len(r) for r in rows]
+    if not counts:
+        return sep, _AMBIGUOUS, "no parsable rows in the sample"
+    modal = max(set(counts), key=counts.count)
+    idx = counts.index(modal)
+    stable = all(c == modal for c in counts[idx:])
     conf = _CONFIRMED if stable else _AMBIGUOUS
-    reason = ("delimiter field count stable" if stable
-              else "delimiter field count varies across rows")
+    if stable:
+        reason = ("delimiter field count stable" if idx == 0 else
+                  f"delimiter field count stable after {idx} preamble row(s)")
+    else:
+        reason = "delimiter field count varies across rows"
     return sep, conf, reason
 
 
