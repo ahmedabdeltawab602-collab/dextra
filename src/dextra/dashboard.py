@@ -9,8 +9,8 @@ widgets instead of to HTML.
 
 Design highlights (see DASHBOARD_PHILOSOPHY.md):
 
-* One call -> one runnable ``dashboard_app.py`` + a sidecar data file (pickle /
-  csv / parquet) + a ``*_meta.json`` reproducibility manifest. ``output_dir``
+* One call -> one runnable ``dashboard_app.py`` + a sidecar data file (parquet /
+  csv by default; pickle opt-in) + a ``*_meta.json`` reproducibility manifest. ``output_dir``
   collects them in one folder.
 * Reuse verbatim: every tab is a ``_compose`` builder; no analysis is
   re-implemented (and the dashboard no longer depends on the report renderer).
@@ -32,6 +32,7 @@ import base64
 import json
 import os
 import sys
+import warnings
 from datetime import datetime, timezone
 from typing import Optional
 
@@ -70,22 +71,25 @@ def _tab_keys(include_model: bool):
     return [k for k in _SECTION_ORDER if k != "model" or include_model]
 
 
+def _have_parquet_engine() -> bool:
+    """True when a parquet engine (pyarrow / fastparquet) is importable."""
+    for mod in ("pyarrow", "fastparquet"):
+        try:
+            __import__(mod)
+            return True
+        except ImportError:
+            continue
+    return False
+
+
 def _require_parquet_engine():
     """Confirm a parquet engine is importable, with a clear error if not."""
-    try:
-        import pyarrow  # noqa: F401
-        return
-    except ImportError:
-        pass
-    try:
-        import fastparquet  # noqa: F401
-        return
-    except ImportError as exc:
+    if not _have_parquet_engine():
         raise ValueError(
             "dash: data_format='parquet' needs a parquet engine. Install one "
             "with `pip install \"dextra[perf]\"` (pyarrow), or use "
-            "data_format='pickle' / 'csv'."
-        ) from exc
+            "data_format='csv'."
+        )
 
 
 # ---------------------------------------------------------------------------
@@ -232,7 +236,7 @@ def dash(
     target: Optional[str] = None,
     include_model: bool = False,
     launch: bool = False,
-    data_format: str = "pickle",
+    data_format: str = "auto",
     max_hist: int = 24,
     top_cat: int = 10,
     theme: str = "light",
@@ -242,8 +246,9 @@ def dash(
 ):
     """Generate a self-contained interactive Streamlit dashboard in one call.
 
-    Writes a thin ``dashboard_app.py``, a sidecar data file (a dtype-preserving
-    ``pickle`` by default, or ``csv`` / ``parquet``), and a ``*_meta.json``
+    Writes a thin ``dashboard_app.py``, a sidecar data file (``parquet`` when
+    an engine is available, else ``csv``; ``pickle`` only on request), and a
+    ``*_meta.json``
     reproducibility manifest (dextra / Python / pandas versions, settings).
     Running ``streamlit run dashboard_app.py`` renders the dextra dashboard: the
     same sections as :func:`edareport` (Overview, Data quality, Univariate,
@@ -270,10 +275,12 @@ def dash(
         and scikit-learn).
     launch : bool
         Also run ``streamlit run <app>`` in a child process.
-    data_format : {"pickle", "csv", "parquet"}
-        Sidecar format. ``pickle`` preserves dtypes with no dependency;
-        ``parquet`` is portable + typed (needs a parquet engine, e.g. pyarrow);
-        ``csv`` is portable but loses dtypes.
+    data_format : {"auto", "parquet", "csv", "pickle"}
+        Sidecar format. ``auto`` (default) resolves to ``parquet`` when an
+        engine (e.g. pyarrow) is importable, else ``csv``. ``parquet`` is
+        portable + typed; ``csv`` is portable but loses dtypes; ``pickle``
+        preserves dtypes with no dependency but can execute arbitrary code
+        when loaded -- it is opt-in and emits a security ``UserWarning``.
     max_hist, top_cat : int
         Defaults for the histogram-column and categorical-column caps.
     theme : str
@@ -300,12 +307,20 @@ def dash(
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
     data_format = str(data_format).lower()
-    if data_format not in _DATA_EXT:
+    if data_format not in ("auto", *_DATA_EXT):
         raise ValueError(
-            f"dash: data_format must be one of {tuple(_DATA_EXT)}, "
+            f"dash: data_format must be one of {('auto', *_DATA_EXT)}, "
             f"got {data_format!r}.")
     if target is not None and target not in df.columns:
         raise KeyError(f"dash: target={target!r} not found in df.")
+    if data_format == "auto":  # safe default: typed parquet, else plain csv
+        data_format = "parquet" if _have_parquet_engine() else "csv"
+    elif data_format == "pickle":
+        warnings.warn(
+            "dash: data_format='pickle' writes a pickle sidecar; pickle can "
+            "execute arbitrary code when loaded, so share it only with "
+            "trusted parties. Prefer 'parquet' (typed) or 'csv' (portable).",
+            UserWarning, stacklevel=2)
     if data_format == "parquet":
         _require_parquet_engine()
 

@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased] — Phase 11.1 (loader, entry layer)
+## [0.3.0] — 2026-06-07 — Phase 11.1 (loader, entry layer) + release fixes
 
 ### Added
 - `dx.load` / `dx.peek` (aliases `dload` / `dpeek`): a smart, transparent,
@@ -14,6 +14,19 @@
 - Shared contract helpers `now_iso` / `append_audit` / `json_safe` in
   `dextra._utils` (single source of truth; addresses audit finding #5).
 - `tests/test_phase11.py`.
+
+### Changed
+- `dx.dash`: default sidecar `data_format` is now `"auto"` — resolves to
+  `parquet` when an engine (pyarrow/fastparquet) is importable, else `csv`.
+  Pickle is no longer the default.
+
+### Security
+- `dx.dash(data_format='pickle')` is opt-in and emits a `UserWarning`:
+  pickle sidecars can execute arbitrary code when loaded.
+
+### Removed
+- `src/dextra/stats_advanced.py.bak` no longer tracked/shipped
+  (`*.bak` added to `.gitignore`).
 
 All notable changes to `dextra` will be documented in this file.
 

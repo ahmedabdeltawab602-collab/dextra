@@ -129,6 +129,19 @@ def test_exports_alias_and_no_underscore():
 # dash() generation
 # ---------------------------------------------------------------------------
 
+def _default_format():
+    """Mirror dash's data_format='auto' resolution (parquet engine -> parquet)."""
+    try:
+        import pyarrow  # noqa: F401
+        return "parquet"
+    except ImportError:
+        try:
+            import fastparquet  # noqa: F401
+            return "parquet"
+        except ImportError:
+            return "csv"
+
+
 def test_generates_runnable_app_and_data(mixed_df, tmp_path):
     out = str(tmp_path / "app.py")
     man = dx.dash(mixed_df, out=out, target="churn", include_model=True,
@@ -151,9 +164,18 @@ def test_default_return_is_path(mixed_df, tmp_path):
     assert dx.dash(mixed_df, out=out, show=False) == out
 
 
-def test_pickle_data_round_trips(mixed_df, tmp_path):
+def test_default_format_is_not_pickle(mixed_df, tmp_path):
     out = str(tmp_path / "app.py")
     man = dx.dash(mixed_df, out=out, return_params=True, show=False)
+    assert man["data_format"] == _default_format()
+    assert not man["data_path"].endswith(".pkl")
+
+
+def test_pickle_is_opt_in_warns_and_round_trips(mixed_df, tmp_path):
+    out = str(tmp_path / "app.py")
+    with pytest.warns(UserWarning, match="pickle"):
+        man = dx.dash(mixed_df, out=out, data_format="pickle",
+                      return_params=True, show=False)
     rt = pd.read_pickle(man["data_path"])
     pd.testing.assert_frame_equal(rt, mixed_df)
 
@@ -242,7 +264,8 @@ def test_output_dir_collects_all_files(mixed_df, tmp_path):
     man = dx.dash(mixed_df, out="app.py", output_dir=d, target="churn",
                   include_model=True, return_params=True, show=False)
     assert man["out"] == os.path.join(d, "app.py")
-    assert set(os.listdir(d)) == {"app.py", "app_data.pkl", "app_meta.json"}
+    ext = {"parquet": "app_data.parquet", "csv": "app_data.csv"}[_default_format()]
+    assert set(os.listdir(d)) == {"app.py", ext, "app_meta.json"}
     for k in ("out", "data_path", "meta_path"):
         assert os.path.exists(man[k])
 
@@ -254,7 +277,7 @@ def test_metadata_manifest_records_environment(mixed_df, tmp_path):
     _json_ok(meta)
     assert meta["dextra_version"] and meta["python_version"]
     assert meta["pandas_version"] == pd.__version__
-    assert meta["data_format"] == "pickle"
+    assert meta["data_format"] == _default_format()
     assert "settings" in meta and "tabs" in meta
     # the manifest mirrors the environment too
     assert man["metadata"]["dextra_version"] == meta["dextra_version"]
@@ -266,8 +289,9 @@ def test_generated_app_has_runtime_checks(mixed_df, tmp_path):
     src = open(out, encoding="utf-8").read()
     assert "dextra[dash]" in src                 # friendly install hint
     assert "data file not found" in src          # missing-data guard
-    assert "_FORMAT = 'pickle'" in src
-    assert "read_pickle" in src and "DO NOT EDIT" in src
+    fmt = _default_format()
+    assert f"_FORMAT = {fmt!r}" in src
+    assert f"read_{fmt}" in src and "DO NOT EDIT" in src
 
 
 def test_parquet_format_or_clear_error(mixed_df, tmp_path):
