@@ -1,7 +1,9 @@
 """Smart, transparent data loader for dextra - Phase 11 (the entry layer).
 
 See ``LOADER_PHILOSOPHY.md`` and ``LOADER_SPEC_11_1.md``. Stage 11.1 covers
-delimited text (csv/tsv) plus a typed pass-through for in-memory frames.
+delimited text (csv/tsv) plus a typed pass-through for in-memory frames;
+stage 11.2 adds Excel (xlsx/xlsm via openpyxl, lazily): sheet listing and
+selection, data-block detection, multi-row headers, values-not-formulas.
 
 Governing principle: *transparency scales with uncertainty*. Confident parses
 load in one line and are fully disclosed; ambiguous decisions are flagged and,
@@ -13,6 +15,7 @@ unified-contract ``params`` artifact). The source is never modified.
 from __future__ import annotations
 
 import csv
+import datetime as _dt
 import hashlib
 import io
 import os
@@ -61,6 +64,8 @@ class DextraLoaderWarning(UserWarning):
 
 _PICKLE_EXT = {".pkl", ".pickle"}
 _TSV_EXT = {".tsv", ".tab"}
+_EXCEL_EXT = {".xlsx", ".xlsm"}
+_XLS_EXT = {".xls"}
 _BOOL_TOKENS = {"true", "false", "yes", "no", "y", "n", "t", "f", "1", "0"}
 _TRUE_TOKENS = {"true", "yes", "y", "t", "1"}
 _HIGH_RISK_RE = re.compile(r"(^id$|_id$|^key$|key$|target|label|^y$)", re.IGNORECASE)
@@ -364,6 +369,14 @@ def _report_frame(plan: dict, df: pd.DataFrame) -> pd.DataFrame:
 def _banner(plan: dict) -> str:
     d = plan["decisions"]
     src = plan["source"]
+    if src.get("kind") == "excel":
+        sh, hdr = d["sheet"], d["header"]
+        shs = "" if sh["confidence"] == _CONFIRMED else " (ambiguous)"
+        depth = d.get("header_rows", {}).get("value", 1)
+        plus = f" (+{depth - 1})" if depth > 1 else ""
+        return (f"source={src['name']} | sheet={sh['value']!r}{shs} | "
+                f"header=row {hdr['value']}{plus} | "
+                f"{plan['metadata']['n_rows']:,}x{plan['metadata']['n_cols']}")
     enc, sep, hdr = d["encoding"], d["delimiter"], d["header"]
     encs = "" if enc["confidence"] == _CONFIRMED else " (ambiguous)"
     return (f"source={src['name']} | encoding={enc['value']}{encs} | "
@@ -391,9 +404,17 @@ def _decision_sentence(plan: dict) -> str:
     n_failed = sum(cp["n_failed"] for cp in plan["columns"].values())
     a = m["n_ambiguous"]
     hint = " - re-run with params= to confirm" if a > 0 else ""
+    if plan["source"].get("kind") == "excel":
+        depth = d.get("header_rows", {}).get("value", 1)
+        bracket = (f"[sheet={d['sheet']['value']!r}, "
+                   f"header=row {d['header']['value']}"
+                   + (f" ({depth} rows)" if depth > 1 else "") + "]")
+    else:
+        bracket = (f"[encoding={d['encoding']['value']}, "
+                   f"sep={d['delimiter']['value']!r}, "
+                   f"header=row {d['header']['value']}]")
     return (f"Loaded {m['n_rows']:,} rows x {m['n_cols']} cols from "
-            f"'{plan['source']['name']}' [encoding={d['encoding']['value']}, "
-            f"sep={d['delimiter']['value']!r}, header=row {d['header']['value']}]; "
+            f"'{plan['source']['name']}' {bracket}; "
             f"coerced {len(coerced)} column(s) ({types}); {n_failed} cell(s) "
             f"failed -> NaN; {a} ambiguous decision(s){hint}. "
             f"Next: dx.clean_rep(df).")
@@ -505,6 +526,335 @@ def _apply_plan(text, plan, parse_dates):
     return pd.DataFrame(typed)
 
 
+
+# ---------------------------------------------------------------------------
+# Excel (Phase 11.2): sheets / data block / multi-row headers / values only
+# ---------------------------------------------------------------------------
+
+def _require_openpyxl():
+    try:
+        import openpyxl  # lazy `io` extra
+        return openpyxl
+    except ImportError as exc:
+        raise DextraLoaderError(
+            "load: Excel sources need openpyxl. Install it with "
+            '`pip install "dextra[io]"` (or `pip install openpyxl`).') from exc
+
+
+def _cell_empty(v) -> bool:
+    return v is None or (isinstance(v, str) and v.strip() == "")
+
+
+def _excel_sheet_rows(raw: bytes, sheet):
+    """Open the workbook (cached values only -- never formulas, never macros)
+    and pick a sheet. Returns ``(rows, name, sheets_meta, confidence, reason)``.
+    """
+    openpyxl = _require_openpyxl()
+    try:
+        wb = openpyxl.load_workbook(io.BytesIO(raw), read_only=True,
+                                    data_only=True)
+    except Exception as exc:  # noqa: BLE001 - normalise to a loader error
+        raise DextraLoaderError(
+            f"load: could not open the Excel workbook ({exc}).") from exc
+    try:
+        names = wb.sheetnames
+        sheets_meta = [{"name": ws.title,
+                        "visible": ws.sheet_state == "visible"}
+                       for ws in wb.worksheets]
+        if isinstance(sheet, bool):
+            raise TypeError("load: sheet must be a name (str) or index (int).")
+        if sheet is None:
+            visible = [m["name"] for m in sheets_meta if m["visible"]]
+            candidates = visible or names
+            name = candidates[0]
+            if len(candidates) == 1:
+                conf, reason = _CONFIRMED, f"single sheet ({name!r})"
+            else:
+                conf = _AMBIGUOUS
+                reason = (f"{len(candidates)} sheets {candidates!r} -> "
+                          f"defaulted to first visible {name!r}; pass sheet= "
+                          "to choose")
+        elif isinstance(sheet, int):
+            if not 0 <= sheet < len(names):
+                raise DextraLoaderError(
+                    f"load: sheet index {sheet} out of range; workbook has "
+                    f"{len(names)} sheet(s): {names!r}.")
+            name = names[sheet]
+            conf, reason = _CONFIRMED, f"user-specified (index {sheet} -> {name!r})"
+        else:
+            name = str(sheet)
+            if name not in names:
+                raise DextraLoaderError(
+                    f"load: sheet {name!r} not found; available sheets: "
+                    f"{names!r}.")
+            conf, reason = _CONFIRMED, f"user-specified ({name!r})"
+        rows = [list(r) for r in wb[name].iter_rows(values_only=True)]
+    finally:
+        wb.close()
+    return rows, name, sheets_meta, conf, reason
+
+
+def _detect_block(rows):
+    """Trim fully-empty border rows/columns; return (block, bounds, problems)."""
+    row_used = [not all(_cell_empty(c) for c in r) for r in rows]
+    if not any(row_used):
+        return [], {"first_row": 0, "last_row": -1,
+                    "first_col": 0, "last_col": -1}, []
+    first_row = row_used.index(True)
+    last_row = len(rows) - 1 - row_used[::-1].index(True)
+    sub = rows[first_row:last_row + 1]
+    width = max(len(r) for r in sub)
+    sub = [list(r) + [None] * (width - len(r)) for r in sub]
+    col_used = [any(not _cell_empty(r[j]) for r in sub) for j in range(width)]
+    first_col = col_used.index(True)
+    last_col = width - 1 - col_used[::-1].index(True)
+    block = [r[first_col:last_col + 1] for r in sub]
+    problems = []
+    if first_row or first_col:
+        problems.append({
+            "scope": "sheet", "kind": "offset_block",
+            "detail": (f"data block starts at row {first_row}, "
+                       f"column {first_col} (0-based)"),
+            "action": "leading empty rows/columns skipped"})
+    return block, {"first_row": first_row, "last_row": last_row,
+                   "first_col": first_col, "last_col": last_col}, problems
+
+
+def _header_probe_rows(block):
+    """Stringify block rows with trailing empties trimmed (for _detect_header)."""
+    probe = []
+    for r in block:
+        idx = [j for j, c in enumerate(r) if not _cell_empty(c)]
+        end = idx[-1] + 1 if idx else 0
+        probe.append(["" if _cell_empty(c) else str(c) for c in r[:end]])
+    return probe
+
+
+def _detect_header_span(block, hdr, hconf, hreason, forced_rows):
+    """Extend a detected header row into a multi-row header span.
+
+    Merged-cell signature: a level above the current header carries labels
+    that sit over *gaps* of the row below (the anchored cell of a merged
+    span); a level below is a full text row under a gappy header. Returns
+    ``(hdr, depth, confidence, reason)``; ``forced_rows`` forces the number
+    of header rows counted downward from ``hdr``.
+    """
+    if forced_rows is not None:
+        n = max(1, int(forced_rows))
+        return hdr, n, _CONFIRMED, f"user-specified ({n} header row(s))"
+    width = len(block[0]) if block else 0
+    depth = 1
+    # Upward: a partial label row whose cells cover gaps of the row below.
+    while hdr > 0 and depth < 3:
+        above = block[hdr - 1]
+        cur = block[hdr]
+        above_idx = [j for j, c in enumerate(above) if not _cell_empty(c)]
+        cur_gaps = {j for j, c in enumerate(cur) if _cell_empty(c)}
+        if (above_idx and len(above_idx) < width
+                and any(j in cur_gaps for j in above_idx)):
+            hdr -= 1
+            depth += 1
+        else:
+            break
+    # Downward: gaps (merged cells) in the bottom level + a full text row below.
+    while depth < 3 and hdr + depth < len(block):
+        bottom = block[hdr + depth - 1]
+        nxt = block[hdr + depth]
+        nxt_cells = [c for c in nxt if not _cell_empty(c)]
+        nxt_texty = (bool(nxt_cells)
+                     and all(not _looks_numeric(str(c))
+                             and not isinstance(c, _dt.date)
+                             for c in nxt_cells)
+                     and len(nxt_cells) == width)
+        if any(_cell_empty(c) for c in bottom) and nxt_texty:
+            depth += 1
+        else:
+            break
+    if depth == 1:
+        return hdr, 1, hconf, hreason
+    return hdr, depth, _AMBIGUOUS, (
+        f"rows {hdr}..{hdr + depth - 1} look like one merged header -> "
+        f"combined {depth} rows; pass header_rows= to override")
+
+
+def _combine_headers(block, hdr, depth):
+    """Build column names from ``depth`` header rows (upper levels ffilled)."""
+    width = len(block[0])
+    levels = []
+    for k in range(depth):
+        row = block[hdr + k] if hdr + k < len(block) else [None] * width
+        if k < depth - 1:  # upper levels: forward-fill across merged spans
+            filled, last = [], None
+            for c in row:
+                if not _cell_empty(c):
+                    last = str(c).strip()
+                filled.append(last)
+            levels.append(filled)
+        else:              # bottom level: taken as written
+            levels.append([None if _cell_empty(c) else str(c).strip()
+                           for c in row])
+    names, seen = [], {}
+    for j in range(width):
+        parts = []
+        for lev in levels:
+            v = lev[j]
+            if v and (not parts or parts[-1] != v):
+                parts.append(v)
+        name = "_".join(parts) if parts else f"col{j}"
+        k = seen.get(name, 0)
+        seen[name] = k + 1
+        if k:
+            name = f"{name}.{k}"
+        names.append(name)
+    return names
+
+
+def _type_excel_column(name, values, parse_dates, decimal, thousands,
+                       na_tokens):
+    """Type one Excel column: native cell types first, else measured inference."""
+    vals = []
+    for v in values:
+        if isinstance(v, str):
+            t = v.strip()
+            vals.append(None if t == "" or t in na_tokens else v)
+        else:
+            vals.append(v)
+    nn = [v for v in vals if v is not None]
+    s = pd.Series(vals, dtype=object)
+
+    def _native(dtype_series, coerced_from, reason):
+        return dtype_series, {
+            "dtype": str(dtype_series.dtype), "coerced_from": coerced_from,
+            "parse_rate": 1.0, "n_failed": 0, "confidence": _CONFIRMED,
+            "reason": reason, "suggest": None}
+
+    if nn and all(isinstance(v, _dt.date) and not isinstance(v, bool)
+                  for v in nn):
+        if parse_dates:
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore")
+                return _native(pd.to_datetime(s, errors="coerce"),
+                               "excel-date", "native Excel date cells")
+    elif nn and all(isinstance(v, bool) for v in nn):
+        return _native(s.astype("boolean"), "excel-bool",
+                       "native Excel boolean cells")
+    elif nn and all(isinstance(v, (int, float)) and not isinstance(v, bool)
+                    for v in nn):
+        return _native(pd.to_numeric(s, errors="coerce"), "excel-number",
+                       "native Excel numeric cells")
+    as_str = pd.Series([None if v is None else str(v) for v in vals],
+                       dtype=object)
+    return _infer_column(name, as_str, parse_dates, decimal, thousands)
+
+
+def _build_from_excel(raw, source_meta, on_ambiguous, sheet, header_forced,
+                      header_rows_forced, parse_dates, decimal, thousands,
+                      na_values, max_rows):
+    rows, sheet_name, sheets_meta, sconf, sreason = _excel_sheet_rows(raw, sheet)
+    block, bounds, problems = _detect_block(rows)
+    dec = "." if decimal is None else decimal
+    na_tokens = set(na_values or [])
+
+    columns, typed = {}, {}
+    if not block:
+        hdr, depth = 0, 1
+        hconf, hreason = _HIGH_RISK, "sheet is empty"
+        problems.append({"scope": "sheet", "kind": "empty",
+                         "detail": f"sheet {sheet_name!r} has no data",
+                         "action": "returned an empty frame"})
+    else:
+        probe = _header_probe_rows(block)
+        hdr0, hconf, hreason = _detect_header(probe, header_forced)
+        hdr, depth, hconf, hreason = _detect_header_span(
+            block, hdr0, hconf, hreason, header_rows_forced)
+        names = _combine_headers(block, hdr, depth)
+        data = block[hdr + depth:]
+        if max_rows is not None:
+            data = data[:max_rows]
+        for j, name in enumerate(names):
+            colvals = [r[j] for r in data]
+            ts, cp = _type_excel_column(name, colvals, parse_dates, dec,
+                                        thousands, na_tokens)
+            typed[name] = ts
+            columns[name] = cp
+            if cp["confidence"] == _HIGH_RISK and "all-NaN" in cp["reason"]:
+                problems.append({"scope": name, "kind": "all_nan",
+                                 "detail": cp["reason"],
+                                 "action": "kept as NaN"})
+    out = pd.DataFrame(typed)
+
+    n_amb_cols = sum(1 for cp in columns.values()
+                     if cp["confidence"] != _CONFIRMED)
+    n_amb_parse = sum(1 for c in (sconf, hconf) if c != _CONFIRMED)
+    plan = {
+        "function": "load",
+        "source": {**source_meta, "kind": "excel"},
+        "parse": {"sheet": sheet_name, "header_row": hdr,
+                  "header_rows": depth, "block": bounds, "decimal": dec,
+                  "thousands": thousands, "na_values": sorted(na_tokens)},
+        "sheets": sheets_meta,
+        "columns": columns,
+        "problems": problems,
+        "decisions": {
+            "sheet": {"value": sheet_name, "confidence": sconf,
+                      "reason": sreason},
+            "header": {"value": hdr, "confidence": hconf, "reason": hreason},
+            "header_rows": {"value": depth, "confidence": _CONFIRMED,
+                            "reason": "part of the header decision"},
+            "decimal": {"value": dec, "confidence": _CONFIRMED,
+                        "reason": "resolved"},
+        },
+        "policy": {"on_ambiguous": on_ambiguous, "allow_pickle": False,
+                   "max_rows": max_rows},
+        "metadata": {"n_rows": int(out.shape[0]), "n_cols": int(out.shape[1]),
+                     "n_ambiguous": int(n_amb_cols + n_amb_parse)},
+        "version": __version__,
+        "generated_at": now_iso(),
+    }
+    return out, json_safe(plan)
+
+
+def _apply_plan_excel(raw, plan, parse_dates):
+    """Replay: apply a stored Excel plan verbatim (no detection)."""
+    p = plan["parse"]
+    rows, _, _, _, _ = _excel_sheet_rows(raw, p.get("sheet"))
+    block, _, _ = _detect_block(rows)
+    hdr = int(p.get("header_row", 0))
+    depth = int(p.get("header_rows", 1))
+    names = list(plan["columns"].keys())
+    data = block[hdr + depth:] if block else []
+    max_rows = (plan.get("policy") or {}).get("max_rows")
+    if max_rows is not None:
+        data = data[:max_rows]
+    na_tokens = set(p.get("na_values") or [])
+    typed = {}
+    for j, name in enumerate(names):
+        colvals = [(r[j] if j < len(r) else None) for r in data]
+        vals = [None if (isinstance(v, str)
+                         and (v.strip() == "" or v.strip() in na_tokens))
+                else v for v in colvals]
+        s = pd.Series(vals, dtype=object)
+        dtype = plan["columns"].get(name, {}).get("dtype", "object")
+        if dtype.startswith("datetime"):
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore")
+                typed[name] = pd.to_datetime(s, errors="coerce")
+        elif dtype in ("float64", "int64"):
+            s_str = s.map(lambda v: v if v is None else str(v))
+            ts, _, _ = _try_numeric(s_str, p.get("decimal", "."),
+                                    p.get("thousands"))
+            typed[name] = (ts if ts is not None
+                           else pd.to_numeric(s_str, errors="coerce"))
+        elif dtype == "boolean":
+            ts, _ = _try_bool(s)
+            typed[name] = ts if ts is not None else s
+        else:
+            # explicit object dtype: pandas 3.0 would otherwise infer str
+            typed[name] = pd.Series(
+                [None if v is None else str(v) for v in vals], dtype=object)
+    return pd.DataFrame(typed)
+
+
 # ---------------------------------------------------------------------------
 # Public API
 # ===========================================================================
@@ -520,6 +870,8 @@ def load(
     encoding: Optional[str] = None,
     sep: Optional[str] = None,
     header_row: Optional[int] = None,
+    sheet=None,
+    header_rows: Optional[int] = None,
     parse_dates: bool = True,
     decimal: Optional[str] = None,
     thousands: Optional[str] = None,
@@ -548,8 +900,9 @@ def load(
     ----------
     source : str | os.PathLike | file-like | DataFrame
         A path, an open binary/text stream, or an in-memory frame (typed
-        pass-through). ``.pkl`` is refused unless ``allow_pickle=True``.
-    kind : {"auto", "csv", "tsv"}
+        pass-through). Excel = ``.xlsx`` / ``.xlsm`` (legacy ``.xls`` is
+        refused with guidance). ``.pkl`` is refused unless ``allow_pickle=True``.
+    kind : {"auto", "csv", "tsv", "excel"}
         Source kind; inferred from the extension when ``"auto"``.
     params : dict, optional
         A previously returned load plan to replay deterministically.
@@ -557,6 +910,12 @@ def load(
         Policy when a decision is ambiguous (see above).
     encoding, sep, header_row, decimal, thousands : optional
         Force a decision instead of detecting it.
+    sheet : str | int, optional
+        Excel only: sheet name or 0-based index. Default: the single sheet,
+        or the first visible one (flagged ambiguous when several exist).
+    header_rows : int, optional
+        Excel only: force the number of header rows (multi-row headers are
+        otherwise detected and combined into ``top_bottom`` names).
     parse_dates : bool
         Attempt safe datetime inference.
     na_values : list, optional
@@ -587,6 +946,7 @@ def load(
     >>> df = dx.load('messy.csv')
     >>> df, plan = dx.load('messy.csv', return_params=True)
     >>> df = dx.load('messy.csv', params=plan)         # deterministic replay
+    >>> df = dx.load('book.xlsx', sheet='Q1')          # Excel: pick a sheet
     """
     if on_ambiguous not in ("warn", "raise", "plan"):
         raise ValueError("on_ambiguous must be 'warn', 'raise' or 'plan'.")
@@ -606,20 +966,30 @@ def load(
             df_name = None
 
     raw, source_meta = _read_bytes(source)
+    real_name = source_meta["name"]  # kind detection uses the real file name
     if df_name:
         source_meta = {**source_meta, "name": df_name}
 
-    ext = os.path.splitext(source_meta["name"])[1].lower()
+    ext = os.path.splitext(real_name)[1].lower()
+    if ext in _XLS_EXT:
+        raise DextraLoaderError(
+            "load: legacy .xls is not supported; save the file as .xlsx "
+            "(or read it with pandas.read_excel + xlrd) and retry.")
     if kind == "auto":
-        kind = "tsv" if ext in _TSV_EXT else "csv"
+        kind = ("excel" if ext in _EXCEL_EXT
+                else "tsv" if ext in _TSV_EXT else "csv")
+    if kind not in ("csv", "tsv", "excel"):
+        raise ValueError("load: kind must be 'auto', 'csv', 'tsv' or 'excel'.")
     if kind == "tsv" and sep is None:
         sep = "\t"
 
-    enc, econf, ereason = _detect_encoding(raw[:sample_bytes], encoding)
-    text, econf, ereason = _decode_full(raw, enc, econf, ereason)
+    if kind != "excel":
+        enc, econf, ereason = _detect_encoding(raw[:sample_bytes], encoding)
+        text, econf, ereason = _decode_full(raw, enc, econf, ereason)
 
     if params is not None:
-        out = _apply_plan(text, params, parse_dates)
+        out = (_apply_plan_excel(raw, params, parse_dates)
+               if kind == "excel" else _apply_plan(text, params, parse_dates))
         src_sha = source_meta.get("sha256")
         plan_sha = params.get("source", {}).get("sha256")
         if src_sha and plan_sha and src_sha != plan_sha:
@@ -641,10 +1011,15 @@ def load(
                   f"'{source_meta['name']}'.")
         return (out, params) if return_params else out
 
-    out, plan = _build_from_text(
-        text, source_meta, kind, on_ambiguous,
-        (enc, econf, ereason), sep, header_row, parse_dates,
-        decimal, thousands, na_values, max_rows)
+    if kind == "excel":
+        out, plan = _build_from_excel(
+            raw, source_meta, on_ambiguous, sheet, header_row, header_rows,
+            parse_dates, decimal, thousands, na_values, max_rows)
+    else:
+        out, plan = _build_from_text(
+            text, source_meta, kind, on_ambiguous,
+            (enc, econf, ereason), sep, header_row, parse_dates,
+            decimal, thousands, na_values, max_rows)
 
     items = _ambiguous_items(plan)
     if show:

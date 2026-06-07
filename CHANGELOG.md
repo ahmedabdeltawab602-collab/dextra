@@ -1,5 +1,26 @@
 # Changelog
 
+## [Unreleased] — Phase 11.2 (loader: Excel)
+
+### Added
+- `dx.load` / `dx.peek` read Excel (`.xlsx` / `.xlsm`) via openpyxl, lazily
+  (`io` extra): sheet listing + selection (`sheet=` name or 0-based index;
+  several sheets -> flagged ambiguous under `on_ambiguous`), data-block
+  detection (leading empty rows/columns skipped and disclosed), multi-row
+  merged headers detected and combined into `top_bottom` names
+  (`header_rows=` to force), **values not formulas** (cached values only;
+  macros never executed), native cell types honoured (dates / booleans /
+  numbers confirmed at parse_rate 1.0) with measured inference for text
+  columns, and fully replayable Excel load plans. Legacy `.xls` is refused
+  with clear guidance. New `load` params: `sheet=`, `header_rows=`.
+- `openpyxl>=3.1` added to the `io` extra (and to `dev` so CI exercises it).
+- 14 Excel tests in `tests/test_phase11.py`.
+
+### Fixed
+- `load`/`peek`: source-kind detection now uses the real file name; `peek`
+  used to mis-detect the kind because the inferred display name replaced
+  the path before the extension check.
+
 ## [0.3.0] — 2026-06-07 — Phase 11.1 (loader, entry layer) + release fixes
 
 ### Added
