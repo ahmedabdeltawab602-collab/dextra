@@ -3,7 +3,9 @@
 See ``LOADER_PHILOSOPHY.md`` and ``LOADER_SPEC_11_1.md``. Stage 11.1 covers
 delimited text (csv/tsv) plus a typed pass-through for in-memory frames;
 stage 11.2 adds Excel (xlsx/xlsm via openpyxl, lazily): sheet listing and
-selection, data-block detection, multi-row headers, values-not-formulas.
+selection, data-block detection, multi-row headers, values-not-formulas;
+stage 11.3a adds parquet (typed pass-through via a lazy engine) and
+JSON/NDJSON (records array / one-object-per-line, nested values disclosed).
 
 Governing principle: *transparency scales with uncertainty*. Confident parses
 load in one line and are fully disclosed; ambiguous decisions are flagged and,
@@ -18,6 +20,7 @@ import csv
 import datetime as _dt
 import hashlib
 import io
+import json
 import os
 import re
 import warnings
@@ -66,6 +69,8 @@ _PICKLE_EXT = {".pkl", ".pickle"}
 _TSV_EXT = {".tsv", ".tab"}
 _EXCEL_EXT = {".xlsx", ".xlsm"}
 _XLS_EXT = {".xls"}
+_PARQUET_EXT = {".parquet", ".pq"}
+_JSON_EXT = {".json", ".jsonl", ".ndjson"}
 _BOOL_TOKENS = {"true", "false", "yes", "no", "y", "n", "t", "f", "1", "0"}
 _TRUE_TOKENS = {"true", "yes", "y", "t", "1"}
 _HIGH_RISK_RE = re.compile(r"(^id$|_id$|^key$|key$|target|label|^y$)", re.IGNORECASE)
@@ -369,6 +374,14 @@ def _report_frame(plan: dict, df: pd.DataFrame) -> pd.DataFrame:
 def _banner(plan: dict) -> str:
     d = plan["decisions"]
     src = plan["source"]
+    if src.get("kind") in ("parquet", "json"):
+        extra = ""
+        if src["kind"] == "json":
+            jf = d.get("json_form", {})
+            jfs = "" if jf.get("confidence") == _CONFIRMED else " (ambiguous)"
+            extra = f" | form={jf.get('value')}{jfs}"
+        return (f"source={src['name']} | kind={src['kind']}{extra} | "
+                f"{plan['metadata']['n_rows']:,}x{plan['metadata']['n_cols']}")
     if src.get("kind") == "excel":
         sh, hdr = d["sheet"], d["header"]
         shs = "" if sh["confidence"] == _CONFIRMED else " (ambiguous)"
@@ -404,7 +417,11 @@ def _decision_sentence(plan: dict) -> str:
     n_failed = sum(cp["n_failed"] for cp in plan["columns"].values())
     a = m["n_ambiguous"]
     hint = " - re-run with params= to confirm" if a > 0 else ""
-    if plan["source"].get("kind") == "excel":
+    if plan["source"].get("kind") == "parquet":
+        bracket = "[parquet, typed]"
+    elif plan["source"].get("kind") == "json":
+        bracket = f"[json, form={d.get('json_form', {}).get('value')}]"
+    elif plan["source"].get("kind") == "excel":
         depth = d.get("header_rows", {}).get("value", 1)
         bracket = (f"[sheet={d['sheet']['value']!r}, "
                    f"header=row {d['header']['value']}"
@@ -855,6 +872,251 @@ def _apply_plan_excel(raw, plan, parse_dates):
     return pd.DataFrame(typed)
 
 
+
+# ---------------------------------------------------------------------------
+# Parquet + JSON/NDJSON (Phase 11.3a)
+# ---------------------------------------------------------------------------
+
+def _have_parquet_engine() -> bool:
+    """True when a parquet engine (pyarrow / fastparquet) is importable."""
+    for mod in ("pyarrow", "fastparquet"):
+        try:
+            __import__(mod)
+            return True
+        except ImportError:
+            continue
+    return False
+
+
+def _passthrough_columns(df, parse_dates, decimal, thousands):
+    """Type columns of an already-typed frame: re-infer text, confirm the rest.
+
+    Returns ``(typed_dict, columns_plan_dict)`` (shared by the in-memory
+    pass-through, parquet, and replayed typed sources).
+    """
+    columns, typed = {}, {}
+    for col in df.columns:
+        dt_ = df[col].dtype
+        if pd.api.types.is_object_dtype(dt_) or pd.api.types.is_string_dtype(dt_):
+            ts, cp = _infer_column(col, df[col].astype(object), parse_dates,
+                                   decimal, thousands)
+        else:
+            ts = df[col]
+            cp = {"dtype": str(dt_), "coerced_from": str(dt_),
+                  "parse_rate": 1.0, "n_failed": 0, "confidence": _CONFIRMED,
+                  "reason": "already typed", "suggest": None}
+        typed[str(col)] = ts
+        columns[str(col)] = cp
+    return typed, columns
+
+
+def _read_parquet_frame(raw: bytes) -> pd.DataFrame:
+    if not _have_parquet_engine():
+        raise DextraLoaderError(
+            "load: parquet needs an engine. Install one with "
+            '`pip install "dextra[perf]"` (pyarrow).')
+    return pd.read_parquet(io.BytesIO(raw))
+
+
+def _build_from_parquet(raw, source_meta, on_ambiguous, parse_dates,
+                        decimal, thousands, max_rows):
+    df = _read_parquet_frame(raw)
+    if max_rows is not None:
+        df = df.head(max_rows)
+    dec = "." if decimal is None else decimal
+    typed, columns = _passthrough_columns(df, parse_dates, dec, thousands)
+    out = pd.DataFrame(typed)
+    n_amb = sum(1 for cp in columns.values() if cp["confidence"] != _CONFIRMED)
+    plan = {
+        "function": "load",
+        "source": {**source_meta, "kind": "parquet"},
+        "parse": {"decimal": dec, "thousands": thousands},
+        "columns": columns,
+        "problems": [],
+        "decisions": {"format": {"value": "parquet", "confidence": _CONFIRMED,
+                                 "reason": "typed columnar source"}},
+        "policy": {"on_ambiguous": on_ambiguous, "allow_pickle": False,
+                   "max_rows": max_rows},
+        "metadata": {"n_rows": int(out.shape[0]), "n_cols": int(out.shape[1]),
+                     "n_ambiguous": int(n_amb)},
+        "version": __version__,
+        "generated_at": now_iso(),
+    }
+    return out, json_safe(plan)
+
+
+def _json_records(text: str):
+    """Parse JSON payload into records. Returns (records, form, conf, reason,
+    n_bad) where form is 'records-array' / 'ndjson' / 'single-object'."""
+    stripped = text.lstrip()
+    if not stripped:
+        return [], "empty", _HIGH_RISK, "empty JSON payload", 0
+    if stripped[0] == "[":
+        data = json.loads(text)
+        if not isinstance(data, list):
+            raise DextraLoaderError("load: JSON array expected at top level.")
+        bad = sum(1 for r in data if not isinstance(r, dict))
+        recs = [r for r in data if isinstance(r, dict)]
+        if not recs:
+            raise DextraLoaderError(
+                "load: JSON array contains no object records.")
+        return recs, "records-array", _CONFIRMED, "top-level JSON array", bad
+    if stripped[0] == "{":
+        lines = [ln for ln in text.splitlines() if ln.strip()]
+        if len(lines) > 1:
+            recs, bad = [], 0
+            for ln in lines:
+                try:
+                    obj = json.loads(ln)
+                    if isinstance(obj, dict):
+                        recs.append(obj)
+                    else:
+                        bad += 1
+                except json.JSONDecodeError:
+                    bad += 1
+            if recs and bad <= len(lines) // 2:
+                return recs, "ndjson", _CONFIRMED, "one JSON object per line", bad
+        obj = json.loads(text)  # single object -> one record (disclosed)
+        return [obj], "single-object", _AMBIGUOUS, (
+            "single top-level object -> loaded as one record"), 0
+    raise DextraLoaderError(
+        "load: unrecognised JSON payload (expected an array of objects, "
+        "NDJSON lines, or a single object).")
+
+
+def _build_from_json(text, source_meta, on_ambiguous, parse_dates,
+                     decimal, thousands, na_values, max_rows):
+    try:
+        records, form, fconf, freason, n_bad = _json_records(text)
+    except json.JSONDecodeError as exc:
+        raise DextraLoaderError(f"load: invalid JSON ({exc}).") from exc
+    if max_rows is not None:
+        records = records[:max_rows]
+    dec = "." if decimal is None else decimal
+    na_tokens = set(na_values or [])
+
+    names, nested = [], set()
+    for r in records:
+        for k in r:
+            if str(k) not in names:
+                names.append(str(k))
+    cols = {n: [] for n in names}
+    for r in records:
+        for n in names:
+            v = r.get(n)
+            if isinstance(v, str) and (v.strip() == "" or v.strip() in na_tokens):
+                v = None
+            elif isinstance(v, (dict, list)):
+                nested.add(n)
+                v = json.dumps(v, ensure_ascii=False)
+            cols[n].append(v)
+
+    problems = []
+    if n_bad:
+        problems.append({"scope": "rows", "kind": "bad_records",
+                         "detail": f"{n_bad} non-object / unparsable item(s)",
+                         "action": "skipped"})
+    for n in sorted(nested):
+        problems.append({"scope": n, "kind": "nested",
+                         "detail": "nested object/array values",
+                         "action": "serialised to JSON strings"})
+
+    columns, typed = {}, {}
+    for n in names:
+        ts, cp = _type_excel_column(n, cols[n], parse_dates, dec, thousands,
+                                    na_tokens)
+        typed[n] = ts
+        columns[n] = cp
+    out = pd.DataFrame(typed)
+
+    n_amb_cols = sum(1 for cp in columns.values()
+                     if cp["confidence"] != _CONFIRMED)
+    n_amb = n_amb_cols + (0 if fconf == _CONFIRMED else 1)
+    plan = {
+        "function": "load",
+        "source": {**source_meta, "kind": "json"},
+        "parse": {"form": form, "decimal": dec, "thousands": thousands,
+                  "na_values": sorted(na_tokens)},
+        "columns": columns,
+        "problems": problems,
+        "decisions": {"json_form": {"value": form, "confidence": fconf,
+                                    "reason": freason}},
+        "policy": {"on_ambiguous": on_ambiguous, "allow_pickle": False,
+                   "max_rows": max_rows},
+        "metadata": {"n_rows": int(out.shape[0]), "n_cols": int(out.shape[1]),
+                     "n_ambiguous": int(n_amb)},
+        "version": __version__,
+        "generated_at": now_iso(),
+    }
+    return out, json_safe(plan)
+
+
+def _coerce_replay_column(s: pd.Series, dtype: str, parse_block: dict,
+                          vals: list):
+    """Coerce one object column to a stored plan dtype (replay; no detection)."""
+    if dtype.startswith("datetime"):
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            return pd.to_datetime(s, errors="coerce")
+    if dtype in ("float64", "int64"):
+        s_str = pd.Series([None if v is None else str(v) for v in vals],
+                          dtype=object)
+        ts, _, _ = _try_numeric(s_str, parse_block.get("decimal", "."),
+                                parse_block.get("thousands"))
+        return ts if ts is not None else pd.to_numeric(s_str, errors="coerce")
+    if dtype == "boolean":
+        ts, _ = _try_bool(s)
+        return ts if ts is not None else s
+    if dtype == "object":
+        return pd.Series([None if v is None else str(v) for v in vals],
+                         dtype=object)
+    return s  # already-typed dtypes pass through
+
+
+def _apply_plan_parquet(raw, plan):
+    df = _read_parquet_frame(raw)
+    max_rows = (plan.get("policy") or {}).get("max_rows")
+    if max_rows is not None:
+        df = df.head(max_rows)
+    p = plan.get("parse", {})
+    typed = {}
+    for col in df.columns:
+        name = str(col)
+        dtype = plan["columns"].get(name, {}).get("dtype", str(df[col].dtype))
+        dt_ = df[col].dtype
+        if pd.api.types.is_object_dtype(dt_) or pd.api.types.is_string_dtype(dt_):
+            vals = [None if pd.isna(v) else v for v in df[col].tolist()]
+            typed[name] = _coerce_replay_column(
+                pd.Series(vals, dtype=object), dtype, p, vals)
+        else:
+            typed[name] = df[col]
+    return pd.DataFrame(typed)
+
+
+def _apply_plan_json(text, plan, parse_dates):
+    p = plan.get("parse", {})
+    records, _, _, _, _ = _json_records(text)
+    max_rows = (plan.get("policy") or {}).get("max_rows")
+    if max_rows is not None:
+        records = records[:max_rows]
+    na_tokens = set(p.get("na_values") or [])
+    names = list(plan["columns"].keys())
+    typed = {}
+    for n in names:
+        vals = []
+        for r in records:
+            v = r.get(n)
+            if isinstance(v, str) and (v.strip() == "" or v.strip() in na_tokens):
+                v = None
+            elif isinstance(v, (dict, list)):
+                v = json.dumps(v, ensure_ascii=False)
+            vals.append(v)
+        dtype = plan["columns"].get(n, {}).get("dtype", "object")
+        typed[n] = _coerce_replay_column(pd.Series(vals, dtype=object),
+                                         dtype, p, vals)
+    return pd.DataFrame(typed)
+
+
 # ---------------------------------------------------------------------------
 # Public API
 # ===========================================================================
@@ -901,8 +1163,12 @@ def load(
     source : str | os.PathLike | file-like | DataFrame
         A path, an open binary/text stream, or an in-memory frame (typed
         pass-through). Excel = ``.xlsx`` / ``.xlsm`` (legacy ``.xls`` is
-        refused with guidance). ``.pkl`` is refused unless ``allow_pickle=True``.
-    kind : {"auto", "csv", "tsv", "excel"}
+        refused with guidance); parquet = ``.parquet`` / ``.pq`` (typed,
+        needs a lazy engine such as pyarrow); JSON = ``.json`` / ``.jsonl`` /
+        ``.ndjson`` (records array or one object per line; nested values are
+        serialised + disclosed). ``.pkl`` is refused unless
+        ``allow_pickle=True``.
+    kind : {"auto", "csv", "tsv", "excel", "parquet", "json"}
         Source kind; inferred from the extension when ``"auto"``.
     params : dict, optional
         A previously returned load plan to replay deterministically.
@@ -977,19 +1243,28 @@ def load(
             "(or read it with pandas.read_excel + xlrd) and retry.")
     if kind == "auto":
         kind = ("excel" if ext in _EXCEL_EXT
+                else "parquet" if ext in _PARQUET_EXT
+                else "json" if ext in _JSON_EXT
                 else "tsv" if ext in _TSV_EXT else "csv")
-    if kind not in ("csv", "tsv", "excel"):
-        raise ValueError("load: kind must be 'auto', 'csv', 'tsv' or 'excel'.")
+    if kind not in ("csv", "tsv", "excel", "parquet", "json"):
+        raise ValueError("load: kind must be 'auto', 'csv', 'tsv', 'excel', "
+                         "'parquet' or 'json'.")
     if kind == "tsv" and sep is None:
         sep = "\t"
 
-    if kind != "excel":
+    if kind not in ("excel", "parquet"):
         enc, econf, ereason = _detect_encoding(raw[:sample_bytes], encoding)
         text, econf, ereason = _decode_full(raw, enc, econf, ereason)
 
     if params is not None:
-        out = (_apply_plan_excel(raw, params, parse_dates)
-               if kind == "excel" else _apply_plan(text, params, parse_dates))
+        if kind == "excel":
+            out = _apply_plan_excel(raw, params, parse_dates)
+        elif kind == "parquet":
+            out = _apply_plan_parquet(raw, params)
+        elif kind == "json":
+            out = _apply_plan_json(text, params, parse_dates)
+        else:
+            out = _apply_plan(text, params, parse_dates)
         src_sha = source_meta.get("sha256")
         plan_sha = params.get("source", {}).get("sha256")
         if src_sha and plan_sha and src_sha != plan_sha:
@@ -1015,6 +1290,14 @@ def load(
         out, plan = _build_from_excel(
             raw, source_meta, on_ambiguous, sheet, header_row, header_rows,
             parse_dates, decimal, thousands, na_values, max_rows)
+    elif kind == "parquet":
+        out, plan = _build_from_parquet(
+            raw, source_meta, on_ambiguous, parse_dates,
+            decimal, thousands, max_rows)
+    elif kind == "json":
+        out, plan = _build_from_json(
+            text, source_meta, on_ambiguous, parse_dates,
+            decimal, thousands, na_values, max_rows)
     else:
         out, plan = _build_from_text(
             text, source_meta, kind, on_ambiguous,

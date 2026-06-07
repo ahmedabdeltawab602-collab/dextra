@@ -1,5 +1,20 @@
 # Changelog
 
+## [Unreleased] — Phase 11.3a (loader: parquet + JSON/NDJSON)
+
+### Added
+- `dx.load` / `dx.peek` read **parquet** (`.parquet` / `.pq`): typed
+  pass-through (already-typed columns confirmed at parse_rate 1.0; text
+  columns re-inferred measurably) via a lazy engine (pyarrow — `perf`
+  extra), with `max_rows` guard and replayable plans.
+- `dx.load` / `dx.peek` read **JSON/NDJSON** (`.json` / `.jsonl` /
+  `.ndjson`): records-array and one-object-per-line forms detected and
+  disclosed (`json_form` decision; a lone top-level object loads as one
+  record and is flagged ambiguous), unparsable lines skipped + counted,
+  nested object/array values serialised to JSON strings + disclosed per
+  column, `na_values` / `max_rows` honoured, plans replayable.
+- 11 new tests in `tests/test_phase11.py`.
+
 ## [Unreleased] — Phase 11.2 (loader: Excel)
 
 ### Added

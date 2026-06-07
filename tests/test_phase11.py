@@ -398,3 +398,118 @@ def test_excel_empty_sheet_returns_empty_frame(tmp_path):
         df, plan = dx.load(p, return_params=True, show=False)
     assert df.empty
     assert any(pr["kind"] == "empty" for pr in plan["problems"])
+
+
+# --------------------------------------------------------------------------- #
+# Phase 11.3a - parquet + JSON/NDJSON
+# --------------------------------------------------------------------------- #
+
+def test_parquet_typed_passthrough(tmp_path):
+    pytest.importorskip("pyarrow")
+    src = str(tmp_path / "t.parquet")
+    pd.DataFrame({"a": [1, 2, 3], "b": [1.5, 2.5, 3.5],
+                  "c": ["x", "y", "z"]}).to_parquet(src, index=False)
+    with warnings.catch_warnings():
+        warnings.simplefilter("error")  # typed source -> no warnings
+        df, plan = dx.load(src, return_params=True, show=False)
+    assert plan["source"]["kind"] == "parquet"
+    assert plan["metadata"]["n_ambiguous"] == 0
+    assert df.shape == (3, 3) and df["a"].dtype.kind == "i"
+    assert all(cp["confidence"] == "confirmed"
+               for cp in plan["columns"].values())
+    json.dumps(plan)
+
+
+def test_parquet_replay_and_max_rows(tmp_path):
+    pytest.importorskip("pyarrow")
+    src = str(tmp_path / "t.parquet")
+    pd.DataFrame({"a": range(20), "b": list("abcdefghijklmnopqrst")}
+                 ).to_parquet(src, index=False)
+    df, plan = dx.load(src, max_rows=5, return_params=True, show=False)
+    assert df.shape == (5, 2)
+    df2 = dx.load(src, params=plan, show=False)
+    pd.testing.assert_frame_equal(df2, df)
+
+
+def test_parquet_engine_error_or_loads(tmp_path):
+    from dextra._loader import DextraLoaderError
+    src = str(tmp_path / "t.parquet")
+    try:
+        import pyarrow  # noqa: F401
+        pd.DataFrame({"a": [1]}).to_parquet(src, index=False)
+        assert dx.load(src, show=False).shape == (1, 1)
+    except ImportError:
+        (tmp_path / "t.parquet").write_bytes(b"PAR1junk")
+        with pytest.raises(DextraLoaderError, match="engine"):
+            dx.load(src, show=False)
+
+
+def test_json_records_array_types(tmp_path):
+    src = _write(tmp_path, "r.json", json.dumps([
+        {"a": 1, "b": "x", "d": "2024-01-02"},
+        {"a": 2, "b": "y", "d": "2024-02-03"},
+        {"a": 3, "b": "z", "d": "2024-03-04"},
+    ]))
+    with warnings.catch_warnings():
+        warnings.simplefilter("error")
+        df, plan = dx.load(src, return_params=True, show=False)
+    assert plan["source"]["kind"] == "json"
+    assert plan["parse"]["form"] == "records-array"
+    assert df["a"].dtype.kind in "if"
+    assert str(df["d"].dtype).startswith("datetime")
+    json.dumps(plan)
+
+
+def test_json_nested_values_serialised_and_disclosed(tmp_path):
+    src = _write(tmp_path, "n.json", json.dumps(
+        [{"a": 1, "meta": {"k": 1}}, {"a": 2, "meta": [1, 2]}]))
+    df, plan = dx.load(src, show=False, return_params=True)
+    assert any(p["kind"] == "nested" and p["scope"] == "meta"
+               for p in plan["problems"])
+    assert json.loads(df["meta"].iloc[0]) == {"k": 1}
+
+
+def test_json_ndjson_skips_bad_lines(tmp_path):
+    src = _write(tmp_path, "r.ndjson",
+                 '{"x": 1}\n{"x": 2}\nnot-json\n{"x": 3}\n')
+    df, plan = dx.load(src, return_params=True, show=False)
+    assert plan["parse"]["form"] == "ndjson"
+    assert df.shape == (3, 1)
+    assert any(p["kind"] == "bad_records" for p in plan["problems"])
+
+
+def test_json_single_object_flagged_ambiguous(tmp_path):
+    src = _write(tmp_path, "one.json", '{"a": 1, "b": 2}')
+    with pytest.warns(DextraLoaderWarning, match="single"):
+        df = dx.load(src, show=False)
+    assert df.shape == (1, 2)
+
+
+def test_json_invalid_payload_clear_error(tmp_path):
+    from dextra._loader import DextraLoaderError
+    src = _write(tmp_path, "bad.json", '[{"a": 1},')
+    with pytest.raises(DextraLoaderError, match="invalid JSON"):
+        dx.load(src, show=False)
+
+
+def test_json_replay_plan(tmp_path):
+    src = _write(tmp_path, "r.ndjson", '{"x": 1, "y": "a"}\n{"x": 2, "y": "b"}\n')
+    df, plan = dx.load(src, return_params=True, show=False)
+    df2 = dx.load(src, params=plan, show=False)
+    pd.testing.assert_frame_equal(df2, df)
+
+
+def test_json_peek_caps_rows(tmp_path):
+    src = _write(tmp_path, "big.ndjson",
+                 "\n".join(json.dumps({"i": i}) for i in range(50)))
+    plan = dx.peek(src, show=False)
+    assert plan["source"]["kind"] == "json"
+    assert plan["metadata"]["n_rows"] <= 10
+
+
+def test_json_na_values_and_max_rows(tmp_path):
+    src = _write(tmp_path, "r.json", json.dumps(
+        [{"a": "1"}, {"a": "NA"}, {"a": "3"}, {"a": "4"}]))
+    df = dx.load(src, na_values=["NA"], max_rows=3, show=False)
+    assert df.shape == (3, 1)
+    assert df["a"].isna().iloc[1]
