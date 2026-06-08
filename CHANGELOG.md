@@ -1,5 +1,28 @@
 # Changelog
 
+## [Unreleased] — hardening before release
+
+### Changed
+- **DRY (audit #5):** `now_iso` / `append_audit` now live only in `_utils`;
+  the six local copies (`_compose`, `_features_common`, `cleaning`,
+  `dashboard`, `modeling`, `selection`) were removed, and `cleaning`'s unused
+  `_append_audit` / `_ensure_audit` dead code deleted. No behaviour change.
+- **Unified contract — Phase 1 (audit #4):** `describe_numeric`,
+  `plot_histograms` and `plot_boxplots` now expose the full standard flag set
+  (`params`, `return_params`, `show`, `plot`, `return_df`, `return_fig`,
+  `decimals`, `df_name`), attach a `dextra_audit` trail to their summary
+  frame, and return a JSON-safe `params` manifest when `return_params=True`.
+  Existing return order is preserved (plotters stay figure-first; a bare call
+  still returns `None`); the manifest is appended last. For the plotters
+  `plot=True` simply gates rendering; for `describe_numeric` `plot` /
+  `return_fig` are documented no-ops (it has no native figure).
+
+### Docs
+- `docs/api.md` now documents the Phase 11 loader (`load` / `peek`): the five
+  source families, the `on_ambiguous` policy, the replayable plan, the
+  security model and the audit trail. `getting-started` and `index` lead with
+  `dx.load(...)` as the entry point.
+
 ## [0.4.0] — 2026-06-07 — Phase 11 complete: the smart loader
 
 `dx.load` / `dx.peek` now cover csv/tsv + Excel + parquet + JSON/NDJSON +

@@ -26,7 +26,11 @@ import seaborn as sns
 
 from ._utils import (
     DEFAULT_BOX_COLORS,
+    append_audit,
     format_value,
+    get_variable_name,
+    json_safe,
+    now_iso,
     resolve_columns,
     safe_divide,
     to_numeric_frame,
@@ -142,9 +146,13 @@ def plot_histograms(
     save: bool = False,
     output_dir: str = "plots",
     filename: str = "histograms_with_summary.png",
+    df_name: Optional[str] = None,
     show: bool = True,
+    plot: bool = True,
     return_fig: bool = False,
     return_df: bool = False,
+    return_params: bool = False,
+    params: Optional[dict] = None,
 ) -> Union[None, plt.Figure, pd.DataFrame, Tuple[plt.Figure, pd.DataFrame]]:
     """Draw a histogram + KDE for each selected column with a side-panel summary.
 
@@ -189,6 +197,15 @@ def plot_histograms(
     Figure, DataFrame, tuple of (Figure, DataFrame), or None
         Depends on ``return_fig`` and ``return_df``.
     """
+    if params is not None:
+        _cfg = params.get("params", params)
+        cols = _cfg.get("cols", cols)
+        bins = _cfg.get("bins", bins)
+        decimals = _cfg.get("decimals", decimals)
+        iqr_multiplier = _cfg.get("iqr_multiplier", iqr_multiplier)
+    if df_name is None:
+        df_name = get_variable_name(df, depth=2)
+
     if isinstance(bins, int) and bins <= 0:
         raise ValueError(f"'bins' must be a positive integer, got {bins}")
     if decimals < 0:
@@ -307,18 +324,49 @@ def plot_histograms(
         fig.savefig(out_path, dpi=dpi, bbox_inches="tight")
         print(f"saved: {out_path}")
 
-    if show:
+    if show and plot:
         plt.show()
     elif not return_fig:
         plt.close(fig)
 
-    if return_fig and return_df:
-        return fig, summary
+    config = {
+        "cols": list(cols_resolved),
+        "bins": bins,
+        "decimals": decimals,
+        "iqr_multiplier": iqr_multiplier,
+    }
+    audit_entry = {
+        "stage": "phase1-eda",
+        "function": "plot_histograms",
+        "timestamp": now_iso(),
+        "df_name": df_name,
+        "params": config,
+        "decision": (
+            f"Plotted histograms for {len(cols_resolved)} column(s) of "
+            f"'{df_name}'."
+        ),
+    }
+    append_audit(summary, audit_entry)
+    manifest = {
+        "stage": "phase1-eda",
+        "function": "plot_histograms",
+        "df_name": df_name,
+        "params": config,
+        "summary": json_safe(summary.to_dict()),
+        "dextra_audit": list(summary.attrs.get("dextra_audit", [])),
+    }
+    # Plotters are figure-first historically; keep (fig, df) order and append
+    # the params manifest last so existing unpacking stays valid.
+    results = []
     if return_fig:
-        return fig
+        results.append(fig)
     if return_df:
-        return summary
-    return None
+        results.append(summary)
+    if return_params:
+        results.append(manifest)
+    if not results:
+        return None
+    return results[0] if len(results) == 1 else tuple(results)
 
 
 # ---------------------------------------------------------------------------
@@ -367,9 +415,13 @@ def plot_boxplots(
     show_grid: bool = True,
     title: str = "Boxplots",
     colors: Optional[Union[Sequence[str], Mapping[str, str]]] = None,
+    df_name: Optional[str] = None,
     show: bool = True,
+    plot: bool = True,
     return_fig: bool = False,
     return_df: bool = False,
+    return_params: bool = False,
+    params: Optional[dict] = None,
 ) -> Union[None, go.Figure, pd.DataFrame, Tuple[go.Figure, pd.DataFrame]]:
     """Stacked horizontal box-plots with annotated statistics (Plotly).
 
@@ -406,6 +458,14 @@ def plot_boxplots(
     -------
     Figure, DataFrame, tuple of (Figure, DataFrame), or None
     """
+    if params is not None:
+        _cfg = params.get("params", params)
+        cols = _cfg.get("cols", cols)
+        decimals = _cfg.get("decimals", decimals)
+        iqr_multiplier = _cfg.get("iqr_multiplier", iqr_multiplier)
+    if df_name is None:
+        df_name = get_variable_name(df, depth=2)
+
     if decimals < 0:
         raise ValueError(f"'decimals' must be >= 0, got {decimals}")
 
@@ -544,16 +604,50 @@ def plot_boxplots(
         if rows_summary else None
     )
 
-    if show:
+    if show and plot:
         fig.show()
 
-    if return_fig and return_df:
-        return fig, summary_df
+    config = {
+        "cols": list(cols_resolved),
+        "decimals": decimals,
+        "iqr_multiplier": iqr_multiplier,
+    }
+    audit_entry = {
+        "stage": "phase1-eda",
+        "function": "plot_boxplots",
+        "timestamp": now_iso(),
+        "df_name": df_name,
+        "params": config,
+        "decision": (
+            f"Plotted boxplots for {len(cols_resolved)} column(s) of "
+            f"'{df_name}'."
+        ),
+    }
+    if isinstance(summary_df, pd.DataFrame):
+        append_audit(summary_df, audit_entry)
+        _summary_payload = json_safe(summary_df.to_dict())
+        _audit_payload = list(summary_df.attrs.get("dextra_audit", []))
+    else:
+        _summary_payload = None
+        _audit_payload = [audit_entry]
+    manifest = {
+        "stage": "phase1-eda",
+        "function": "plot_boxplots",
+        "df_name": df_name,
+        "params": config,
+        "summary": _summary_payload,
+        "dextra_audit": _audit_payload,
+    }
+    results = []
     if return_fig:
-        return fig
+        results.append(fig)
     if return_df:
-        return summary_df
-    return None
+        results.append(summary_df)
+    if return_params:
+        results.append(manifest)
+    if not results:
+        return None
+    return results[0] if len(results) == 1 else tuple(results)
 
 
 # Backward-compatible short aliases.

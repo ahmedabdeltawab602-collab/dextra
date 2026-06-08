@@ -16,7 +16,9 @@ _STANDARD_FLAGS = {"params", "return_params", "show", "plot",
                    "return_df", "return_fig", "decimals", "df_name"}
 _FAMILIES = ["transform", "scale", "bin", "encode", "dtfeats", "cross",
              "aggfeat", "featpipe", "redundancy", "relevance", "importance",
-             "rfe", "selectpipe", "regress", "classify", "cluster"]
+             "rfe", "selectpipe", "regress", "classify", "cluster",
+             # Phase 1 EDA brought up to the unified contract (audit #4).
+             "describe_numeric", "plot_histograms", "plot_boxplots"]
 
 # short alias -> canonical function name
 _ALIASES = {

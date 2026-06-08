@@ -16,8 +16,11 @@ import numpy as np
 import pandas as pd
 
 from ._utils import (
+    append_audit,
     format_value,
     get_variable_name,
+    json_safe,
+    now_iso,
     resolve_columns,
     safe_divide,
     to_numeric_frame,
@@ -49,6 +52,26 @@ def _display(frame: pd.DataFrame) -> None:
             print(frame.to_string())
 
 
+def _ret_pack(out, params, fig, return_df, return_params, return_fig):
+    """Pack outputs in the fixed order: dataframe, params, figure.
+
+    Only the requested pieces are returned; a single piece is returned bare,
+    several as a tuple. Shared Phase-1 contract helper.
+    """
+    results = []
+    if return_df:
+        results.append(out)
+    if return_params:
+        results.append(params)
+    if return_fig:
+        results.append(fig)
+    if not results:
+        return out
+    if len(results) == 1:
+        return results[0]
+    return tuple(results)
+
+
 def describe_numeric(
     df: pd.DataFrame,
     cols: Optional[Sequence[str]] = None,
@@ -59,6 +82,10 @@ def describe_numeric(
     metrics_as_rows: bool = True,
     show: bool = True,
     return_df: bool = False,
+    return_fig: bool = False,
+    return_params: bool = False,
+    params: Optional[dict] = None,
+    plot: bool = False,
     raw: bool = False,
 ) -> Optional[pd.DataFrame]:
     """Return a rich numeric summary of ``df``.
@@ -111,6 +138,15 @@ def describe_numeric(
     >>> summary = describe_numeric(df, return_df=True, raw=True, show=False)
     >>> summary.loc['mean']  # doctest: +SKIP
     """
+    if params is not None:
+        _cfg = params.get("params", params)
+        cols = _cfg.get("cols", cols)
+        decimals = _cfg.get("decimals", decimals)
+        iqr_multiplier = _cfg.get("iqr_multiplier", iqr_multiplier)
+        ddof = _cfg.get("ddof", ddof)
+        metrics_as_rows = _cfg.get("metrics_as_rows", metrics_as_rows)
+        raw = _cfg.get("raw", raw)
+
     if decimals < 0:
         raise ValueError(f"'decimals' must be >= 0, got {decimals}")
     if iqr_multiplier <= 0:
@@ -235,9 +271,41 @@ def describe_numeric(
         print("-" * len(header))
         _display(formatted)
 
-    if return_df:
-        return formatted
-    return None
+    config = {
+        "cols": list(cols_resolved),
+        "decimals": decimals,
+        "iqr_multiplier": iqr_multiplier,
+        "ddof": ddof,
+        "metrics_as_rows": metrics_as_rows,
+        "raw": raw,
+    }
+    audit_entry = {
+        "stage": "phase1-eda",
+        "function": "describe_numeric",
+        "timestamp": now_iso(),
+        "df_name": df_name,
+        "params": config,
+        "decision": (
+            f"Summarised {len(cols_resolved)} numeric column(s) of "
+            f"'{df_name}'."
+        ),
+    }
+    append_audit(formatted, audit_entry)
+    manifest = {
+        "stage": "phase1-eda",
+        "function": "describe_numeric",
+        "df_name": df_name,
+        "params": config,
+        "summary": json_safe(summary_t.to_dict()),
+        "dextra_audit": list(formatted.attrs.get("dextra_audit", [])),
+    }
+    # describe_numeric has no native figure; plot/return_fig are documented
+    # no-ops kept only for unified-contract symmetry.
+    packed = _ret_pack(formatted, manifest, None,
+                       return_df, return_params, return_fig)
+    if not (return_df or return_params or return_fig):
+        return None
+    return packed
 
 
 # Backward-compatible short alias. Preserves the original public entry point
