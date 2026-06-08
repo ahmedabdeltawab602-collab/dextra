@@ -14,9 +14,13 @@ the relevant functions raise a clear error if their extra is missing.
 
 ## A one-line tour
 
+Everything starts with `load`, the entry layer (Phase 11): it turns a raw,
+messy source into a typed `DataFrame` and discloses exactly how it parsed it.
+
 ```python
 import dextra as dx
 
+df = dx.load("sales.csv")                     # raw file -> typed DataFrame + full disclosure
 dx.describe_numeric(df)                       # rich numeric summary + plot
 dx.clean_rep(df)                              # data-quality audit
 dx.regress(df, y="price", method="compare")   # rank regression baselines

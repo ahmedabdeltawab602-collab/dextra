@@ -24,6 +24,7 @@ self-explaining calls.
 
 | Phase | Module | What it does |
 |-------|--------|--------------|
+| 11 | `_loader` | `load` / `peek` — raw, messy source → typed DataFrame + full disclosure (the entry layer, "Phase 0" of the pipeline) |
 | 1 | `stats`, `plots` | Rich numeric EDA + better default plots |
 | 2 | `stats_advanced` | 22 statistical helpers (inference, hypothesis tests, diagnostics) |
 | 3 | `cleaning` | 10 cleaning helpers across the DAMA-DMBOK stages |
