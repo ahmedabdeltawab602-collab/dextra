@@ -24,8 +24,8 @@ from typing import Optional, Sequence
 
 import pandas as pd
 
-from ._compose import _BUILDERS, _SECTION_ORDER, _append_audit, _now_iso
-from ._utils import _ensure_pandas, get_variable_name
+from ._compose import _BUILDERS, _SECTION_ORDER
+from ._utils import _ensure_pandas, append_audit, get_variable_name, now_iso
 from ._version import __version__
 
 
@@ -239,7 +239,7 @@ def edareport(
             skipped.append((key, reason))
             manifest_sections[key] = {"status": "skipped", "reason": reason}
 
-    generated_at = _now_iso()
+    generated_at = now_iso()
     n, m = df.shape
     header_meta = (f"{n:,} rows &times; {m} columns &middot; generated "
                    f"{generated_at} &middot; {len(built)} section(s)")
@@ -252,7 +252,7 @@ def edareport(
 
     out_copy = df.copy()
     out_copy.attrs = dict(df.attrs)
-    _append_audit(out_copy, {
+    append_audit(out_copy, {
         "stage": "report", "function": "edareport",
         "timestamp": generated_at,
         "params": {"out": out, "target": target,

@@ -42,16 +42,14 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-from ._utils import _ensure_pandas, get_variable_name
+from ._utils import _ensure_pandas, append_audit, get_variable_name, now_iso
 from ._version import __version__
 from .modeling import (
-    _append_audit,
     _display,
     _finalize_figure,
     _fmt_metric,
     _fmt_table,
     _json_safe_num,
-    _now_iso,
     _print_header,
     _ret_pack,
 )
@@ -392,7 +390,7 @@ def tsdecomp(
         },
         "metadata": {"n": int(n), "input_mode": mode, "freq": freq},
         "version": __version__,
-        "analyzed_at": _now_iso(),
+        "analyzed_at": now_iso(),
     }
 
     decision = (
@@ -403,7 +401,7 @@ def tsdecomp(
 
     out = df.copy()
     out.attrs = dict(df.attrs)
-    _append_audit(out, {
+    append_audit(out, {
         "stage": "timeseries",
         "function": "tsdecomp",
         "timestamp": report["analyzed_at"],
@@ -686,7 +684,7 @@ def tsstat(
                      "regression": regression, "max_diff": int(max_diff),
                      "freq": _freq_string(tidx)},
         "version": __version__,
-        "analyzed_at": _now_iso(),
+        "analyzed_at": now_iso(),
     }
 
     decision = (
@@ -698,7 +696,7 @@ def tsstat(
 
     out = df.copy()
     out.attrs = dict(df.attrs)
-    _append_audit(out, {
+    append_audit(out, {
         "stage": "timeseries",
         "function": "tsstat",
         "timestamp": report["analyzed_at"],
@@ -983,9 +981,9 @@ def tsfcast(
             f"tsfcast(method='{best}') to forecast (mode={mode}).")
         out = df.copy()
         out.attrs = dict(df.attrs)
-        _append_audit(out, {
+        append_audit(out, {
             "stage": "timeseries", "function": "tsfcast",
-            "timestamp": _now_iso(), "mode": mode,
+            "timestamp": now_iso(), "mode": mode,
             "params": {"value": vname, "time": tname, "compare": cands,
                        "valid": valid, "period": period},
             "decision": decision})
@@ -1023,7 +1021,7 @@ def tsfcast(
                      "horizon": int(horizon), "valid": int(valid),
                      "period": period, "freq": _freq_string(tidx)},
         "version": __version__,
-        "analyzed_at": _now_iso(),
+        "analyzed_at": now_iso(),
     }
     decision = (
         f"{n} obs, method={resolved}"
@@ -1034,7 +1032,7 @@ def tsfcast(
 
     out = df.copy()
     out.attrs = dict(df.attrs)
-    _append_audit(out, {
+    append_audit(out, {
         "stage": "timeseries", "function": "tsfcast",
         "timestamp": report["analyzed_at"], "mode": mode,
         "params": {"value": vname, "time": tname, "method": resolved,

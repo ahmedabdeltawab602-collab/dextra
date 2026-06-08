@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
-
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -50,9 +48,6 @@ def _print_header(title: str) -> None:
     print("-" * len(title))
 
 
-def _now_iso() -> str:
-    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-
 
 def _finalize_figure(fig, return_fig: bool) -> None:
     """Display the figure when one was created.
@@ -87,11 +82,6 @@ def _ret_pack(out, params, fig, return_df, return_params, return_fig):
         return results[0]
     return tuple(results)
 
-
-def _append_audit(out: pd.DataFrame, entry: dict) -> None:
-    out.attrs.setdefault(AUDIT_KEY, [])
-    out.attrs[AUDIT_KEY] = list(out.attrs[AUDIT_KEY])
-    out.attrs[AUDIT_KEY].append(entry)
 
 
 def _fmt_table(frame: pd.DataFrame, decimals: int) -> pd.DataFrame:

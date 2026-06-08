@@ -43,16 +43,14 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 
-from ._utils import _ensure_pandas, get_variable_name
+from ._utils import _ensure_pandas, append_audit, get_variable_name, now_iso
 from ._version import __version__
 from .modeling import (
-    _append_audit,
     _display,
     _finalize_figure,
     _fmt_metric,
     _fmt_table,
     _json_safe_num,
-    _now_iso,
     _print_header,
     _require_sklearn,
     _ret_pack,
@@ -263,7 +261,7 @@ def confusion_report(
         "task": "classification",
         "target": str(target),
         "version": __version__,
-        "evaluated_at": _now_iso(),
+        "evaluated_at": now_iso(),
         "metrics": {
             "per_class": {
                 str(c): {
@@ -295,7 +293,7 @@ def confusion_report(
 
     out = df.copy()
     out.attrs = dict(df.attrs)
-    _append_audit(out, {
+    append_audit(out, {
         "stage": "evaluation",
         "function": "confusion_report",
         "timestamp": report["evaluated_at"],
@@ -462,7 +460,7 @@ def residual_analysis(
         "task": "regression",
         "target": str(target),
         "version": __version__,
-        "evaluated_at": _now_iso(),
+        "evaluated_at": now_iso(),
         "metrics": {
             "resid_mean": _json_safe_num(resid.mean()),
             "resid_std": _json_safe_num(r_std),
@@ -488,7 +486,7 @@ def residual_analysis(
 
     out = df.copy()
     out.attrs = dict(df.attrs)
-    _append_audit(out, {
+    append_audit(out, {
         "stage": "evaluation",
         "function": "residual_analysis",
         "timestamp": report["evaluated_at"],
@@ -714,7 +712,7 @@ def roc_pr(
         "task": "classification",
         "target": str(target),
         "version": __version__,
-        "evaluated_at": _now_iso(),
+        "evaluated_at": now_iso(),
         "metrics": {
             "per_class": {
                 index[i]: {"roc_auc": _json_safe_num(rows_auc[i]),
@@ -737,7 +735,7 @@ def roc_pr(
 
     out = df.copy()
     out.attrs = dict(df.attrs)
-    _append_audit(out, {
+    append_audit(out, {
         "stage": "evaluation",
         "function": "roc_pr",
         "timestamp": report["evaluated_at"],
@@ -963,7 +961,7 @@ def learning_curves(
         "task": task,
         "target": str(target),
         "version": __version__,
-        "evaluated_at": _now_iso(),
+        "evaluated_at": now_iso(),
         "metrics": {
             "scoring": scoring,
             "train_sizes": [int(s) for s in sizes],
@@ -986,7 +984,7 @@ def learning_curves(
 
     out = df.copy()
     out.attrs = dict(df.attrs)
-    _append_audit(out, {
+    append_audit(out, {
         "stage": "evaluation",
         "function": "learning_curves",
         "timestamp": report["evaluated_at"],

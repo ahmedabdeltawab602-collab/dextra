@@ -9,18 +9,16 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 from ._features_common import (
-    _append_audit,
     _display,
     _finalize_figure,
     _fmt_table,
-    _now_iso,
     _print_header,
     _ret_pack,
 )
 from ._features_derive import aggfeat, cross, dtfeats
 from ._features_discretize import bin, encode
 from ._features_numeric import scale, transform
-from ._utils import _ensure_pandas, get_variable_name
+from ._utils import _ensure_pandas, append_audit, get_variable_name, now_iso
 from ._version import __version__
 
 _FEATPIPE_DISPATCH = {
@@ -292,7 +290,7 @@ def _featpipe_fit(df, steps, save_path, show, plot, return_df,
     combined = {
         "function": "featpipe",
         "version": __version__,
-        "fit_at": _now_iso(),
+        "fit_at": now_iso(),
         "steps": step_params_list,
         "metadata": {
             "n_steps": len(clean),
@@ -316,7 +314,7 @@ def _featpipe_fit(df, steps, save_path, show, plot, return_df,
                 f"versioned, JSON-serialisable artifact.{saved_note} Apply to "
                 f"held-out data with featpipe(df_test, params=...).")
 
-    _append_audit(out, {
+    append_audit(out, {
         "stage": "feature_pipeline",
         "function": "featpipe",
         "timestamp": combined["fit_at"],
@@ -399,10 +397,10 @@ def _featpipe_apply(df, params, show, plot, return_df, return_params,
                 f"({chain}; fitted {fit_at}); {n_new} new column(s) produced; "
                 f"no re-fit -- leakage-safe.")
 
-    _append_audit(out, {
+    append_audit(out, {
         "stage": "feature_pipeline",
         "function": "featpipe",
-        "timestamp": _now_iso(),
+        "timestamp": now_iso(),
         "mode": "apply",
         "params": {"n_steps": len(summary_rows), "chain": chain,
                    "fit_at": fit_at},

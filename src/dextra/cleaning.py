@@ -25,7 +25,6 @@ from __future__ import annotations
 import re
 import unicodedata
 import warnings
-from datetime import datetime, timezone
 from typing import Any, Dict, List, Mapping, Optional, Sequence, Tuple, Union
 
 import matplotlib.pyplot as plt
@@ -33,7 +32,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 
-from ._utils import _ensure_pandas, get_variable_name
+from ._utils import _ensure_pandas, get_variable_name, now_iso
 
 try:
     from IPython.display import display as _ipy_display
@@ -63,20 +62,7 @@ def _print_header(title: str) -> None:
     print("-" * len(title))
 
 
-def _now_iso() -> str:
-    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
-
-def _ensure_audit(df: pd.DataFrame) -> List[dict]:
-    """Return the audit list on df.attrs, initializing it if absent."""
-    if AUDIT_KEY not in df.attrs:
-        df.attrs[AUDIT_KEY] = []
-    return df.attrs[AUDIT_KEY]
-
-
-def _append_audit(df: pd.DataFrame, entry: dict) -> None:
-    audit = _ensure_audit(df)
-    audit.append(entry)
 
 
 def _format_per_value(v, kind, decimals):
@@ -578,7 +564,7 @@ def standardize_columns(
     out.attrs[AUDIT_KEY].append({
         "stage": "structural_cleanup",
         "function": "standardize_columns",
-        "timestamp": _now_iso(),
+        "timestamp": now_iso(),
         "before": {"n_cols": len(original_names)},
         "after":  {"n_cols": len(proposed),
                    "n_renamed_columns": n_renamed,
@@ -897,7 +883,7 @@ def cast_types(
     out.attrs[AUDIT_KEY].append({
         "stage": "type_coercion",
         "function": "cast_types",
-        "timestamp": _now_iso(),
+        "timestamp": now_iso(),
         "before": {"dtypes": dtypes_before},
         "after":  {"dtypes": {c: str(out[c].dtype) for c in out.columns}},
         "params": {
@@ -1103,7 +1089,7 @@ def validate_rules(
     summary_attrs[AUDIT_KEY].append({
         "stage": "consistency_rules",
         "function": "validate_rules",
-        "timestamp": _now_iso(),
+        "timestamp": now_iso(),
         "before": {"n_rows": len(df)},
         "after":  {"n_pass": n_pass, "n_fail": n_fail, "n_error": n_error,
                    "n_violating_rows": n_bad_rows},
@@ -1341,7 +1327,7 @@ def handle_missing(
         out.attrs[AUDIT_KEY].append({
             "stage": "missing_values",
             "function": "handle_missing",
-            "timestamp": _now_iso(),
+            "timestamp": now_iso(),
             "before": {"n_rows": n_before_rows, "n_missing_cells": int(missing_before.sum())},
             "after":  {"n_rows": n_after_rows, "n_missing_cells": int(out.isna().sum().sum())},
             "params": {"strategy": "drop_rows"},
@@ -1369,7 +1355,7 @@ def handle_missing(
         out.attrs[AUDIT_KEY].append({
             "stage": "missing_values",
             "function": "handle_missing",
-            "timestamp": _now_iso(),
+            "timestamp": now_iso(),
             "before": {"n_cols": n_before_cols},
             "after":  {"n_cols": out.shape[1], "dropped": cols_to_drop},
             "params": {"strategy": "drop_cols", "drop_threshold": drop_threshold},
@@ -1474,7 +1460,7 @@ def handle_missing(
     out.attrs[AUDIT_KEY].append({
         "stage": "missing_values",
         "function": "handle_missing",
-        "timestamp": _now_iso(),
+        "timestamp": now_iso(),
         "before": {"n_missing_cells": int(missing_before.sum())},
         "after":  {"n_missing_cells": int(out.isna().sum().sum())},
         "params": {"strategy": str(strategy),
@@ -1636,7 +1622,7 @@ def dedupe(
     out.attrs[AUDIT_KEY].append({
         "stage": "duplicate_resolution",
         "function": "dedupe",
-        "timestamp": _now_iso(),
+        "timestamp": now_iso(),
         "before": {"n_rows": n_before},
         "after":  {"n_rows": n_after, "n_removed": n_removed,
                    "n_duplicate_groups": n_unique_dup_groups},
@@ -1831,7 +1817,7 @@ def clip_outliers(
     out.attrs[AUDIT_KEY].append({
         "stage": "outlier_treatment",
         "function": "clip_outliers",
-        "timestamp": _now_iso(),
+        "timestamp": now_iso(),
         "before": {"n_rows": n_before},
         "after":  {"n_rows": n_after, "cells_clipped": total_clipped,
                    "rows_dropped": rows_dropped},

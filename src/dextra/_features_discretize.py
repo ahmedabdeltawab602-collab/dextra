@@ -10,17 +10,15 @@ import numpy as np
 import pandas as pd
 
 from ._features_common import (
-    _append_audit,
     _display,
     _finalize_figure,
     _fmt_table,
     _hist_bins,
-    _now_iso,
     _print_header,
     _resolve_cols,
     _ret_pack,
 )
-from ._utils import _ensure_pandas, get_variable_name
+from ._utils import _ensure_pandas, append_audit, get_variable_name, now_iso
 from ._version import __version__
 
 _VALID_BIN_METHODS = ("equal_width", "quantile", "kmeans", "compare")
@@ -271,7 +269,7 @@ def bin(
         "function": "bin",
         "method": method,
         "version": __version__,
-        "fit_at": _now_iso(),
+        "fit_at": now_iso(),
         "columns": col_params,
         "metadata": {"inplace": bool(inplace), "n_cols": len(cols),
                      "n_bins": int(n_bins)},
@@ -283,7 +281,7 @@ def bin(
                 f"to {n_bins} ordered bin(s); {placement}. Created ordinal "
                 f"discretised feature(s).")
 
-    _append_audit(out, {
+    append_audit(out, {
         "stage": "feature_binning",
         "function": "bin",
         "timestamp": params_out["fit_at"],
@@ -357,10 +355,10 @@ def _bin_apply(df, params, inplace, show, plot, return_df,
     decision = (f"Applied saved '{method}' binning (fitted "
                 f"{params.get('fit_at', '?')}) to {len(col_params)} "
                 f"column(s); no re-fit -- leakage-safe.")
-    _append_audit(out, {
+    append_audit(out, {
         "stage": "feature_binning",
         "function": "bin",
-        "timestamp": _now_iso(),
+        "timestamp": now_iso(),
         "mode": "apply",
         "params": {"method": method, "cols": list(col_params),
                    "fit_at": params.get("fit_at")},
@@ -808,7 +806,7 @@ def encode(
         "function": "encode",
         "method": method,
         "version": __version__,
-        "fit_at": _now_iso(),
+        "fit_at": now_iso(),
         "columns": col_params,
         "metadata": {
             "inplace": bool(inplace),
@@ -825,7 +823,7 @@ def encode(
                 f"column(s); produced {total_new} numeric feature column(s). "
                 f"Apply to held-out data with encode(df_test, params=...).")
 
-    _append_audit(out, {
+    append_audit(out, {
         "stage": "feature_encoding",
         "function": "encode",
         "timestamp": params_out["fit_at"],
@@ -928,10 +926,10 @@ def _encode_apply(df, params, show, plot, return_df, return_params,
     decision = (f"Applied saved '{method}' encoding (fitted "
                 f"{params.get('fit_at', '?')}) to {len(col_params)} "
                 f"column(s); no re-fit -- leakage-safe.")
-    _append_audit(out, {
+    append_audit(out, {
         "stage": "feature_encoding",
         "function": "encode",
-        "timestamp": _now_iso(),
+        "timestamp": now_iso(),
         "mode": "apply",
         "params": {"method": method, "cols": list(col_params),
                    "fit_at": params.get("fit_at")},

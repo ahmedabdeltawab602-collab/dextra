@@ -33,12 +33,11 @@ import json
 import os
 import sys
 import warnings
-from datetime import datetime, timezone
 from typing import Optional
 
 import pandas as pd
 
-from ._utils import _ensure_pandas, get_variable_name
+from ._utils import _ensure_pandas, append_audit, get_variable_name, now_iso
 from ._version import __version__
 
 _TAB_LABELS = {
@@ -56,14 +55,6 @@ _DATA_EXT = {"pickle": "_data.pkl", "csv": "_data.csv", "parquet": "_data.parque
 # Small local helpers
 # ---------------------------------------------------------------------------
 
-def _now_iso() -> str:
-    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-
-
-def _append_audit(out: pd.DataFrame, entry: dict) -> None:
-    out.attrs.setdefault("dextra_audit", [])
-    out.attrs["dextra_audit"] = list(out.attrs["dextra_audit"])
-    out.attrs["dextra_audit"].append(entry)
 
 
 def _tab_keys(include_model: bool):
@@ -347,7 +338,7 @@ def dash(
     else:
         df.to_pickle(data_path)
 
-    generated_at = _now_iso()
+    generated_at = now_iso()
     meta_line = (f"dextra={__version__}  python={sys.version.split()[0]}  "
                  f"pandas={pd.__version__}  generated={generated_at}")
     app_src = _render_app_source(
@@ -382,7 +373,7 @@ def dash(
 
     out_copy = df.copy()
     out_copy.attrs = dict(df.attrs)
-    _append_audit(out_copy, {
+    append_audit(out_copy, {
         "stage": "dashboard", "function": "dash",
         "timestamp": generated_at,
         "params": {"app": app_path, "data": data_path, "meta": meta_path,

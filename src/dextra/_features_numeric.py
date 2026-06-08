@@ -10,18 +10,16 @@ import numpy as np
 import pandas as pd
 
 from ._features_common import (
-    _append_audit,
     _display,
     _finalize_figure,
     _fmt_table,
     _get_scipy_stats,
     _hist_bins,
-    _now_iso,
     _print_header,
     _resolve_cols,
     _ret_pack,
 )
-from ._utils import _ensure_pandas, get_variable_name
+from ._utils import _ensure_pandas, append_audit, get_variable_name, now_iso
 from ._version import __version__
 
 _VALID_TRANSFORM_METHODS = ("log", "log1p", "sqrt", "boxcox", "yeojohnson",
@@ -226,7 +224,7 @@ def transform(
         "function": "transform",
         "method": method,
         "version": __version__,
-        "fit_at": _now_iso(),
+        "fit_at": now_iso(),
         "columns": col_params,
         "metadata": {"inplace": bool(inplace), "n_cols": len(cols)},
     }
@@ -239,7 +237,7 @@ def transform(
                 f"|skew| reduced on {improved}/{len(cols)}; {placement}. "
                 f"Created distribution feature(s).")
 
-    _append_audit(out, {
+    append_audit(out, {
         "stage": "feature_transform",
         "function": "transform",
         "timestamp": params_out["fit_at"],
@@ -307,10 +305,10 @@ def _transform_apply(df, params, inplace, show, plot, return_df,
     decision = (f"Applied saved '{method}' transform (fitted "
                 f"{params.get('fit_at', '?')}) to {len(col_params)} "
                 f"column(s); no re-fit -- leakage-safe.")
-    _append_audit(out, {
+    append_audit(out, {
         "stage": "feature_transform",
         "function": "transform",
-        "timestamp": _now_iso(),
+        "timestamp": now_iso(),
         "mode": "apply",
         "params": {"method": method, "cols": list(col_params),
                    "fit_at": params.get("fit_at")},
@@ -551,7 +549,7 @@ def scale(
         "function": "scale",
         "method": method,
         "version": __version__,
-        "fit_at": _now_iso(),
+        "fit_at": now_iso(),
         "columns": col_params,
         "metadata": {"inplace": bool(inplace), "n_cols": len(cols)},
     }
@@ -562,7 +560,7 @@ def scale(
                 f"{placement}. Apply to held-out data with "
                 f"scale(df_test, params=...).")
 
-    _append_audit(out, {
+    append_audit(out, {
         "stage": "feature_scaling",
         "function": "scale",
         "timestamp": params_out["fit_at"],
@@ -617,10 +615,10 @@ def _scale_apply(df, params, inplace, show, plot, return_df,
     decision = (f"Applied saved '{method}' scaler (fitted "
                 f"{params.get('fit_at', '?')}) to {len(col_params)} "
                 f"column(s); no re-fit -- leakage-safe.")
-    _append_audit(out, {
+    append_audit(out, {
         "stage": "feature_scaling",
         "function": "scale",
-        "timestamp": _now_iso(),
+        "timestamp": now_iso(),
         "mode": "apply",
         "params": {"method": method, "cols": list(col_params),
                    "fit_at": params.get("fit_at")},

@@ -19,7 +19,6 @@ import base64
 import inspect
 import io
 from contextlib import redirect_stdout
-from datetime import datetime, timezone
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -32,14 +31,6 @@ _SECTION_ORDER = ("overview", "quality", "univariate", "bivariate", "model")
 # Shared helpers
 # ---------------------------------------------------------------------------
 
-def _now_iso() -> str:
-    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-
-
-def _append_audit(out: pd.DataFrame, entry: dict) -> None:
-    out.attrs.setdefault("dextra_audit", [])
-    out.attrs["dextra_audit"] = list(out.attrs["dextra_audit"])
-    out.attrs["dextra_audit"].append(entry)
 
 
 def _fig_to_b64(fig) -> str:

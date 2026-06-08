@@ -36,7 +36,6 @@ Stage 5.3 - Pipeline wrapper:
 from __future__ import annotations
 
 import warnings
-from datetime import datetime, timezone
 from typing import Optional, Sequence
 
 import matplotlib.pyplot as plt
@@ -44,7 +43,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 
-from ._utils import _ensure_pandas, get_variable_name
+from ._utils import _ensure_pandas, append_audit, get_variable_name, now_iso
 from ._version import __version__
 
 try:
@@ -79,9 +78,6 @@ def _print_header(title: str) -> None:
     print("-" * len(title))
 
 
-def _now_iso() -> str:
-    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-
 
 def _finalize_figure(fig, return_fig: bool) -> None:
     if fig is None:
@@ -106,11 +102,6 @@ def _ret_pack(out, params, fig, return_df, return_params, return_fig):
         return results[0]
     return tuple(results)
 
-
-def _append_audit(out: pd.DataFrame, entry: dict) -> None:
-    out.attrs.setdefault(AUDIT_KEY, [])
-    out.attrs[AUDIT_KEY] = list(out.attrs[AUDIT_KEY])
-    out.attrs[AUDIT_KEY].append(entry)
 
 
 def _fmt_table(frame: pd.DataFrame, decimals: int) -> pd.DataFrame:
@@ -404,7 +395,7 @@ def redundancy(
         "function": "redundancy",
         "method": method,
         "version": __version__,
-        "fit_at": _now_iso(),
+        "fit_at": now_iso(),
         "target": None,
         "candidates": list(candidates),
         "kept": list(kept),
@@ -425,7 +416,7 @@ def redundancy(
                 f"{len(dropped)}, kept {len(kept)}. Apply to held-out data "
                 f"with redundancy(df_test, params=...).")
 
-    _append_audit(out, {
+    append_audit(out, {
         "stage": "feature_selection",
         "function": "redundancy",
         "timestamp": params_out["fit_at"],
@@ -486,10 +477,10 @@ def _redundancy_apply(df, params, show, plot, return_df, return_params,
                 f"{params.get('fit_at', '?')}); subset to {len(kept)} kept "
                 f"feature(s), dropped {len(dropped)} -- no re-scoring, "
                 f"leakage-safe.")
-    _append_audit(out, {
+    append_audit(out, {
         "stage": "feature_selection",
         "function": "redundancy",
-        "timestamp": _now_iso(),
+        "timestamp": now_iso(),
         "mode": "apply",
         "params": {"method": method, "n_dropped": len(dropped),
                    "fit_at": params.get("fit_at")},
@@ -837,7 +828,7 @@ def relevance(
         "function": "relevance",
         "method": method,
         "version": __version__,
-        "fit_at": _now_iso(),
+        "fit_at": now_iso(),
         "target": y_name,
         "target_kind": target_kind,
         "candidates": list(candidates),
@@ -860,7 +851,7 @@ def relevance(
                 f"({len(kept)}), dropped {len(dropped)}. Apply to held-out "
                 f"data with relevance(df_test, params=...).")
 
-    _append_audit(out, {
+    append_audit(out, {
         "stage": "feature_selection",
         "function": "relevance",
         "timestamp": params_out["fit_at"],
@@ -921,10 +912,10 @@ def _relevance_apply(df, params, show, plot, return_df, return_params,
                 f"{params.get('fit_at', '?')}); subset to {len(kept)} kept "
                 f"feature(s), dropped {len(dropped)} -- no re-scoring, "
                 f"leakage-safe.")
-    _append_audit(out, {
+    append_audit(out, {
         "stage": "feature_selection",
         "function": "relevance",
-        "timestamp": _now_iso(),
+        "timestamp": now_iso(),
         "mode": "apply",
         "params": {"method": method, "target": params.get("target"),
                    "n_dropped": len(dropped), "fit_at": params.get("fit_at")},
@@ -1345,7 +1336,7 @@ def importance(
         "function": "importance",
         "method": method,
         "version": __version__,
-        "fit_at": _now_iso(),
+        "fit_at": now_iso(),
         "target": y_name,
         "target_kind": target_kind,
         "candidates": list(candidates),
@@ -1367,7 +1358,7 @@ def importance(
                 f"({len(kept)}), dropped {len(dropped)}. Apply to held-out "
                 f"data with importance(df_test, params=...).")
 
-    _append_audit(out, {
+    append_audit(out, {
         "stage": "feature_selection",
         "function": "importance",
         "timestamp": params_out["fit_at"],
@@ -1454,10 +1445,10 @@ def _selection_apply(df, params, expected_fn, show, plot, return_df,
                 f"{params.get('fit_at', '?')}); subset to {len(kept)} kept "
                 f"feature(s), dropped {len(dropped)} -- no re-fit, "
                 f"leakage-safe.")
-    _append_audit(out, {
+    append_audit(out, {
         "stage": "feature_selection",
         "function": expected_fn,
-        "timestamp": _now_iso(),
+        "timestamp": now_iso(),
         "mode": "apply",
         "params": {"method": method, "n_dropped": len(dropped),
                    "fit_at": params.get("fit_at")},
@@ -1644,7 +1635,7 @@ def rfe(
         "function": "rfe",
         "method": estimator,
         "version": __version__,
-        "fit_at": _now_iso(),
+        "fit_at": now_iso(),
         "target": y_name,
         "target_kind": target_kind,
         "candidates": list(candidates),
@@ -1668,7 +1659,7 @@ def rfe(
                 f" dropped {len(dropped)}. Apply to held-out data with "
                 f"rfe(df_test, params=...).")
 
-    _append_audit(out, {
+    append_audit(out, {
         "stage": "feature_selection",
         "function": "rfe",
         "timestamp": params_out["fit_at"],
@@ -1996,7 +1987,7 @@ def _selectpipe_fit(df, steps, y, save_path, show, plot, return_df,
     combined = {
         "function": "selectpipe",
         "version": __version__,
-        "fit_at": _now_iso(),
+        "fit_at": now_iso(),
         "steps": step_params_list,
         "metadata": {
             "n_steps": len(clean),
@@ -2022,7 +2013,7 @@ def _selectpipe_fit(df, steps, y, save_path, show, plot, return_df,
                 f"artifact.{saved_note} Apply to held-out data with "
                 f"selectpipe(df_test, params=...).")
 
-    _append_audit(out, {
+    append_audit(out, {
         "stage": "feature_selection",
         "function": "selectpipe",
         "timestamp": combined["fit_at"],
@@ -2104,10 +2095,10 @@ def _selectpipe_apply(df, params, show, plot, return_df, return_params,
                 f"column(s), {out.shape[1]} remain; no re-scoring -- "
                 f"leakage-safe.")
 
-    _append_audit(out, {
+    append_audit(out, {
         "stage": "feature_selection",
         "function": "selectpipe",
-        "timestamp": _now_iso(),
+        "timestamp": now_iso(),
         "mode": "apply",
         "params": {"n_steps": len(summary_rows), "chain": chain,
                    "fit_at": fit_at},

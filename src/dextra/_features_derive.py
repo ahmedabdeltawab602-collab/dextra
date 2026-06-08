@@ -10,17 +10,15 @@ import numpy as np
 import pandas as pd
 
 from ._features_common import (
-    _append_audit,
     _display,
     _finalize_figure,
     _fmt_table,
     _hist_bins,
-    _now_iso,
     _print_header,
     _resolve_cols,
     _ret_pack,
 )
-from ._utils import _ensure_pandas, get_variable_name
+from ._utils import _ensure_pandas, append_audit, get_variable_name, now_iso
 from ._version import __version__
 
 _VALID_DTFEATS_METHODS = ("calendar", "cyclical", "both", "compare")
@@ -244,7 +242,7 @@ def dtfeats(
         "function": "dtfeats",
         "method": method,
         "version": __version__,
-        "fit_at": _now_iso(),
+        "fit_at": now_iso(),
         "columns": col_params,
         "metadata": {"drop_original": bool(drop_original), "n_cols": len(cols)},
     }
@@ -254,7 +252,7 @@ def dtfeats(
                 f"datetime column(s) using method '{method}'. Cyclical "
                 f"sin/cos pairs keep periodic distance meaningful.")
 
-    _append_audit(out, {
+    append_audit(out, {
         "stage": "feature_datetime",
         "function": "dtfeats",
         "timestamp": params_out["fit_at"],
@@ -316,10 +314,10 @@ def _dtfeats_apply(df, params, show, plot, return_df, return_params,
     decision = (f"Applied saved 'dtfeats' recipe (fitted "
                 f"{params.get('fit_at', '?')}) to {len(col_params)} "
                 f"column(s); identical feature set to the fit.")
-    _append_audit(out, {
+    append_audit(out, {
         "stage": "feature_datetime",
         "function": "dtfeats",
-        "timestamp": _now_iso(),
+        "timestamp": now_iso(),
         "mode": "apply",
         "params": {"method": method, "cols": list(col_params),
                    "fit_at": params.get("fit_at")},
@@ -575,7 +573,7 @@ def cross(
         "function": "cross",
         "method": method,
         "version": __version__,
-        "fit_at": _now_iso(),
+        "fit_at": now_iso(),
         "columns": recipe,
         "metadata": {"degree": int(degree) if method == "polynomial" else None,
                      "n_terms": len(recipe)},
@@ -585,7 +583,7 @@ def cross(
                 f"'{method}'. Interactions expose relationships a linear "
                 f"model cannot see from the raw columns alone.")
 
-    _append_audit(out, {
+    append_audit(out, {
         "stage": "feature_interaction",
         "function": "cross",
         "timestamp": params_out["fit_at"],
@@ -644,10 +642,10 @@ def _cross_apply(df, params, show, plot, return_df, return_params,
     decision = (f"Applied saved 'cross' recipe (fitted "
                 f"{params.get('fit_at', '?')}) -- recreated {len(recipe)} "
                 f"interaction feature(s); identical to the fit.")
-    _append_audit(out, {
+    append_audit(out, {
         "stage": "feature_interaction",
         "function": "cross",
-        "timestamp": _now_iso(),
+        "timestamp": now_iso(),
         "mode": "apply",
         "params": {"method": method, "n_terms": len(recipe),
                    "fit_at": params.get("fit_at")},
@@ -962,7 +960,7 @@ def aggfeat(
         "function": "aggfeat",
         "method": agg,
         "version": __version__,
-        "fit_at": _now_iso(),
+        "fit_at": now_iso(),
         "columns": col_params,
         "metadata": {"as_of": as_of, "agg_mode": agg_mode,
                      "n_cols": len(value)},
@@ -975,7 +973,7 @@ def aggfeat(
     decision = (f"Built {len(value)} aggregation feature(s): {agg} of "
                 f"{value} grouped by {group}. Used {guard}.")
 
-    _append_audit(out, {
+    append_audit(out, {
         "stage": "feature_aggregation",
         "function": "aggfeat",
         "timestamp": params_out["fit_at"],
@@ -1077,10 +1075,10 @@ def _aggfeat_apply(df, params, show, plot, return_df, return_params,
     decision = (f"Applied saved 'aggfeat' params (fitted "
                 f"{params.get('fit_at', '?')}) -- recreated {len(col_params)} "
                 f"aggregation feature(s); no re-fit -- leakage-safe.")
-    _append_audit(out, {
+    append_audit(out, {
         "stage": "feature_aggregation",
         "function": "aggfeat",
-        "timestamp": _now_iso(),
+        "timestamp": now_iso(),
         "mode": "apply",
         "params": {"agg": agg, "cols": list(col_params),
                    "fit_at": params.get("fit_at")},

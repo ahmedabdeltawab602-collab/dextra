@@ -34,7 +34,6 @@ Stage 6.1 - regression:
 from __future__ import annotations
 
 import warnings
-from datetime import datetime, timezone
 from typing import Optional, Sequence
 
 import matplotlib.pyplot as plt
@@ -42,7 +41,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 
-from ._utils import _ensure_pandas, get_variable_name
+from ._utils import _ensure_pandas, append_audit, get_variable_name, now_iso
 from ._version import __version__
 
 try:
@@ -79,9 +78,6 @@ def _print_header(title: str) -> None:
     print("-" * len(title))
 
 
-def _now_iso() -> str:
-    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-
 
 def _finalize_figure(fig, return_fig: bool) -> None:
     if fig is None:
@@ -106,11 +102,6 @@ def _ret_pack(out, params, fig, return_df, return_params, return_fig):
         return results[0]
     return tuple(results)
 
-
-def _append_audit(out: pd.DataFrame, entry: dict) -> None:
-    out.attrs.setdefault(AUDIT_KEY, [])
-    out.attrs[AUDIT_KEY] = list(out.attrs[AUDIT_KEY])
-    out.attrs[AUDIT_KEY].append(entry)
 
 
 def _fmt_table(frame: pd.DataFrame, decimals: int) -> pd.DataFrame:
@@ -448,7 +439,7 @@ def regress(
         "task": "regression",
         "algorithm": method,
         "version": __version__,
-        "fit_at": _now_iso(),
+        "fit_at": now_iso(),
         "features": list(features),
         "target": target_name,
         "hyperparams": _hyperparams(method),
@@ -466,7 +457,7 @@ def regress(
         f"In-sample predictions added as '{pred_col}'. "
         f"Persist with joblib.dump(params['estimator'], ...).")
 
-    _append_audit(out, {
+    append_audit(out, {
         "stage": "modeling",
         "function": "regress",
         "timestamp": params_out["fit_at"],
@@ -541,10 +532,10 @@ def _regress_apply(df, params, show, plot, return_df, return_params,
                 f"model (fitted {params.get('fit_at', '?')}); predicted "
                 f"{len(out)} row(s) into '{pred_col}' -- no re-fit, "
                 f"leakage-safe.")
-    _append_audit(out, {
+    append_audit(out, {
         "stage": "modeling",
         "function": "regress",
-        "timestamp": _now_iso(),
+        "timestamp": now_iso(),
         "mode": "apply",
         "params": {"algorithm": params.get("algorithm"),
                    "fit_at": params.get("fit_at")},
@@ -585,10 +576,10 @@ def _regress_compare(df, X, yv, features, target_name, cv_folds, standardize,
     decision = (f"Compared {len(_REGRESS_METHODS)} regressors by {cv_folds}-fold "
                 f"CV; best by R^2 is '{best}' (R^2={_fmt_metric(best_r2, decimals)}). "
                 f"Nothing written -- choose a method to fit.")
-    _append_audit(out, {
+    append_audit(out, {
         "stage": "modeling",
         "function": "regress",
-        "timestamp": _now_iso(),
+        "timestamp": now_iso(),
         "mode": "compare",
         "params": {"candidates": list(_REGRESS_METHODS), "cv": cv_folds,
                    "target": target_name},
@@ -923,7 +914,7 @@ def classify(
         "task": "classification",
         "algorithm": method,
         "version": __version__,
-        "fit_at": _now_iso(),
+        "fit_at": now_iso(),
         "features": list(features),
         "target": target_name,
         "classes": [_json_safe_label(c) for c in estimator.classes_],
@@ -947,7 +938,7 @@ def classify(
         f"Predicted labels added as '{pred_col}'. "
         f"Persist with joblib.dump(params['estimator'], ...).")
 
-    _append_audit(out, {
+    append_audit(out, {
         "stage": "modeling",
         "function": "classify",
         "timestamp": params_out["fit_at"],
@@ -1004,10 +995,10 @@ def _classify_apply(df, params, show, plot, return_df, return_params,
     decision = (f"Applied saved '{params.get('algorithm', '?')}' classifier "
                 f"(fitted {params.get('fit_at', '?')}); predicted {len(out)} "
                 f"row(s) into '{pred_col}' -- no re-fit, leakage-safe.")
-    _append_audit(out, {
+    append_audit(out, {
         "stage": "modeling",
         "function": "classify",
-        "timestamp": _now_iso(),
+        "timestamp": now_iso(),
         "mode": "apply",
         "params": {"algorithm": params.get("algorithm"),
                    "fit_at": params.get("fit_at")},
@@ -1049,10 +1040,10 @@ def _classify_compare(df, X, yv, features, target_name, n_classes, binary,
                 f"{cv_folds}-fold stratified CV; best by accuracy is '{best}' "
                 f"(accuracy={_fmt_metric(best_acc, decimals)}). Nothing written "
                 f"-- choose a method to fit.")
-    _append_audit(out, {
+    append_audit(out, {
         "stage": "modeling",
         "function": "classify",
-        "timestamp": _now_iso(),
+        "timestamp": now_iso(),
         "mode": "compare",
         "params": {"candidates": list(_CLASSIFY_METHODS), "cv": cv_folds,
                    "target": target_name, "n_classes": int(n_classes)},
@@ -1371,7 +1362,7 @@ def cluster(
         "task": "clustering",
         "algorithm": method,
         "version": __version__,
-        "fit_at": _now_iso(),
+        "fit_at": now_iso(),
         "features": list(features),
         "target": None,
         "hyperparams": _cluster_hyperparams(method, best_k),
@@ -1392,7 +1383,7 @@ def cluster(
         f"{inertia_txt}. Cluster labels added as '{pred_col}'. "
         f"Persist with joblib.dump(params['estimator'], ...).")
 
-    _append_audit(out, {
+    append_audit(out, {
         "stage": "modeling",
         "function": "cluster",
         "timestamp": params_out["fit_at"],
@@ -1449,10 +1440,10 @@ def _cluster_apply(df, params, show, plot, return_df, return_params,
                 f"model (fitted {params.get('fit_at', '?')}); assigned "
                 f"{len(out)} row(s) into '{pred_col}' -- no re-fit, "
                 f"leakage-safe.")
-    _append_audit(out, {
+    append_audit(out, {
         "stage": "modeling",
         "function": "cluster",
-        "timestamp": _now_iso(),
+        "timestamp": now_iso(),
         "mode": "apply",
         "params": {"algorithm": params.get("algorithm"),
                    "fit_at": params.get("fit_at")},
@@ -1496,10 +1487,10 @@ def _cluster_compare(df, Xs, scaler, features, k_grid, use_scaler, show, plot,
         f"{krange_txt}; best by silhouette is '{best}' "
         f"(silhouette={_fmt_metric(best_sil, decimals)}, k={int(best_k)}). "
         f"Nothing written -- choose a method to fit.")
-    _append_audit(out, {
+    append_audit(out, {
         "stage": "modeling",
         "function": "cluster",
-        "timestamp": _now_iso(),
+        "timestamp": now_iso(),
         "mode": "compare",
         "params": {"candidates": list(_CLUSTER_METHODS),
                    "k_range": [k_grid[0], k_grid[-1]]},
