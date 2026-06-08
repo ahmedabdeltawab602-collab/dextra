@@ -18,7 +18,10 @@ _FAMILIES = ["transform", "scale", "bin", "encode", "dtfeats", "cross",
              "aggfeat", "featpipe", "redundancy", "relevance", "importance",
              "rfe", "selectpipe", "regress", "classify", "cluster",
              # Phase 1 EDA brought up to the unified contract (audit #4).
-             "describe_numeric", "plot_histograms", "plot_boxplots"]
+             "describe_numeric", "plot_histograms", "plot_boxplots",
+             # Phase 2 batch 1 (audit #4).
+             "pearson_skewness", "empirical_rule_check", "outliers_report",
+             "missing_report", "frequency_table"]
 
 # short alias -> canonical function name
 _ALIASES = {

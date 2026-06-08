@@ -28,7 +28,10 @@ from scipy import stats as _sst
 
 from ._utils import (
     _ensure_pandas,
+    append_audit,
     get_variable_name,
+    json_safe,
+    now_iso,
     resolve_columns,
     to_numeric_frame,
 )
@@ -37,6 +40,20 @@ try:
     from IPython.display import display as _ipy_display
 except ImportError:
     _ipy_display = None
+
+
+def _ret_pack(out, params, fig, return_df, return_params, return_fig):
+    """Pack outputs in fixed order: dataframe, params, figure (Phase-2 contract)."""
+    results = []
+    if return_df:
+        results.append(out)
+    if return_params:
+        results.append(params)
+    if return_fig:
+        results.append(fig)
+    if not results:
+        return None
+    return results[0] if len(results) == 1 else tuple(results)
 
 
 sns.set_style("whitegrid")
@@ -283,6 +300,8 @@ def pearson_skewness(
     plot: bool = True,
     return_df: bool = False,
     return_fig: bool = False,
+    params: Optional[dict] = None,
+    return_params: bool = False,
     fig_width: float = 14.0,
     fig_row_height: float = 3.5,
     dpi: int = 110,
@@ -292,6 +311,10 @@ def pearson_skewness(
         raise ValueError(f"'decimals' must be >= 0, got {decimals}")
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
+    if params is not None:
+        _cfg = params.get("params", params)
+        cols = _cfg.get("cols", cols)
+        decimals = _cfg.get("decimals", decimals)
 
     cols_resolved = resolve_columns(df, cols, numeric_only=True)
     num = to_numeric_frame(df[cols_resolved].copy())
@@ -342,10 +365,34 @@ def pearson_skewness(
                                      fig_width, fig_row_height, dpi, decimals)
     _finalize_figure(fig, show, plot, return_fig)
 
-    if return_df and return_fig: return summary, fig
-    if return_df: return summary
-    if return_fig: return fig
-    return None
+    _config = {"cols": list(cols_resolved), "decimals": decimals}
+    _audit_entry = {
+        "stage": "phase2-stats",
+        "function": "pearson_skewness",
+        "timestamp": now_iso(),
+        "df_name": df_name,
+        "params": _config,
+        "decision": f"Pearson skewness for {len(cols_resolved)} column(s) of \047{df_name}\047.",
+    }
+    if isinstance(summary, pd.DataFrame):
+        append_audit(summary, _audit_entry)
+        _audit_list = list(summary.attrs.get("dextra_audit", []))
+        _summary_payload = json_safe(summary.to_dict())
+    else:
+        _audit_list = [_audit_entry]
+        _summary_payload = None
+    manifest = {
+        "stage": "phase2-stats",
+        "function": "pearson_skewness",
+        "df_name": df_name,
+        "params": _config,
+        "summary": _summary_payload,
+        "dextra_audit": _audit_list,
+    }
+
+    if not (return_df or return_params or return_fig):
+        return None
+    return _ret_pack(summary, manifest, fig, return_df, return_params, return_fig)
 
 
 def _plot_pearson_skewness(num, summary, cols, fig_width, row_height, dpi, decimals):
@@ -407,6 +454,8 @@ def empirical_rule_check(
     plot: bool = True,
     return_df: bool = False,
     return_fig: bool = False,
+    params: Optional[dict] = None,
+    return_params: bool = False,
     fig_width: float = 14.0,
     fig_row_height: float = 3.8,
     dpi: int = 110,
@@ -416,6 +465,11 @@ def empirical_rule_check(
         raise ValueError(f"'tolerance' must be > 0, got {tolerance}")
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
+    if params is not None:
+        _cfg = params.get("params", params)
+        cols = _cfg.get("cols", cols)
+        decimals = _cfg.get("decimals", decimals)
+        tolerance = _cfg.get("tolerance", tolerance)
 
     cols_resolved = resolve_columns(df, cols, numeric_only=True)
     num = to_numeric_frame(df[cols_resolved].copy())
@@ -467,10 +521,34 @@ def empirical_rule_check(
                                    fig_width, fig_row_height, dpi, decimals)
     _finalize_figure(fig, show, plot, return_fig)
 
-    if return_df and return_fig: return summary, fig
-    if return_df: return summary
-    if return_fig: return fig
-    return None
+    _config = {"cols": list(cols_resolved), "decimals": decimals, "tolerance": tolerance}
+    _audit_entry = {
+        "stage": "phase2-stats",
+        "function": "empirical_rule_check",
+        "timestamp": now_iso(),
+        "df_name": df_name,
+        "params": _config,
+        "decision": f"Empirical-rule check for {len(cols_resolved)} column(s) of \047{df_name}\047.",
+    }
+    if isinstance(summary, pd.DataFrame):
+        append_audit(summary, _audit_entry)
+        _audit_list = list(summary.attrs.get("dextra_audit", []))
+        _summary_payload = json_safe(summary.to_dict())
+    else:
+        _audit_list = [_audit_entry]
+        _summary_payload = None
+    manifest = {
+        "stage": "phase2-stats",
+        "function": "empirical_rule_check",
+        "df_name": df_name,
+        "params": _config,
+        "summary": _summary_payload,
+        "dextra_audit": _audit_list,
+    }
+
+    if not (return_df or return_params or return_fig):
+        return None
+    return _ret_pack(summary, manifest, fig, return_df, return_params, return_fig)
 
 
 def _plot_empirical_rule(num, summary, cols, fig_width, row_height, dpi, decimals):
@@ -537,6 +615,8 @@ def outliers_report(
     plot: bool = True,
     return_df: bool = False,
     return_fig: bool = False,
+    params: Optional[dict] = None,
+    return_params: bool = False,
     return_rows: bool = False,
     fig_width: float = 14.0,
     fig_row_height: float = 3.5,
@@ -549,6 +629,13 @@ def outliers_report(
     if z_threshold <= 0: raise ValueError(f"'z_threshold' must be > 0, got {z_threshold}")
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
+    if params is not None:
+        _cfg = params.get("params", params)
+        cols = _cfg.get("cols", cols)
+        method = _cfg.get("method", method)
+        k = _cfg.get("k", k)
+        z_threshold = _cfg.get("z_threshold", z_threshold)
+        decimals = _cfg.get("decimals", decimals)
 
     cols_resolved = resolve_columns(df, cols, numeric_only=True)
     num = to_numeric_frame(df[cols_resolved].copy())
@@ -603,6 +690,31 @@ def outliers_report(
                              fig_width, fig_row_height, dpi, decimals)
     _finalize_figure(fig, show, plot, return_fig)
 
+    _config = {"cols": list(cols_resolved), "method": method, "k": k, "z_threshold": z_threshold, "decimals": decimals}
+    _audit_entry = {
+        "stage": "phase2-stats",
+        "function": "outliers_report",
+        "timestamp": now_iso(),
+        "df_name": df_name,
+        "params": _config,
+        "decision": f"Outliers report ({method}) for {len(cols_resolved)} column(s) of \047{df_name}\047.",
+    }
+    if isinstance(summary, pd.DataFrame):
+        append_audit(summary, _audit_entry)
+        _audit_list = list(summary.attrs.get("dextra_audit", []))
+        _summary_payload = json_safe(summary.to_dict())
+    else:
+        _audit_list = [_audit_entry]
+        _summary_payload = None
+    manifest = {
+        "stage": "phase2-stats",
+        "function": "outliers_report",
+        "df_name": df_name,
+        "params": _config,
+        "summary": _summary_payload,
+        "dextra_audit": _audit_list,
+    }
+
     if return_rows:
         if not n_rows_flagged:
             return df.iloc[0:0].assign(outlier_in=pd.Series(dtype="object"))
@@ -610,10 +722,9 @@ def outliers_report(
         flagged_rows["outlier_in"] = outlier_mask.loc[any_outlier_per_row].apply(
             lambda r: ", ".join(c for c in cols_resolved if r[c]), axis=1)
         return flagged_rows
-    if return_df and return_fig: return summary, fig
-    if return_df: return summary
-    if return_fig: return fig
-    return None
+    if not (return_df or return_params or return_fig):
+        return None
+    return _ret_pack(summary, manifest, fig, return_df, return_params, return_fig)
 
 
 def _plot_outliers(num, summary, cols, method, k, z_threshold, fig_width, row_height, dpi, decimals):
@@ -1095,6 +1206,8 @@ def missing_report(
     plot: bool = True,
     return_df: bool = False,
     return_fig: bool = False,
+    params: Optional[dict] = None,
+    return_params: bool = False,
     fig_width: float = 14.0,
     fig_height: float = 6.5,
     dpi: int = 110,
@@ -1117,6 +1230,9 @@ def missing_report(
     """
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
+    if params is not None:
+        _cfg = params.get("params", params)
+        decimals = _cfg.get("decimals", decimals)
     df = _ensure_pandas(df)
     n_total = len(df)
     rows = []
@@ -1175,10 +1291,34 @@ def missing_report(
         fig = _plot_missing_report(df, summary, fig_width, fig_height, dpi, decimals)
     _finalize_figure(fig, show, plot, return_fig)
 
-    if return_df and return_fig: return summary, fig
-    if return_df: return summary
-    if return_fig: return fig
-    return None
+    _config = {"decimals": decimals}
+    _audit_entry = {
+        "stage": "phase2-stats",
+        "function": "missing_report",
+        "timestamp": now_iso(),
+        "df_name": df_name,
+        "params": _config,
+        "decision": f"Missing-values report for \047{df_name}\047.",
+    }
+    if isinstance(summary, pd.DataFrame):
+        append_audit(summary, _audit_entry)
+        _audit_list = list(summary.attrs.get("dextra_audit", []))
+        _summary_payload = json_safe(summary.to_dict())
+    else:
+        _audit_list = [_audit_entry]
+        _summary_payload = None
+    manifest = {
+        "stage": "phase2-stats",
+        "function": "missing_report",
+        "df_name": df_name,
+        "params": _config,
+        "summary": _summary_payload,
+        "dextra_audit": _audit_list,
+    }
+
+    if not (return_df or return_params or return_fig):
+        return None
+    return _ret_pack(summary, manifest, fig, return_df, return_params, return_fig)
 
 
 def _plot_missing_report(df, summary, fig_width, fig_height, dpi, decimals):
@@ -1238,6 +1378,8 @@ def frequency_table(
     plot: bool = True,
     return_df: bool = False,
     return_fig: bool = False,
+    params: Optional[dict] = None,
+    return_params: bool = False,
     fig_width: float = 12.0,
     fig_height: float = 5.5,
     dpi: int = 110,
@@ -1255,6 +1397,11 @@ def frequency_table(
         raise KeyError(f"Column not found: {col!r}")
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
+    if params is not None:
+        _cfg = params.get("params", params)
+        top_n = _cfg.get("top_n", top_n)
+        ascending = _cfg.get("ascending", ascending)
+        decimals = _cfg.get("decimals", decimals)
 
     s = df[col].dropna()
     n_missing = int(df[col].isna().sum())
@@ -1296,10 +1443,34 @@ def frequency_table(
         fig = _plot_frequency_table(summary, col, fig_width, fig_height, dpi, decimals)
     _finalize_figure(fig, show, plot, return_fig)
 
-    if return_df and return_fig: return summary, fig
-    if return_df: return summary
-    if return_fig: return fig
-    return None
+    _config = {"col": repr(col), "top_n": top_n, "ascending": ascending, "decimals": decimals}
+    _audit_entry = {
+        "stage": "phase2-stats",
+        "function": "frequency_table",
+        "timestamp": now_iso(),
+        "df_name": df_name,
+        "params": _config,
+        "decision": f"Frequency table for column \047{col}\047 of \047{df_name}\047.",
+    }
+    if isinstance(summary, pd.DataFrame):
+        append_audit(summary, _audit_entry)
+        _audit_list = list(summary.attrs.get("dextra_audit", []))
+        _summary_payload = json_safe(summary.to_dict())
+    else:
+        _audit_list = [_audit_entry]
+        _summary_payload = None
+    manifest = {
+        "stage": "phase2-stats",
+        "function": "frequency_table",
+        "df_name": df_name,
+        "params": _config,
+        "summary": _summary_payload,
+        "dextra_audit": _audit_list,
+    }
+
+    if not (return_df or return_params or return_fig):
+        return None
+    return _ret_pack(summary, manifest, fig, return_df, return_params, return_fig)
 
 
 def _plot_frequency_table(summary, col, fig_width, fig_height, dpi, decimals):
