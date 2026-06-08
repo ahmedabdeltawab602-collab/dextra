@@ -21,7 +21,11 @@ _FAMILIES = ["transform", "scale", "bin", "encode", "dtfeats", "cross",
              "describe_numeric", "plot_histograms", "plot_boxplots",
              # Phase 2 batch 1 (audit #4).
              "pearson_skewness", "empirical_rule_check", "outliers_report",
-             "missing_report", "frequency_table"]
+             "missing_report", "frequency_table",
+             # Phase 2 batch 2 (audit #4).
+             "z_scores", "correlation_matrix", "simple_linear_regression",
+             "group_compare", "anova_oneway", "chi_square_independence",
+             "vif_scores", "cross_tab"]
 
 # short alias -> canonical function name
 _ALIASES = {

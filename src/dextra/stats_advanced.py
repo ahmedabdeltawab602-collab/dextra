@@ -156,6 +156,8 @@ def z_scores(
     plot: bool = True,
     return_df: bool = False,
     return_fig: bool = False,
+    params: Optional[dict] = None,
+    return_params: bool = False,
     return_zscores: bool = False,
     fig_width: float = 14.0,
     fig_row_height: float = 3.5,
@@ -171,6 +173,11 @@ def z_scores(
         raise ValueError(f"'decimals' must be >= 0, got {decimals}")
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
+    if params is not None:
+        _cfg = params.get("params", params)
+        cols = _cfg.get("cols", cols)
+        threshold = _cfg.get("threshold", threshold)
+        decimals = _cfg.get("decimals", decimals)
 
     cols_resolved = resolve_columns(df, cols, numeric_only=True)
     num = to_numeric_frame(df[cols_resolved].copy())
@@ -233,13 +240,33 @@ def z_scores(
 
     if return_zscores:
         return z
-    if return_df and return_fig:
-        return summary, fig
-    if return_df:
-        return summary
-    if return_fig:
-        return fig
-    return None
+    _config = json_safe({"cols": list(cols) if cols is not None else None, "threshold": threshold, "decimals": decimals})
+    _audit_entry = {
+        "stage": "phase2-stats",
+        "function": "z_scores",
+        "timestamp": now_iso(),
+        "df_name": df_name,
+        "params": _config,
+        "decision": f"Z-scores (|Z| > {threshold}) for '{df_name}'.",
+    }
+    if isinstance(summary, pd.DataFrame):
+        append_audit(summary, _audit_entry)
+        _audit_list = list(summary.attrs.get("dextra_audit", []))
+        _summary_payload = json_safe(summary.to_dict())
+    else:
+        _audit_list = [_audit_entry]
+        _summary_payload = None
+    manifest = {
+        "stage": "phase2-stats",
+        "function": "z_scores",
+        "df_name": df_name,
+        "params": _config,
+        "summary": _summary_payload,
+        "dextra_audit": _audit_list,
+    }
+    if not (return_df or return_params or return_fig):
+        return None
+    return _ret_pack(summary, manifest, fig, return_df, return_params, return_fig)
 
 
 def _plot_z_scores(z, cols, threshold, fig_width, row_height, dpi, decimals):
@@ -806,6 +833,8 @@ def correlation_matrix(
     plot: bool = True,
     return_df: bool = False,
     return_fig: bool = False,
+    params: Optional[dict] = None,
+    return_params: bool = False,
     return_p: bool = False,
     annot: bool = True,
     mask_lower: bool = False,
@@ -836,6 +865,12 @@ def correlation_matrix(
         raise ValueError(f"'alpha' must be in (0, 1), got {alpha}")
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
+    if params is not None:
+        _cfg = params.get("params", params)
+        cols = _cfg.get("cols", cols)
+        method = _cfg.get("method", method)
+        alpha = _cfg.get("alpha", alpha)
+        decimals = _cfg.get("decimals", decimals)
 
     cols_resolved = resolve_columns(df, cols, numeric_only=True)
     if len(cols_resolved) < 2:
@@ -929,10 +964,33 @@ def correlation_matrix(
     if return_p:
         if return_fig: return r_mat, p_mat, fig
         return r_mat, p_mat
-    if return_df and return_fig: return r_mat, fig
-    if return_df: return r_mat
-    if return_fig: return fig
-    return None
+    _config = json_safe({"cols": list(cols) if cols is not None else None, "method": method, "alpha": alpha, "decimals": decimals})
+    _audit_entry = {
+        "stage": "phase2-stats",
+        "function": "correlation_matrix",
+        "timestamp": now_iso(),
+        "df_name": df_name,
+        "params": _config,
+        "decision": f"Correlation matrix ({method}) for '{df_name}'.",
+    }
+    if isinstance(r_mat, pd.DataFrame):
+        append_audit(r_mat, _audit_entry)
+        _audit_list = list(r_mat.attrs.get("dextra_audit", []))
+        _summary_payload = json_safe(r_mat.to_dict())
+    else:
+        _audit_list = [_audit_entry]
+        _summary_payload = None
+    manifest = {
+        "stage": "phase2-stats",
+        "function": "correlation_matrix",
+        "df_name": df_name,
+        "params": _config,
+        "summary": _summary_payload,
+        "dextra_audit": _audit_list,
+    }
+    if not (return_df or return_params or return_fig):
+        return None
+    return _ret_pack(r_mat, manifest, fig, return_df, return_params, return_fig)
 
 
 def _plot_correlation_matrix(r_mat, p_mat, pairs_df, method, alpha, annot, mask_lower, cmap,
@@ -1011,6 +1069,8 @@ def simple_linear_regression(
     plot: bool = True,
     return_df: bool = False,
     return_fig: bool = False,
+    params: Optional[dict] = None,
+    return_params: bool = False,
     return_residuals: bool = False,
     ci_band: bool = True,
     fig_width: float = 16.0,
@@ -1041,6 +1101,10 @@ def simple_linear_regression(
         raise ValueError(f"'alpha' must be in (0, 1), got {alpha}")
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
+    if params is not None:
+        _cfg = params.get("params", params)
+        alpha = _cfg.get("alpha", alpha)
+        decimals = _cfg.get("decimals", decimals)
 
     valid = df[[x, y]].dropna()
     if len(valid) < 3:
@@ -1123,10 +1187,33 @@ def simple_linear_regression(
         if return_df and return_fig: return summary, fig, residuals_series
         if return_df: return summary, residuals_series
         return residuals_series
-    if return_df and return_fig: return summary, fig
-    if return_df: return summary
-    if return_fig: return fig
-    return None
+    _config = json_safe({"x": x, "y": y, "alpha": alpha, "decimals": decimals})
+    _audit_entry = {
+        "stage": "phase2-stats",
+        "function": "simple_linear_regression",
+        "timestamp": now_iso(),
+        "df_name": df_name,
+        "params": _config,
+        "decision": f"Simple linear regression {y} ~ {x} for '{df_name}'.",
+    }
+    if isinstance(summary, pd.DataFrame):
+        append_audit(summary, _audit_entry)
+        _audit_list = list(summary.attrs.get("dextra_audit", []))
+        _summary_payload = json_safe(summary.to_dict())
+    else:
+        _audit_list = [_audit_entry]
+        _summary_payload = None
+    manifest = {
+        "stage": "phase2-stats",
+        "function": "simple_linear_regression",
+        "df_name": df_name,
+        "params": _config,
+        "summary": _summary_payload,
+        "dextra_audit": _audit_list,
+    }
+    if not (return_df or return_params or return_fig):
+        return None
+    return _ret_pack(summary, manifest, fig, return_df, return_params, return_fig)
 
 
 def _plot_slr(xa, ya, y_pred, residuals, m, b, r2, p_value, se_slope, df_resid,
@@ -1516,6 +1603,8 @@ def cross_tab(
     plot: bool = True,
     return_df: bool = False,
     return_fig: bool = False,
+    params: Optional[dict] = None,
+    return_params: bool = False,
     return_test: bool = False,
     cmap: str = "Blues",
     fig_width: float = 12.0,
@@ -1549,6 +1638,11 @@ def cross_tab(
         raise ValueError(f"'normalize' must be None/'index'/'columns'/'all', got {normalize!r}")
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
+    if params is not None:
+        _cfg = params.get("params", params)
+        normalize = _cfg.get("normalize", normalize)
+        alpha = _cfg.get("alpha", alpha)
+        decimals = _cfg.get("decimals", decimals)
 
     valid = df[[row, col]].dropna()
     if len(valid) == 0:
@@ -1601,10 +1695,33 @@ def cross_tab(
     if return_test:
         if return_fig: return display_table, test_result, fig
         return display_table, test_result
-    if return_df and return_fig: return display_table, fig
-    if return_df: return display_table
-    if return_fig: return fig
-    return None
+    _config = json_safe({"row": row, "col": col, "normalize": normalize, "alpha": alpha, "decimals": decimals})
+    _audit_entry = {
+        "stage": "phase2-stats",
+        "function": "cross_tab",
+        "timestamp": now_iso(),
+        "df_name": df_name,
+        "params": _config,
+        "decision": f"Cross-tab {row} x {col} for '{df_name}'.",
+    }
+    if isinstance(display_table, pd.DataFrame):
+        append_audit(display_table, _audit_entry)
+        _audit_list = list(display_table.attrs.get("dextra_audit", []))
+        _summary_payload = json_safe(display_table.to_dict())
+    else:
+        _audit_list = [_audit_entry]
+        _summary_payload = None
+    manifest = {
+        "stage": "phase2-stats",
+        "function": "cross_tab",
+        "df_name": df_name,
+        "params": _config,
+        "summary": _summary_payload,
+        "dextra_audit": _audit_list,
+    }
+    if not (return_df or return_params or return_fig):
+        return None
+    return _ret_pack(display_table, manifest, fig, return_df, return_params, return_fig)
 
 
 def _plot_cross_tab(observed, expected, row, col, chi2, p, v, strength,
@@ -1638,6 +1755,8 @@ def group_compare(
     plot: bool = True,
     return_df: bool = False,
     return_fig: bool = False,
+    params: Optional[dict] = None,
+    return_params: bool = False,
     fig_width: float = 14.0,
     fig_row_height: float = 4.0,
     dpi: int = 110,
@@ -1654,6 +1773,10 @@ def group_compare(
         raise KeyError(f"group_col not found: {group_col!r}")
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
+    if params is not None:
+        _cfg = params.get("params", params)
+        value_cols = _cfg.get("value_cols", value_cols)
+        decimals = _cfg.get("decimals", decimals)
 
     if value_cols is None:
         value_cols = [c for c in df.columns
@@ -1710,10 +1833,33 @@ def group_compare(
                                   fig_row_height, dpi, decimals)
     _finalize_figure(fig, show, plot, return_fig)
 
-    if return_df and return_fig: return summary, fig
-    if return_df: return summary
-    if return_fig: return fig
-    return None
+    _config = json_safe({"group_col": group_col, "value_cols": value_cols, "decimals": decimals})
+    _audit_entry = {
+        "stage": "phase2-stats",
+        "function": "group_compare",
+        "timestamp": now_iso(),
+        "df_name": df_name,
+        "params": _config,
+        "decision": f"Group comparison by '{group_col}' for '{df_name}'.",
+    }
+    if isinstance(summary, pd.DataFrame):
+        append_audit(summary, _audit_entry)
+        _audit_list = list(summary.attrs.get("dextra_audit", []))
+        _summary_payload = json_safe(summary.to_dict())
+    else:
+        _audit_list = [_audit_entry]
+        _summary_payload = None
+    manifest = {
+        "stage": "phase2-stats",
+        "function": "group_compare",
+        "df_name": df_name,
+        "params": _config,
+        "summary": _summary_payload,
+        "dextra_audit": _audit_list,
+    }
+    if not (return_df or return_params or return_fig):
+        return None
+    return _ret_pack(summary, manifest, fig, return_df, return_params, return_fig)
 
 
 def _plot_group_compare(df, group_col, value_cols, fig_width, row_height, dpi, decimals):
@@ -2624,6 +2770,8 @@ def anova_oneway(
     plot: bool = True,
     return_df: bool = False,
     return_fig: bool = False,
+    params: Optional[dict] = None,
+    return_params: bool = False,
     fig_width: float = 14.0,
     fig_height: float = 4.8,
     dpi: int = 110,
@@ -2635,6 +2783,10 @@ def anova_oneway(
         raise KeyError(f"value_col not found: {value_col!r}")
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
+    if params is not None:
+        _cfg = params.get("params", params)
+        alpha = _cfg.get("alpha", alpha)
+        decimals = _cfg.get("decimals", decimals)
 
     sub = df[[group_col, value_col]].dropna()
     groups = sub.groupby(group_col)[value_col]
@@ -2693,10 +2845,33 @@ def anova_oneway(
                           f_stat, df1, df2, alpha, p, fig_width, fig_height, dpi)
     _finalize_figure(fig, show, plot, return_fig)
 
-    if return_df and return_fig: return summary, fig
-    if return_df: return summary
-    if return_fig: return fig
-    return None
+    _config = json_safe({"group_col": group_col, "value_col": value_col, "alpha": alpha, "decimals": decimals})
+    _audit_entry = {
+        "stage": "phase2-stats",
+        "function": "anova_oneway",
+        "timestamp": now_iso(),
+        "df_name": df_name,
+        "params": _config,
+        "decision": f"One-way ANOVA of '{value_col}' by '{group_col}' for '{df_name}'.",
+    }
+    if isinstance(summary, pd.DataFrame):
+        append_audit(summary, _audit_entry)
+        _audit_list = list(summary.attrs.get("dextra_audit", []))
+        _summary_payload = json_safe(summary.to_dict())
+    else:
+        _audit_list = [_audit_entry]
+        _summary_payload = None
+    manifest = {
+        "stage": "phase2-stats",
+        "function": "anova_oneway",
+        "df_name": df_name,
+        "params": _config,
+        "summary": _summary_payload,
+        "dextra_audit": _audit_list,
+    }
+    if not (return_df or return_params or return_fig):
+        return None
+    return _ret_pack(summary, manifest, fig, return_df, return_params, return_fig)
 
 
 def _plot_anova(sub, group_col, value_col, group_names, arrays,
@@ -2750,6 +2925,8 @@ def chi_square_independence(
     plot: bool = True,
     return_df: bool = False,
     return_fig: bool = False,
+    params: Optional[dict] = None,
+    return_params: bool = False,
     fig_width: float = 12.0,
     fig_height: float = 4.8,
     dpi: int = 110,
@@ -2761,6 +2938,10 @@ def chi_square_independence(
         raise KeyError(f"col not found: {col!r}")
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
+    if params is not None:
+        _cfg = params.get("params", params)
+        alpha = _cfg.get("alpha", alpha)
+        decimals = _cfg.get("decimals", decimals)
 
     valid = df[[row, col]].dropna()
     observed = pd.crosstab(valid[row], valid[col])
@@ -2804,10 +2985,33 @@ def chi_square_independence(
                               fig_width, fig_height, dpi)
     _finalize_figure(fig, show, plot, return_fig)
 
-    if return_df and return_fig: return summary, fig
-    if return_df: return summary
-    if return_fig: return fig
-    return None
+    _config = json_safe({"row": row, "col": col, "alpha": alpha, "decimals": decimals})
+    _audit_entry = {
+        "stage": "phase2-stats",
+        "function": "chi_square_independence",
+        "timestamp": now_iso(),
+        "df_name": df_name,
+        "params": _config,
+        "decision": f"Chi-square independence {row} x {col} for '{df_name}'.",
+    }
+    if isinstance(summary, pd.DataFrame):
+        append_audit(summary, _audit_entry)
+        _audit_list = list(summary.attrs.get("dextra_audit", []))
+        _summary_payload = json_safe(summary.to_dict())
+    else:
+        _audit_list = [_audit_entry]
+        _summary_payload = None
+    manifest = {
+        "stage": "phase2-stats",
+        "function": "chi_square_independence",
+        "df_name": df_name,
+        "params": _config,
+        "summary": _summary_payload,
+        "dextra_audit": _audit_list,
+    }
+    if not (return_df or return_params or return_fig):
+        return None
+    return _ret_pack(summary, manifest, fig, return_df, return_params, return_fig)
 
 
 def _plot_chi2_test(chi2, dof, alpha, p, row, col, fig_width, fig_height, dpi):
@@ -2877,6 +3081,8 @@ def vif_scores(
     plot: bool = True,
     return_df: bool = False,
     return_fig: bool = False,
+    params: Optional[dict] = None,
+    return_params: bool = False,
     fig_width: float = 11.0,
     fig_height: float = 5.0,
     dpi: int = 110,
@@ -2901,6 +3107,11 @@ def vif_scores(
         raise ValueError(f"'threshold' must be > 1, got {threshold}")
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
+    if params is not None:
+        _cfg = params.get("params", params)
+        cols = _cfg.get("cols", cols)
+        threshold = _cfg.get("threshold", threshold)
+        decimals = _cfg.get("decimals", decimals)
 
     cols_resolved = resolve_columns(df, cols, numeric_only=True)
     if len(cols_resolved) < 2:
@@ -2950,10 +3161,33 @@ def vif_scores(
         fig = _plot_vif(summary, threshold, fig_width, fig_height, dpi, decimals)
     _finalize_figure(fig, show, plot, return_fig)
 
-    if return_df and return_fig: return summary, fig
-    if return_df: return summary
-    if return_fig: return fig
-    return None
+    _config = json_safe({"cols": list(cols) if cols is not None else None, "threshold": threshold, "decimals": decimals})
+    _audit_entry = {
+        "stage": "phase2-stats",
+        "function": "vif_scores",
+        "timestamp": now_iso(),
+        "df_name": df_name,
+        "params": _config,
+        "decision": f"VIF scores for '{df_name}'.",
+    }
+    if isinstance(summary, pd.DataFrame):
+        append_audit(summary, _audit_entry)
+        _audit_list = list(summary.attrs.get("dextra_audit", []))
+        _summary_payload = json_safe(summary.to_dict())
+    else:
+        _audit_list = [_audit_entry]
+        _summary_payload = None
+    manifest = {
+        "stage": "phase2-stats",
+        "function": "vif_scores",
+        "df_name": df_name,
+        "params": _config,
+        "summary": _summary_payload,
+        "dextra_audit": _audit_list,
+    }
+    if not (return_df or return_params or return_fig):
+        return None
+    return _ret_pack(summary, manifest, fig, return_df, return_params, return_fig)
 
 
 def _plot_vif(summary, threshold, fig_width, fig_height, dpi, decimals):
