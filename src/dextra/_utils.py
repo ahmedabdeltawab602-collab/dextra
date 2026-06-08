@@ -9,6 +9,7 @@ plumbing.
 from __future__ import annotations
 
 import inspect
+import warnings
 from datetime import datetime, timezone
 from typing import Any, Iterable, List, Optional, Sequence
 
@@ -132,6 +133,21 @@ def get_variable_name(obj: object, depth: int = 2) -> str:
 # ---------------------------------------------------------------------------
 # Safe arithmetic
 # ---------------------------------------------------------------------------
+
+def resolve_name(df_name, name, func_name):
+    """Back-compat shim: ``name=`` is the deprecated alias for ``df_name=``.
+
+    Emits a ``DeprecationWarning`` when ``name=`` is used and maps it onto
+    ``df_name`` only if the caller did not already pass ``df_name``.
+    """
+    if name is not None:
+        warnings.warn(
+            f"{func_name}: 'name=' is deprecated; use 'df_name=' instead.",
+            DeprecationWarning, stacklevel=3)
+        if df_name is None:
+            df_name = name
+    return df_name
+
 
 def now_iso() -> str:
     """Current UTC time as a compact ISO-8601 string (shared contract helper)."""

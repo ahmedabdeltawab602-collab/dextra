@@ -25,7 +25,12 @@ _FAMILIES = ["transform", "scale", "bin", "encode", "dtfeats", "cross",
              # Phase 2 batch 2 (audit #4).
              "z_scores", "correlation_matrix", "simple_linear_regression",
              "group_compare", "anova_oneway", "chi_square_independence",
-             "vif_scores", "cross_tab"]
+             "vif_scores", "cross_tab",
+             # Phase 2 batch 3 — inference/test family (audit #4, name-> df_name).
+             "confidence_interval_mean", "confidence_interval_proportion",
+             "sample_size_mean", "sample_size_proportion", "normality_test",
+             "t_test_one_sample", "t_test_two_sample", "t_test_paired",
+             "class_imbalance"]
 
 # short alias -> canonical function name
 _ALIASES = {

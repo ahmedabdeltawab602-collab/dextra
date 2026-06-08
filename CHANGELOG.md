@@ -16,6 +16,22 @@
   still returns `None`); the manifest is appended last. For the plotters
   `plot=True` simply gates rendering; for `describe_numeric` `plot` /
   `return_fig` are documented no-ops (it has no native figure).
+- **Unified contract — Phase 2 (audit #4 complete):** all 22 `stats_advanced`
+  functions now expose the full standard flag set, attach a `dextra_audit`
+  trail and return a JSON-safe `params` manifest when `return_params=True`.
+  Existing return order and the special escape-hatch returns
+  (`return_zscores`, `return_p`, `return_residuals`, `return_test`,
+  `return_rows`) are preserved; a bare call still returns `None`. The
+  inference/test helpers are pure functions of their explicit arguments, so
+  `params=` is accepted and recorded but there is nothing to replay.
+
+### Deprecated
+- `name=` is deprecated across the Phase 2 single-label helpers
+  (`confidence_interval_mean`, `confidence_interval_proportion`,
+  `normality_test`, `t_test_one_sample`, `class_imbalance`); pass `df_name=`
+  instead. `name=` still works and maps onto `df_name`, emitting a
+  `DeprecationWarning`. (The two-label helpers keep `name1`/`name2` and
+  `name_before`/`name_after`, which are group labels, not the frame name.)
 
 ### Docs
 - `docs/api.md` now documents the Phase 11 loader (`load` / `peek`): the five

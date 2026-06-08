@@ -33,6 +33,7 @@ from ._utils import (
     json_safe,
     now_iso,
     resolve_columns,
+    resolve_name,
     to_numeric_frame,
 )
 
@@ -1922,10 +1923,13 @@ def confidence_interval_mean(
     confidence: float = 0.95,
     decimals: int = 4,
     name: Optional[str] = None,
+    df_name: Optional[str] = None,
     show: bool = True,
     plot: bool = True,
     return_df: bool = False,
     return_fig: bool = False,
+    params: Optional[dict] = None,
+    return_params: bool = False,
     fig_width: float = 10.0,
     fig_height: float = 3.0,
     dpi: int = 110,
@@ -1964,7 +1968,8 @@ def confidence_interval_mean(
     )
     summary.index.name = "metric"
 
-    label = name or "data"
+    df_name = resolve_name(df_name, name, "confidence_interval_mean")
+    label = df_name or "data"
     if show:
         _print_header(f"Confidence interval for the mean of: {label}  (confidence={confidence})")
         _display(_format_summary(summary, decimals))
@@ -1978,10 +1983,33 @@ def confidence_interval_mean(
                             fig_width, fig_height, dpi, decimals)
     _finalize_figure(fig, show, plot, return_fig)
 
-    if return_df and return_fig: return summary, fig
-    if return_df: return summary
-    if return_fig: return fig
-    return None
+    _config = json_safe({"confidence": confidence, "decimals": decimals})
+    _audit_entry = {
+        "stage": "phase2-stats",
+        "function": "confidence_interval_mean",
+        "timestamp": now_iso(),
+        "df_name": df_name,
+        "params": _config,
+        "decision": f"{confidence:.0%} CI for the mean.",
+    }
+    if isinstance(summary, pd.DataFrame):
+        append_audit(summary, _audit_entry)
+        _audit_list = list(summary.attrs.get("dextra_audit", []))
+        _summary_payload = json_safe(summary.to_dict())
+    else:
+        _audit_list = [_audit_entry]
+        _summary_payload = None
+    manifest = {
+        "stage": "phase2-stats",
+        "function": "confidence_interval_mean",
+        "df_name": df_name,
+        "params": _config,
+        "summary": _summary_payload,
+        "dextra_audit": _audit_list,
+    }
+    if not (return_df or return_params or return_fig):
+        return None
+    return _ret_pack(summary, manifest, fig, return_df, return_params, return_fig)
 
 
 def _plot_ci_mean(label, mean, lower, upper, n, conf, fig_width, fig_height, dpi, decimals):
@@ -2016,10 +2044,13 @@ def confidence_interval_proportion(
     method: str = "wilson",
     decimals: int = 4,
     name: Optional[str] = None,
+    df_name: Optional[str] = None,
     show: bool = True,
     plot: bool = True,
     return_df: bool = False,
     return_fig: bool = False,
+    params: Optional[dict] = None,
+    return_params: bool = False,
     fig_width: float = 10.0,
     fig_height: float = 3.0,
     dpi: int = 110,
@@ -2064,7 +2095,8 @@ def confidence_interval_proportion(
     )
     summary.index.name = "metric"
 
-    label = name or "proportion"
+    df_name = resolve_name(df_name, name, "confidence_interval_proportion")
+    label = df_name or "proportion"
     if show:
         _print_header(f"Confidence interval for {label}  (method={method}, confidence={confidence})")
         _display(_format_summary(summary, decimals))
@@ -2078,10 +2110,33 @@ def confidence_interval_proportion(
                             fig_width, fig_height, dpi, decimals)
     _finalize_figure(fig, show, plot, return_fig)
 
-    if return_df and return_fig: return summary, fig
-    if return_df: return summary
-    if return_fig: return fig
-    return None
+    _config = json_safe({"successes": successes, "n": n, "confidence": confidence, "method": method, "decimals": decimals})
+    _audit_entry = {
+        "stage": "phase2-stats",
+        "function": "confidence_interval_proportion",
+        "timestamp": now_iso(),
+        "df_name": df_name,
+        "params": _config,
+        "decision": f"{confidence:.0%} CI for a proportion ({method}).",
+    }
+    if isinstance(summary, pd.DataFrame):
+        append_audit(summary, _audit_entry)
+        _audit_list = list(summary.attrs.get("dextra_audit", []))
+        _summary_payload = json_safe(summary.to_dict())
+    else:
+        _audit_list = [_audit_entry]
+        _summary_payload = None
+    manifest = {
+        "stage": "phase2-stats",
+        "function": "confidence_interval_proportion",
+        "df_name": df_name,
+        "params": _config,
+        "summary": _summary_payload,
+        "dextra_audit": _audit_list,
+    }
+    if not (return_df or return_params or return_fig):
+        return None
+    return _ret_pack(summary, manifest, fig, return_df, return_params, return_fig)
 
 
 def _plot_ci_prop(label, p_hat, lower, upper, n, method, conf, fig_width, fig_height, dpi, decimals):
@@ -2115,10 +2170,13 @@ def sample_size_mean(
     std: float,
     confidence: float = 0.95,
     decimals: int = 2,
+    df_name: Optional[str] = None,
     show: bool = True,
     plot: bool = True,
     return_df: bool = False,
     return_fig: bool = False,
+    params: Optional[dict] = None,
+    return_params: bool = False,
     fig_width: float = 10.0,
     fig_height: float = 4.5,
     dpi: int = 110,
@@ -2159,10 +2217,33 @@ def sample_size_mean(
                             fig_width, fig_height, dpi, decimals)
     _finalize_figure(fig, show, plot, return_fig)
 
-    if return_df and return_fig: return summary, fig
-    if return_df: return summary
-    if return_fig: return fig
-    return None
+    _config = json_safe({"margin_error": margin_error, "std": std, "confidence": confidence, "decimals": decimals})
+    _audit_entry = {
+        "stage": "phase2-stats",
+        "function": "sample_size_mean",
+        "timestamp": now_iso(),
+        "df_name": df_name,
+        "params": _config,
+        "decision": f"Required sample size for the mean (E={margin_error}, conf={confidence:.0%}).",
+    }
+    if isinstance(summary, pd.DataFrame):
+        append_audit(summary, _audit_entry)
+        _audit_list = list(summary.attrs.get("dextra_audit", []))
+        _summary_payload = json_safe(summary.to_dict())
+    else:
+        _audit_list = [_audit_entry]
+        _summary_payload = None
+    manifest = {
+        "stage": "phase2-stats",
+        "function": "sample_size_mean",
+        "df_name": df_name,
+        "params": _config,
+        "summary": _summary_payload,
+        "dextra_audit": _audit_list,
+    }
+    if not (return_df or return_params or return_fig):
+        return None
+    return _ret_pack(summary, manifest, fig, return_df, return_params, return_fig)
 
 
 def _plot_ss_mean(E, std, conf, z, n_required, fig_width, fig_height, dpi, decimals):
@@ -2193,10 +2274,13 @@ def sample_size_proportion(
     p: float = 0.5,
     confidence: float = 0.95,
     decimals: int = 2,
+    df_name: Optional[str] = None,
     show: bool = True,
     plot: bool = True,
     return_df: bool = False,
     return_fig: bool = False,
+    params: Optional[dict] = None,
+    return_params: bool = False,
     fig_width: float = 12.0,
     fig_height: float = 4.5,
     dpi: int = 110,
@@ -2245,10 +2329,33 @@ def sample_size_proportion(
                             fig_width, fig_height, dpi, decimals)
     _finalize_figure(fig, show, plot, return_fig)
 
-    if return_df and return_fig: return summary, fig
-    if return_df: return summary
-    if return_fig: return fig
-    return None
+    _config = json_safe({"margin_error": margin_error, "p": p, "confidence": confidence, "decimals": decimals})
+    _audit_entry = {
+        "stage": "phase2-stats",
+        "function": "sample_size_proportion",
+        "timestamp": now_iso(),
+        "df_name": df_name,
+        "params": _config,
+        "decision": f"Required sample size for a proportion (E={margin_error}, conf={confidence:.0%}).",
+    }
+    if isinstance(summary, pd.DataFrame):
+        append_audit(summary, _audit_entry)
+        _audit_list = list(summary.attrs.get("dextra_audit", []))
+        _summary_payload = json_safe(summary.to_dict())
+    else:
+        _audit_list = [_audit_entry]
+        _summary_payload = None
+    manifest = {
+        "stage": "phase2-stats",
+        "function": "sample_size_proportion",
+        "df_name": df_name,
+        "params": _config,
+        "summary": _summary_payload,
+        "dextra_audit": _audit_list,
+    }
+    if not (return_df or return_params or return_fig):
+        return None
+    return _ret_pack(summary, manifest, fig, return_df, return_params, return_fig)
 
 
 def _plot_ss_prop(E, p, conf, z, n_required, fig_width, fig_height, dpi, decimals):
@@ -2346,10 +2453,13 @@ def normality_test(
     alpha: float = 0.05,
     decimals: int = 4,
     name: Optional[str] = None,
+    df_name: Optional[str] = None,
     show: bool = True,
     plot: bool = True,
     return_df: bool = False,
     return_fig: bool = False,
+    params: Optional[dict] = None,
+    return_params: bool = False,
     fig_width: float = 12.0,
     fig_height: float = 4.5,
     dpi: int = 110,
@@ -2399,7 +2509,8 @@ def normality_test(
     ])
     summary.index.name = "metric"
 
-    label = name or "data"
+    df_name = resolve_name(df_name, name, "normality_test")
+    label = df_name or "data"
     if show:
         _print_header(f"Normality test for: {label}  ({test_label}, alpha={alpha})")
         _display(_format_summary(summary, decimals))
@@ -2416,10 +2527,33 @@ def normality_test(
                               fig_width, fig_height, dpi)
     _finalize_figure(fig, show, plot, return_fig)
 
-    if return_df and return_fig: return summary, fig
-    if return_df: return summary
-    if return_fig: return fig
-    return None
+    _config = json_safe({"method": method, "alpha": alpha, "decimals": decimals})
+    _audit_entry = {
+        "stage": "phase2-stats",
+        "function": "normality_test",
+        "timestamp": now_iso(),
+        "df_name": df_name,
+        "params": _config,
+        "decision": f"Normality test ({method}, alpha={alpha}).",
+    }
+    if isinstance(summary, pd.DataFrame):
+        append_audit(summary, _audit_entry)
+        _audit_list = list(summary.attrs.get("dextra_audit", []))
+        _summary_payload = json_safe(summary.to_dict())
+    else:
+        _audit_list = [_audit_entry]
+        _summary_payload = None
+    manifest = {
+        "stage": "phase2-stats",
+        "function": "normality_test",
+        "df_name": df_name,
+        "params": _config,
+        "summary": _summary_payload,
+        "dextra_audit": _audit_list,
+    }
+    if not (return_df or return_params or return_fig):
+        return None
+    return _ret_pack(summary, manifest, fig, return_df, return_params, return_fig)
 
 
 def _plot_normality(arr, p, alpha, test_label, label, fig_width, fig_height, dpi):
@@ -2458,10 +2592,13 @@ def t_test_one_sample(
     alpha: float = 0.05,
     decimals: int = 4,
     name: Optional[str] = None,
+    df_name: Optional[str] = None,
     show: bool = True,
     plot: bool = True,
     return_df: bool = False,
     return_fig: bool = False,
+    params: Optional[dict] = None,
+    return_params: bool = False,
     fig_width: float = 10.0,
     fig_height: float = 4.5,
     dpi: int = 110,
@@ -2498,7 +2635,8 @@ def t_test_one_sample(
     ])
     summary.index.name = "metric"
 
-    label = name or "data"
+    df_name = resolve_name(df_name, name, "t_test_one_sample")
+    label = df_name or "data"
     if show:
         _print_header(f"One-sample t-test for: {label}  "
                       f"(H0: mean = {popmean}, alt = {alternative})")
@@ -2518,10 +2656,33 @@ def t_test_one_sample(
                           title=f"One-sample t-test: {label} vs {popmean}")
     _finalize_figure(fig, show, plot, return_fig)
 
-    if return_df and return_fig: return summary, fig
-    if return_df: return summary
-    if return_fig: return fig
-    return None
+    _config = json_safe({"popmean": popmean, "alternative": alternative, "alpha": alpha, "decimals": decimals})
+    _audit_entry = {
+        "stage": "phase2-stats",
+        "function": "t_test_one_sample",
+        "timestamp": now_iso(),
+        "df_name": df_name,
+        "params": _config,
+        "decision": f"One-sample t-test vs {popmean} ({alternative}).",
+    }
+    if isinstance(summary, pd.DataFrame):
+        append_audit(summary, _audit_entry)
+        _audit_list = list(summary.attrs.get("dextra_audit", []))
+        _summary_payload = json_safe(summary.to_dict())
+    else:
+        _audit_list = [_audit_entry]
+        _summary_payload = None
+    manifest = {
+        "stage": "phase2-stats",
+        "function": "t_test_one_sample",
+        "df_name": df_name,
+        "params": _config,
+        "summary": _summary_payload,
+        "dextra_audit": _audit_list,
+    }
+    if not (return_df or return_params or return_fig):
+        return None
+    return _ret_pack(summary, manifest, fig, return_df, return_params, return_fig)
 
 
 # --- 17) TWO-SAMPLE t-TEST (F-M05-L06-01) ---------------------------------
@@ -2535,10 +2696,13 @@ def t_test_two_sample(
     decimals: int = 4,
     name1: Optional[str] = None,
     name2: Optional[str] = None,
+    df_name: Optional[str] = None,
     show: bool = True,
     plot: bool = True,
     return_df: bool = False,
     return_fig: bool = False,
+    params: Optional[dict] = None,
+    return_params: bool = False,
     fig_width: float = 14.0,
     fig_height: float = 4.5,
     dpi: int = 110,
@@ -2603,10 +2767,33 @@ def t_test_two_sample(
                               label1, label2, p, fig_width, fig_height, dpi)
     _finalize_figure(fig, show, plot, return_fig)
 
-    if return_df and return_fig: return summary, fig
-    if return_df: return summary
-    if return_fig: return fig
-    return None
+    _config = json_safe({"alternative": alternative, "equal_var": equal_var, "alpha": alpha, "decimals": decimals})
+    _audit_entry = {
+        "stage": "phase2-stats",
+        "function": "t_test_two_sample",
+        "timestamp": now_iso(),
+        "df_name": df_name,
+        "params": _config,
+        "decision": f"Two-sample t-test ({alternative}, equal_var={equal_var}).",
+    }
+    if isinstance(summary, pd.DataFrame):
+        append_audit(summary, _audit_entry)
+        _audit_list = list(summary.attrs.get("dextra_audit", []))
+        _summary_payload = json_safe(summary.to_dict())
+    else:
+        _audit_list = [_audit_entry]
+        _summary_payload = None
+    manifest = {
+        "stage": "phase2-stats",
+        "function": "t_test_two_sample",
+        "df_name": df_name,
+        "params": _config,
+        "summary": _summary_payload,
+        "dextra_audit": _audit_list,
+    }
+    if not (return_df or return_params or return_fig):
+        return None
+    return _ret_pack(summary, manifest, fig, return_df, return_params, return_fig)
 
 
 def _plot_ttest_two(a1, a2, t_stat, df_val, alpha, alternative, label1, label2, p,
@@ -2660,10 +2847,13 @@ def t_test_paired(
     decimals: int = 4,
     name_before: Optional[str] = None,
     name_after: Optional[str] = None,
+    df_name: Optional[str] = None,
     show: bool = True,
     plot: bool = True,
     return_df: bool = False,
     return_fig: bool = False,
+    params: Optional[dict] = None,
+    return_params: bool = False,
     fig_width: float = 12.0,
     fig_height: float = 4.5,
     dpi: int = 110,
@@ -2725,10 +2915,33 @@ def t_test_paired(
                                  fig_width, fig_height, dpi)
     _finalize_figure(fig, show, plot, return_fig)
 
-    if return_df and return_fig: return summary, fig
-    if return_df: return summary
-    if return_fig: return fig
-    return None
+    _config = json_safe({"alternative": alternative, "alpha": alpha, "decimals": decimals})
+    _audit_entry = {
+        "stage": "phase2-stats",
+        "function": "t_test_paired",
+        "timestamp": now_iso(),
+        "df_name": df_name,
+        "params": _config,
+        "decision": f"Paired t-test ({alternative}).",
+    }
+    if isinstance(summary, pd.DataFrame):
+        append_audit(summary, _audit_entry)
+        _audit_list = list(summary.attrs.get("dextra_audit", []))
+        _summary_payload = json_safe(summary.to_dict())
+    else:
+        _audit_list = [_audit_entry]
+        _summary_payload = None
+    manifest = {
+        "stage": "phase2-stats",
+        "function": "t_test_paired",
+        "df_name": df_name,
+        "params": _config,
+        "summary": _summary_payload,
+        "dextra_audit": _audit_list,
+    }
+    if not (return_df or return_params or return_fig):
+        return None
+    return _ret_pack(summary, manifest, fig, return_df, return_params, return_fig)
 
 
 def _plot_ttest_paired(b, a, diff, t_stat, alpha, p, nb, na, fig_width, fig_height, dpi):
@@ -3223,10 +3436,13 @@ def class_imbalance(
     target,
     decimals: int = 2,
     name: Optional[str] = None,
+    df_name: Optional[str] = None,
     show: bool = True,
     plot: bool = True,
     return_df: bool = False,
     return_fig: bool = False,
+    params: Optional[dict] = None,
+    return_params: bool = False,
     fig_width: float = 12.0,
     fig_height: float = 4.5,
     dpi: int = 110,
@@ -3275,7 +3491,8 @@ def class_imbalance(
     })
     summary.index.name = "class"
 
-    label = name or "target"
+    df_name = resolve_name(df_name, name, "class_imbalance")
+    label = df_name or "target"
     if show:
         _print_header(f"Class imbalance for: {label}")
         _display(_format_summary(summary, decimals,
@@ -3298,10 +3515,33 @@ def class_imbalance(
                               fig_width, fig_height, dpi, decimals)
     _finalize_figure(fig, show, plot, return_fig)
 
-    if return_df and return_fig: return summary, fig
-    if return_df: return summary
-    if return_fig: return fig
-    return None
+    _config = json_safe({"decimals": decimals})
+    _audit_entry = {
+        "stage": "phase2-stats",
+        "function": "class_imbalance",
+        "timestamp": now_iso(),
+        "df_name": df_name,
+        "params": _config,
+        "decision": "Class-imbalance report.",
+    }
+    if isinstance(summary, pd.DataFrame):
+        append_audit(summary, _audit_entry)
+        _audit_list = list(summary.attrs.get("dextra_audit", []))
+        _summary_payload = json_safe(summary.to_dict())
+    else:
+        _audit_list = [_audit_entry]
+        _summary_payload = None
+    manifest = {
+        "stage": "phase2-stats",
+        "function": "class_imbalance",
+        "df_name": df_name,
+        "params": _config,
+        "summary": _summary_payload,
+        "dextra_audit": _audit_list,
+    }
+    if not (return_df or return_params or return_fig):
+        return None
+    return _ret_pack(summary, manifest, fig, return_df, return_params, return_fig)
 
 
 def _plot_imbalance(counts, pct, severity, ratio, fig_width, fig_height, dpi, decimals):
