@@ -134,6 +134,7 @@ def edareport(
     title: Optional[str] = None,
     sections: Optional[Sequence[str]] = None,
     include_model: bool = False,
+    task: str = "auto",
     max_hist: int = 24,
     top_cat: int = 10,
     theme: str = "light",
@@ -174,6 +175,11 @@ def edareport(
     include_model : bool
         Build the optional baseline model / evaluation section (needs ``target``
         and scikit-learn).
+    task : {"auto", "regression", "classification"}
+        Task of the model section. ``"auto"`` (default) infers regression
+        when the target dtype is numeric and it has more than 10 unique
+        values, otherwise classification; pass an explicit value to override
+        the inference.
     max_hist : int
         Cap on the number of numeric columns plotted as histograms.
     top_cat : int
@@ -206,6 +212,11 @@ def edareport(
         df_name = get_variable_name(df, depth=2)
     if title is None:
         title = f"dextra EDA report - {df_name}"
+    task = str(task).lower()
+    if task not in ("auto", "regression", "classification"):
+        raise ValueError(
+            "edareport: task must be 'auto', 'regression' or "
+            f"'classification', got {task!r}.")
 
     if sections is None:
         wanted = list(_SECTION_ORDER)
@@ -218,7 +229,7 @@ def edareport(
         wanted.remove("model")
 
     ctx = {"target": target, "include_model": include_model,
-           "max_hist": int(max_hist), "top_cat": int(top_cat),
+           "task": task, "max_hist": int(max_hist), "top_cat": int(top_cat),
            "decimals": int(decimals)}
 
     built, skipped, manifest_sections = [], [], {}
@@ -258,7 +269,7 @@ def edareport(
         "stage": "report", "function": "edareport",
         "timestamp": generated_at,
         "params": {"out": out, "target": target,
-                   "include_model": bool(include_model),
+                   "include_model": bool(include_model), "task": task,
                    "sections_built": [k for k, _, _ in built]},
         "decision": decision,
     })
@@ -274,7 +285,7 @@ def edareport(
             "sections": manifest_sections,
             "metadata": {"n_rows": int(n), "n_cols": int(m),
                          "target": target, "include_model": bool(include_model),
-                         "theme": theme},
+                         "task": task, "theme": theme},
             "version": __version__,
             "generated_at": generated_at,
             "dextra_audit": audit_trail,

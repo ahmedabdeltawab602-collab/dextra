@@ -182,3 +182,35 @@ def test_manifest_audit_keeps_input_history(mixed_df, tmp_path):
     assert len(trail) == 2 and trail[0]["stage"] == "cleaning"
     assert trail[-1]["function"] == "edareport"
     assert len(df2.attrs["dextra_audit"]) == 1       # input list untouched
+# ---------------------------------------------------------------------------
+# explicit model task (audit #7)
+# ---------------------------------------------------------------------------
+
+def test_task_param_validated_and_recorded(mixed_df, tmp_path):
+    with pytest.raises(ValueError, match="task"):
+        dx.edareport(mixed_df, out=str(tmp_path / "r.html"), task="cluster",
+                     show=False)
+    man = dx.edareport(mixed_df, out=str(tmp_path / "r.html"),
+                       task="classification", return_params=True, show=False)
+    assert man["metadata"]["task"] == "classification"
+    man = dx.edareport(mixed_df, out=str(tmp_path / "r.html"),
+                       return_params=True, show=False)
+    assert man["metadata"]["task"] == "auto"           # unchanged default
+
+
+def test_task_overrides_auto_inference(tmp_path):
+    pytest.importorskip("sklearn")
+    from dextra._compose import _sec_model
+    rng = np.random.default_rng(0)
+    n = 160
+    df = pd.DataFrame({
+        "a": rng.normal(0, 1, n),
+        "b": rng.normal(0, 1, n),
+        "flag": rng.integers(0, 2, n),                 # numeric, 2 uniques
+    })
+    ctx = {"include_model": True, "target": "flag",
+           "max_hist": 24, "top_cat": 10, "decimals": 4}
+    _, blocks = _sec_model(df, {**ctx, "task": "auto"})
+    assert blocks[0][0].startswith("Baseline classification")  # <= 10 uniques
+    _, blocks = _sec_model(df, {**ctx, "task": "regression"})
+    assert blocks[0][0].startswith("Baseline regression")      # forced

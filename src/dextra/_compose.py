@@ -188,7 +188,13 @@ def _sec_model(df, ctx):
     if not target or target not in df.columns:
         raise ValueError("a valid target= is required for the model section")
     y = df[target]
-    is_reg = pd.api.types.is_numeric_dtype(y) and int(y.nunique()) > 10
+    task = ctx.get("task", "auto")
+    if task == "regression":
+        is_reg = True
+    elif task == "classification":
+        is_reg = False
+    else:  # "auto": numeric dtype first, then the unique-count threshold
+        is_reg = pd.api.types.is_numeric_dtype(y) and int(y.nunique()) > 10
 
     rng = np.random.default_rng(0)
     order = np.arange(len(df))

@@ -2,6 +2,17 @@
 
 ## [Unreleased] — hardening before release
 
+### Added
+- **Explicit model task (audit #7):** `edareport` / `dash` accept
+  `task="auto" | "regression" | "classification"` for the model section.
+  `"auto"` (the default, behaviour unchanged) infers regression when the
+  target dtype is numeric and it has more than 10 unique values, otherwise
+  classification; an explicit value overrides the inference. The dashboard
+  exposes the choice as a "Model task" sidebar control, forwards it to the
+  generated app and records it in the reproducibility manifest; both
+  functions record it in their `return_params` manifest and audit entry.
+  An unknown value raises `ValueError`.
+
 ### Changed
 - **DRY (audit #5):** `now_iso` / `append_audit` now live only in `_utils`;
   the six local copies (`_compose`, `_features_common`, `cleaning`,

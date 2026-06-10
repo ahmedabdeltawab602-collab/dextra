@@ -337,3 +337,27 @@ def test_manifest_audit_keeps_input_history(mixed_df, tmp_path):
     assert len(trail) == 2 and trail[0]["stage"] == "cleaning"
     assert trail[-1]["function"] == "dash"
     assert len(df2.attrs["dextra_audit"]) == 1       # input list untouched
+# ---------------------------------------------------------------------------
+# explicit model task (audit #7)
+# ---------------------------------------------------------------------------
+
+def test_task_param_validated_embedded_and_recorded(mixed_df, tmp_path):
+    with pytest.raises(ValueError, match="task"):
+        dx.dash(mixed_df, out=str(tmp_path / "app.py"), task="cluster",
+                show=False)
+    out = str(tmp_path / "app.py")
+    man = dx.dash(mixed_df, out=out, task="regression", return_params=True,
+                  show=False)
+    assert man["task"] == "regression"
+    src = open(out, encoding="utf-8").read()
+    assert "task='regression'" in src                # forwarded to the app
+    py_compile.compile(out, doraise=True)            # app still valid
+    meta = json.load(open(man["meta_path"], encoding="utf-8"))
+    assert meta["settings"]["task"] == "regression"
+    assert man["dextra_audit"][-1]["params"]["task"] == "regression"
+
+
+def test_renderer_task_control_with_stub(mixed_df, fake_st):
+    from dextra.dashboard import _build_dashboard
+    _build_dashboard(mixed_df, task="regression")    # stub returns the default
+    assert any(isinstance(c, tuple) and c[0] == "tabs" for c in fake_st.calls)
