@@ -7,11 +7,11 @@ aggfeat), ``_features_pipeline`` (featpipe). Re-exports the eight public
 functions so ``from dextra.features import ...`` keeps working unchanged.
 """
 from ._features_derive import aggfeat, cross, dtfeats
-from ._features_discretize import bin, encode
+from ._features_discretize import bin, binize, encode
 from ._features_numeric import scale, transform
 from ._features_pipeline import featpipe
 
 __all__ = [
-    "transform", "scale", "bin", "encode",
+    "transform", "scale", "bin", "binize", "encode",
     "dtfeats", "cross", "aggfeat", "featpipe",
 ]

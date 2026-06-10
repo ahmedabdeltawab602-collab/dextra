@@ -180,3 +180,8 @@ def test_cluster_agglomerative(data):
     pytest.importorskip("sklearn")
     assert dx.cluster(data, cols=["age", "income", "score"],
                       method="agglomerative", k=3, **KW) is not None
+def test_binize_alias_for_bin():
+    # audit #9: `bin` shadows the builtin; `binize` is the official
+    # alternative name and both stay fully supported.
+    assert dx.binize is dx.bin
+    assert "binize" in dx.__all__

@@ -71,6 +71,7 @@ from .evaluation import (
 from .features import (
     aggfeat,
     bin,
+    binize,
     cross,
     dtfeats,
     encode,
@@ -236,7 +237,7 @@ __all__ = [
     "tidycols", "recast", "impute", "winsor", "verify",
     # Phase 4
     "transform", "scale",
-    "bin", "encode",
+    "bin", "binize", "encode",
     "dtfeats", "cross", "aggfeat",
     "featpipe",
     # Phase 5

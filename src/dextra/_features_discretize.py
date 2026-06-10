@@ -1135,3 +1135,8 @@ def _plot_encode_compare(df, cols, fig_width, fig_height, dpi):
     fig.suptitle(f"Encode COMPARE -- column '{c}'  (Stage 4.2)",
                  fontsize=14, fontweight="bold")
     return fig
+
+
+# Audit #9: ``bin`` shadows the Python builtin; ``binize`` is the official
+# alternative name. ``bin`` remains a fully supported alias -- no break.
+binize = bin

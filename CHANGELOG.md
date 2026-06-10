@@ -12,6 +12,9 @@
   generated app and records it in the reproducibility manifest; both
   functions record it in their `return_params` manifest and audit entry.
   An unknown value raises `ValueError`.
+- **`binize` (audit #9):** new official alternative name for `bin` (which
+  shadows the Python builtin). `bin` remains a fully supported alias --
+  nothing breaks; both names point to the same function.
 
 ### Changed
 - **DRY (audit #5):** `now_iso` / `append_audit` now live only in `_utils`;
