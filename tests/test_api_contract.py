@@ -111,3 +111,17 @@ def test_phase3_deprecated_aliases_warn_and_resolve():
         assert dx.impute is dx.handle_missing
         assert dx.dedup is dx.dedupe
         assert dx.winsor is dx.clip_outliers
+
+
+def test_public_frame_functions_take_explicit_df_name():
+    # audit #11: every public frame/source-first function exposes an explicit
+    # df_name= (or name=) label; get_variable_name stays a last-resort
+    # fallback only, never the primary mechanism.
+    for nm in sorted(set(dx.__all__)):
+        obj = getattr(dx, nm)
+        if not inspect.isfunction(obj):
+            continue
+        params = list(inspect.signature(obj).parameters)
+        if params and params[0] in ("df", "data", "source"):
+            assert "df_name" in params or "name" in params, (
+                f"{nm} takes '{params[0]}' but exposes no df_name=/name=")

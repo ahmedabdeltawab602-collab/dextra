@@ -1621,16 +1621,19 @@ def _load_frame(source, *, on_ambiguous, parse_dates, decimal, thousands,
 
 
 def peek(source, *, kind: str = "auto", on_ambiguous: str = "plan",
-         show: bool = True, n_preview: int = 10, **load_kwargs):
+         show: bool = True, n_preview: int = 10,
+         df_name: Optional[str] = None, **load_kwargs):
     """Propose a load plan + preview WITHOUT committing a full load.
 
     Returns the load plan (dict); loads at most ``n_preview`` rows for the sample.
     The teaching / inspection entry point ("look before you load").
+    ``df_name=`` labels the source explicitly in the plan / audit (audit #11);
+    when omitted it is inferred as a last resort.
     """
     load_kwargs.pop("return_params", None)
     load_kwargs.pop("max_rows", None)
     plan = load(source, kind=kind, on_ambiguous="plan", show=show,
-                max_rows=n_preview, **load_kwargs)
+                max_rows=n_preview, df_name=df_name, **load_kwargs)
     return plan
 
 

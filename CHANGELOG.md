@@ -17,6 +17,12 @@
   nothing breaks; both names point to the same function.
 
 ### Changed
+- **Explicit frame labels (audit #11):** `peek` now exposes `df_name=`
+  explicitly in its signature (previously it was only forwarded through
+  `**load_kwargs`). A new API-contract test enforces that every public
+  frame-first function accepts an explicit `df_name=` / `name=`;
+  `get_variable_name` inspection remains a last-resort fallback only
+  (verified across all call sites).
 - **DRY (audit #5):** `now_iso` / `append_audit` now live only in `_utils`;
   the six local copies (`_compose`, `_features_common`, `cleaning`,
   `dashboard`, `modeling`, `selection`) were removed, and `cleaning`'s unused
