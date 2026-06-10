@@ -19,7 +19,7 @@ scikit-learn-compatible wrappers):
 |---|---|---|
 | `stats` / `plots` | `describe_numeric`, `plot_histograms`, `plot_boxplots` | Foundational EDA: rich summaries and better default plots. |
 | `stats_advanced` | 22 functions (z-scores, skewness, correlation, SLR, CIs, t-tests, ANOVA, chi-square, VIF, class imbalance, ...) | Descriptive, bivariate, inference, hypothesis tests and ML diagnostics. |
-| `cleaning` | 10 functions (`clean_report`, `na_show`/`na_fix`, `dedupe`, `clip_outliers`, ...) | Data-quality auditing and cleaning across the DAMA-DMBOK stages. |
+| `cleaning` | 10 functions (`clean_report`, `na_show`/`impute`, `dedupe`, `clip_outliers`, ...) | Data-quality auditing and cleaning across the DAMA-DMBOK stages. |
 | `features` | 8 functions (`transform`, `scale`, `bin`, `encode`, `dtfeats`, `cross`, `aggfeat`, `featpipe`) | Leakage-safe feature engineering with a fit/apply contract. |
 | `selection` | 5 functions (`redundancy`, `relevance`, `importance`, `rfe`, `selectpipe`) | Filter / Embedded / Wrapper feature selection, leakage-safe. |
 | `modeling` | 3 functions (`regress`, `classify`, `cluster`) | Instant baselines: fit / apply / compare with a hybrid (JSON + fitted estimator) artifact. |
@@ -138,7 +138,7 @@ summarising the distribution.
 
 Call `dx.functions()` to list every public function with its one-line summary.
 Long descriptive names each have a short alias (e.g. `numdesc`, `zsc`, `corrmat`,
-`na_fix`, `redun`, `selpipe`); the pre-0.1.0 names still forward to the new ones.
+`impute`, `redun`, `selpipe`); the pre-0.1.0 names still forward to the new ones.
 
 For the full per-module API, see the philosophy documents in the repository
 (`FEATURES_PHILOSOPHY.md`, `SELECTION_PHILOSOPHY.md`, `CLEANING_PHILOSOPHY.md`)

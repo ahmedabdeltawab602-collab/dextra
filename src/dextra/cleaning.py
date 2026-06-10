@@ -659,8 +659,7 @@ def _plot_standardize_columns(name_changes, n_cells_stripped_per_col,
 # Aliases (dextra naming tradition)
 # ---------------------------------------------------------------------------
 
-cleanrep = clean_report
-stdcols  = standardize_columns
+# (`cleanrep` / `stdcols` are deprecated -- see module __getattr__, audit #10.)
 
 
 # ===========================================================================
@@ -1150,9 +1149,7 @@ def _plot_validate_rules(summary, fig_width, fig_height, dpi, decimals):
     return fig
 
 
-# Stage 3.2 aliases
-cast    = cast_types
-vrules  = validate_rules
+# (Stage 3.2 aliases `cast` / `vrules` are deprecated -- see __getattr__.)
 
 
 # ===========================================================================
@@ -1886,10 +1883,9 @@ def _plot_clip_outliers(df_before, df_after, cols, per_col_log, action,
     return fig
 
 
-# Stage 3.3 aliases
-fillna_smart = handle_missing
-dedup        = dedupe
-clipout      = clip_outliers
+# Stage 3.3: `dedup` is the official short alias; `fillna_smart` /
+# `clipout` are deprecated -- see module __getattr__ (audit #10).
+dedup = dedupe
 
 
 # ===========================================================================
@@ -1930,7 +1926,7 @@ def na_show(
     --------
     >>> view = dx.na_show(df)
     >>> # decide a strategy from the suggestions, then:
-    >>> df_clean = dx.na_fix(df, strategy='median')
+    >>> df_clean = dx.impute(df, strategy='median')
     """
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
@@ -1987,7 +1983,7 @@ def na_show(
                                     "suggested_strategy"].to_dict()
             print(f"\nDecision: {n_bad_rows} row(s) across {n_bad_cols} column(s) "
                   f"have missing values. Suggested per-column strategies: {recs}. "
-                  f"Call `dx.na_fix(df, strategy=...)` once you have decided.\n")
+                  f"Call `dx.impute(df, strategy=...)` once you have decided.\n")
         else:
             print("\nDecision: No missing values detected. Data is complete.\n")
 
@@ -2060,7 +2056,7 @@ def dup_show(
       - ``is_first_in_group``: True for the first occurrence.
 
     The result is sorted by group so the user can decide which rows to
-    drop and call ``dx.dup_fix(df, drop_indices=[...])``.
+    drop and call ``dx.dedup(df, drop_indices=[...])``.
 
     DAMA dimension: Uniqueness.
 
@@ -2068,7 +2064,7 @@ def dup_show(
     --------
     >>> view = dx.dup_show(df, subset=['customer_id'])
     >>> # inspect, decide, then:
-    >>> df_clean = dx.dup_fix(df, drop_indices=view.index[view['is_first_in_group']==False])
+    >>> df_clean = dx.dedup(df, drop_indices=view.index[view['is_first_in_group']==False])
     """
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
@@ -2113,8 +2109,8 @@ def dup_show(
             print(f"\nFirst {n_show} of {n_dup_rows} duplicate row(s) in {n_groups} group(s):")
             _display(diag.head(n_show))
             print(f"\nDecision: {n_dup_rows} duplicate row(s) in {n_groups} group(s). "
-                  f"Either call `dx.dup_fix(df, drop_indices=[...])` after choosing rows, "
-                  f"or `dx.dup_fix(df, keep='first'|'last')` for a bulk action.\n")
+                  f"Either call `dx.dedup(df, drop_indices=[...])` after choosing rows, "
+                  f"or `dx.dedup(df, keep='first'|'last')` for a bulk action.\n")
         else:
             print("\nDecision: No duplicate rows found.\n")
 
@@ -2347,15 +2343,9 @@ def _plot_out_show(df, cols, bounds_per_col, fig_width, fig_height, dpi, decimal
 # Inspectors (new, no v1 equivalent)
 # na_show, dup_show, out_show — already defined above
 
-# Actor short aliases (point to existing functions for backward compat)
-na_fix       = handle_missing
-dup_fix      = dedupe
-out_fix      = clip_outliers
-rule_check   = validate_rules
-type_fix     = cast_types
-col_clean    = standardize_columns
-col_fix      = standardize_columns  # shorter alias
-clean_rep    = clean_report
+# (v2 actor aliases `na_fix` / `dup_fix` / `out_fix` / `rule_check` /
+# `type_fix` / `col_clean` / `col_fix` / `clean_rep` are deprecated --
+# see module __getattr__, audit #10.)
 
 # ---------------------------------------------------------------------------
 # Professional underscore-free aliases (polars/tidyverse competitive)
@@ -2376,3 +2366,40 @@ impute   = handle_missing        # academic term for filling missing
 # dedup is already defined above as v1 alias
 winsor   = clip_outliers         # winsorize outliers (academic term)
 verify   = validate_rules        # generic verify
+
+
+# ---------------------------------------------------------------------------
+# Deprecated aliases (audit #10): ONE official short alias per function
+# (`audit`, `tidycols`, `recast`, `verify`, `impute`, `dedup`, `winsor`);
+# the older synonyms below still resolve -- to the SAME function object, so
+# identity checks keep holding -- but emit a DeprecationWarning (PEP 562).
+# ---------------------------------------------------------------------------
+
+_DEPRECATED_ALIASES = {
+    "cleanrep": "clean_report", "clean_rep": "clean_report",
+    "stdcols": "standardize_columns", "col_clean": "standardize_columns",
+    "col_fix": "standardize_columns",
+    "cast": "cast_types", "type_fix": "cast_types",
+    "vrules": "validate_rules", "rule_check": "validate_rules",
+    "fillna_smart": "handle_missing", "na_fix": "handle_missing",
+    "dup_fix": "dedupe",
+    "clipout": "clip_outliers", "out_fix": "clip_outliers",
+}
+
+_OFFICIAL_SHORT = {
+    "clean_report": "audit", "standardize_columns": "tidycols",
+    "cast_types": "recast", "validate_rules": "verify",
+    "handle_missing": "impute", "dedupe": "dedup",
+    "clip_outliers": "winsor",
+}
+
+
+def __getattr__(name):
+    canonical = _DEPRECATED_ALIASES.get(name)
+    if canonical is not None:
+        warnings.warn(
+            f"dextra: '{name}' is a deprecated alias of '{canonical}'; use "
+            f"'{_OFFICIAL_SHORT[canonical]}' (or '{canonical}') instead.",
+            DeprecationWarning, stacklevel=2)
+        return globals()[canonical]
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")

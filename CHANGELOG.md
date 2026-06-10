@@ -46,6 +46,15 @@
   instead. `name=` still works and maps onto `df_name`, emitting a
   `DeprecationWarning`. (The two-label helpers keep `name1`/`name2` and
   `name_before`/`name_after`, which are group labels, not the frame name.)
+- **Phase 3 alias slimming (audit #10):** each cleaning function now has ONE
+  official short alias -- `audit`, `tidycols`, `recast`, `verify`, `impute`,
+  `dedup`, `winsor` (plus the inspectors `nascan` / `dupscan` / `outscan`).
+  The older synonyms (`cleanrep`, `clean_rep`, `stdcols`, `col_clean`,
+  `col_fix`, `cast`, `type_fix`, `vrules`, `rule_check`, `fillna_smart`,
+  `na_fix`, `dup_fix`, `clipout`, `out_fix`) still work and resolve to the
+  same function objects via a module `__getattr__` (identity checks keep
+  holding), but emit a `DeprecationWarning` and were removed from `__all__`.
+  In-library messages and the docs now recommend the official names.
 
 ### Fixed
 - **Audit trail surfaced (audit #6):** `edareport` / `dash` appended their

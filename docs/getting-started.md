@@ -22,7 +22,7 @@ import dextra as dx
 
 df = dx.load("sales.csv")                     # raw file -> typed DataFrame + full disclosure
 dx.describe_numeric(df)                       # rich numeric summary + plot
-dx.clean_rep(df)                              # data-quality audit
+dx.audit(df)                              # data-quality audit
 dx.regress(df, y="price", method="compare")   # rank regression baselines
 out, params = dx.classify(df, y="churn", method="forest", return_params=True)
 preds = dx.classify(df_new, params=params)    # apply, no re-fit (leakage-safe)

@@ -9,6 +9,8 @@ from __future__ import annotations
 
 import inspect
 
+import pytest
+
 import dextra as dx
 
 # fit/apply families must all expose these standard flags (the unified contract)
@@ -85,3 +87,27 @@ def test_aliases_are_identity():
         assert hasattr(dx, alias), f"alias {alias} not exported"
         assert getattr(dx, alias) is getattr(dx, canonical), (
             f"alias {alias} is not the same object as {canonical}")
+
+
+def test_phase3_deprecated_aliases_warn_and_resolve():
+    # audit #10: one official short alias per cleaning function; the older
+    # synonyms warn but resolve to the same object (PEP 562 __getattr__).
+    import warnings as _w
+    deprecated = ("cleanrep", "clean_rep", "stdcols", "col_clean", "col_fix",
+                  "cast", "type_fix", "vrules", "rule_check", "fillna_smart",
+                  "na_fix", "dup_fix", "clipout", "out_fix")
+    for alias in deprecated:
+        with pytest.warns(DeprecationWarning, match=alias):
+            obj = getattr(dx, alias)
+        assert callable(obj), alias
+        assert alias not in dx.__all__, alias
+    # the official short aliases stay warning-free identities
+    with _w.catch_warnings():
+        _w.simplefilter("error", DeprecationWarning)
+        assert dx.audit is dx.clean_report
+        assert dx.tidycols is dx.standardize_columns
+        assert dx.recast is dx.cast_types
+        assert dx.verify is dx.validate_rules
+        assert dx.impute is dx.handle_missing
+        assert dx.dedup is dx.dedupe
+        assert dx.winsor is dx.clip_outliers

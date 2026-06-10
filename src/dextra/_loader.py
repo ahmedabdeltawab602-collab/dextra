@@ -457,7 +457,7 @@ def _decision_sentence(plan: dict) -> str:
             f"'{plan['source']['name']}' {bracket}; "
             f"coerced {len(coerced)} column(s) ({types}); {n_failed} cell(s) "
             f"failed -> NaN; {a} ambiguous decision(s){hint}. "
-            f"Next: dx.clean_rep(df).")
+            f"Next: dx.audit(df).")
 
 
 # ---------------------------------------------------------------------------
@@ -1611,7 +1611,7 @@ def _load_frame(source, *, on_ambiguous, parse_dates, decimal, thousands,
     })
     decision = (f"Typed pass-through of in-memory frame '{name}': "
                 f"{out.shape[0]:,} rows x {out.shape[1]} cols; "
-                f"{n_amb} ambiguous column(s). Next: dx.clean_rep(df).")
+                f"{n_amb} ambiguous column(s). Next: dx.audit(df).")
     append_audit(out, {"stage": "loader", "function": "load",
                        "timestamp": plan["generated_at"], "params": plan,
                        "decision": decision})

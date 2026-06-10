@@ -3,9 +3,9 @@
 Quick start
 -----------
 >>> import dextra as dx
->>> dx.clean_rep(df)      # master audit
+>>> dx.audit(df)          # master audit
 >>> dx.na_show(df)        # show missing
->>> dx.na_fix(df)         # fix missing
+>>> dx.impute(df)         # fix missing
 
 Phase 2: 22 statistical helpers.
 Phase 3 v2: 10 cleaning helpers (3 inspectors + 7 actors, short names).
@@ -16,38 +16,24 @@ from ._utils import DEFAULT_BOX_COLORS
 from ._version import __version__
 from .cleaning import (
     audit,
-    cast,
     cast_types,
-    clean_rep,
     clean_report,
-    cleanrep,
     clip_outliers,
-    clipout,
-    col_clean,
-    col_fix,
     dedup,
     dedupe,
-    dup_fix,
     dup_show,
     dupscan,
-    fillna_smart,
     handle_missing,
     impute,
-    na_fix,
     na_show,
     nascan,
-    out_fix,
     out_show,
     outscan,
     recast,
-    rule_check,
     standardize_columns,
-    stdcols,
     tidycols,
-    type_fix,
     validate_rules,
     verify,
-    vrules,
     winsor,
 )
 from .compat import (
@@ -221,18 +207,15 @@ __all__ = [
     # Phase 3 v1 (kept for compat)
     "clean_report", "standardize_columns", "cast_types", "validate_rules",
     "handle_missing", "dedupe", "clip_outliers",
-    # Phase 3 v2
+    # Phase 3 v2 inspectors
     "na_show", "dup_show", "out_show",
-    "na_fix", "dup_fix", "out_fix",
-    "rule_check", "type_fix", "col_clean", "col_fix", "clean_rep",
     # Aliases
     "zsc", "pskew", "emprule", "outrep", "corrmat", "slr",
     "missrep", "freqtab", "xtab", "gcmp",
     "cim", "cip", "ssm", "ssp",
     "normtest", "t1", "t2", "tpair", "aov1", "chi2ind",
     "vif", "imbalance",
-    "cleanrep", "stdcols", "cast", "vrules",
-    "fillna_smart", "dedup", "clipout",
+    "dedup",
     "audit", "nascan", "dupscan", "outscan",
     "tidycols", "recast", "impute", "winsor", "verify",
     # Phase 4
@@ -264,3 +247,10 @@ __all__ = [
     "DextraFeaturePipeline", "DextraSelectPipeline",
     "DextraRegressor", "DextraClassifier", "DextraClusterer",
 ]
+
+
+def __getattr__(name):  # PEP 562 -- deprecated Phase 3 aliases (audit #10)
+    from . import cleaning as _cleaning
+    if name in _cleaning._DEPRECATED_ALIASES:
+        return getattr(_cleaning, name)  # warns there, names the official alias
+    raise AttributeError(f"module 'dextra' has no attribute {name!r}")
