@@ -33,6 +33,14 @@
   `DeprecationWarning`. (The two-label helpers keep `name1`/`name2` and
   `name_before`/`name_after`, which are group labels, not the frame name.)
 
+### Fixed
+- **Audit trail surfaced (audit #6):** `edareport` / `dash` appended their
+  audit entry to an internal copy that was immediately discarded, so the
+  trail was unreachable. The manifest returned with `return_params=True` now
+  carries `dextra_audit` (the input frame's history plus this run's entry)
+  as its last key. The input DataFrame stays unmutated and all other return
+  values are unchanged.
+
 ### Docs
 - `docs/api.md` now documents the Phase 11 loader (`load` / `peek`): the five
   source families, the `on_ambiguous` policy, the replayable plan, the

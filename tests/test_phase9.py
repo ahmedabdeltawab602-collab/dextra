@@ -156,3 +156,29 @@ def test_idempotent_report(mixed_df, tmp_path):
     assert (set(a["sections"]) == set(b["sections"]))
     for k in a["sections"]:
         assert a["sections"][k]["status"] == b["sections"][k]["status"]
+# ---------------------------------------------------------------------------
+# audit trail in the manifest (audit #6)
+# ---------------------------------------------------------------------------
+
+def test_manifest_includes_audit_trail(mixed_df, tmp_path):
+    man = dx.edareport(mixed_df, out=str(tmp_path / "r.html"),
+                       return_params=True, show=False)
+    trail = man["dextra_audit"]
+    assert isinstance(trail, list) and len(trail) == 1
+    entry = trail[-1]
+    assert entry["stage"] == "report" and entry["function"] == "edareport"
+    assert entry["params"]["sections_built"]
+    assert entry["decision"]
+    _json_ok(man)                                    # stays JSON-safe
+    assert "dextra_audit" not in mixed_df.attrs      # input never mutated
+
+
+def test_manifest_audit_keeps_input_history(mixed_df, tmp_path):
+    df2 = mixed_df.copy()
+    df2.attrs = {"dextra_audit": [{"stage": "cleaning", "function": "fillna"}]}
+    man = dx.edareport(df2, out=str(tmp_path / "r.html"),
+                       return_params=True, show=False)
+    trail = man["dextra_audit"]
+    assert len(trail) == 2 and trail[0]["stage"] == "cleaning"
+    assert trail[-1]["function"] == "edareport"
+    assert len(df2.attrs["dextra_audit"]) == 1       # input list untouched

@@ -37,7 +37,7 @@ from typing import Optional
 
 import pandas as pd
 
-from ._utils import _ensure_pandas, append_audit, get_variable_name, now_iso
+from ._utils import _ensure_pandas, get_variable_name, now_iso
 from ._version import __version__
 
 _TAB_LABELS = {
@@ -277,7 +277,8 @@ def dash(
     theme : str
         Visual theme hint (``"light"``).
     return_params : bool
-        Return the JSON-safe build manifest instead of the app path.
+        Return the JSON-safe build manifest (including the ``dextra_audit``
+        trail) instead of the app path.
     show : bool
         Print the one-line ``Decision:`` summary.
     df_name : str, optional
@@ -371,9 +372,10 @@ def dash(
                 f"metadata '{meta_path}'). Run: streamlit run {app_path}"
                 + ("  [launched]" if launched else "") + ".")
 
-    out_copy = df.copy()
-    out_copy.attrs = dict(df.attrs)
-    append_audit(out_copy, {
+    # Audit #6: build the trail (input history + this run) and surface it
+    # in the return_params manifest below. The input df is never mutated.
+    audit_trail = list(df.attrs.get("dextra_audit", []))
+    audit_trail.append({
         "stage": "dashboard", "function": "dash",
         "timestamp": generated_at,
         "params": {"app": app_path, "data": data_path, "meta": meta_path,
@@ -402,6 +404,7 @@ def dash(
                          "pandas_version": metadata["pandas_version"]},
             "version": __version__,
             "generated_at": generated_at,
+            "dextra_audit": audit_trail,
         }
     return app_path
 

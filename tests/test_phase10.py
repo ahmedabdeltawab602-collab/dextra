@@ -311,3 +311,29 @@ def test_parquet_format_or_clear_error(mixed_df, tmp_path):
     else:
         with pytest.raises(ValueError, match="parquet engine"):
             dx.dash(mixed_df, out=out, data_format="parquet", show=False)
+# ---------------------------------------------------------------------------
+# audit trail in the manifest (audit #6)
+# ---------------------------------------------------------------------------
+
+def test_manifest_includes_audit_trail(mixed_df, tmp_path):
+    man = dx.dash(mixed_df, out=str(tmp_path / "app.py"),
+                  return_params=True, show=False)
+    trail = man["dextra_audit"]
+    assert isinstance(trail, list) and len(trail) == 1
+    entry = trail[-1]
+    assert entry["stage"] == "dashboard" and entry["function"] == "dash"
+    assert entry["params"]["data_format"] == man["data_format"]
+    assert entry["decision"]
+    _json_ok(man)                                    # stays JSON-safe
+    assert "dextra_audit" not in mixed_df.attrs      # input never mutated
+
+
+def test_manifest_audit_keeps_input_history(mixed_df, tmp_path):
+    df2 = mixed_df.copy()
+    df2.attrs = {"dextra_audit": [{"stage": "cleaning", "function": "fillna"}]}
+    man = dx.dash(df2, out=str(tmp_path / "app.py"),
+                  return_params=True, show=False)
+    trail = man["dextra_audit"]
+    assert len(trail) == 2 and trail[0]["stage"] == "cleaning"
+    assert trail[-1]["function"] == "dash"
+    assert len(df2.attrs["dextra_audit"]) == 1       # input list untouched

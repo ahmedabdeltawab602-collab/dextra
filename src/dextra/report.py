@@ -25,7 +25,7 @@ from typing import Optional, Sequence
 import pandas as pd
 
 from ._compose import _BUILDERS, _SECTION_ORDER
-from ._utils import _ensure_pandas, append_audit, get_variable_name, now_iso
+from ._utils import _ensure_pandas, get_variable_name, now_iso
 from ._version import __version__
 
 
@@ -181,7 +181,8 @@ def edareport(
     theme : str
         Visual theme (``"light"``).
     return_params : bool
-        Return the JSON-safe build manifest instead of the output path.
+        Return the JSON-safe build manifest (including the ``dextra_audit``
+        trail) instead of the output path.
     show : bool
         Print the one-line ``Decision:`` summary.
     decimals : int
@@ -250,9 +251,10 @@ def edareport(
     decision = (f"Report written to '{out}': {len(built)} section(s) built"
                 + (f", {len(skipped)} skipped" if skipped else "") + ".")
 
-    out_copy = df.copy()
-    out_copy.attrs = dict(df.attrs)
-    append_audit(out_copy, {
+    # Audit #6: build the trail (input history + this run) and surface it
+    # in the return_params manifest below. The input df is never mutated.
+    audit_trail = list(df.attrs.get("dextra_audit", []))
+    audit_trail.append({
         "stage": "report", "function": "edareport",
         "timestamp": generated_at,
         "params": {"out": out, "target": target,
@@ -275,6 +277,7 @@ def edareport(
                          "theme": theme},
             "version": __version__,
             "generated_at": generated_at,
+            "dextra_audit": audit_trail,
         }
     return out
 
