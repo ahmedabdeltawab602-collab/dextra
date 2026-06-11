@@ -988,6 +988,11 @@ def validate_rules(
         description: optional human-readable description (str).
         severity:    optional 'error'|'warning' (default 'error').
 
+    Trust assumption: string `check` rules are executed with `df.eval` and
+    callables receive the full DataFrame -- rules are code, not data. Only
+    use rules from a trusted source (your own code or configuration); never
+    build them from untrusted end-user input.
+
     For each rule we report n_violations, pct_violations, status.
 
     `return_violations=True` returns the rows that failed at least one rule

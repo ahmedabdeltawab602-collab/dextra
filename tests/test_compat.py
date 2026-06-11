@@ -104,6 +104,27 @@ def test_clusterer_fit_predict_labels(data):
     assert len(np.unique(labels)) == 3
 
 
+@pytest.mark.parametrize("method", ["kmeans", "agglomerative"])
+def test_clusterer_labels_are_fit_labels(data, method):
+    """audit #13: labels_ is what the fit assigned, not a re-prediction."""
+    X, _, _ = data
+    cl = DextraClusterer(method=method, k=3).fit(X)
+    assert len(cl.labels_) == len(X)
+    assert np.array_equal(cl.labels_, cl.estimator_[-1].labels_)
+
+
+def test_clusterer_agglomerative_labels_match_direct_fit(data):
+    """labels_ reproduces AgglomerativeClustering's own fit assignments."""
+    from sklearn.cluster import AgglomerativeClustering
+    from sklearn.preprocessing import StandardScaler
+
+    X, _, _ = data
+    cl = DextraClusterer(method="agglomerative", k=3).fit(X)
+    Xs = StandardScaler().fit_transform(X.to_numpy(dtype=float))
+    expected = AgglomerativeClustering(n_clusters=3).fit_predict(Xs)
+    assert np.array_equal(cl.labels_, expected)
+
+
 def test_inside_sklearn_pipeline(data):
     X, _, y_clf = data
     pipe = Pipeline([

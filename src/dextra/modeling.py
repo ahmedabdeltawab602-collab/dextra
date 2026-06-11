@@ -1166,8 +1166,11 @@ def _fit_cluster_core(method: str, k: int, Xs):
     Returns ``(predictor, labels, inertia)``. ``agglomerative`` has no native
     ``predict``; a :class:`~sklearn.neighbors.NearestCentroid` is fitted on its
     labels so the persisted estimator can assign new points by the same
-    nearest-centroid rule used to deploy hierarchical clustering. ``inertia`` is
-    ``None`` for agglomerative (undefined) and rendered ``-`` / ``n/a``.
+    nearest-centroid rule used to deploy hierarchical clustering; the actual
+    fit assignments are kept on it as ``labels_`` (sklearn clusterer
+    convention), so wrappers expose true fit labels, not re-predictions.
+    ``inertia`` is ``None`` for agglomerative (undefined) and rendered
+    ``-`` / ``n/a``.
     """
     if method == "kmeans":
         from sklearn.cluster import KMeans
@@ -1181,6 +1184,7 @@ def _fit_cluster_core(method: str, k: int, Xs):
         labels = ag.fit_predict(Xs)
         nc = NearestCentroid()
         nc.fit(Xs, labels)
+        nc.labels_ = labels  # the true fit assignments (audit #13)
         return nc, labels, None
     raise ValueError(f"cluster: unknown method {method!r}")  # pragma: no cover
 

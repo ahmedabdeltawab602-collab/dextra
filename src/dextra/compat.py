@@ -230,7 +230,13 @@ class DextraClassifier(ClassifierMixin, _BaseModelWrapper):
 
 
 class DextraClusterer(ClusterMixin, _BaseModelWrapper):
-    """sklearn clusterer wrapping :func:`dextra.cluster` (unsupervised, no y)."""
+    """sklearn clusterer wrapping :func:`dextra.cluster` (unsupervised, no y).
+
+    ``labels_`` holds the labels assigned by the fit itself (sklearn
+    convention); ``predict`` assigns data via the persisted estimator (for
+    ``agglomerative`` that is a nearest-centroid rule, which may disagree
+    with the fit labels on boundary points).
+    """
 
     def __init__(self, method: str = "kmeans",
                  cols: Optional[Sequence[str]] = None, k: Optional[int] = None,
@@ -253,7 +259,16 @@ class DextraClusterer(ClusterMixin, _BaseModelWrapper):
         self.estimator_ = params["estimator"]
         self.feature_names_in_ = np.asarray(cols, dtype=object)
         self.n_features_in_ = len(cols)
-        self.labels_ = self.predict(X)
+        fit_labels = getattr(self.estimator_[-1], "labels_", None)
+        if fit_labels is not None and len(fit_labels) == len(X):
+            # The labels the fit actually assigned (sklearn convention).
+            # predict() may disagree for agglomerative, whose deployed
+            # predictor re-assigns by nearest centroid (audit #13).
+            self.labels_ = np.asarray(fit_labels)
+        else:
+            # Rows were dropped internally (e.g. NaN) or the estimator has
+            # no labels_: fall back to assigning via the deployed predictor.
+            self.labels_ = self.predict(X)
         return self
 
     def fit_predict(self, X, y=None):

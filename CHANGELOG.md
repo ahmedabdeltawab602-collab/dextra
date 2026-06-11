@@ -69,12 +69,23 @@
   carries `dextra_audit` (the input frame's history plus this run's entry)
   as its last key. The input DataFrame stays unmutated and all other return
   values are unchanged.
+- **Clusterer fit labels (audit #13):** `DextraClusterer.labels_` (and so
+  `fit_predict`) now holds the labels the underlying fit actually assigned
+  (sklearn clusterer convention) instead of re-predicting the training data
+  through the persisted estimator. For `method="agglomerative"` the deployed
+  predictor is a nearest-centroid stand-in whose re-predictions can disagree
+  with the fit labels on boundary points; `predict` on *new* data still uses
+  it, unchanged. The stand-in now also carries the fit labels as `labels_`.
 
 ### Docs
 - `docs/api.md` now documents the Phase 11 loader (`load` / `peek`): the five
   source families, the `on_ambiguous` policy, the replayable plan, the
   security model and the audit trail. `getting-started` and `index` lead with
   `dx.load(...)` as the entry point.
+- **`df.eval` trust assumption (audit #12):** the `validate_rules` docstring
+  now states that string `check` rules run through `df.eval` and callables
+  receive the full frame -- rules are code and must come from a trusted
+  source, never from untrusted end-user input. No functional change.
 
 ## [0.4.0] — 2026-06-07 — Phase 11 complete: the smart loader
 
