@@ -48,3 +48,4 @@ nav:
   - Home: index.md
   - Getting started: getting-started.md
   - API reference: api.md
+  - Benchmarks: benchmarks.md

@@ -15,6 +15,13 @@
 - **`binize` (audit #9):** new official alternative name for `bin` (which
   shadows the Python builtin). `bin` remains a fully supported alias --
   nothing breaks; both names point to the same function.
+- **Macro-benchmark (productionization):** new `benchmarks/macro_bench.py`
+  times the documented workflow on a ~1M-row dirty synthetic frame (load ->
+  full cleaning chain -> featpipe) and prints a ready-to-paste markdown
+  table; methodology and measured results live in `docs/benchmarks.md` (new
+  nav page). Measured: the cleaning + features chain runs in ~3.8 s for 10^6
+  rows; `dx.load`'s measured-inference pass dominates (~55 s) as the
+  disclosed one-time ingestion cost.
 
 ### Changed
 - **Explicit frame labels (audit #11):** `peek` now exposes `df_name=`
@@ -44,6 +51,9 @@
   `return_rows`) are preserved; a bare call still returns `None`. The
   inference/test helpers are pure functions of their explicit arguments, so
   `params=` is accepted and recorded but there is nothing to replay.
+- **Coverage gate raised 68 -> 78** in `run_validation.ps1` and all CI test
+  jobs, locking in the coverage sprint (total 76.43% -> 81.20%; cleaning.py
+  61% -> 98% via the new visual/show-path + strategy-matrix tests).
 
 ### Deprecated
 - `name=` is deprecated across the Phase 2 single-label helpers

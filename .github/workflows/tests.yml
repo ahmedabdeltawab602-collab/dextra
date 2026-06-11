@@ -36,7 +36,7 @@ jobs:
         run: mypy src/dextra
 
       - name: Run tests
-        run: pytest --cov=dextra --cov-report=term-missing --cov-fail-under=68
+        run: pytest --cov=dextra --cov-report=term-missing --cov-fail-under=78
 
   benchmarks:
     runs-on: ubuntu-latest
@@ -101,7 +101,7 @@ jobs:
           pip install -e ".[dev,ml,perf]"
 
       - name: Run tests (perf extras active)
-        run: pytest --cov=dextra --cov-fail-under=68
+        run: pytest --cov=dextra --cov-fail-under=78
 
   pandas-matrix:
     runs-on: ubuntu-latest
@@ -141,4 +141,4 @@ jobs:
         run: python -c "import pandas, numpy; print(pandas.__version__, numpy.__version__)"
 
       - name: Run tests
-        run: pytest --cov=dextra --cov-fail-under=68
+        run: pytest --cov=dextra --cov-fail-under=78
