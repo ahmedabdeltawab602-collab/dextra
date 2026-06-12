@@ -4,8 +4,8 @@
 
 ### Added
 - **Leakage-safe fit/apply for cleaning -- `handle_missing` / `impute`
-  (eval M-5, part 1):** the function now accepts the standard
-  `params` / `return_params` contract. FIT mode (`return_params=True`)
+  and `clip_outliers` / `winsor` (eval M-5):** both functions now
+  accept the standard `params` / `return_params` contract. FIT mode (`return_params=True`)
   freezes the per-column fill values learned from the fit data
   (mean/median/mode/constant store the value; random_uniform /
   random_normal store the fitted distribution; `auto` resolves its
@@ -17,7 +17,12 @@
   missing values but no fitted fill are left as NaN with a UserWarning.
   Apply on a frame missing fitted column(s) raises a clear KeyError;
   foreign params raise ValueError; `dry_run` cannot fit or apply.
-  Return order follows the unified contract: `(df, params[, fig])`;
+  `clip_outliers` freezes the per-column lower/upper bounds (Tukey
+  IQR or z-score) computed on the fit data and clips/drops held-out
+  rows at those train bounds verbatim (unfittable columns --
+  all-NaN, zero spread -- are excluded and disclosed in the
+  docstring). Return order follows the unified contract:
+  `(df, params[, fig])`;
   bare calls are unchanged. Audit entries carry `mode: fit/apply`.
   Regression tests: `tests/test_cleaning_fit_apply.py`.
 - **Explicit model task (audit #7):** `edareport` / `dash` accept

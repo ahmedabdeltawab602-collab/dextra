@@ -1984,6 +1984,92 @@ _VALID_OUTLIER_METHODS_CLEAN = ("iqr", "zscore")
 _VALID_OUTLIER_ACTIONS = ("clip", "drop")
 
 
+def _clip_outliers_apply(df, params, decimals, df_name, show, plot,
+                         return_df, return_params, return_fig,
+                         fig_width, fig_height, dpi):
+    """APPLY mode for clip_outliers: replay fitted bounds, never re-compute."""
+    if (not isinstance(params, dict)
+            or params.get("function") != "clip_outliers"):
+        got = params.get("function") if isinstance(params, dict) else params
+        raise ValueError(
+            f"params dict is not for 'clip_outliers' (function={got!r}).")
+    col_params = params.get("columns", {}) or {}
+    method = params.get("method", "?")
+    action = params.get("action", "clip")
+    fitted_at = params.get("fit_at", "?")
+    missing_cols = [c for c in col_params if c not in df.columns]
+    if missing_cols:
+        raise KeyError(
+            f"clip_outliers apply failed: params expects column(s) "
+            f"{missing_cols} which are not present in this DataFrame. "
+            f"The data does not match the fitted bounds.")
+
+    out = df.copy()
+    out.attrs = dict(df.attrs)
+    n_before = len(out)
+    per_col_log = []
+    outlier_mask_total = pd.Series(False, index=out.index)
+    for c, cp in col_params.items():
+        s = pd.to_numeric(out[c], errors="coerce")
+        lb, ub = cp["lower_bound"], cp["upper_bound"]
+        col_mask = (s < lb) | (s > ub)
+        n_out = int(col_mask.fillna(False).sum())
+        if action == "clip":
+            if n_out:
+                out[c] = s.clip(lower=lb, upper=ub)
+            n_clipped, n_dropped = n_out, 0
+        else:
+            outlier_mask_total = outlier_mask_total | col_mask.fillna(False)
+            n_clipped, n_dropped = 0, n_out
+        per_col_log.append({
+            "column": c, "lower_bound": float(lb), "upper_bound": float(ub),
+            "n_outliers": n_out, "n_clipped": n_clipped,
+            "n_dropped_rows": n_dropped,
+        })
+    if action == "drop" and outlier_mask_total.any():
+        out = out.loc[~outlier_mask_total].copy()
+        out.attrs = dict(df.attrs)
+    n_after = len(out)
+    total_clipped = sum(e["n_clipped"] for e in per_col_log)
+    rows_dropped = n_before - n_after
+    did = (f"clipped {total_clipped} cell(s)" if action == "clip"
+           else f"dropped {rows_dropped} row(s)")
+    decision = (f"Applied saved {method} bounds (fitted {fitted_at}) to "
+                f"{len(per_col_log)} column(s): {did} at fit-time bounds; "
+                f"no re-fit -- leakage-safe.")
+    out.attrs.setdefault(AUDIT_KEY, [])
+    out.attrs[AUDIT_KEY] = list(out.attrs[AUDIT_KEY])
+    out.attrs[AUDIT_KEY].append({
+        "stage": "outlier_treatment",
+        "function": "clip_outliers",
+        "timestamp": now_iso(),
+        "mode": "apply",
+        "before": {"n_rows": n_before},
+        "after": {"n_rows": n_after, "cells_clipped": total_clipped,
+                  "rows_dropped": rows_dropped},
+        "params": {"method": method, "action": action,
+                   "cols": list(col_params), "fit_at": fitted_at},
+        "decision": decision,
+    })
+    if show:
+        _print_header(f"Outlier treatment for: {df_name}  "
+                      f"(method={method}, action={action}, mode=apply)")
+        if per_col_log:
+            log_df = pd.DataFrame(per_col_log).set_index("column")
+            _display(_format_summary(
+                log_df, decimals,
+                int_cols=("n_outliers", "n_clipped", "n_dropped_rows")))
+        print(f"\nDecision: {decision}\n")
+    fig = None
+    if plot:
+        fig = _plot_clip_outliers(df, out, list(col_params), per_col_log,
+                                  action, fig_width, fig_height, dpi,
+                                  decimals)
+    _finalize_figure(fig, show, plot, return_fig)
+    return _ret_pack(out, fig, return_df, return_fig,
+                     params=params, return_params=return_params)
+
+
 def clip_outliers(
     df: pd.DataFrame,
     cols: Optional[Sequence[str]] = None,
@@ -2001,6 +2087,8 @@ def clip_outliers(
     fig_width: float = 14.0,
     fig_height: float = 6.0,
     dpi: int = 110,
+    params: Optional[dict] = None,
+    return_params: bool = False,
 ):
     """Stage 5: outlier treatment.
 
@@ -2012,6 +2100,14 @@ def clip_outliers(
         'clip'   - winsorization (replace with bound). Default; no row loss.
         'drop'   - drop rows where ANY analysed column is outlying.
 
+    Leakage-safe fit/apply: in FIT mode (``params=None``) pass
+    ``return_params=True`` to also get a replayable params dict with
+    the per-column bounds computed from THIS data; in APPLY mode
+    (``params=<dict>``) held-out data is clipped/dropped at those
+    fit-time bounds verbatim -- never recomputed. Columns whose
+    bounds could not be fitted (all-NaN, zero spread) are excluded
+    from the params and left untouched on apply.
+
     DAMA dimension: Accuracy (correcting suspect values without inventing them).
 
     Examples
@@ -2019,10 +2115,26 @@ def clip_outliers(
     >>> dx.clip_outliers(df)                              # IQR, k=1.5, clip
     >>> dx.clip_outliers(df, method='zscore', z_threshold=3)
     >>> dx.clip_outliers(df, action='drop')
+    >>> tr, p = dx.clip_outliers(train, return_params=True)
+    >>> te = dx.clip_outliers(test, params=p)   # train bounds, no re-fit
     """
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
     df = _ensure_pandas(df)
+
+    if params is not None:
+        if dry_run:
+            raise ValueError(
+                "clip_outliers: dry_run is a fit-mode flag and cannot "
+                "be combined with params= (apply mode).")
+        return _clip_outliers_apply(
+            df, params, decimals, df_name, show, plot, return_df,
+            return_params, return_fig, fig_width, fig_height, dpi)
+    if dry_run and return_params:
+        raise ValueError(
+            "clip_outliers: dry_run does not fit parameters; run with "
+            "dry_run=False to get a replayable params dict.")
+
     if method not in _VALID_OUTLIER_METHODS_CLEAN:
         raise ValueError(f"'method' must be one of {_VALID_OUTLIER_METHODS_CLEAN}, got {method!r}")
     if action not in _VALID_OUTLIER_ACTIONS:
@@ -2101,6 +2213,9 @@ def clip_outliers(
     else:
         decision = (f"Dropped {rows_dropped} row(s) flagged by {method} "
                     f"across {len(per_col_log)} column(s).")
+    if return_params:
+        decision += (" Fitted bounds saved; apply to held-out data "
+                     "with clip_outliers(df_test, params=...).")
 
     out.attrs.setdefault(AUDIT_KEY, [])
     out.attrs[AUDIT_KEY] = list(out.attrs[AUDIT_KEY])
@@ -2115,6 +2230,20 @@ def clip_outliers(
                    "action": action, "cols": list(cols)},
         "decision": decision,
     })
+    params_out = None
+    if return_params:
+        out.attrs[AUDIT_KEY][-1]["mode"] = "fit"
+        params_out = json_safe({
+            "function": "clip_outliers",
+            "method": method, "k": k, "z_threshold": z_threshold,
+            "action": action,
+            "version": __version__,
+            "fit_at": now_iso(),
+            "columns": {e["column"]: {
+                "lower_bound": e["lower_bound"],
+                "upper_bound": e["upper_bound"]} for e in per_col_log},
+            "metadata": {"cols": list(cols)},
+        })
 
     if show:
         _print_header(f"Outlier treatment for: {df_name}  "
@@ -2132,7 +2261,8 @@ def clip_outliers(
                                     fig_width, fig_height, dpi, decimals)
     _finalize_figure(fig, show, plot, return_fig)
 
-    return _ret_pack(out, fig, return_df, return_fig)
+    return _ret_pack(out, fig, return_df, return_fig,
+                     params=params_out, return_params=return_params)
 
 
 def _plot_clip_outliers(df_before, df_after, cols, per_col_log, action,
