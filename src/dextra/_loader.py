@@ -128,25 +128,69 @@ def _read_bytes(source):
 # Detection: encoding / decode / delimiter / header
 # ---------------------------------------------------------------------------
 
-def _detect_encoding(sample: bytes, forced: Optional[str]):
+def _arabic_runs(text: str) -> bool:
+    """True when non-ASCII chars are mostly Arabic-block AND form runs.
+
+    Legacy-Arabic bytes decoded with cp1256 yield consecutive Arabic letters
+    (whole words), while European accented text (latin-1 / cp125x) yields
+    isolated high chars between ASCII letters -- adjacency separates the two
+    even though both occupy the same high-byte range.
+    """
+    idx = [i for i, ch in enumerate(text) if ord(ch) > 127]
+    if not idx:
+        return False
+    arabic = sum(1 for i in idx if 0x0600 <= ord(text[i]) <= 0x06FF)
+    adjacent = sum(
+        1 for k, i in enumerate(idx)
+        if (k > 0 and idx[k - 1] == i - 1)
+        or (k + 1 < len(idx) and idx[k + 1] == i + 1))
+    return (arabic / len(idx) >= 0.8) and (adjacent / len(idx) >= 0.5)
+
+
+def _detect_encoding(sample: bytes, forced: Optional[str],
+                     truncated: bool = False):
+    """Pick an encoding for ``sample``; only certainty earns ``confirmed``.
+
+    Order: user override > BOM > strict utf-8 > guesses. Everything below
+    the strict-utf-8 line is a guess and is reported ``ambiguous`` so the
+    ``on_ambiguous`` policy surfaces it (eval M-6: a detector's first guess
+    used to be stamped ``confirmed``, turning cp1256 -- and even valid
+    utf-8 -- Arabic into mojibake silently). ``encoding=`` is the
+    deterministic way out.
+    """
     if forced:
         return forced, _CONFIRMED, f"user-specified ({forced})"
     if sample.startswith(b"\xef\xbb\xbf"):
         return "utf-8-sig", _CONFIRMED, "BOM: utf-8"
     if sample.startswith((b"\xff\xfe", b"\xfe\xff")):
         return "utf-16", _CONFIRMED, "BOM: utf-16"
+    if b"\x00" not in sample:  # NUL bytes suggest BOM-less utf-16 -> guess
+        try:
+            sample.decode("utf-8")
+            return "utf-8", _CONFIRMED, "strict utf-8 decode of sample"
+        except UnicodeDecodeError as exc:
+            if truncated and exc.start >= len(sample) - 3:
+                # a multi-byte char split at the sample cut, not bad bytes;
+                # _decode_full still strict-decodes the full payload after
+                return ("utf-8", _CONFIRMED,
+                        "strict utf-8 decode of sample (boundary-split tail)")
+    try:
+        if _arabic_runs(sample.decode("cp1256")):
+            return ("cp1256", _AMBIGUOUS,
+                    "guessed cp1256 (legacy Arabic byte runs); pass "
+                    "encoding= to confirm")
+    except UnicodeDecodeError:
+        pass
     try:
         from charset_normalizer import from_bytes  # lazy `io` extra
         best = from_bytes(sample).best()
         if best is not None and best.encoding:
-            enc = "utf-8" if best.encoding.replace("_", "-") == "utf-8" else best.encoding
-            return enc, _CONFIRMED, f"charset-normalizer: {enc}"
+            enc = ("utf-8" if best.encoding.replace("_", "-") == "utf-8"
+                   else best.encoding)
+            return (enc, _AMBIGUOUS,
+                    f"charset-normalizer guess: {enc}; pass encoding= to "
+                    "confirm")
     except Exception:  # noqa: BLE001 - fall back to stdlib probing
-        pass
-    try:
-        sample.decode("utf-8")
-        return "utf-8", _CONFIRMED, "strict utf-8 decode of sample"
-    except UnicodeDecodeError:
         pass
     try:
         sample.decode("cp1256")
@@ -1444,7 +1488,10 @@ def load(
     on_ambiguous : {"warn", "raise", "plan"}
         Policy when a decision is ambiguous (see above).
     encoding, sep, header_row, decimal, thousands : optional
-        Force a decision instead of detecting it.
+        Force a decision instead of detecting it. ``encoding=`` is the
+        deterministic way out for legacy text: auto-detection of non-utf-8
+        bytes is a guess and is always flagged ambiguous (e.g. pass
+        ``encoding="cp1256"`` for legacy Arabic files).
     sheet : str | int, optional
         Excel only: sheet name or 0-based index. Default: the single sheet,
         or the first visible one (flagged ambiguous when several exist).
@@ -1548,7 +1595,8 @@ def load(
         sep = "\t"
 
     if kind not in ("excel", "parquet"):
-        enc, econf, ereason = _detect_encoding(raw[:sample_bytes], encoding)
+        enc, econf, ereason = _detect_encoding(
+            raw[:sample_bytes], encoding, truncated=len(raw) > sample_bytes)
         text, econf, ereason = _decode_full(raw, enc, econf, ereason)
 
     if params is not None:

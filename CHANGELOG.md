@@ -88,6 +88,18 @@
   `confirmed`, real dates with separators still parse, and a lone "0" is
   still a number. Regression tests:
   `tests/test_loader_b1_leading_zeros.py`.
+- **Arabic / legacy encodings no longer corrupted silently (eval M-6):**
+  encoding auto-detection used to stamp a detector's first guess
+  `confirmed`: legacy cp1256 Arabic came back as cp932/mac_latin2 mojibake,
+  and even valid utf-8 Arabic could come back as gb18030 -- with no warning
+  under any policy. Detection now tries strict utf-8 first (confirmed only
+  when the bytes really decode, tolerating a multi-byte char cut at the
+  sample boundary), prefers cp1256 when non-utf-8 bytes decode to
+  Arabic-looking letter runs, and reports **every** non-utf-8 guess
+  (including charset-normalizer's) as `ambiguous`, so
+  `on_ambiguous="warn"/"raise"/"plan"` all surface it. `encoding=` is
+  the documented deterministic way out and stays `confirmed`. Regression
+  tests: `tests/test_loader_m6_encoding.py`.
 - **Audit trail surfaced (audit #6):** `edareport` / `dash` appended their
   audit entry to an internal copy that was immediately discarded, so the
   trail was unreachable. The manifest returned with `return_params=True` now

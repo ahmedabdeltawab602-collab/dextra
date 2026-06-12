@@ -59,9 +59,14 @@ def test_tsv_kind(tmp_path):
 def test_cp1256_arabic_headers(tmp_path):
     src = _write(tmp_path, "ar.csv", "الاسم,القيمة\nأحمد,10\nسارة,20\n",
                  encoding="cp1256")
-    df, plan = dx.load(src, return_params=True, show=False)
+    # legacy-Arabic bytes are a guess -> disclosed ambiguous (eval M-6)
+    with pytest.warns(DextraLoaderWarning):
+        df, plan = dx.load(src, return_params=True, show=False)
     assert df.shape == (2, 2)
-    assert plan["decisions"]["encoding"]["value"].lower() in ("cp1256", "utf-8", "latin-1")
+    enc = plan["decisions"]["encoding"]
+    assert enc["value"].lower() == "cp1256"
+    assert enc["confidence"] == "ambiguous"
+    assert df.iloc[0, 0] == "أحمد"  # round-trip survives the guess
 
 
 def test_junk_preamble_header_detection(tmp_path):
