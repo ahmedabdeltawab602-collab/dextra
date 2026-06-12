@@ -3,6 +3,23 @@
 ## [Unreleased] — hardening before release
 
 ### Added
+- **Leakage-safe fit/apply for cleaning -- `handle_missing` / `impute`
+  (eval M-5, part 1):** the function now accepts the standard
+  `params` / `return_params` contract. FIT mode (`return_params=True`)
+  freezes the per-column fill values learned from the fit data
+  (mean/median/mode/constant store the value; random_uniform /
+  random_normal store the fitted distribution; `auto` resolves its
+  per-column choice on the fit data and freezes it); APPLY mode
+  (`params=<dict>`) replays those values verbatim -- never recomputed --
+  so held-out data is filled with train statistics. `drop_cols` replays
+  the fitted column drop; order-based strategies
+  (ffill/bfill/interpolate) re-run by nature (documented); columns with
+  missing values but no fitted fill are left as NaN with a UserWarning.
+  Apply on a frame missing fitted column(s) raises a clear KeyError;
+  foreign params raise ValueError; `dry_run` cannot fit or apply.
+  Return order follows the unified contract: `(df, params[, fig])`;
+  bare calls are unchanged. Audit entries carry `mode: fit/apply`.
+  Regression tests: `tests/test_cleaning_fit_apply.py`.
 - **Explicit model task (audit #7):** `edareport` / `dash` accept
   `task="auto" | "regression" | "classification"` for the model section.
   `"auto"` (the default, behaviour unchanged) infers regression when the

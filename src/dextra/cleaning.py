@@ -32,7 +32,8 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 
-from ._utils import _ensure_pandas, get_variable_name, now_iso
+from ._utils import _ensure_pandas, get_variable_name, json_safe, now_iso
+from ._version import __version__
 
 try:
     from IPython.display import display as _ipy_display
@@ -1267,6 +1268,205 @@ def _impute_column(s: pd.Series, strategy: str,
     return out
 
 
+_FROZEN_FILL_STRATEGIES = ("mean", "median", "mode", "constant")
+
+
+def _fill_value_kind(v):
+    """Classify a fill value for JSON-safe storage and faithful replay."""
+    if v is None or (isinstance(v, float) and pd.isna(v)):
+        return None, None
+    if isinstance(v, (bool, np.bool_)):
+        return bool(v), "bool"
+    if isinstance(v, (int, np.integer)):
+        return int(v), "number"
+    if isinstance(v, (float, np.floating)):
+        return float(v), "number"
+    if isinstance(v, pd.Timestamp):
+        return v.isoformat(), "datetime"
+    if isinstance(v, str):
+        return v, "text"
+    return str(v), "other"
+
+
+def _fit_fill_entry(s: pd.Series, strategy: str, fill_value) -> dict:
+    """Build one column's replayable fill entry, learned from the FIT data.
+
+    mean/median/mode/constant freeze the fill value; random_uniform /
+    random_normal freeze the fitted distribution; the order-based strategies
+    (ffill/bfill/interpolate) and keep/random_sample carry no train
+    statistic and are re-run on apply (disclosed there).
+    """
+    entry = {"strategy": strategy, "fill_value": None, "value_kind": None}
+    non_na = s.dropna()
+    if strategy == "mean" and pd.api.types.is_numeric_dtype(s) and len(non_na):
+        entry["fill_value"], entry["value_kind"] = _fill_value_kind(s.mean())
+    elif (strategy == "median" and pd.api.types.is_numeric_dtype(s)
+          and len(non_na)):
+        entry["fill_value"], entry["value_kind"] = _fill_value_kind(s.median())
+    elif strategy == "mode":
+        modes = non_na.mode()
+        if len(modes):
+            entry["fill_value"], entry["value_kind"] = (
+                _fill_value_kind(modes.iloc[0]))
+    elif strategy == "constant":
+        entry["fill_value"], entry["value_kind"] = _fill_value_kind(fill_value)
+    elif (strategy == "random_uniform"
+          and pd.api.types.is_numeric_dtype(s) and len(non_na)):
+        entry["bounds"] = [float(non_na.min()), float(non_na.max())]
+    elif (strategy == "random_normal"
+          and pd.api.types.is_numeric_dtype(s) and len(non_na)):
+        sd = float(non_na.std())
+        entry["dist"] = [float(non_na.mean()),
+                         1.0 if (pd.isna(sd) or sd == 0) else sd]
+    return entry
+
+
+def _apply_fill_column(s: pd.Series, entry: dict, rng) -> pd.Series:
+    """Fill one apply-side column from a fitted entry. Returns a NEW Series."""
+    strategy = entry.get("strategy")
+    value, kind = entry.get("fill_value"), entry.get("value_kind")
+    if strategy == "keep":
+        return s.copy()
+    if value is not None:
+        fill = pd.Timestamp(value) if kind == "datetime" else value
+        out = s.copy()
+        if isinstance(out.dtype, pd.CategoricalDtype):
+            if fill not in out.cat.categories:
+                out = out.cat.add_categories([fill])
+        return out.fillna(fill)
+    if strategy in _FROZEN_FILL_STRATEGIES:
+        return s.copy()  # nothing was learnable at fit -> leave as is
+    if strategy == "random_uniform":
+        out = s.copy()
+        n = int(out.isna().sum())
+        if n and "bounds" in entry:
+            lo, hi = entry["bounds"]
+            out.loc[out.isna()] = rng.uniform(lo, hi, n)
+        return out
+    if strategy == "random_normal":
+        out = s.copy()
+        n = int(out.isna().sum())
+        if n and "dist" in entry:
+            mu, sd = entry["dist"]
+            out.loc[out.isna()] = rng.normal(mu, sd, n)
+        return out
+    if strategy in ("ffill", "bfill", "interpolate", "random_sample"):
+        # order-based / sampling strategies have no train statistic; re-run
+        return _impute_column(s, strategy, rng=rng)
+    return s.copy()
+
+
+def _handle_missing_apply(df, params, random_state, decimals, df_name,
+                          show, plot, return_df, return_params, return_fig,
+                          fig_width, fig_height, dpi):
+    """APPLY mode for handle_missing: replay fitted fills, never re-compute."""
+    if (not isinstance(params, dict)
+            or params.get("function") != "handle_missing"):
+        got = params.get("function") if isinstance(params, dict) else params
+        raise ValueError(
+            f"params dict is not for 'handle_missing' (function={got!r}).")
+    meta = params.get("metadata", {}) or {}
+    mode_level = meta.get("mode_level")
+    fitted_at = params.get("fit_at", "?")
+    n_before_rows = len(df)
+
+    if mode_level == "drop_rows":
+        out = df.dropna(axis=0, how="any").copy()
+        per_col_log = []
+        decision = (f"Applied saved 'drop_rows' plan (fitted {fitted_at}): "
+                    f"dropped {n_before_rows - len(out)} row(s) with any NaN "
+                    f"(re-run; no train statistic involved).")
+    elif mode_level == "drop_cols":
+        fitted_drop = list(meta.get("dropped_cols", []))
+        absent = [c for c in fitted_drop if c not in df.columns]
+        out = df.drop(
+            columns=[c for c in fitted_drop if c in df.columns]).copy()
+        per_col_log = [{"column": c, "strategy": "drop_col (fitted)",
+                        "filled": 0} for c in fitted_drop]
+        decision = (f"Applied saved 'drop_cols' plan (fitted {fitted_at}): "
+                    f"dropped the {len(fitted_drop)} column(s) chosen on the "
+                    f"fit data; no re-decision -- leakage-safe."
+                    + (f" {len(absent)} fitted column(s) absent here: "
+                       f"{absent}." if absent else ""))
+    else:
+        col_params = params.get("columns", {}) or {}
+        missing_cols = [c for c in col_params if c not in df.columns]
+        if missing_cols:
+            raise KeyError(
+                f"handle_missing apply failed: params expects column(s) "
+                f"{missing_cols} which are not present in this DataFrame. "
+                f"The data does not match the fitted plan.")
+        rng = np.random.default_rng(
+            random_state if random_state is not None
+            else meta.get("random_state"))
+        out = df.copy()
+        per_col_log, resampled = [], []
+        for c, entry in col_params.items():
+            n_missing = int(out[c].isna().sum())
+            if n_missing == 0:
+                continue
+            filled_col = _apply_fill_column(out[c], entry, rng)
+            n_after = int(filled_col.isna().sum())
+            out[c] = filled_col
+            if entry.get("strategy") == "random_sample":
+                resampled.append(c)
+            per_col_log.append({
+                "column": c,
+                "strategy": f"{entry.get('strategy')} (fitted)",
+                "missing_before": n_missing,
+                "filled": n_missing - n_after,
+                "missing_after": n_after,
+            })
+        unfitted = [c for c in out.columns
+                    if c not in col_params and int(out[c].isna().sum()) > 0]
+        if unfitted:
+            warnings.warn(
+                f"handle_missing: {len(unfitted)} column(s) with missing "
+                f"values had no fitted fill (not part of the fit plan): "
+                f"{unfitted}; left as NaN.", UserWarning, stacklevel=3)
+        if resampled:
+            warnings.warn(
+                f"handle_missing: column(s) {resampled} use 'random_sample', "
+                f"which re-samples from THIS data on apply (no train "
+                f"statistic is stored).", UserWarning, stacklevel=3)
+        total = sum(e.get("filled", 0) for e in per_col_log)
+        decision = (f"Applied saved missing-value fills (fitted {fitted_at}) "
+                    f"to {len(per_col_log)} column(s), {total} cell(s) "
+                    f"filled with fit-time values; no re-fit -- "
+                    f"leakage-safe.")
+
+    out.attrs = dict(df.attrs)
+    out.attrs.setdefault(AUDIT_KEY, [])
+    out.attrs[AUDIT_KEY] = list(out.attrs[AUDIT_KEY])
+    out.attrs[AUDIT_KEY].append({
+        "stage": "missing_values",
+        "function": "handle_missing",
+        "timestamp": now_iso(),
+        "mode": "apply",
+        "params": {"strategy": params.get("strategy"), "fit_at": fitted_at},
+        "decision": decision,
+    })
+    if show:
+        _print_header(f"Missing handling for: {df_name}  "
+                      f"(strategy={params.get('strategy')}, mode=apply)")
+        if per_col_log:
+            log_df = pd.DataFrame(per_col_log).set_index("column")
+            int_cols = tuple(c for c in ("missing_before", "filled",
+                                         "missing_after")
+                             if c in log_df.columns)
+            _display(_format_summary(log_df, decimals, int_cols=int_cols))
+        else:
+            print("No missing values to handle.")
+        print(f"\nDecision: {decision}\n")
+    fig = None
+    if plot:
+        fig = _plot_handle_missing(df, out, fig_width, fig_height, dpi,
+                                   decimals)
+    _finalize_figure(fig, show, plot, return_fig)
+    return _ret_pack(out, fig, return_df, return_fig,
+                     params=params, return_params=return_params)
+
+
 def handle_missing(
     df: pd.DataFrame,
     strategy: Union[str, Mapping[str, str]] = "auto",
@@ -1283,6 +1483,8 @@ def handle_missing(
     fig_width: float = 14.0,
     fig_height: float = 5.5,
     dpi: int = 110,
+    params: Optional[dict] = None,
+    return_params: bool = False,
 ):
     """Stage 3: handle missing values.
 
@@ -1300,6 +1502,18 @@ def handle_missing(
         'drop_cols' - drop columns with > `drop_threshold` missing.
         dict        - per-column: {'colname': strategy_str}.
 
+    Leakage-safe fit/apply: in FIT mode (``params=None``) pass
+    ``return_params=True`` to also get a replayable params dict
+    holding the fill values learned from THIS data; in APPLY mode
+    (``params=<dict>``) those values are applied verbatim -- never
+    recomputed -- so held-out data is filled with train statistics.
+    mean/median/mode/constant freeze the fill value;
+    random_uniform / random_normal freeze the train distribution;
+    ffill/bfill/interpolate are order-based re-runs (no train
+    statistic exists); random_sample re-samples from the apply-side
+    data (warned). 'drop_cols' replays the fitted column drop;
+    'drop_rows' re-runs (no statistic).
+
     DAMA dimension: Completeness.
 
     Examples
@@ -1307,10 +1521,26 @@ def handle_missing(
     >>> dx.handle_missing(df)                              # auto
     >>> dx.handle_missing(df, strategy={'price': 'median', 'name': 'mode'})
     >>> dx.handle_missing(df, strategy='drop_cols', drop_threshold=0.5)
+    >>> tr, p = dx.handle_missing(train, strategy='mean', return_params=True)
+    >>> te = dx.handle_missing(test, params=p)   # train means, no re-fit
     """
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
     df = _ensure_pandas(df)
+
+    if params is not None:
+        if dry_run:
+            raise ValueError(
+                "handle_missing: dry_run is a fit-mode flag and cannot "
+                "be combined with params= (apply mode).")
+        return _handle_missing_apply(
+            df, params, random_state, decimals, df_name, show, plot,
+            return_df, return_params, return_fig,
+            fig_width, fig_height, dpi)
+    if dry_run and return_params:
+        raise ValueError(
+            "handle_missing: dry_run does not fit parameters; run with "
+            "dry_run=False to get a replayable params dict.")
 
     n_before_rows, n_before_cols = df.shape
     missing_before = df.isna().sum()
@@ -1339,7 +1569,16 @@ def handle_missing(
                               per_col_log, decision, decimals,
                               df_name, "drop_rows",
                               show, plot, return_fig, fig_width, fig_height, dpi)
-        return _ret_pack(out, None, return_df, return_fig)
+        params_out = None
+        if return_params:
+            params_out = {
+                "function": "handle_missing", "strategy": "drop_rows",
+                "version": __version__, "fit_at": now_iso(),
+                "columns": {},
+                "metadata": {"mode_level": "drop_rows"},
+            }
+        return _ret_pack(out, None, return_df, return_fig,
+                         params=params_out, return_params=return_params)
 
     if strategy == "drop_cols":
         miss_pct = (missing_before / n_before_rows).fillna(0)
@@ -1367,7 +1606,18 @@ def handle_missing(
                               per_col_log, decision, decimals,
                               df_name, "drop_cols",
                               show, plot, return_fig, fig_width, fig_height, dpi)
-        return _ret_pack(out, None, return_df, return_fig)
+        params_out = None
+        if return_params:
+            params_out = {
+                "function": "handle_missing", "strategy": "drop_cols",
+                "version": __version__, "fit_at": now_iso(),
+                "columns": {},
+                "metadata": {"mode_level": "drop_cols",
+                             "dropped_cols": list(cols_to_drop),
+                             "drop_threshold": drop_threshold},
+            }
+        return _ret_pack(out, None, return_df, return_fig,
+                         params=params_out, return_params=return_params)
 
     # ---------- per-column imputation ----------
     if isinstance(strategy, str):
@@ -1455,6 +1705,9 @@ def handle_missing(
     n_cols_imputed = sum(1 for e in per_col_log if e.get("filled", 0) > 0)
     decision = (f"Imputed {total_filled} cell(s) across {n_cols_imputed} "
                 f"column(s) using strategy '{strategy}'.")
+    if return_params:
+        decision += (" Fitted fill values saved; apply to held-out "
+                     "data with handle_missing(df_test, params=...).")
 
     out.attrs = dict(df.attrs)
     out.attrs.setdefault(AUDIT_KEY, [])
@@ -1472,11 +1725,40 @@ def handle_missing(
         "decision": decision,
     })
 
+    params_out = None
+    if return_params:
+        out.attrs[AUDIT_KEY][-1]["mode"] = "fit"
+        col_entries = {}
+        for c in df.columns:
+            if per_col_strategy is not None:
+                strat_c = per_col_strategy.get(c)
+                if strat_c is None:
+                    continue
+            else:
+                strat_c = (_auto_strategy_for_column(df[c])
+                           if global_strategy == "auto"
+                           else global_strategy)
+            entry = _fit_fill_entry(df[c], strat_c, fill_value)
+            entry["missing_in_fit"] = int(df[c].isna().sum())
+            col_entries[c] = entry
+        params_out = json_safe({
+            "function": "handle_missing",
+            "strategy": (dict(per_col_strategy)
+                         if per_col_strategy is not None
+                         else global_strategy),
+            "version": __version__,
+            "fit_at": now_iso(),
+            "columns": col_entries,
+            "metadata": {"mode_level": None,
+                         "drop_threshold": drop_threshold,
+                         "random_state": random_state},
+        })
     fig = _emit_missing_report(out, df, n_before_rows, len(out),
                                 per_col_log, decision, decimals,
                                 df_name, str(strategy),
                                 show, plot, return_fig, fig_width, fig_height, dpi)
-    return _ret_pack(out, fig, return_df, return_fig)
+    return _ret_pack(out, fig, return_df, return_fig,
+                     params=params_out, return_params=return_params)
 
 
 def _emit_missing_report(out, df, n_before_rows, n_after_rows,
@@ -1499,7 +1781,13 @@ def _emit_missing_report(out, df, n_before_rows, n_after_rows,
     return fig
 
 
-def _ret_pack(out, fig, return_df, return_fig):
+def _ret_pack(out, fig, return_df, return_fig, params=None,
+              return_params=False):
+    if return_params:
+        # unified contract order: dataframe, params, figure
+        if return_fig:
+            return out, params, fig
+        return out, params
     if return_df and return_fig: return out, fig
     if return_df: return out
     if return_fig: return fig
