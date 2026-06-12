@@ -73,6 +73,21 @@
   In-library messages and the docs now recommend the official names.
 
 ### Fixed
+- **Leading-zero identifiers survive the loader (eval B-1, Blocker):**
+  `load`'s measured inference used to coerce pure-digit columns into
+  datetime ("001" -> year 1) or int64 ("01001" -> 1001), silently dropping
+  leading zeros at parse_rate=1.0 and marking the decision `confirmed` --
+  so no `on_ambiguous` policy could catch the corruption (the high-risk
+  path only fired when some values failed to parse). Two guards now apply:
+  pure-digit strings are never tried as datetime (no date separator means
+  no date), and a pure-digit column containing at least one leading-zero
+  value ("001", "01001", "0512345678") is kept as text and flagged
+  `ambiguous-high-risk` (id/key/target-like name) or `ambiguous`, so
+  `warn`/`raise`/`plan` all surface it. Lossless conversions are
+  untouched: digit columns without leading zeros still become int64
+  `confirmed`, real dates with separators still parse, and a lone "0" is
+  still a number. Regression tests:
+  `tests/test_loader_b1_leading_zeros.py`.
 - **Audit trail surfaced (audit #6):** `edareport` / `dash` appended their
   audit entry to an internal copy that was immediately discarded, so the
   trail was unreachable. The manifest returned with `return_params=True` now

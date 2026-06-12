@@ -257,6 +257,12 @@ def _try_datetime(s: pd.Series):
     base = _nonnull(s)
     if base.empty:
         return None, 0.0
+    text = base.astype(str).str.strip()
+    if text.str.fullmatch(r"[0-9]+").all():
+        # B-1 guard: pure-digit strings ("001", "20240102") carry no date
+        # separator -- parsing them as datetime invents meaning (year 1).
+        # Leave them to the numeric / text paths.
+        return None, 0.0
     for fmt in _DATE_FORMATS:
         conv = pd.to_datetime(base, format=fmt, errors="coerce")
         if conv.notna().mean() >= _PARSE_ACCEPT:
@@ -319,6 +325,24 @@ def _infer_column(name: str, s: pd.Series, parse_dates: bool,
     n_base = int(base.shape[0])
 
     typed, dtype, rate, suggest = s, "object", 1.0, None
+
+    if n_base:
+        text = base.astype(str).str.strip()
+        if (text.str.fullmatch(r"[0-9]+").all()
+                and bool(((text.str.len() > 1)
+                          & text.str.startswith("0")).any())):
+            # B-1 guard: pure-digit values with a leading zero are identifiers
+            # (order ids, zipcodes, phones) -- int/datetime coercion would
+            # silently drop the zeros. Keep text, never CONFIRMED, so the
+            # on_ambiguous policy (warn/raise/plan) surfaces the decision.
+            conf = (_HIGH_RISK if _HIGH_RISK_RE.search(str(name))
+                    else _AMBIGUOUS)
+            col_plan = {"dtype": "object", "coerced_from": "object",
+                        "parse_rate": 1.0, "n_failed": 0,
+                        "confidence": conf,
+                        "reason": "leading-zero identifier kept as text",
+                        "suggest": None}
+            return s, col_plan
 
     if parse_dates:
         conv, r = _try_datetime(s)
