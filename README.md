@@ -95,7 +95,7 @@ dx.describe_numeric(df)
 # 2) Histograms with side-by-side statistics
 dx.plot_histograms(df, bins=30)
 
-# 3) Interactive Plotly box-plots
+# 3) Interactive Plotly box-plots  -- needs the viz extra:  pip install "dextra[viz]"
 dx.plot_boxplots(df)
 ```
 
@@ -106,7 +106,7 @@ you can feed the results into another step:
 
 ```python
 summary = dx.describe_numeric(df, return_df=True, raw=True, show=False)
-fig, stats = dx.plot_boxplots(df, return_fig=True, return_df=True, show=False)
+fig, stats = dx.plot_boxplots(df, return_fig=True, return_df=True, show=False)  # needs dextra[viz]
 ```
 
 `raw=True` returns un-formatted `float64` values — use that when you plan
