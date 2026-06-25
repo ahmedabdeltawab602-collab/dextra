@@ -544,6 +544,8 @@ def _regress_apply(df, params, show, plot, return_df, return_params,
     if show:
         _print_header(f"Regression prediction for: {df_name}  "
                       f"(algorithm={params.get('algorithm')}, mode=apply)")
+        print(f"  fit-time metrics (saved at {params.get('fit_at', '?')}) -- "
+              f"measured on the training data, not on this frame:")
         _display(_fmt_table(_metrics_table(params["metrics"]), decimals))
         print(f"\nDecision: {decision}\n")
 
@@ -1007,6 +1009,8 @@ def _classify_apply(df, params, show, plot, return_df, return_params,
     if show:
         _print_header(f"Classification prediction for: {df_name}  "
                       f"(algorithm={params.get('algorithm')}, mode=apply)")
+        print(f"  fit-time metrics (saved at {params.get('fit_at', '?')}) -- "
+              f"measured on the training data, not on this frame:")
         _display(_fmt_table(_metrics_table(params["metrics"]), decimals))
         print(f"\nDecision: {decision}\n")
     fig = None
@@ -1456,6 +1460,8 @@ def _cluster_apply(df, params, show, plot, return_df, return_params,
     if show:
         _print_header(f"Cluster assignment for: {df_name}  "
                       f"(algorithm={params.get('algorithm')}, mode=apply)")
+        print(f"  fit-time metrics (saved at {params.get('fit_at', '?')}) -- "
+              f"measured on the training data, not on this frame:")
         _display(_fmt_table(_metrics_table(params["metrics"]), decimals))
         print(f"\nDecision: {decision}\n")
     fig = None

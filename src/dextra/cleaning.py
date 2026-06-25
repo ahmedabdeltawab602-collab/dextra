@@ -1082,6 +1082,13 @@ def validate_rules(
     n_total = len(rules)
     n_bad_rows = int(any_violation.sum())
 
+    if n_error > 0:
+        _errs = summary.index[summary["status"] == "ERROR"].tolist()
+        warnings.warn(
+            f"validate_rules: {n_error} rule(s) could not be evaluated and "
+            f"were marked ERROR: {_errs}. Their check raised an exception; "
+            f"treat the validation as incomplete.", UserWarning, stacklevel=2)
+
     if show:
         _print_header(f"Rule validation for: {df_name}  ({n_total} rule(s))")
         _display(_format_summary(
