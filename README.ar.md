@@ -9,15 +9,22 @@
 
 مكتبة `dextra` أداة شاملة للتحليل الاستكشافي قائمة على مبدأ واحد:
 **سطر واحد من الكود ← جدول رقمي غني + رسم متعدّد اللوحات + جملة `Decision:` واحدة.**
-تضمّ حالياً **48 دالة عامة** عبر ست وحدات:
+تضمّ حالياً **68 كائناً عاماً متمايزاً** — اللودر (`load`) في الصدارة، وتسع وحدات تحليلية، وأغلفة متوافقة مع scikit-learn:
 
 | الوحدة | الدوال | ما تغطّيه |
 |---|---|---|
+| `_loader` (طبقة الدخول) | `load`, `peek` (اختصارات `dload`, `dpeek`) | مصدر خام فوضوي (CSV/TSV/Excel/JSON/Parquet) ← DataFrame مُصنَّف بإفصاح كامل قابل للإعادة. |
 | `stats` / `plots` | `describe_numeric`, `plot_histograms`, `plot_boxplots` | أساسيات EDA: ملخّصات غنية ورسوم افتراضية أفضل. |
 | `stats_advanced` | 22 دالة (z-scores، الالتواء، الارتباط، الانحدار الخطي، فترات الثقة، اختبارات t، ANOVA، كاي-تربيع، VIF، عدم توازن الفئات، ...) | الوصفية والثنائية والاستدلال واختبارات الفروض وتشخيص ML. |
-| `cleaning` | 10 دوال (`clean_report`, `na_show`/`na_fix`, `dedupe`, `clip_outliers`, ...) | تدقيق جودة البيانات وتنظيفها عبر مراحل DAMA-DMBOK. |
+| `cleaning` | 10 دوال (`clean_report`, `handle_missing`/`impute`, `dedupe`, `clip_outliers`/`winsor`, ...) | تدقيق جودة البيانات وتنظيفها عبر مراحل DAMA-DMBOK؛ fit/apply آمن ضد التسرّب لـ`handle_missing` و`clip_outliers`. |
 | `features` | 8 دوال (`transform`, `scale`, `bin`, `encode`, `dtfeats`, `cross`, `aggfeat`, `featpipe`) | هندسة ميزات آمنة ضد التسرّب بنمط fit/apply. |
 | `selection` | 5 دوال (`redundancy`, `relevance`, `importance`, `rfe`, `selectpipe`) | اختيار الميزات: Filter / Embedded / Wrapper، آمن ضد التسرّب. |
+| `modeling` | `regress`, `classify`, `cluster` | نماذج أساس فورية: fit / apply / compare بأثر هجين (JSON + مُقدِّر مُدرَّب). |
+| `evaluation` | `confusion_report`, `roc_pr`, `residual_analysis`, `learning_curves` | تقييم نماذج متعدّد المقاييس (وضع التسميات أو الأثر المحفوظ). |
+| `timeseries` | `tsdecomp`, `tsstat`, `tsfcast` | تفكيك السلاسل الزمنية واختبارات الاستقرار والتنبؤ الأساسي. |
+| `report` | `edareport` | تقرير EDA تفاعلي HTML قائم بذاته (يجمع المراحل 1‑8). |
+| `dashboard` | `dash` | يولّد تطبيق Streamlit تفاعلياً قائماً بذاته. |
+| `compat` | `DextraFeaturePipeline`/`DextraSelectPipeline`، `DextraRegressor`/`DextraClassifier`/`DextraClusterer` | أغلفة متوافقة مع scikit-learn تدخل في `Pipeline`/`GridSearchCV`. |
 
 نفّذ `dx.functions()` لطباعة كامل الواجهة العامة مع ملخّص سطر واحد لكل دالة.
 معظم الدوال توفّر نمط `method='compare'` يعرض كل الخيارات **دون أن يقرّر عنك**،
@@ -48,9 +55,34 @@ cd dextra
 pip install -e ".[dev]"
 ```
 
+### إضافات اختيارية
+
+النواة خفيفة (numpy, pandas, matplotlib, seaborn, scipy). فعّل ما تحتاجه:
+
+```bash
+pip install "dextra[io]"       # charset-normalizer + clevercsv + openpyxl: أفضل كشف للودر + Excel
+pip install "dextra[ml]"       # scikit-learn: regress / classify / cluster، المنتقيات النموذجية، dextra.compat
+pip install "dextra[viz]"      # plotly: صناديق plot_boxplots التفاعلية
+pip install "dextra[ts]"       # statsmodels: السلاسل الزمنية STL + ADF / KPSS
+pip install "dextra[dash]"     # streamlit: لوحة المعلومات التفاعلية المولَّدة
+pip install "dextra[perf]"     # polars + pyarrow: خلفيات DataFrame بديلة
+pip install "dextra[notebook]" # jupyter + ipykernel
+pip install "dextra[docs]"     # موقع mkdocs-material
+```
+
 ---
 
 ## بداية سريعة
+
+معظم سير العمل يبدأ من **اللودر** — يحوّل ملفاً فوضوياً إلى DataFrame مُصنَّف وموثَّق:
+
+```python
+import dextra as dx
+
+df = dx.load("your_data.csv")   # ترميز + فاصل + استدلال نوع لكل عمود، بإفصاح قابل للإعادة
+```
+
+وبقية البداية السريعة تستخدم إطاراً صغيراً في الذاكرة ليعمل المقطع كما هو:
 
 ```python
 import pandas as pd

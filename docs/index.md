@@ -5,7 +5,7 @@
 `dextra` is a lightweight toolkit layered on top of pandas and scikit-learn. It
 turns the repetitive first steps of any data analysis — exploration, cleaning,
 feature engineering, feature selection and baseline modeling — into single,
-self-explaining calls.
+self-explaining calls. It ships **68 distinct public callables** — the `load` entry layer, nine analytical modules, and scikit-learn-compatible wrappers.
 
 ## The design contract
 
@@ -31,10 +31,14 @@ self-explaining calls.
 | 11 | `_loader` | `load` / `peek` — raw, messy source → typed DataFrame + full disclosure (the entry layer, "Phase 0" of the pipeline) |
 | 1 | `stats`, `plots` | Rich numeric EDA + better default plots |
 | 2 | `stats_advanced` | 22 statistical helpers (inference, hypothesis tests, diagnostics) |
-| 3 | `cleaning` | 10 cleaning helpers across the DAMA-DMBOK stages |
+| 3 | `cleaning` | 10 cleaning helpers across the DAMA-DMBOK stages; leakage-safe fit/apply on `handle_missing`/`clip_outliers` |
 | 4 | `features` | 8 leakage-safe feature-engineering functions |
 | 5 | `selection` | 5 feature-selection functions (Filter / Embedded / Wrapper) |
 | 6 | `modeling` | `regress`, `classify`, `cluster` — instant baselines |
+| 7 | `evaluation` | `confusion_report`, `roc_pr`, `residual_analysis`, `learning_curves` — deep model evaluation |
+| 8 | `timeseries` | `tsdecomp`, `tsstat`, `tsfcast` — decomposition, stationarity, baseline forecasts |
+| 9 | `report` | `edareport` — one-call self-contained HTML EDA report |
+| 10 | `dashboard` | `dash` — generated interactive Streamlit app |
 | 6.5 | `compat` | scikit-learn-compatible wrappers |
 
 See [Getting started](getting-started.md) and the [API reference](api.md).

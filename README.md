@@ -12,17 +12,24 @@
 
 `dextra` is a choice-first toolkit for the whole exploratory workflow. Every
 function follows one contract: **one line of code -> a rich numeric table + a
-multi-panel figure + a one-sentence `Decision:`**. It currently ships **51 public functions** across six modules (plus
-scikit-learn-compatible wrappers):
+multi-panel figure + a one-sentence `Decision:`**. It currently ships **68 distinct public callables** -- the `load` entry
+layer at the front, nine analytical modules (EDA, statistics, cleaning,
+features, selection, modeling, evaluation, time series and reporting), and
+scikit-learn-compatible wrappers:
 
 | Module | Functions | What it covers |
 |---|---|---|
+| `_loader` (entry layer) | `load`, `peek` (aliases `dload`, `dpeek`) | Raw, messy CSV / TSV / Excel / JSON / Parquet → a typed DataFrame with full, replayable disclosure. |
 | `stats` / `plots` | `describe_numeric`, `plot_histograms`, `plot_boxplots` | Foundational EDA: rich summaries and better default plots. |
 | `stats_advanced` | 22 functions (z-scores, skewness, correlation, SLR, CIs, t-tests, ANOVA, chi-square, VIF, class imbalance, ...) | Descriptive, bivariate, inference, hypothesis tests and ML diagnostics. |
-| `cleaning` | 10 functions (`clean_report`, `na_show`/`impute`, `dedupe`, `clip_outliers`, ...) | Data-quality auditing and cleaning across the DAMA-DMBOK stages. |
+| `cleaning` | 10 functions (`clean_report`, `handle_missing`/`impute`, `dedupe`, `clip_outliers`/`winsor`, ...) | Data-quality auditing and cleaning across the DAMA-DMBOK stages; leakage-safe fit/apply on `handle_missing` and `clip_outliers`. |
 | `features` | 8 functions (`transform`, `scale`, `bin`, `encode`, `dtfeats`, `cross`, `aggfeat`, `featpipe`) | Leakage-safe feature engineering with a fit/apply contract. |
 | `selection` | 5 functions (`redundancy`, `relevance`, `importance`, `rfe`, `selectpipe`) | Filter / Embedded / Wrapper feature selection, leakage-safe. |
 | `modeling` | 3 functions (`regress`, `classify`, `cluster`) | Instant baselines: fit / apply / compare with a hybrid (JSON + fitted estimator) artifact. |
+| `evaluation` | `confusion_report`, `roc_pr`, `residual_analysis`, `learning_curves` | Deep multi-metric model evaluation (label or saved-artifact mode). |
+| `timeseries` | `tsdecomp`, `tsstat`, `tsfcast` | Decomposition, stationarity tests, baseline forecasting. |
+| `report` | `edareport` | One-call, self-contained HTML EDA report (composes Phases 1-8). |
+| `dashboard` | `dash` | Generates a self-contained, interactive Streamlit app. |
 | `compat` | `DextraFeaturePipeline` / `DextraSelectPipeline`, `DextraRegressor` / `DextraClassifier` / `DextraClusterer` | scikit-learn-compatible wrappers that drop into `Pipeline` / `GridSearchCV`. |
 
 Run `dx.functions()` to print the whole public API with one-line summaries.
@@ -61,9 +68,14 @@ The core install is lightweight (numpy, pandas, matplotlib, seaborn, scipy).
 Enable the rest as needed:
 
 ```bash
-pip install "dextra[ml]"    # scikit-learn: regress / classify / cluster, model-based selectors, dextra.compat
-pip install "dextra[viz]"   # plotly: interactive plot_boxplots
-pip install "dextra[docs]"  # mkdocs-material site
+pip install "dextra[io]"       # charset-normalizer + clevercsv + openpyxl: best loader detection + Excel
+pip install "dextra[ml]"       # scikit-learn: regress / classify / cluster, model-based selectors, dextra.compat
+pip install "dextra[viz]"      # plotly: interactive plot_boxplots
+pip install "dextra[ts]"       # statsmodels: time-series STL + ADF / KPSS
+pip install "dextra[dash]"     # streamlit: the generated interactive dashboard
+pip install "dextra[perf]"     # polars + pyarrow: alternative DataFrame backends
+pip install "dextra[notebook]" # jupyter + ipykernel
+pip install "dextra[docs]"     # mkdocs-material site
 ```
 
 ### scikit-learn interoperability
@@ -76,6 +88,17 @@ directly into `sklearn.pipeline.Pipeline` and `GridSearchCV`.
 ---
 
 ## Quick start
+
+Most real workflows begin at the **loader** -- it turns a messy file into a
+typed, fully documented DataFrame:
+
+```python
+import dextra as dx
+
+df = dx.load("your_data.csv")   # encoding + delimiter + per-column type inference, replayable
+```
+
+The rest of this quick start uses a small in-memory frame so it runs as-is:
 
 ```python
 import pandas as pd
