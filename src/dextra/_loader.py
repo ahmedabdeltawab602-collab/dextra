@@ -98,8 +98,10 @@ def _read_bytes(source):
         ext = os.path.splitext(path)[1].lower()
         if ext in _PICKLE_EXT:
             raise LoaderSecurityError(
-                f"refusing to auto-load pickle {path!r}: pickle can execute "
-                "arbitrary code. Pass allow_pickle=True only for trusted files.")
+                f"refusing to load pickle {path!r}: pickle can execute "
+                "arbitrary code, so dextra never auto-loads it. Convert it to "
+                "CSV/Parquet, or read it yourself with pandas.read_pickle if "
+                "you trust its origin.")
         with open(path, "rb") as fh:
             raw = fh.read()
         try:
@@ -595,7 +597,7 @@ def _build_from_text(text, source_meta, kind, on_ambiguous,
             "header": {"value": header_row, "confidence": hconf, "reason": hreason},
             "decimal": {"value": dec, "confidence": _CONFIRMED, "reason": "resolved"},
         },
-        "policy": {"on_ambiguous": on_ambiguous, "allow_pickle": False,
+        "policy": {"on_ambiguous": on_ambiguous,
                    "max_rows": max_rows},
         "metadata": {"n_rows": int(out.shape[0]), "n_cols": int(out.shape[1]),
                      "n_ambiguous": int(n_amb_cols + n_amb_parse)},
@@ -912,7 +914,7 @@ def _build_from_excel(raw, source_meta, on_ambiguous, sheet, header_forced,
             "decimal": {"value": dec, "confidence": _CONFIRMED,
                         "reason": "resolved"},
         },
-        "policy": {"on_ambiguous": on_ambiguous, "allow_pickle": False,
+        "policy": {"on_ambiguous": on_ambiguous,
                    "max_rows": max_rows},
         "metadata": {"n_rows": int(out.shape[0]), "n_cols": int(out.shape[1]),
                      "n_ambiguous": int(n_amb_cols + n_amb_parse)},
@@ -1026,7 +1028,7 @@ def _build_from_parquet(raw, source_meta, on_ambiguous, parse_dates,
         "problems": [],
         "decisions": {"format": {"value": "parquet", "confidence": _CONFIRMED,
                                  "reason": "typed columnar source"}},
-        "policy": {"on_ambiguous": on_ambiguous, "allow_pickle": False,
+        "policy": {"on_ambiguous": on_ambiguous,
                    "max_rows": max_rows},
         "metadata": {"n_rows": int(out.shape[0]), "n_cols": int(out.shape[1]),
                      "n_ambiguous": int(n_amb)},
@@ -1132,7 +1134,7 @@ def _build_from_json(text, source_meta, on_ambiguous, parse_dates,
         "problems": problems,
         "decisions": {"json_form": {"value": form, "confidence": fconf,
                                     "reason": freason}},
-        "policy": {"on_ambiguous": on_ambiguous, "allow_pickle": False,
+        "policy": {"on_ambiguous": on_ambiguous,
                    "max_rows": max_rows},
         "metadata": {"n_rows": int(out.shape[0]), "n_cols": int(out.shape[1]),
                      "n_ambiguous": int(n_amb)},
@@ -1328,7 +1330,7 @@ def _build_from_sql(names, rows, truncated, guard, sql, sql_params,
             "row_guard": {"value": guard, "confidence": guard_conf,
                           "reason": guard_reason},
         },
-        "policy": {"on_ambiguous": on_ambiguous, "allow_pickle": False,
+        "policy": {"on_ambiguous": on_ambiguous,
                    "max_rows": max_rows},
         "metadata": {"n_rows": int(out.shape[0]), "n_cols": int(out.shape[1]),
                      "n_ambiguous": int(n_amb)},
@@ -1453,7 +1455,6 @@ def load(
     na_values=None,
     max_rows: Optional[int] = None,
     sample_bytes: int = 262144,
-    allow_pickle: bool = False,
     return_params: bool = False,
     show: bool = True,
     decimals: int = 4,
@@ -1479,8 +1480,8 @@ def load(
         refused with guidance); parquet = ``.parquet`` / ``.pq`` (typed,
         needs a lazy engine such as pyarrow); JSON = ``.json`` / ``.jsonl`` /
         ``.ndjson`` (records array or one object per line; nested values are
-        serialised + disclosed). ``.pkl`` is refused unless
-        ``allow_pickle=True``.
+        serialised + disclosed). ``.pkl`` is always refused (pickle can
+        execute arbitrary code on load).
     kind : {"auto", "csv", "tsv", "excel", "parquet", "json"}
         Source kind; inferred from the extension when ``"auto"``.
     params : dict, optional
@@ -1514,8 +1515,6 @@ def load(
         Extra NA tokens added to the pandas defaults.
     max_rows : int, optional
         Safety cap on the number of rows read.
-    allow_pickle : bool
-        Permit loading a pickle source (unsafe; off by default).
     return_params : bool
         Also return the load plan.
     show : bool
