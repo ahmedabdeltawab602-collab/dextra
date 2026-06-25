@@ -243,6 +243,17 @@ def clean_report(
         df_name = get_variable_name(df, depth=2)
     df = _ensure_pandas(df)
 
+    if df.shape[1] == 0:
+        raise ValueError(
+            "clean_report: nothing to audit -- the DataFrame has no columns. "
+            "Pass a frame with at least one column.")
+    if not df.columns.is_unique:
+        _dups = sorted(set(map(str, df.columns[df.columns.duplicated()])))
+        raise ValueError(
+            f"clean_report: duplicate column name(s) {_dups} -- dextra needs "
+            f"unique column labels. Run dx.tidycols(df) (standardize_columns) "
+            f"to de-duplicate them first.")
+
     n_rows = len(df)
     n_cols = df.shape[1]
 

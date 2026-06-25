@@ -157,6 +157,13 @@ def describe_numeric(
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
 
+    if isinstance(df, pd.DataFrame) and not df.columns.is_unique:
+        _dups = sorted(set(map(str, df.columns[df.columns.duplicated()])))
+        raise ValueError(
+            f"describe_numeric: duplicate column name(s) {_dups} -- dextra needs "
+            f"unique column labels. Run dx.tidycols(df) (standardize_columns) "
+            f"to de-duplicate them first.")
+
     cols_resolved = resolve_columns(df, cols, numeric_only=True)
     num_col = to_numeric_frame(df[cols_resolved].copy())
 
