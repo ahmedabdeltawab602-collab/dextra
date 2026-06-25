@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=64"]
+requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -8,7 +8,8 @@ dynamic = ["version"]
 description = "Lightweight exploratory-data-analysis, cleaning, feature-engineering, selection and baseline-modeling helpers: one line of code -> a rich table, a multi-panel plot, and a decision sentence, on top of pandas / scikit-learn."
 readme = "README.md"
 requires-python = ">=3.9"
-license = { file = "LICENSE" }
+license = "MIT"
+license-files = ["LICENSE"]
 authors = [
   { name = "Ahmed Abd El Tawab", email = "ahmedabdeltawab3740@gmail.com" },
 ]
@@ -17,13 +18,13 @@ classifiers = [
   "Development Status :: 4 - Beta",
   "Intended Audience :: Developers",
   "Intended Audience :: Science/Research",
-  "License :: OSI Approved :: MIT License",
   "Operating System :: OS Independent",
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
   "Topic :: Scientific/Engineering",
   "Topic :: Scientific/Engineering :: Information Analysis",
   "Topic :: Scientific/Engineering :: Visualization",
@@ -92,7 +93,7 @@ dev = [
   "hypothesis>=6.90",
   "pytest-benchmark>=4.0",
   "build>=1.0",
-  "twine>=4.0",
+  "twine>=5.1",
   "plotly>=5.10",
   "scikit-learn>=1.1",
   "statsmodels>=0.14",
