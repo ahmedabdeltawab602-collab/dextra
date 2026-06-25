@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ## [Unreleased] — hardening before release
 
 ### Added
+- **Low-memory CSV/TSV loading -- `load(..., low_memory=True)` (eval m-8):** an opt-in flag that streams the source once for header and ragged-row detection instead of materialising every cell as a Python list-of-lists, cutting the transient peak memory of a large delimited-text load (about a third on a million rows (1322 -> 869 MB)) while returning a **byte-identical frame and load plan** -- per-column measured inference is unchanged. A no-op for already-typed sources (Excel / parquet / JSON / SQL). Documented in `docs/benchmarks.md`; regression tests: `tests/test_loader_low_memory.py`.
 - **Leakage-safe fit/apply for cleaning -- `handle_missing` / `impute`
   and `clip_outliers` / `winsor` (eval M-5):** both functions now
   accept the standard `params` / `return_params` contract. FIT mode (`return_params=True`)

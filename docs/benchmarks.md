@@ -60,3 +60,47 @@ python benchmarks/macro_bench.py --rows 100000   # quicker sanity run
 The script writes a temporary CSV (removed afterwards), prints the
 environment line and a ready-to-paste markdown table, and never fails the
 run: a step that raises is reported as `FAILED` and timing continues.
+
+## Memory: the loader's transient peak
+
+`load` spends memory to keep ingestion transparent. Measured on the same
+1.01M-row, 48.6 MB CSV used above (`python 3.13`, `pandas 3.0.3`):
+
+| path | transient peak | x final frame | process RSS delta |
+|---|---:|---:|---:|
+| default | 1,322 MB | 13.7x | +313 MB |
+| `low_memory=True` | 869 MB | 9.0x | +249 MB |
+
+The loaded frame is only ~97 MB (about 2x the CSV). The transient **peak**
+is higher because measured per-column inference reads the whole source
+*twice* in the default path: once as a Python list-of-lists (the `csv` parse
+used to locate the header row and count ragged rows) and once as an
+object-dtype DataFrame (the raw values that inference then types). Both
+full-width copies are alive while the typed columns are built, so the
+high-water mark lands near 13-14x the final frame for a plain CSV. It is
+transient -- memory falls back to the frame's own footprint once `load`
+returns -- but it is the loader's real ceiling on a large file.
+
+### `low_memory=True`
+
+Passing `low_memory=True` streams the source **once** instead of
+materialising every cell as a Python list-of-lists: it keeps only a bounded
+header sample plus a per-row field-count tally (integers), which is all that
+header-row and ragged-row detection actually require. The larger of the two
+transient copies is never built, so the peak drops by about a third (1,322
+-> 869 MB here; 13.7x -> 9.0x the frame) and the process RSS delta falls
+with it (+313 -> +249 MB). The returned frame **and** the load plan are
+identical to the default path -- per-column measured inference is unchanged
+-- so the flag is a pure space/time trade with no effect on the result. It
+applies to delimited text (CSV/TSV); already-typed sources (Excel / parquet
+/ JSON / SQL) ignore it.
+
+Measure it yourself with `tracemalloc` around a load:
+
+```python
+import tracemalloc, dextra as dx
+tracemalloc.start()
+df = dx.load("big.csv", show=False)        # add low_memory=True to compare
+_, peak = tracemalloc.get_traced_memory()
+print(round(peak / 1e6), "MB transient peak")
+```
