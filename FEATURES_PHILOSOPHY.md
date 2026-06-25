@@ -244,7 +244,9 @@ Three staged deliveries, each tested before the next begins:
 | 4.3   | `datetime_features`, `interaction_features`, `aggregate_features` | Temporal + Crosses + Aggregations |
 
 After Stage 4.3: a `feature_pipeline` convenience wrapper that chains the
-seven functions and saves/loads the combined params dict.
+seven feature functions -- and, since M-5, optionally the two leakage-prone
+cleaning steps `handle_missing` / `clip_outliers` -- and saves/loads the
+combined params dict.
 
 ---
 

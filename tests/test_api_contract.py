@@ -32,7 +32,10 @@ _FAMILIES = ["transform", "scale", "bin", "encode", "dtfeats", "cross",
              "confidence_interval_mean", "confidence_interval_proportion",
              "sample_size_mean", "sample_size_proportion", "normality_test",
              "t_test_one_sample", "t_test_two_sample", "t_test_paired",
-             "class_imbalance"]
+             "class_imbalance",
+             # M-5: the two cleaning functions now on the leakage-safe
+             # fit/apply contract (handle_missing/impute, clip_outliers/winsor).
+             "handle_missing", "clip_outliers"]
 
 # short alias -> canonical function name
 _ALIASES = {

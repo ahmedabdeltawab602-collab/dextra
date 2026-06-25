@@ -7,16 +7,20 @@ turns the repetitive first steps of any data analysis — exploration, cleaning,
 feature engineering, feature selection and baseline modeling — into single,
 self-explaining calls.
 
-## The design contract (every function honours it)
+## The design contract
 
 - **One-line invocation** — `dx.something(df)` is enough to get a useful result.
 - **Rich tabular output** — a densely packed metrics table, not a single number.
 - **Comprehensive visual** — a multi-panel figure beside the numbers.
 - **Decision sentence** — a short `Decision:` line summarising the result.
 - **Choices, not decisions** — `method="compare"` ranks candidates without
-  silently picking one.
+  silently picking one (in the feature-engineering, selection and
+  modeling families).
 - **Leakage-safe fit/apply** — learn on train only, replay verbatim on new data
-  via a JSON-serialisable `params` artifact.
+  via a JSON-serialisable `params` artifact. This is honoured by the
+  feature-engineering, selection and modeling families and by the two
+  leakage-prone cleaning steps `handle_missing` and `clip_outliers`; the
+  remaining cleaning helpers are deterministic, stateless one-shot operations.
 - **Immutability + audit trail** — the input frame is never mutated; every
   operation is logged to `df.attrs["dextra_audit"]`.
 

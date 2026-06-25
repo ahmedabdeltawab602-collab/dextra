@@ -24,7 +24,7 @@
   docstring). Return order follows the unified contract:
   `(df, params[, fig])`;
   bare calls are unchanged. Audit entries carry `mode: fit/apply`.
-  Regression tests: `tests/test_cleaning_fit_apply.py`.
+  Both functions are now valid `featpipe` steps (`{"fn": "handle_missing"}` / `{"fn": "clip_outliers"}`), so a full clean -> engineer recipe fits on train and replays verbatim from one combined params artifact; both also join the `_FAMILIES` API-contract check. Regression tests: `tests/test_cleaning_fit_apply.py`.
 - **Explicit model task (audit #7):** `edareport` / `dash` accept
   `task="auto" | "regression" | "classification"` for the model section.
   `"auto"` (the default, behaviour unchanged) infers regression when the

@@ -8,6 +8,7 @@ from typing import Optional, Sequence
 import matplotlib.pyplot as plt
 import pandas as pd
 
+from .cleaning import clip_outliers, handle_missing
 from ._features_common import (
     _display,
     _finalize_figure,
@@ -29,6 +30,10 @@ _FEATPIPE_DISPATCH = {
     "dtfeats": dtfeats,
     "cross": cross,
     "aggfeat": aggfeat,
+    # M-5: two leakage-prone cleaning steps wired in so a full
+    # clean -> engineer recipe replays from one params artifact.
+    "handle_missing": handle_missing,
+    "clip_outliers": clip_outliers,
 }
 
 
@@ -43,7 +48,11 @@ _FEATPIPE_INPLACE_FNS = ("transform", "scale", "bin")
 
 def _featpipe_compare_key(fn_name: str) -> str:
     """Return the keyword that selects the method for a given function."""
-    return "agg" if fn_name == "aggfeat" else "method"
+    if fn_name == "aggfeat":
+        return "agg"
+    if fn_name == "handle_missing":
+        return "strategy"
+    return "method"
 
 
 def _featpipe_validate_steps(steps) -> list:
@@ -147,7 +156,8 @@ def featpipe(
     fig_height: float = 4.6,
     dpi: int = 110,
 ):
-    """Chain the seven dextra feature-engineering functions into one pipeline.
+    """Chain dextra's feature-engineering functions -- plus two leakage-prone
+    cleaning steps (``handle_missing`` / ``clip_outliers``) -- into one pipeline.
 
     featpipe is the Stage 4.4 convenience wrapper. It runs ``transform``,
     ``scale``, ``bin``, ``encode``, ``dtfeats``, ``cross`` and ``aggfeat`` in
@@ -167,7 +177,8 @@ def featpipe(
         Input data. Never mutated.
     steps : sequence of dict, optional
         Fit-mode recipe. Each dict has a ``'fn'`` key naming one of
-        ``transform / scale / bin / encode / dtfeats / cross / aggfeat``; every
+        ``transform / scale / bin / encode / dtfeats / cross / aggfeat`` (plus the
+        cleaning steps ``handle_missing`` / ``clip_outliers``); every
         other key is forwarded as a keyword argument to that function, e.g.
         ``{'fn': 'scale', 'cols': ['price'], 'method': 'robust'}``. A step may
         reference a column produced by an earlier step. ``method='compare'``
