@@ -67,10 +67,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   (`params`, `return_params`, `show`, `plot`, `return_df`, `return_fig`,
   `decimals`, `df_name`), attach a `dextra_audit` trail to their summary
   frame, and return a JSON-safe `params` manifest when `return_params=True`.
-  Existing return order is preserved (plotters stay figure-first; a bare call
-  still returns `None`); the manifest is appended last. For the plotters
-  `plot=True` simply gates rendering; for `describe_numeric` `plot` /
-  `return_fig` are documented no-ops (it has no native figure).
+  Existing return order is preserved: the unified contract is
+  `(df, params[, fig])`, but these plotters stay figure-first for backward
+  compatibility, so they return `(fig, df, params)` -- the manifest last --
+  while `describe_numeric` has no figure and returns `(df, params)`; a bare
+  call still returns `None`. For the plotters `plot=True` simply gates
+  rendering; for `describe_numeric` `plot` / `return_fig` are documented
+  no-ops (it has no native figure).
 - **Unified contract — Phase 2 (audit #4 complete):** all 22 `stats_advanced`
   functions now expose the full standard flag set, attach a `dextra_audit`
   trail and return a JSON-safe `params` manifest when `return_params=True`.
