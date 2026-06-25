@@ -1,5 +1,10 @@
 # Changelog
 
+All notable changes to `dextra` will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/).
+
 ## [Unreleased] — hardening before release
 
 ### Added
@@ -242,14 +247,9 @@ an `on_ambiguous` policy, and a replayable JSON-safe load plan.
 - `src/dextra/stats_advanced.py.bak` no longer tracked/shipped
   (`*.bak` added to `.gitignore`).
 
-All notable changes to `dextra` will be documented in this file.
+### Phases 7–10 — evaluation, time series, report, dashboard (shipped in 0.3.0; were previously stranded in a second Unreleased section)
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/).
-
-## [Unreleased]
-
-### Added
+#### Added
 - **Phase 7 - `evaluation`:** four deep, multi-metric evaluation functions
   (each with a short alias), built on the Phase-6 hybrid artifact and the same
   one-line contract (dense metrics table + multi-panel figure + `Decision:`
@@ -327,7 +327,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   reproducibility manifest (dextra / Python / pandas versions + settings), and
   up-front dependency / data-file checks in the generated app.
 
-### Testing
+#### Testing
 - `tests/test_phase7.py` - covers all four evaluation functions in both label
   and artifact modes (binary + multiclass), the JSON-safe report descriptor,
   figure rendering, input-DataFrame immutability, alias identity and the
@@ -356,7 +356,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   the CSV format and the guard paths; and the renderer `_build_dashboard` with a
   stubbed Streamlit (tab rendering, model-tab toggle, tab isolation).
 
-### Dependencies
+#### Dependencies
 - New **optional** extra `ts` (`statsmodels>=0.14`), lazy-imported, for the
   Phase 8 STL decomposition and (upcoming) ADF / KPSS stationarity tests. The
   base install is unchanged; `import dextra` still needs only numpy / pandas /
@@ -483,6 +483,8 @@ property-based tests and an informational mypy gate. Backward-compatible.
 - seaborn >= 0.12
 - plotly >= 5.10
 
-[Unreleased]: https://github.com/ahmedabdeltawab602-collab/dextra/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/ahmedabdeltawab602-collab/dextra/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/ahmedabdeltawab602-collab/dextra/compare/v0.3.0...v0.4.0
+[0.3.0]: https://github.com/ahmedabdeltawab602-collab/dextra/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/ahmedabdeltawab602-collab/dextra/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/ahmedabdeltawab602-collab/dextra/releases/tag/v0.1.0
