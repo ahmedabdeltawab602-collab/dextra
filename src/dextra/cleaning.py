@@ -2177,38 +2177,57 @@ def clip_outliers(
     per_col_log = []
     outlier_mask_total = pd.Series(False, index=out.index)
 
-    for c in cols:
-        s = pd.to_numeric(out[c], errors="coerce")
-        non_na = s.dropna()
-        if non_na.empty:
+    # Flag non-finite (inf) inputs with a named dextra warning, then suppress
+    # the raw numpy overflow/invalid RuntimeWarnings while bounds are computed.
+    # Clipping results are unchanged; this is a disclosure-only change.
+    _inf_cols = []
+    for _c in cols:
+        _ser = df[_c]
+        if isinstance(_ser, pd.DataFrame):
             continue
-        if method == "iqr":
-            q1 = non_na.quantile(0.25)
-            q3 = non_na.quantile(0.75)
-            iqr = q3 - q1
-            lb = q1 - k * iqr
-            ub = q3 + k * iqr
-        else:
-            mu, sigma = non_na.mean(), non_na.std()
-            if sigma == 0 or pd.isna(sigma):
+        if np.isinf(pd.to_numeric(_ser, errors="coerce")
+                    .to_numpy(dtype="float64", na_value=np.nan)).any():
+            _inf_cols.append(str(_c))
+    if _inf_cols:
+        warnings.warn(
+            f"clip_outliers: column(s) {_inf_cols} contain non-finite (inf) "
+            f"values; the computed bounds may overflow to inf. Replace them "
+            f"first (e.g. df.replace([np.inf, -np.inf], np.nan)) if that is "
+            f"not intended.", UserWarning, stacklevel=2)
+
+    with np.errstate(over="ignore", invalid="ignore", divide="ignore"):
+        for c in cols:
+            s = pd.to_numeric(out[c], errors="coerce")
+            non_na = s.dropna()
+            if non_na.empty:
                 continue
-            lb = mu - z_threshold * sigma
-            ub = mu + z_threshold * sigma
-        col_mask = (s < lb) | (s > ub)
-        n_out = int(col_mask.fillna(False).sum())
-        if action == "clip":
-            if n_out:
-                out[c] = s.clip(lower=lb, upper=ub)
-            n_clipped = n_out
-            n_dropped = 0
-        else:  # drop
-            outlier_mask_total = outlier_mask_total | col_mask.fillna(False)
-            n_clipped = 0
-            n_dropped = n_out
-        per_col_log.append({
-            "column": c, "lower_bound": float(lb), "upper_bound": float(ub),
-            "n_outliers": n_out, "n_clipped": n_clipped, "n_dropped_rows": n_dropped,
-        })
+            if method == "iqr":
+                q1 = non_na.quantile(0.25)
+                q3 = non_na.quantile(0.75)
+                iqr = q3 - q1
+                lb = q1 - k * iqr
+                ub = q3 + k * iqr
+            else:
+                mu, sigma = non_na.mean(), non_na.std()
+                if sigma == 0 or pd.isna(sigma):
+                    continue
+                lb = mu - z_threshold * sigma
+                ub = mu + z_threshold * sigma
+            col_mask = (s < lb) | (s > ub)
+            n_out = int(col_mask.fillna(False).sum())
+            if action == "clip":
+                if n_out:
+                    out[c] = s.clip(lower=lb, upper=ub)
+                n_clipped = n_out
+                n_dropped = 0
+            else:  # drop
+                outlier_mask_total = outlier_mask_total | col_mask.fillna(False)
+                n_clipped = 0
+                n_dropped = n_out
+            per_col_log.append({
+                "column": c, "lower_bound": float(lb), "upper_bound": float(ub),
+                "n_outliers": n_out, "n_clipped": n_clipped, "n_dropped_rows": n_dropped,
+            })
 
     if dry_run:
         # Revert any clipping that was done in-place above

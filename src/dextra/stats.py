@@ -10,6 +10,7 @@ with earlier versions of *dextra*.
 
 from __future__ import annotations
 
+import warnings
 from typing import List, Optional, Sequence
 
 import numpy as np
@@ -170,39 +171,53 @@ def describe_numeric(
     if num_col.empty or num_col.shape[1] == 0:
         raise ValueError("No numeric columns available to describe.")
 
-    # Central tendency & dispersion
-    mean_ = num_col.mean()
-    std_ = num_col.std(ddof=ddof)
-    var_ = num_col.var(ddof=ddof)
-    cv_ = safe_divide(std_, mean_.replace(0, np.nan).abs()) * 100
-    min_ = num_col.min()
-    max_ = num_col.max()
+    # Non-finite (inf) values make some reductions overflow or go invalid.
+    # Surface that with a named dextra warning instead of leaking raw numpy
+    # RuntimeWarnings, then suppress the numpy noise during the computation
+    # below. The reported statistics themselves are left unchanged.
+    _inf_any = np.isinf(num_col.to_numpy(dtype="float64", na_value=np.nan))
+    if _inf_any.any():
+        _inf_cols = [str(_c) for _c, _has in zip(num_col.columns, _inf_any.any(axis=0)) if _has]
+        warnings.warn(
+            f"describe_numeric: column(s) {_inf_cols} contain non-finite (inf) "
+            f"values; affected statistics may be reported as NaN or inf. "
+            f"Replace them first (e.g. df.replace([np.inf, -np.inf], np.nan)) "
+            f"if you need finite summaries.", UserWarning, stacklevel=2)
 
-    # Quartiles
-    q1 = num_col.quantile(0.25)
-    q2 = num_col.quantile(0.50)
-    q3 = num_col.quantile(0.75)
-    iqr = q3 - q1
+    with np.errstate(over="ignore", invalid="ignore", divide="ignore"):
+        # Central tendency & dispersion
+        mean_ = num_col.mean()
+        std_ = num_col.std(ddof=ddof)
+        var_ = num_col.var(ddof=ddof)
+        cv_ = safe_divide(std_, mean_.replace(0, np.nan).abs()) * 100
+        min_ = num_col.min()
+        max_ = num_col.max()
 
-    lb = q1 - iqr_multiplier * iqr
-    ub = q3 + iqr_multiplier * iqr
+        # Quartiles
+        q1 = num_col.quantile(0.25)
+        q2 = num_col.quantile(0.50)
+        q3 = num_col.quantile(0.75)
+        iqr = q3 - q1
 
-    # Outliers (Tukey's rule)
-    out_mask = num_col.lt(lb) | num_col.gt(ub)
-    out_count = out_mask.sum()
+        lb = q1 - iqr_multiplier * iqr
+        ub = q3 + iqr_multiplier * iqr
 
-    # Relative distance between mean and median (sign-safe)
-    diff_percent = (mean_ - q2).abs() / q2.replace(0, np.nan).abs() * 100
-    diff_percent = diff_percent.fillna(0.0)
+        # Outliers (Tukey's rule)
+        out_mask = num_col.lt(lb) | num_col.gt(ub)
+        out_count = out_mask.sum()
 
-    count_ = num_col.count()
-    total_rows = pd.Series(len(num_col), index=num_col.columns)
-    missing = total_rows - count_
-    out_pct = safe_divide(out_count, count_) * 100
+        # Relative distance between mean and median (sign-safe)
+        diff_percent = (mean_ - q2).abs() / q2.replace(0, np.nan).abs() * 100
+        diff_percent = diff_percent.fillna(0.0)
 
-    skew_ = num_col.skew()
-    kurt_ = num_col.kurt()
-    nunique_ = num_col.nunique(dropna=True)
+        count_ = num_col.count()
+        total_rows = pd.Series(len(num_col), index=num_col.columns)
+        missing = total_rows - count_
+        out_pct = safe_divide(out_count, count_) * 100
+
+        skew_ = num_col.skew()
+        kurt_ = num_col.kurt()
+        nunique_ = num_col.nunique(dropna=True)
 
     # Mode can return 0..N values per column; keep raw list for the "raw" path
     # and a pre-joined string for display.

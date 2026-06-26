@@ -104,6 +104,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   In-library messages and the docs now recommend the official names.
 
 ### Fixed
+- **Non-finite (inf) inputs no longer leak raw numpy warnings (eval n-2):**
+  `describe_numeric` and `clip_outliers` on a column holding `inf` / `-inf`
+  (or values that overflow under the IQR fences, e.g. `1e308`) used to emit
+  bare numpy `RuntimeWarning`s -- `invalid value encountered in reduce`,
+  `overflow encountered in scalar add` -- carrying no dextra context. Both
+  functions now detect non-finite inputs up front, emit a single named
+  `UserWarning` listing the affected column(s) and pointing at
+  `df.replace([np.inf, -np.inf], np.nan)`, and wrap the affected reductions
+  in `np.errstate(...)` to silence the raw numpy noise. The reported
+  statistics and clipping results are byte-for-byte unchanged -- this is a
+  disclosure-only change. Regression test: `tests/test_inf_robustness.py`.
 - **Leading-zero identifiers survive the loader (eval B-1, Blocker):**
   `load`'s measured inference used to coerce pure-digit columns into
   datetime ("001" -> year 1) or int64 ("01001" -> 1001), silently dropping
