@@ -1030,7 +1030,17 @@ def _read_parquet_frame(raw: bytes) -> pd.DataFrame:
         raise DextraLoaderError(
             "load: parquet needs an engine. Install one with "
             '`pip install "dextra[perf]"` (pyarrow).')
-    return pd.read_parquet(io.BytesIO(raw))
+    try:
+        return pd.read_parquet(io.BytesIO(raw))
+    except DextraLoaderError:
+        raise
+    except Exception as exc:  # e.g. pyarrow.lib.ArrowInvalid (pyarrow is optional)
+        raise DextraLoaderError(
+            "load: could not read the data as parquet -- the bytes are not a "
+            "valid parquet file. A wrong extension on a CSV / Excel / JSON "
+            "file is the usual cause; pass an explicit kind= (e.g. "
+            "kind='csv') if the content is not parquet. Underlying cause: "
+            f"{type(exc).__name__}: {exc}") from exc
 
 
 def _build_from_parquet(raw, source_meta, on_ambiguous, parse_dates,

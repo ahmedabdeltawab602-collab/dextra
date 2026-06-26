@@ -104,6 +104,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   In-library messages and the docs now recommend the official names.
 
 ### Fixed
+- **CSV / Excel / JSON content behind a `.parquet` name now fails cleanly (eval n-3):**
+  a non-parquet payload routed to the parquet reader (usually a wrong
+  extension on a delimited / Excel / JSON file) used to surface the engine's
+  raw `pyarrow.lib.ArrowInvalid: Parquet magic bytes not found in footer`,
+  whereas the Excel and JSON paths already wrapped the same mistake as a
+  `DextraLoaderError`. `_read_parquet_frame` now catches the read failure and
+  re-raises a `DextraLoaderError` naming the likely cause and pointing at an
+  explicit `kind=` -- covering both the build and replay paths. pyarrow stays
+  an optional `[perf]` dependency (the exception is caught broadly, never
+  imported at module top level); valid parquet is unaffected. Regression test:
+  `tests/test_loader_parquet_error.py`.
 - **Non-finite (inf) inputs no longer leak raw numpy warnings (eval n-2):**
   `describe_numeric` and `clip_outliers` on a column holding `inf` / `-inf`
   (or values that overflow under the IQR fences, e.g. `1e308`) used to emit
