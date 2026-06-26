@@ -1141,6 +1141,12 @@ def _build_from_json(text, source_meta, on_ambiguous, parse_dates,
         problems.append({"scope": "rows", "kind": "bad_records",
                          "detail": f"{n_bad} non-object / unparsable item(s)",
                          "action": "skipped"})
+        warnings.warn(
+            f"load: dropped {n_bad} unparsable / non-object JSON record(s) "
+            f"from the source; the loaded frame excludes them (the drop is "
+            f"disclosed in plan['problems']). Fix the source or pass an "
+            f"explicit kind= if this was not intended.",
+            DextraLoaderWarning, stacklevel=3)
     for n in sorted(nested):
         problems.append({"scope": n, "kind": "nested",
                          "detail": "nested object/array values",

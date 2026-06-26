@@ -104,6 +104,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   In-library messages and the docs now recommend the official names.
 
 ### Fixed
+- **Dropped JSON / NDJSON records now warn instead of vanishing silently (eval n-4):**
+  when `load` skips unparsable NDJSON lines (or non-object items in a JSON
+  array) it dropped them from the frame and disclosed the count only in
+  `plan['problems']` -- invisible under the default `show=False`. It now also
+  emits a named `DextraLoaderWarning` stating how many records were dropped
+  (the same disclosure-plus-warning shape added for silent rule ERRORs in
+  m-6); the `plan['problems']` entry is unchanged and clean sources stay
+  silent. Regression test: `tests/test_loader_ndjson_warning.py`.
 - **CSV / Excel / JSON content behind a `.parquet` name now fails cleanly (eval n-3):**
   a non-parquet payload routed to the parquet reader (usually a wrong
   extension on a delimited / Excel / JSON file) used to surface the engine's
