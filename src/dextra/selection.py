@@ -1053,7 +1053,7 @@ def _plot_redundancy_compare(df, candidates, fig_width, fig_height, dpi):
 
 
 def _plot_relevance(candidates, kept, scores, ranked, method, y_name,
-                    fig_width, fig_height, dpi):
+                    fig_width, fig_height, dpi, kind="relevance"):
     if not candidates:
         return None
     fig, axes = plt.subplots(1, 2, figsize=(fig_width, fig_height), dpi=dpi)
@@ -1077,7 +1077,7 @@ def _plot_relevance(candidates, kept, scores, ranked, method, y_name,
     ax0.set_yticklabels(order)
     ax0.invert_yaxis()
     ax0.set_xlabel(f"{method} score")
-    ax0.set_title(f"Relevance to '{y_name}'  (green=keep, red=drop)",
+    ax0.set_title(f"{('Importance for' if kind=='importance' else 'RFE selection for' if kind=='rfe' else 'Relevance to')} '{y_name}'  (green=keep, red=drop)",
                   fontweight="bold")
 
     ax1 = axes[1]
@@ -1090,7 +1090,7 @@ def _plot_relevance(candidates, kept, scores, ranked, method, y_name,
     for i, v in enumerate([n_keep, n_drop]):
         ax1.text(i, v, str(v), ha="center", va="bottom", fontsize=10)
 
-    fig.suptitle(f"relevance  (method={method})",
+    fig.suptitle(f"{kind}  (method={method})",
                  fontsize=14, fontweight="bold")
     return fig
 
@@ -1378,7 +1378,7 @@ def importance(
     fig = None
     if plot:
         fig = _plot_relevance(candidates, kept, scores, ranked, method,
-                              y_name, fig_width, fig_height, dpi)
+                              y_name, fig_width, fig_height, dpi, kind="importance")
     _finalize_figure(fig, return_fig)
     return _ret_pack(out, params_out, fig, return_df, return_params, return_fig)
 
@@ -1471,7 +1471,7 @@ def _selection_apply(df, params, expected_fn, show, plot, return_df,
     if plot:
         fig = _plot_relevance(candidates, kept, scores, ranked, method,
                               params.get("target"),
-                              fig_width, fig_height, dpi)
+                              fig_width, fig_height, dpi, kind="importance")
     _finalize_figure(fig, return_fig)
     return _ret_pack(out, params, fig, return_df, return_params, return_fig)
 
@@ -1679,7 +1679,7 @@ def rfe(
     fig = None
     if plot:
         fig = _plot_relevance(candidates, kept, scores, ranked, estimator,
-                              y_name, fig_width, fig_height, dpi)
+                              y_name, fig_width, fig_height, dpi, kind="rfe")
     _finalize_figure(fig, return_fig)
     return _ret_pack(out, params_out, fig, return_df, return_params, return_fig)
 

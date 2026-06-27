@@ -205,6 +205,17 @@ def _sec_model(df, ctx):
     if len(te) == 0:
         raise ValueError("not enough rows for a train/test split")
 
+    # Leakage-safe feature imputation so the baseline can fit AND predict on
+    # rows with missing features (otherwise this section skipped on NaN data).
+    _feat_cols = [c for c in df.columns if c != target]
+    if tr[_feat_cols].isna().any().any() or te[_feat_cols].isna().any().any():
+        from .cleaning import handle_missing
+        _trf, _imp = handle_missing(tr[_feat_cols], return_params=True,
+                                    show=False, plot=False)
+        tr = pd.concat([_trf, tr[[target]]], axis=1)
+        _tef = handle_missing(te[_feat_cols], params=_imp, show=False, plot=False)
+        te = pd.concat([_tef, te[[target]]], axis=1)
+
     if is_reg:
         from .evaluation import residual_analysis
         from .modeling import regress
@@ -221,7 +232,8 @@ def _sec_model(df, ctx):
         params = ret[1] if isinstance(ret, tuple) and len(ret) >= 2 else None
         t, f, d = _run(confusion_report, te, params=params)
         title_block = "Baseline classification (held-out test)"
-    note = ("Random-forest baseline trained on a 75% split; metrics are on the "
+    note = ("Random-forest baseline trained on a 75% split (missing feature "
+            "values imputed from train statistics); metrics are on the "
             "held-out 25% test split. A floor, not a tuned final model.")
     return "Baseline model & evaluation", [(title_block, t, f, d, note)]
 

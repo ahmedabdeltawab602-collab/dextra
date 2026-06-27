@@ -2645,7 +2645,7 @@ def out_show(
     --------
     >>> view = dx.out_show(df, cols=['price', 'age'])
     >>> # decide and apply:
-    >>> df_clean = dx.out_fix(df, cols=['price'], action='clip')
+    >>> df_clean = dx.clip_outliers(df, cols=['price'], action='clip')
     """
     if df_name is None:
         df_name = get_variable_name(df, depth=2)
@@ -2754,8 +2754,8 @@ def out_show(
         _display(diag.head(n_show))
         print(f"\nDecision: {n_outlier_rows} outlier row(s) detected across "
               f"{len(col_summary)} column(s). Options: "
-              f"`dx.out_fix(df, action='clip')` to winsorise, "
-              f"`dx.out_fix(df, action='drop')` to remove the rows, or leave as is.\n")
+              f"`dx.clip_outliers(df, action='clip')` to winsorise, "
+              f"`dx.clip_outliers(df, action='drop')` to remove the rows, or leave as is.\n")
 
     fig = None
     if plot:

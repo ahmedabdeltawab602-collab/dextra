@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+- **`out_show` / `outscan` now recommends the official `clip_outliers` / `winsor`** in its printed Decision and docstring example, instead of the deprecated `out_fix` alias (which emits a DeprecationWarning). `out_fix` still resolves for backward compatibility. (UA review C1.)
+- **`importance` / `imps` and `rfe` plots are now titled correctly** -- "importance (method=…)" / "Importance for '…'" and "rfe (…)" / "RFE selection for '…'". Previously both reused the relevance plotter and were mislabelled "relevance" (numeric content was always correct). `_plot_relevance` gained a `kind=` parameter. (UA review SEL1.)
+- **`edareport(include_model=True)` model section no longer skips when feature columns contain missing values.** The baseline now imputes features leakage-safely (fit `handle_missing` on the train split, apply to the held-out split) before fitting/evaluating, so the section builds on real-world NaN-containing data instead of being skipped with "cannot derive predictions". Applies to both regression and classification sections. (UA review R1.)
+
 ## [0.5.0] — 2026-06-26 — hardening before release
 
 ### Added
