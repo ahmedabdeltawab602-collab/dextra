@@ -2,6 +2,7 @@
 
 [![Python](https://img.shields.io/badge/python-3.9%2B-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Docs](https://img.shields.io/badge/%D8%A7%D9%84%D8%AA%D9%88%D8%AB%D9%8A%D9%82-%D9%85%D8%AA%D8%A7%D8%AD-brightgreen.svg)](https://ahmedabdeltawab602-collab.github.io/dextra/)
 
 > *مساعدات خفيفة لتحليل البيانات الاستكشافي، مبنية فوق pandas وseaborn وplotly.*
 

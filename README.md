@@ -4,6 +4,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Tests](https://github.com/ahmedabdeltawab602-collab/dextra/actions/workflows/tests.yml/badge.svg)](https://github.com/ahmedabdeltawab602-collab/dextra/actions/workflows/tests.yml)
 [![PyPI](https://img.shields.io/pypi/v/pydextra.svg)](https://pypi.org/project/pydextra/)
+[![Docs](https://img.shields.io/badge/docs-online-brightgreen.svg)](https://ahmedabdeltawab602-collab.github.io/dextra/)
 
 > *Lightweight exploratory-data-analysis helpers built on top of pandas,
 > seaborn and plotly.*

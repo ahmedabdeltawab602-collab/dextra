@@ -1,15 +1,18 @@
 name: publish
 
+# PARKED (2026-07-02): publishing is done deliberately from the maintainer's
+# machine (twine, explicit version glob) until PyPI Trusted Publishing is
+# configured for the 'pydextra' project. Manual trigger only -- a GitHub
+# Release will NOT auto-publish.
 on:
-  release:
-    types: [published]
+  workflow_dispatch:
 
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
     environment:
       name: pypi
-      url: https://pypi.org/p/dextra
+      url: https://pypi.org/p/pydextra
     permissions:
       id-token: write
 
