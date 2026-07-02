@@ -8,7 +8,6 @@ from typing import Optional, Sequence
 import matplotlib.pyplot as plt
 import pandas as pd
 
-from .cleaning import clip_outliers, handle_missing
 from ._features_common import (
     _display,
     _finalize_figure,
@@ -21,6 +20,7 @@ from ._features_discretize import bin, encode
 from ._features_numeric import scale, transform
 from ._utils import _ensure_pandas, append_audit, get_variable_name, now_iso
 from ._version import __version__
+from .cleaning import clip_outliers, handle_missing
 
 _FEATPIPE_DISPATCH = {
     "transform": transform,

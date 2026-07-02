@@ -27,7 +27,9 @@ def test_read_parquet_frame_passes_through_dextra_error(monkeypatch):
 def test_clip_outliers_duplicate_column_skipped_in_inf_scan():
     # Duplicate labels make df[col] a DataFrame; the inf scan must skip it
     # rather than crash there. The original behaviour (erroring later in the
-    # main loop) is preserved, so the call still raises.
+    # main loop) is preserved, so the call still raises -- the concrete type
+    # comes from pandas internals (TypeError on pandas 2.x; kept as a narrow
+    # tuple rather than a blind Exception, ruff B017).
     dup = pd.DataFrame([[1.0, 2.0], [3.0, 4.0]], columns=["x", "x"])
-    with pytest.raises(Exception):
+    with pytest.raises((TypeError, ValueError)):
         dx.clip_outliers(dup, cols=["x"], show=False, plot=False)
