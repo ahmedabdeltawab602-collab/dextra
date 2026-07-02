@@ -59,7 +59,7 @@ def _require_plotly():
     except ImportError as exc:  # pragma: no cover - exercised only without plotly
         raise ImportError(
             "plot_boxplots requires Plotly, an optional dependency. Install it "
-            "with `pip install plotly` (or `pip install dextra[viz]`)."
+            "with `pip install plotly` (or `pip install pydextra[viz]`)."
         ) from exc
     return go, make_subplots
 

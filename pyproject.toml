@@ -3,7 +3,7 @@ requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "dextra"
+name = "pydextra"
 dynamic = ["version"]
 description = "Lightweight exploratory-data-analysis, cleaning, feature-engineering, selection and baseline-modeling helpers: one line of code -> a rich table, a multi-panel plot, and a decision sentence, on top of pandas / scikit-learn."
 readme = "README.md"
@@ -13,7 +13,7 @@ license-files = ["LICENSE"]
 authors = [
   { name = "Ahmed Abd El Tawab", email = "ahmedabdeltawab3740@gmail.com" },
 ]
-keywords = ["pandas", "eda", "statistics", "visualization", "scikit-learn", "machine-learning", "feature-engineering"]
+keywords = ["dextra", "pandas", "eda", "statistics", "visualization", "scikit-learn", "machine-learning", "feature-engineering"]
 classifiers = [
   "Development Status :: 4 - Beta",
   "Intended Audience :: Developers",

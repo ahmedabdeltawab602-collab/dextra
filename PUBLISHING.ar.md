@@ -1,6 +1,6 @@
 # دليل نشر مكتبة dextra على GitHub وPyPI
 
-هذا الدليل باللغة العربية يشرح كل خطوة لنشر المشروع بدءاً من مجلد المشروع المحلّي ووصولاً إلى `pip install dextra` للعموم.
+هذا الدليل باللغة العربية يشرح كل خطوة لنشر المشروع بدءاً من مجلد المشروع المحلّي ووصولاً إلى `pip install pydextra` للعموم.
 
 ---
 
@@ -107,7 +107,7 @@ python -m build
 ```bash
 # استخدم glob الإصدار الصريح دائماً (استبدل X.Y.Z برقم الإصدار الفعلي).
 # لا تستخدم dist/* العام أبداً: قد يرفع أرتيفاكتات قديمة متبقية في dist/.
-twine upload --repository testpypi dist/dextra-X.Y.Z*
+twine upload --repository testpypi dist/pydextra-X.Y.Z*
 ```
 
 - **Username:** `__token__`
@@ -164,13 +164,13 @@ rm -rf dist/ build/ *.egg-info
 python -m build
 
 # الرفع إلى PyPI — glob الإصدار الصريح دائماً، لا dist/* العام (قد يرفع أرتيفاكتات قديمة)
-twine upload dist/dextra-X.Y.Z*
+twine upload dist/pydextra-X.Y.Z*
 ```
 
 ### د) التحقق
 
 ```bash
-pip install dextra
+pip install pydextra
 python -c "import dextra as dx; print(dx.__version__)"
 ```
 

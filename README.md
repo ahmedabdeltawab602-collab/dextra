@@ -3,7 +3,7 @@
 [![Python](https://img.shields.io/badge/python-3.9%2B-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Tests](https://github.com/ahmedabdeltawab602-collab/dextra/actions/workflows/tests.yml/badge.svg)](https://github.com/ahmedabdeltawab602-collab/dextra/actions/workflows/tests.yml)
-[![PyPI](https://img.shields.io/pypi/v/dextra.svg)](https://pypi.org/project/dextra/)
+[![PyPI](https://img.shields.io/pypi/v/pydextra.svg)](https://pypi.org/project/pydextra/)
 
 > *Lightweight exploratory-data-analysis helpers built on top of pandas,
 > seaborn and plotly.*
@@ -45,7 +45,7 @@ against data leakage.
 From PyPI (once published):
 
 ```bash
-pip install dextra
+pip install pydextra   # import name is unchanged: import dextra as dx
 ```
 
 Directly from GitHub:
@@ -68,14 +68,14 @@ The core install is lightweight (numpy, pandas, matplotlib, seaborn, scipy).
 Enable the rest as needed:
 
 ```bash
-pip install "dextra[io]"       # charset-normalizer + clevercsv + openpyxl: best loader detection + Excel
-pip install "dextra[ml]"       # scikit-learn: regress / classify / cluster, model-based selectors, dextra.compat
-pip install "dextra[viz]"      # plotly: interactive plot_boxplots
-pip install "dextra[ts]"       # statsmodels: time-series STL + ADF / KPSS
-pip install "dextra[dash]"     # streamlit: the generated interactive dashboard
-pip install "dextra[perf]"     # polars + pyarrow: alternative DataFrame backends
-pip install "dextra[notebook]" # jupyter + ipykernel
-pip install "dextra[docs]"     # mkdocs-material site
+pip install "pydextra[io]"       # charset-normalizer + clevercsv + openpyxl: best loader detection + Excel
+pip install "pydextra[ml]"       # scikit-learn: regress / classify / cluster, model-based selectors, dextra.compat
+pip install "pydextra[viz]"      # plotly: interactive plot_boxplots
+pip install "pydextra[ts]"       # statsmodels: time-series STL + ADF / KPSS
+pip install "pydextra[dash]"     # streamlit: the generated interactive dashboard
+pip install "pydextra[perf]"     # polars + pyarrow: alternative DataFrame backends
+pip install "pydextra[notebook]" # jupyter + ipykernel
+pip install "pydextra[docs]"     # mkdocs-material site
 ```
 
 ### scikit-learn interoperability
@@ -118,7 +118,7 @@ dx.describe_numeric(df)
 # 2) Histograms with side-by-side statistics
 dx.plot_histograms(df, bins=30)
 
-# 3) Interactive Plotly box-plots  -- needs the viz extra:  pip install "dextra[viz]"
+# 3) Interactive Plotly box-plots  -- needs the viz extra:  pip install "pydextra[viz]"
 dx.plot_boxplots(df)
 ```
 
@@ -129,7 +129,7 @@ you can feed the results into another step:
 
 ```python
 summary = dx.describe_numeric(df, return_df=True, raw=True, show=False)
-fig, stats = dx.plot_boxplots(df, return_fig=True, return_df=True, show=False)  # needs dextra[viz]
+fig, stats = dx.plot_boxplots(df, return_fig=True, return_df=True, show=False)  # needs pydextra[viz]
 ```
 
 `raw=True` returns un-formatted `float64` values — use that when you plan

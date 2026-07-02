@@ -139,7 +139,7 @@ def _require_sklearn(what: str) -> None:
     except ImportError as exc:  # pragma: no cover
         raise ImportError(
             f"{what} requires scikit-learn, which is not installed. Install it "
-            f"with `pip install scikit-learn` (or `pip install dextra[ml]`)."
+            f"with `pip install scikit-learn` (or `pip install pydextra[ml]`)."
         ) from exc
 
 

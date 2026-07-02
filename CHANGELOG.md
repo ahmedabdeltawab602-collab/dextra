@@ -15,7 +15,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - **`edareport(include_model=True)` model section no longer skips when feature columns contain missing values.** The baseline now imputes features leakage-safely (fit `handle_missing` on the train split, apply to the held-out split) before fitting/evaluating, so the section builds on real-world NaN-containing data instead of being skipped with "cannot derive predictions". Applies to both regression and classification sections. (UA review R1.)
 
 ### Changed
-- **`PUBLISHING.ar.md` upload commands now use an explicit version glob** (`dist/dextra-X.Y.Z*`) instead of the generic `dist/*`, so a stale artifact left in `dist/` can never be uploaded by accident. (Strict pre-publish gate E.)
+- **`PUBLISHING.ar.md` upload commands now use an explicit version glob** (`dist/pydextra-X.Y.Z*`) instead of the generic `dist/*`, so a stale artifact left in `dist/` can never be uploaded by accident. (Strict pre-publish gate E.)
+- **Distribution renamed to `pydextra`** -- the name `dextra` on PyPI belongs to an unrelated project (dextra 0.1.1, financial-document extraction, 2025-06-18), so uploads under `dextra` are impossible. Only the `pip install` name changes: **the import name stays `import dextra`**. Badge, PyPI link, install docs and publishing glob updated. (Strict gate: live PyPI collision discovery.)
 
 ## [0.5.0] — 2026-06-26 — hardening before release
 

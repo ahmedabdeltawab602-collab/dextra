@@ -3,10 +3,10 @@
 ## Installation
 
 ```bash
-pip install dextra                # core: numpy, pandas, matplotlib, seaborn, scipy
-pip install "dextra[ml]"          # + scikit-learn (models, model-based selectors, compat)
-pip install "dextra[viz]"         # + Plotly (interactive box-plots)
-pip install "dextra[dev]"         # everything needed to develop and test dextra
+pip install pydextra                # core: numpy, pandas, matplotlib, seaborn, scipy
+pip install "pydextra[ml]"          # + scikit-learn (models, model-based selectors, compat)
+pip install "pydextra[viz]"         # + Plotly (interactive box-plots)
+pip install "pydextra[dev]"         # everything needed to develop and test dextra
 ```
 
 scikit-learn and Plotly are **optional**. The core library works without them;
@@ -35,7 +35,7 @@ sales.to_csv("sales.csv", index=False)        # create the example file
 df = dx.load("sales.csv")                     # raw file -> typed DataFrame + full disclosure
 dx.describe_numeric(df)                       # rich numeric summary + plot
 dx.audit(df)                              # data-quality audit
-# the model steps below need the ml extra:  pip install "dextra[ml]"
+# the model steps below need the ml extra:  pip install "pydextra[ml]"
 dx.regress(df, y="price", method="compare")   # rank regression baselines
 train, df_new = df.iloc[:400], df.iloc[400:]  # a held-out split for the apply demo
 out, params = dx.classify(train, y="churn", method="forest", return_params=True)

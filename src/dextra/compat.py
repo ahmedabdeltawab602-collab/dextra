@@ -79,7 +79,7 @@ def _check_sklearn() -> None:
         raise ImportError(
             "dextra.compat wrappers require scikit-learn, which is not "
             "installed. Install it with `pip install scikit-learn` (or "
-            "`pip install dextra[ml]`)."
+            "`pip install pydextra[ml]`)."
         )
 
 

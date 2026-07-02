@@ -38,7 +38,7 @@
 من PyPI (بعد النشر):
 
 ```bash
-pip install dextra
+pip install pydextra   # اسم الاستيراد كما هو: import dextra as dx
 ```
 
 مباشرة من GitHub:
@@ -60,14 +60,14 @@ pip install -e ".[dev]"
 النواة خفيفة (numpy, pandas, matplotlib, seaborn, scipy). فعّل ما تحتاجه:
 
 ```bash
-pip install "dextra[io]"       # charset-normalizer + clevercsv + openpyxl: أفضل كشف للودر + Excel
-pip install "dextra[ml]"       # scikit-learn: regress / classify / cluster، المنتقيات النموذجية، dextra.compat
-pip install "dextra[viz]"      # plotly: صناديق plot_boxplots التفاعلية
-pip install "dextra[ts]"       # statsmodels: السلاسل الزمنية STL + ADF / KPSS
-pip install "dextra[dash]"     # streamlit: لوحة المعلومات التفاعلية المولَّدة
-pip install "dextra[perf]"     # polars + pyarrow: خلفيات DataFrame بديلة
-pip install "dextra[notebook]" # jupyter + ipykernel
-pip install "dextra[docs]"     # موقع mkdocs-material
+pip install "pydextra[io]"       # charset-normalizer + clevercsv + openpyxl: أفضل كشف للودر + Excel
+pip install "pydextra[ml]"       # scikit-learn: regress / classify / cluster، المنتقيات النموذجية، dextra.compat
+pip install "pydextra[viz]"      # plotly: صناديق plot_boxplots التفاعلية
+pip install "pydextra[ts]"       # statsmodels: السلاسل الزمنية STL + ADF / KPSS
+pip install "pydextra[dash]"     # streamlit: لوحة المعلومات التفاعلية المولَّدة
+pip install "pydextra[perf]"     # polars + pyarrow: خلفيات DataFrame بديلة
+pip install "pydextra[notebook]" # jupyter + ipykernel
+pip install "pydextra[docs]"     # موقع mkdocs-material
 ```
 
 ---

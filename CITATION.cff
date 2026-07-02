@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use dextra in your work, please cite it as below."
-title: "dextra: one-line exploratory analysis, cleaning, feature engineering, selection and baseline modeling for pandas"
+title: "pydextra (import name: dextra): one-line exploratory analysis, cleaning, feature engineering, selection and baseline modeling for pandas"
 type: software
 authors:
   - family-names: "Abd El Tawab"

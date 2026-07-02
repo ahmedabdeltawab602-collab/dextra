@@ -670,7 +670,7 @@ def _require_openpyxl():
     except ImportError as exc:
         raise DextraLoaderError(
             "load: Excel sources need openpyxl. Install it with "
-            '`pip install "dextra[io]"` (or `pip install openpyxl`).') from exc
+            '`pip install "pydextra[io]"` (or `pip install openpyxl`).') from exc
 
 
 def _cell_empty(v) -> bool:
@@ -1029,7 +1029,7 @@ def _read_parquet_frame(raw: bytes) -> pd.DataFrame:
     if not _have_parquet_engine():
         raise DextraLoaderError(
             "load: parquet needs an engine. Install one with "
-            '`pip install "dextra[perf]"` (pyarrow).')
+            '`pip install "pydextra[perf]"` (pyarrow).')
     try:
         return pd.read_parquet(io.BytesIO(raw))
     except DextraLoaderError:

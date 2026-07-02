@@ -110,7 +110,7 @@ fabricating one.
   via a **lazy** `statsmodels` import — the canonical, battle-tested
   implementations. These are imported only inside the function, exactly as
   scikit-learn is in Phases 5–7. If `statsmodels` is not installed the function
-  raises a clear, actionable error (`pip install "dextra[ts]"`).
+  raises a clear, actionable error (`pip install "pydextra[ts]"`).
 - `tsfcast` ships four dependency-free baselines — **naive**
   (last value), **snaive** (last season), **drift** (last value + average slope),
   **mean** — plus `method="compare"`, ranked on the held-out window. **No new
