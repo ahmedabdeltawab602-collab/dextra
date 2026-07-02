@@ -105,7 +105,9 @@ python -m build
 ### ج) الرفع إلى TestPyPI
 
 ```bash
-twine upload --repository testpypi dist/*
+# استخدم glob الإصدار الصريح دائماً (استبدل X.Y.Z برقم الإصدار الفعلي).
+# لا تستخدم dist/* العام أبداً: قد يرفع أرتيفاكتات قديمة متبقية في dist/.
+twine upload --repository testpypi dist/dextra-X.Y.Z*
 ```
 
 - **Username:** `__token__`
@@ -161,8 +163,8 @@ rm -rf dist/ build/ *.egg-info
 # إعادة البناء
 python -m build
 
-# الرفع إلى PyPI
-twine upload dist/*
+# الرفع إلى PyPI — glob الإصدار الصريح دائماً، لا dist/* العام (قد يرفع أرتيفاكتات قديمة)
+twine upload dist/dextra-X.Y.Z*
 ```
 
 ### د) التحقق

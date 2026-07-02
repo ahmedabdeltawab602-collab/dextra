@@ -14,6 +14,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - **`importance` / `imps` and `rfe` plots are now titled correctly** -- "importance (method=…)" / "Importance for '…'" and "rfe (…)" / "RFE selection for '…'". Previously both reused the relevance plotter and were mislabelled "relevance" (numeric content was always correct). `_plot_relevance` gained a `kind=` parameter. (UA review SEL1.)
 - **`edareport(include_model=True)` model section no longer skips when feature columns contain missing values.** The baseline now imputes features leakage-safely (fit `handle_missing` on the train split, apply to the held-out split) before fitting/evaluating, so the section builds on real-world NaN-containing data instead of being skipped with "cannot derive predictions". Applies to both regression and classification sections. (UA review R1.)
 
+### Changed
+- **`PUBLISHING.ar.md` upload commands now use an explicit version glob** (`dist/dextra-X.Y.Z*`) instead of the generic `dist/*`, so a stale artifact left in `dist/` can never be uploaded by accident. (Strict pre-publish gate E.)
+
 ## [0.5.0] — 2026-06-26 — hardening before release
 
 ### Added
