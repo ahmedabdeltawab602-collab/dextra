@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.5.1] — 2026-07-02 — UA review fixes
+
 ### Fixed
 - **`out_show` / `outscan` now recommends the official `clip_outliers` / `winsor`** in its printed Decision and docstring example, instead of the deprecated `out_fix` alias (which emits a DeprecationWarning). `out_fix` still resolves for backward compatibility. (UA review C1.)
 - **`importance` / `imps` and `rfe` plots are now titled correctly** -- "importance (method=…)" / "Importance for '…'" and "rfe (…)" / "RFE selection for '…'". Previously both reused the relevance plotter and were mislabelled "relevance" (numeric content was always correct). `_plot_relevance` gained a `kind=` parameter. (UA review SEL1.)
@@ -524,7 +526,8 @@ property-based tests and an informational mypy gate. Backward-compatible.
 - seaborn >= 0.12
 - plotly >= 5.10
 
-[Unreleased]: https://github.com/ahmedabdeltawab602-collab/dextra/compare/v0.5.0...HEAD
+[Unreleased]: https://github.com/ahmedabdeltawab602-collab/dextra/compare/v0.5.1...HEAD
+[0.5.1]: https://github.com/ahmedabdeltawab602-collab/dextra/compare/v0.5.0...v0.5.1
 [0.5.0]: https://github.com/ahmedabdeltawab602-collab/dextra/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/ahmedabdeltawab602-collab/dextra/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/ahmedabdeltawab602-collab/dextra/compare/v0.2.0...v0.3.0
