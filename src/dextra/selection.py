@@ -658,7 +658,11 @@ def _clean_feature_matrix(df, candidates, y_series, func_name, method):
     if int(mask.sum()) < 3:
         raise ValueError(
             f"{func_name}: not enough complete rows (features + target) to "
-            f"score the candidates.")
+            f"score the candidates -- {int(mask.sum())} complete of "
+            f"{len(df)} row(s). Scoring needs rows with no missing values "
+            f"across the candidates. Remedy: impute first -- run "
+            f"dx.handle_missing(df) (or add a handle_missing step before "
+            f"this one in your featpipe recipe), then retry.")
     return feats.loc[mask].to_numpy(dtype=float), y_series.loc[mask]
 
 
@@ -771,6 +775,15 @@ def relevance(
     pandas.DataFrame
         The DataFrame with low-relevance candidate columns removed, and -- when
         requested -- the params dict and/or the matplotlib figure.
+
+    Notes
+    -----
+    Scoring uses rows that are complete across the candidate features
+    and the target. On wide-missing data impute first --
+    ``dx.handle_missing(df)`` (or a ``handle_missing`` step before this
+    one in a ``featpipe`` recipe) -- otherwise the scorer raises with
+    this exact remedy. Per-feature scoring on incomplete rows is
+    declared debt (tracked in the project issues), not in 0.6.0.
 
     Examples
     --------

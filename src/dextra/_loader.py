@@ -384,7 +384,7 @@ def _infer_column(name: str, s: pd.Series, parse_dates: bool,
             conf = (_HIGH_RISK if _HIGH_RISK_RE.search(str(name))
                     else _AMBIGUOUS)
             col_plan = {"dtype": "object", "coerced_from": "object",
-                        "parse_rate": 1.0, "n_failed": 0,
+                        "parse_rate": 1.0, "n_failed": 0, "n_blank": 0,
                         "confidence": conf,
                         "reason": "leading-zero identifier kept as text",
                         "suggest": None}
@@ -428,8 +428,11 @@ def _infer_column(name: str, s: pd.Series, parse_dates: bool,
     if all_nan:
         reason = "all values failed coercion -> all-NaN"
 
+    n_blank = (int((s.notna() & (s.astype(str).str.strip() == "")).sum())
+               if dtype != "object" else 0)
     col_plan = {"dtype": dtype, "coerced_from": "object",
                 "parse_rate": round(float(rate), 4), "n_failed": n_failed,
+                "n_blank": n_blank,
                 "confidence": conf, "reason": reason, "suggest": suggest}
     return typed, col_plan
 
@@ -498,6 +501,29 @@ def _ambiguous_items(plan: dict):
     return items
 
 
+def _replay_row_cap(plan: dict):
+    """Row cap a replay should honour.
+
+    ``plan_scope='load'`` means the cap was part of the user's own load
+    call -- honour it. A ``'preview'`` scope (peek) or a plan saved before
+    the field existed carries a preview artifact, not a recipe decision:
+    ignore the cap, load everything, and say so once, loudly.
+    """
+    cap = (plan.get("policy") or {}).get("max_rows")
+    if cap is None:
+        return None
+    if plan.get("plan_scope") == "load":
+        return int(cap)
+    origin = ("a peek() preview" if plan.get("plan_scope") == "preview"
+              else "a plan saved before 'plan_scope' existed")
+    warnings.warn(
+        f"load: params came from {origin}; its max_rows={cap} cap was a "
+        f"preview limit, not part of the recipe -- loading ALL rows. For a "
+        f"replayable full-load plan use load(source, return_params=True).",
+        DextraLoaderWarning, stacklevel=3)
+    return None
+
+
 def _decision_sentence(plan: dict) -> str:
     m = plan["metadata"]
     d = plan["decisions"]
@@ -505,6 +531,7 @@ def _decision_sentence(plan: dict) -> str:
                if cp["dtype"] != "object"]
     types = ", ".join(sorted({t for _, t in coerced})) or "none"
     n_failed = sum(cp["n_failed"] for cp in plan["columns"].values())
+    n_blank = sum(cp.get("n_blank", 0) for cp in plan["columns"].values())
     a = m["n_ambiguous"]
     hint = " - re-run with params= to confirm" if a > 0 else ""
     if plan["source"].get("kind") == "sql":
@@ -523,10 +550,11 @@ def _decision_sentence(plan: dict) -> str:
         bracket = (f"[encoding={d['encoding']['value']}, "
                    f"sep={d['delimiter']['value']!r}, "
                    f"header=row {d['header']['value']}]")
+    blank_clause = f"{n_blank} blank cell(s) coerced -> NaN; " if n_blank else ""
     return (f"Loaded {m['n_rows']:,} rows x {m['n_cols']} cols from "
             f"'{plan['source']['name']}' {bracket}; "
             f"coerced {len(coerced)} column(s) ({types}); {n_failed} cell(s) "
-            f"failed -> NaN; {a} ambiguous decision(s){hint}. "
+            f"failed -> NaN; {blank_clause}{a} ambiguous decision(s){hint}. "
             f"Next: dx.audit(df).")
 
 
@@ -635,7 +663,7 @@ def _apply_plan(text, plan, parse_dates):
     df = pd.read_csv(io.StringIO(text), sep=p["delimiter"], header=p["header_row"],
                      dtype=object, keep_default_na=True,
                      na_values=list(p.get("na_values") or []),
-                     skip_blank_lines=True, nrows=plan["policy"].get("max_rows"),
+                     skip_blank_lines=True, nrows=_replay_row_cap(plan),
                      engine="python", on_bad_lines="skip")
     df.columns = [str(c) for c in df.columns]
     typed = {}
@@ -955,7 +983,7 @@ def _apply_plan_excel(raw, plan, parse_dates):
     depth = int(p.get("header_rows", 1))
     names = list(plan["columns"].keys())
     data = block[hdr + depth:] if block else []
-    max_rows = (plan.get("policy") or {}).get("max_rows")
+    max_rows = _replay_row_cap(plan)
     if max_rows is not None:
         data = data[:max_rows]
     na_tokens = set(p.get("na_values") or [])
@@ -1206,7 +1234,7 @@ def _coerce_replay_column(s: pd.Series, dtype: str, parse_block: dict,
 
 def _apply_plan_parquet(raw, plan):
     df = _read_parquet_frame(raw)
-    max_rows = (plan.get("policy") or {}).get("max_rows")
+    max_rows = _replay_row_cap(plan)
     if max_rows is not None:
         df = df.head(max_rows)
     p = plan.get("parse", {})
@@ -1227,7 +1255,7 @@ def _apply_plan_parquet(raw, plan):
 def _apply_plan_json(text, plan, parse_dates):
     p = plan.get("parse", {})
     records, _, _, _, _ = _json_records(text)
-    max_rows = (plan.get("policy") or {}).get("max_rows")
+    max_rows = _replay_row_cap(plan)
     if max_rows is not None:
         records = records[:max_rows]
     na_tokens = set(p.get("na_values") or [])
@@ -1387,7 +1415,7 @@ def _load_sql(source, *, sql, sql_params, params, on_ambiguous, parse_dates,
         sql = p.get("sql")
         sql_params = p.get("sql_params")
         if max_rows is None:
-            max_rows = (params.get("policy") or {}).get("max_rows")
+            max_rows = _replay_row_cap(params)
     if sql is None:
         raise DextraLoaderError(
             "load: a database source needs sql= (parametrised; pass values "
@@ -1431,6 +1459,7 @@ def _load_sql(source, *, sql, sql_params, params, on_ambiguous, parse_dates,
 def _disclose_and_finish(out, plan, on_ambiguous, show, decimals,
                          interactive, return_params):
     """Shared disclosure tail: report -> policy -> audit -> return."""
+    plan.setdefault("plan_scope", "load")
     items = _ambiguous_items(plan)
     if show:
         print(_banner(plan))
@@ -1718,7 +1747,8 @@ def _load_frame(source, *, on_ambiguous, parse_dates, decimal, thousands,
     out.attrs = dict(df.attrs)
     n_amb = sum(1 for cp in columns.values() if cp["confidence"] != _CONFIRMED)
     plan = json_safe({
-        "function": "load", "source": {"name": name, "kind": "frame",
+        "function": "load", "plan_scope": "load",
+        "source": {"name": name, "kind": "frame",
                                         "sha256": None, "size": None, "mtime": None},
         "parse": {}, "columns": columns, "problems": [],
         "decisions": {}, "policy": {"on_ambiguous": on_ambiguous},
@@ -1744,13 +1774,26 @@ def peek(source, *, kind: str = "auto", on_ambiguous: str = "plan",
 
     Returns the load plan (dict); loads at most ``n_preview`` rows for the sample.
     The teaching / inspection entry point ("look before you load").
+    The plan carries ``plan_scope='preview'``: replaying it with
+    ``load(source, params=plan)`` loads ALL rows (the preview cap is
+    not part of the recipe) and warns once about the origin.
     ``df_name=`` labels the source explicitly in the plan / audit (audit #11);
     when omitted it is inferred as a last resort.
+
+    Examples
+    --------
+    >>> plan = dx.peek("messy.csv")
+    >>> df = dx.load("messy.csv", params=plan)   # full load, all rows
     """
     load_kwargs.pop("return_params", None)
     load_kwargs.pop("max_rows", None)
     plan = load(source, kind=kind, on_ambiguous="plan", show=show,
                 max_rows=n_preview, df_name=df_name, **load_kwargs)
+    if isinstance(plan, dict):
+        # The n_preview cap is a peek artifact, not a recipe decision.
+        # load(params=plan) sees this scope, ignores the cap (loading
+        # ALL rows) and discloses why (issue #3).
+        plan["plan_scope"] = "preview"
     return plan
 
 

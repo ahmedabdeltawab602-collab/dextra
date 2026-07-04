@@ -49,4 +49,5 @@ nav:
   - Getting started: getting-started.md
   - Examples: examples.md
   - API reference: api.md
+  - API consistency: api-consistency.md
   - Benchmarks: benchmarks.md

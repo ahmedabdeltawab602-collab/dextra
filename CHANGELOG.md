@@ -7,6 +7,90 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.6.0] — 2026-07-04 — external-referee hardening
+
+One comprehensive hardening release: eleven defects proven during the
+end-to-end notebook audit, each closed red->green with a named regression
+test (`tests/test_issue_*`), plus systematic sweeps (warnings, docstrings,
+API consistency). No new analytical features.
+
+### Fixed
+- **Install hints now name the real PyPI distribution** -- the `[ts]` gate
+  recommended `pip install "dextra[ts]"`, which installs an unrelated
+  project; it now says `pydextra[ts]` (same for `[perf]` / `[dash]`), and a
+  regression test scans every runtime hint. (issue #1)
+- **`load`'s decision sentence counts silently-blanked cells.** Whitespace
+  cells that coerce to NaN were buried in `null_%` while the sentence said
+  "0 cell(s) failed"; it now adds "N blank cell(s) coerced -> NaN"
+  whenever that happens. (issue #11)
+- **`handle_missing` no longer floods stderr with "Mean of empty slice"**
+  on frames containing all-NaN columns: statistics are computed on
+  non-empty data only, all-NaN columns are left unchanged (documented).
+  (issue #6)
+- **`edareport` / `correlation_matrix` no longer leak ConstantInputWarning.**
+  Zero-variance columns are skipped before scipy is called and are named
+  in the Decision line ("Excluded N constant column(s) ..."), which flows
+  into the HTML report. (issue #8)
+- **`dtfeats(features=[...])` honours the selection literally.**
+  `features=['year','month']` produced eight columns (the default sin/cos
+  pairs leaked); now exactly the requested calendar features are emitted,
+  and `features=` with `method='cyclical'` is rejected with guidance.
+  (issue #7)
+- **`relevance` on wide-missing data names the literal remedy.** Instead
+  of a bare "not enough complete rows", the error now reports the
+  complete-of-total counts and says: run `dx.handle_missing(df)` (or add
+  a `handle_missing` step before this one in a featpipe recipe). (issue #5)
+- **Replaying a `peek` plan loads ALL rows.** `peek`'s 10-row preview cap
+  was stored in the plan and silently truncated `load(source, params=plan)`
+  to 10 rows. Plans now carry a `plan_scope` field: `'preview'` plans (and
+  older plans saved without the field) replay in full with ONE loud warning
+  naming the origin and recommending `load(source, return_params=True)`;
+  a `max_rows=` cap the user set deliberately at load time is still
+  honoured silently. (issue #3)
+
+### Added
+- **`featpipe(protect=[...])`** -- columns isolated from EVERY step, so a
+  bare `scale` / `encode` step can never swallow a numeric target such as
+  `CHURN {-1,1}`. Steps explicitly referencing a protected column are
+  rejected; the list is recorded in the artifact metadata and honoured on
+  apply (absent columns are skipped, so target-less test frames work).
+  Same contract as `protect` in `relevance` / `redundancy`. (issue #2)
+- **Per-step disclosure in the pipeline artifact:** `step_summary` now
+  records `cols_touched` / `cols_added` / `cols_removed` per step, and the
+  printed summary table gains a `touched` column -- the pipeline names
+  literally what each step did. (issue #2)
+- **`class_imbalance(df, 'target')`** -- the `(df, col)` form now works,
+  mirroring `frequency_table(df, col)`; the Series form is unchanged.
+  (issue #9)
+- **`docs/api-consistency.md`** -- an auto-generated table of the shared
+  flag vocabulary across all 63 public functions (`tools/
+  gen_api_consistency.py`), with sync tests that fail if the page drifts;
+  fit/apply symmetry (`params` <-> `return_params`) holds with zero
+  exceptions.
+- **Complete public docstrings, enforced.** 22 public objects (the short
+  stats-test docstrings and the sklearn wrappers) gained full Parameters /
+  Examples sections with signature-verified runnable examples, and
+  `tests/test_docstring_completeness.py` permanently requires every public
+  callable to ship >= 4 docstring lines plus a usage example.
+
+### Changed
+- **BREAKING (inside `featpipe` only): steps that support `inplace`
+  (`transform` / `scale` / `bin` / `encode`) now default to
+  `inplace=True` within a pipeline**, so a plain recipe produces a
+  model-ready frame -- no raw `'Male'` column reaching the estimator, no
+  duplicated raw+derived pairs. An explicit `'inplace': False` in a step
+  is honoured verbatim, and the standalone functions keep their `False`
+  default outside the pipeline. Recipes that reference suffixed derived
+  names (e.g. `income_log1p`) must either reference the original column
+  or add `'inplace': False` to the earlier step -- the step error now
+  carries exactly this migration hint. (issue #4)
+
+### Declared debt
+- `relevance` scoring per feature over its own complete rows (instead of
+  requiring rows complete across ALL candidates) is deliberately NOT in
+  0.6.0; it is documented in the `relevance` docstring and tracked as an
+  open GitHub issue.
+
 ## [0.5.1] — 2026-07-02 — UA review fixes
 
 ### Fixed

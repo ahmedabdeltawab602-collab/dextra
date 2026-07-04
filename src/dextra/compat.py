@@ -101,6 +101,11 @@ class DextraFeaturePipeline(TransformerMixin, BaseEstimator):
     steps : sequence of dict
         A ``featpipe`` recipe, e.g.
         ``[{"fn": "scale", "cols": ["age"], "method": "standard"}]``.
+
+    Examples
+    --------
+    >>> from dextra.compat import DextraFeaturePipeline
+    >>> DextraFeaturePipeline(steps=recipe).fit_transform(X)
     """
 
     def __init__(self, steps: Optional[Sequence[dict]] = None):
@@ -128,6 +133,11 @@ class DextraSelectPipeline(TransformerMixin, BaseEstimator):
     steps : sequence of dict
         A ``selectpipe`` recipe, e.g.
         ``[{"fn": "relevance", "method": "anova", "keep": 8}]``.
+
+    Examples
+    --------
+    >>> from dextra.compat import DextraSelectPipeline
+    >>> DextraSelectPipeline(steps=recipe).fit_transform(X, y)
     """
 
     def __init__(self, steps: Optional[Sequence[dict]] = None):
@@ -170,7 +180,16 @@ class _BaseModelWrapper(BaseEstimator):
 
 
 class DextraRegressor(RegressorMixin, _BaseModelWrapper):
-    """sklearn regressor wrapping :func:`dextra.regress` (one baseline algorithm)."""
+    """sklearn regressor wrapping :func:`dextra.regress` (one baseline algorithm).
+
+    Fit learns a dextra params artifact; ``predict`` reuses the fitted
+    estimator -- drop-in for sklearn Pipelines and cross_val_score.
+
+    Examples
+    --------
+    >>> from dextra.compat import DextraRegressor
+    >>> DextraRegressor(method="forest").fit(X, y).predict(X_new)
+    """
 
     def __init__(self, method: str = "forest",
                  cols: Optional[Sequence[str]] = None, cv: int = 5,
@@ -198,7 +217,16 @@ class DextraRegressor(RegressorMixin, _BaseModelWrapper):
 
 
 class DextraClassifier(ClassifierMixin, _BaseModelWrapper):
-    """sklearn classifier wrapping :func:`dextra.classify` (one baseline algorithm)."""
+    """sklearn classifier wrapping :func:`dextra.classify` (one baseline algorithm).
+
+    Fit learns a dextra params artifact; ``predict`` / ``predict_proba``
+    reuse the fitted estimator -- drop-in for sklearn Pipelines.
+
+    Examples
+    --------
+    >>> from dextra.compat import DextraClassifier
+    >>> DextraClassifier(method="logistic").fit(X, y).predict(X_new)
+    """
 
     def __init__(self, method: str = "forest",
                  cols: Optional[Sequence[str]] = None, cv: int = 5,
@@ -236,6 +264,11 @@ class DextraClusterer(ClusterMixin, _BaseModelWrapper):
     convention); ``predict`` assigns data via the persisted estimator (for
     ``agglomerative`` that is a nearest-centroid rule, which may disagree
     with the fit labels on boundary points).
+
+    Examples
+    --------
+    >>> from dextra.compat import DextraClusterer
+    >>> DextraClusterer(method="kmeans", k=4).fit(X).labels_
     """
 
     def __init__(self, method: str = "kmeans",

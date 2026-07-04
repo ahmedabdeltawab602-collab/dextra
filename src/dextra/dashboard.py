@@ -78,7 +78,7 @@ def _require_parquet_engine():
     if not _have_parquet_engine():
         raise ValueError(
             "dash: data_format='parquet' needs a parquet engine. Install one "
-            "with `pip install \"dextra[perf]\"` (pyarrow), or use "
+            "with `pip install \"pydextra[perf]\"` (pyarrow), or use "
             "data_format='csv'."
         )
 
@@ -184,7 +184,7 @@ def _render_app_source(data_basename, app_basename, data_format, target,
         "except ImportError as exc:  # pragma: no cover\n"
         "    sys.stderr.write(\n"
         "        'This dashboard needs dextra and Streamlit. Install with:\\n'\n"
-        "        '    pip install \"dextra[dash]\"\\n'\n"
+        "        '    pip install \"pydextra[dash]\"\\n'\n"
         "        f'(import error: {exc})\\n')\n"
         "    raise SystemExit(1) from exc\n\n"
         "if not os.path.exists(_DATA):  # pragma: no cover\n"

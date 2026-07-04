@@ -1225,10 +1225,14 @@ def _impute_column(s: pd.Series, strategy: str,
 
     if strategy == "mean":
         if pd.api.types.is_numeric_dtype(out):
-            out = out.fillna(out.mean())
+            non_na = out.dropna()
+            if not non_na.empty:
+                out = out.fillna(non_na.mean())
     elif strategy == "median":
         if pd.api.types.is_numeric_dtype(out):
-            out = out.fillna(out.median())
+            non_na = out.dropna()
+            if not non_na.empty:
+                out = out.fillna(non_na.median())
     elif strategy == "mode":
         modes = out.dropna().mode()
         if len(modes):
@@ -1531,6 +1535,9 @@ def handle_missing(
     statistic exists); random_sample re-samples from the apply-side
     data (warned). 'drop_cols' replays the fitted column drop;
     'drop_rows' re-runs (no statistic).
+
+    Columns that are entirely missing have no statistic to impute
+    from and are left unchanged (no RuntimeWarning is emitted).
 
     DAMA dimension: Completeness.
 

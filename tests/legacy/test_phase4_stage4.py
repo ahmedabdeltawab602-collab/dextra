@@ -70,11 +70,18 @@ def main() -> None:
 
     # one recipe that exercises all seven functions; step 1 creates a column
     # (income_log1p) that step 2 then scales -> chaining is tested.
+    # 0.6.0 migration (issue #4): inside featpipe, inplace now defaults to
+    # True; this recipe relies on suffixed derived columns, so it declares
+    # 'inplace': False explicitly -- exactly what a 0.5.x user migrates to.
     recipe = [
-        {"fn": "transform", "cols": ["income"], "method": "log1p"},
-        {"fn": "scale", "cols": ["income_log1p", "age"], "method": "robust"},
-        {"fn": "bin", "cols": ["age"], "method": "quantile", "n_bins": 4},
-        {"fn": "encode", "cols": ["city"], "method": "onehot"},
+        {"fn": "transform", "cols": ["income"], "method": "log1p",
+         "inplace": False},
+        {"fn": "scale", "cols": ["income_log1p", "age"], "method": "robust",
+         "inplace": False},
+        {"fn": "bin", "cols": ["age"], "method": "quantile", "n_bins": 4,
+         "inplace": False},
+        {"fn": "encode", "cols": ["city"], "method": "onehot",
+         "inplace": False},
         {"fn": "dtfeats", "cols": ["signup"], "method": "calendar"},
         {"fn": "cross", "pairs": [("income", "age")], "method": "ratio"},
         {"fn": "aggfeat", "group": "city", "value": "income", "agg": "mean"},
@@ -254,7 +261,8 @@ def main() -> None:
                           return_fig=True, return_df=False)
     check("plot=True returns a Figure object", fig is not None)
     single = dx.featpipe(train, steps=[{"fn": "scale", "cols": ["age"],
-                                        "method": "standard"}], **KW)
+                                        "method": "standard",
+                                        "inplace": False}], **KW)
     check("single-step pipeline works",
           "age_standard" in single.columns)
 
