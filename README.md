@@ -166,7 +166,9 @@ Long descriptive names each have a short alias (e.g. `numdesc`, `zsc`, `corrmat`
 
 For the full per-module API, see the philosophy documents in the repository
 (`FEATURES_PHILOSOPHY.md`, `SELECTION_PHILOSOPHY.md`, `CLEANING_PHILOSOPHY.md`)
-and the walkthrough notebook in `notebooks/`.
+and the three end-to-end notebooks indexed in
+[`notebooks/README.md`](notebooks/README.md) -- messy-CSV rescue,
+leakage-safe pipelines, and a full Arabic EDA on Egyptian food prices.
 
 ---
 
