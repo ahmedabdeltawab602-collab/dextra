@@ -159,6 +159,8 @@ def dtfeats(
         'compare'  -> writes nothing; reports how many features each produces.
     features : sequence of str, optional
         Subset of calendar features to extract. Default is a 10-feature set.
+        When given, exactly these calendar features are produced and the
+        default cyclical sin/cos pairs are suppressed (issue #7).
     drop_original : bool, default False
         If True the source datetime column is dropped after extraction.
     params : dict, optional
@@ -199,15 +201,23 @@ def dtfeats(
     cols = _resolve_dt_cols(df, cols, "dtfeats")
 
     if features is not None:
+        if method == "cyclical":
+            raise ValueError(
+                "dtfeats: features= lists calendar features, which "
+                "method='cyclical' does not emit. Use method='calendar' "
+                "or 'both', or omit features= for cyclical output.")
         cal_all = list(features)
         bad = [f for f in cal_all if f not in _DT_CALENDAR_ALL]
         if bad:
             raise ValueError(
                 f"dtfeats: unknown calendar feature(s) {bad}; valid options "
                 f"are {_DT_CALENDAR_ALL}.")
+        # An explicit features= is a literal calendar selection; do not
+        # also emit the default cyclical sin/cos pairs (issue #7).
+        cyc_all = []
     else:
         cal_all = list(_DT_CALENDAR_DEFAULT)
-    cyc_all = list(_DT_CYCLICAL_DEFAULT)
+        cyc_all = list(_DT_CYCLICAL_DEFAULT)
 
     if method == "compare":
         return _dtfeats_compare(df, cols, cal_all, cyc_all, show, plot,
