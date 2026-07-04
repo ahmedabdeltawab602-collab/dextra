@@ -43,7 +43,12 @@ _FEATPIPE_CONTROL_FLAGS = (
 )
 
 
-_FEATPIPE_INPLACE_FNS = ("transform", "scale", "bin")
+# Steps that support inplace=. Inside the pipeline they default to
+# inplace=True (decision 3, issue #4): a plain recipe must yield a
+# model-ready frame with no raw/derived duplicate columns. An explicit
+# 'inplace': False in a step is honoured verbatim; the standalone
+# functions keep their own default (False) outside featpipe.
+_FEATPIPE_INPLACE_FNS = ("transform", "scale", "bin", "encode")
 
 
 def _featpipe_compare_key(fn_name: str) -> str:
@@ -186,7 +191,11 @@ def featpipe(
     df : pandas.DataFrame
         Input data. Never mutated.
     steps : sequence of dict, optional
-        Fit-mode recipe. Each dict has a ``'fn'`` key naming one of
+        Fit-mode recipe. Inside the pipeline, steps that support
+        ``inplace`` (transform / scale / bin / encode) default to
+        ``inplace=True`` so the finished frame is model-ready; write
+        ``'inplace': False`` in a step to keep the raw column alongside
+        the derived one. Each dict has a ``'fn'`` key naming one of
         ``transform / scale / bin / encode / dtfeats / cross / aggfeat`` (plus the
         cleaning steps ``handle_missing`` / ``clip_outliers``); every
         other key is forwarded as a keyword argument to that function, e.g.
@@ -355,6 +364,8 @@ def _featpipe_fit(df, steps, save_path, protect, show, plot, return_df,
         before_n = out.shape[1]
         iso_cols = [c for c in protect if c in out.columns]
         work = out.drop(columns=iso_cols) if iso_cols else out
+        if fn_name in _FEATPIPE_INPLACE_FNS and "inplace" not in kwargs:
+            kwargs = {**kwargs, "inplace": True}
         try:
             new_out, sp = fn(work, return_params=True, return_df=True,
                              show=False, plot=False, **kwargs)
