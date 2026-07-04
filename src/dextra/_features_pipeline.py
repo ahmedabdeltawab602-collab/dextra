@@ -55,6 +55,15 @@ def _featpipe_compare_key(fn_name: str) -> str:
     return "method"
 
 
+def _fmt_touched(names, cap: int = 6) -> str:
+    """Compact, literal disclosure of the columns a step touched."""
+    if not names:
+        return "-"
+    shown = list(names)[:cap]
+    extra = len(names) - len(shown)
+    return ", ".join(shown) + (f" (+{extra} more)" if extra > 0 else "")
+
+
 def _featpipe_validate_steps(steps) -> list:
     """Validate a steps list; return a clean list of ``(fn_name, kwargs)``.
 
@@ -145,6 +154,7 @@ def featpipe(
     *,
     save_path: Optional[str] = None,
     load_path: Optional[str] = None,
+    protect: Optional[Sequence[str]] = None,
     return_params: bool = False,
     show: bool = True,
     plot: bool = True,
@@ -193,6 +203,14 @@ def featpipe(
     load_path : str, optional
         Apply-mode shortcut. The combined params dict is read from this JSON
         file, then applied. Mutually exclusive with ``params`` and ``steps``.
+    protect : sequence of str, optional
+        Fit mode only. Columns isolated from EVERY step: steps that
+        auto-select their columns (e.g. a bare ``scale``) never see them,
+        so a numeric target such as ``CHURN`` survives untouched. A step
+        that explicitly references a protected column is rejected. The
+        list is recorded in the artifact's metadata and honoured on
+        apply (columns absent on the apply side are simply skipped).
+        Same contract as ``protect`` in ``relevance`` / ``redundancy``.
     return_params : bool, default False
         If True the combined params dict is returned alongside the DataFrame.
     show, plot, return_df, return_fig, decimals, df_name : standard dextra flags.
@@ -252,6 +270,10 @@ def featpipe(
             raise ValueError(
                 "featpipe: 'save_path' saves a freshly fitted pipeline and is "
                 "valid in fit mode only (when 'steps' is given).")
+        if protect is not None:
+            raise ValueError(
+                "featpipe: protect= is fit-mode only; a fitted artifact "
+                "already records its protect list in metadata.")
         return _featpipe_apply(df, params, show, plot, return_df,
                                return_params, return_fig, decimals, df_name,
                                fig_width, fig_height, dpi)
@@ -261,15 +283,65 @@ def featpipe(
             "featpipe: provide 'steps' to fit a pipeline, or 'params' / "
             "'load_path' to apply a saved one.")
 
-    return _featpipe_fit(df, steps, save_path, show, plot, return_df,
-                         return_params, return_fig, decimals, df_name,
-                         fig_width, fig_height, dpi)
+    return _featpipe_fit(df, steps, save_path, protect, show, plot,
+                         return_df, return_params, return_fig, decimals,
+                         df_name, fig_width, fig_height, dpi)
 
 
-def _featpipe_fit(df, steps, save_path, show, plot, return_df,
+def _featpipe_reattach(step_out, before, iso_cols, idx, fn_name):
+    """Re-attach protected columns after a step, preserving order/attrs."""
+    collide = [c for c in iso_cols if c in step_out.columns]
+    if collide:
+        raise ValueError(
+            f"featpipe step {idx} (fn={fn_name}): produced column(s) "
+            f"{collide} colliding with protect= names.")
+    step_cols = list(step_out.columns)
+    merged = step_out
+    for c in iso_cols:
+        merged[c] = before[c].loc[merged.index]
+    order = ([c for c in before.columns if c in merged.columns]
+             + [c for c in step_cols if c not in before.columns])
+    _attrs = dict(merged.attrs)
+    merged = merged[order]
+    merged.attrs = _attrs
+    return merged
+
+
+def _featpipe_fit(df, steps, save_path, protect, show, plot, return_df,
                   return_params, return_fig, decimals, df_name,
                   fig_width, fig_height, dpi):
     clean = _featpipe_validate_steps(steps)
+
+    protect = [str(c) for c in (protect or [])]
+    missing = [c for c in protect if c not in df.columns]
+    if missing:
+        raise KeyError(
+            f"featpipe: protect= column(s) {missing} not found in df. "
+            f"protect isolates existing columns (e.g. the target) from "
+            f"every step.")
+    if protect:
+        _col_keys = ("cols", "col", "group", "by", "pairs", "y",
+                     "value", "values")
+        for idx, (fn_name, kwargs) in enumerate(clean):
+            named = set()
+            for k in _col_keys:
+                v = kwargs.get(k)
+                if isinstance(v, str):
+                    named.add(v)
+                elif isinstance(v, (list, tuple)):
+                    for x in v:
+                        if isinstance(x, str):
+                            named.add(x)
+                        elif isinstance(x, (list, tuple)):
+                            named.update(
+                                i for i in x if isinstance(i, str))
+            hit = sorted(named & set(protect))
+            if hit:
+                raise ValueError(
+                    f"featpipe step {idx} (fn={fn_name}): column(s) "
+                    f"{hit} are listed in protect= but explicitly "
+                    f"referenced by this step. Remove them from "
+                    f"protect= or from the step.")
 
     out = df.copy()
     out.attrs = dict(df.attrs)
@@ -279,24 +351,37 @@ def _featpipe_fit(df, steps, save_path, show, plot, return_df,
 
     for idx, (fn_name, kwargs) in enumerate(clean):
         fn = _FEATPIPE_DISPATCH[fn_name]
+        before = out
         before_n = out.shape[1]
+        iso_cols = [c for c in protect if c in out.columns]
+        work = out.drop(columns=iso_cols) if iso_cols else out
         try:
-            new_out, sp = fn(out, return_params=True, return_df=True,
+            new_out, sp = fn(work, return_params=True, return_df=True,
                              show=False, plot=False, **kwargs)
         except Exception as exc:
             raise type(exc)(
                 f"featpipe step {idx} (fn={fn_name}, fit): {exc}") from exc
+        if iso_cols:
+            new_out = _featpipe_reattach(new_out, before, iso_cols,
+                                         idx, fn_name)
         out = new_out
         after_n = out.shape[1]
         added = [c for c in out.columns if c not in prev_cols]
+        removed = [c for c in prev_cols if c not in out.columns]
+        touched = [c for c in prev_cols
+                   if c in out.columns and not before[c].equals(out[c])]
         prev_cols = list(out.columns)
         step_params_list.append(sp)
         summary_rows.append({
             "fn": fn_name, "method": str(sp.get("method", "-")),
             "cols_before": before_n, "cols_after": after_n,
-            "cols_added": len(added)})
+            "cols_added": len(added),
+            "touched": _fmt_touched(touched)})
         step_summary.append({"step": idx, "fn": fn_name,
-                             "method": sp.get("method")})
+                             "method": sp.get("method"),
+                             "cols_touched": sorted(touched),
+                             "cols_added": sorted(added),
+                             "cols_removed": sorted(removed)})
 
     combined = {
         "function": "featpipe",
@@ -305,6 +390,7 @@ def _featpipe_fit(df, steps, save_path, show, plot, return_df,
         "steps": step_params_list,
         "metadata": {
             "n_steps": len(clean),
+            "protect": list(protect),
             "step_summary": step_summary,
             "input_shape": list(df.shape),
             "output_shape": list(out.shape),
@@ -365,6 +451,9 @@ def _featpipe_apply(df, params, show, plot, return_df, return_params,
             "featpipe apply: params['steps'] must be a non-empty list of "
             "per-function params dicts.")
 
+    protect = [str(c) for c in
+               (params.get("metadata", {}) or {}).get("protect", []) or []]
+
     out = df.copy()
     out.attrs = dict(df.attrs)
     input_cols = out.shape[1]
@@ -381,7 +470,10 @@ def _featpipe_apply(df, params, show, plot, return_df, return_params,
                 f"featpipe apply: step {idx} references unknown function "
                 f"{fn_name!r}.")
         fn = _FEATPIPE_DISPATCH[fn_name]
+        before = out
         before_n = out.shape[1]
+        iso_cols = [c for c in protect if c in out.columns]
+        work = out.drop(columns=iso_cols) if iso_cols else out
         call_kwargs = {"params": sp, "show": False, "plot": False,
                        "return_df": True, "return_params": False}
         if fn_name in _FEATPIPE_INPLACE_FNS:
@@ -389,17 +481,22 @@ def _featpipe_apply(df, params, show, plot, return_df, return_params,
             if ip is not None:
                 call_kwargs["inplace"] = bool(ip)
         try:
-            out = fn(out, **call_kwargs)
+            out = fn(work, **call_kwargs)
         except Exception as exc:
             raise type(exc)(
                 f"featpipe step {idx} (fn={fn_name}, apply): {exc}") from exc
+        if iso_cols:
+            out = _featpipe_reattach(out, before, iso_cols, idx, fn_name)
         after_n = out.shape[1]
         added = [c for c in out.columns if c not in prev_cols]
+        touched = [c for c in prev_cols
+                   if c in out.columns and not before[c].equals(out[c])]
         prev_cols = list(out.columns)
         summary_rows.append({
             "fn": fn_name, "method": str(sp.get("method", "-")),
             "cols_before": before_n, "cols_after": after_n,
-            "cols_added": len(added)})
+            "cols_added": len(added),
+            "touched": _fmt_touched(touched)})
 
     n_new = sum(r["cols_added"] for r in summary_rows)
     fit_at = params.get("fit_at", "?")
