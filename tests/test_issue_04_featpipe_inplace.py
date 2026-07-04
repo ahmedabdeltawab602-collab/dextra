@@ -69,3 +69,37 @@ def test_issue_04_apply_replays_forced_inplace():
                             return_df=True)
     assert list(apply_out.columns) == list(fit_out.columns)
     assert apply_out.select_dtypes(exclude="number").shape[1] == 0
+
+
+def test_issue_04_stale_suffix_reference_gets_migration_hint():
+    """A 0.5.x-style recipe referencing a suffixed column that the forced
+    inplace default no longer creates must fail WITH migration guidance."""
+    import pytest
+
+    df = _df()
+    recipe = [
+        {"fn": "transform", "cols": ["income"], "method": "log1p"},
+        {"fn": "scale", "cols": ["income_log1p"], "method": "robust"},
+    ]
+    with pytest.raises(KeyError) as ei:
+        dx.featpipe(df, steps=recipe, show=False, plot=False)
+    msg = str(ei.value)
+    assert "income_log1p" in msg
+    assert "inplace" in msg and "False" in msg, msg
+    assert "0.6.0" in msg, msg
+
+
+def test_issue_04_hint_also_when_failing_step_lacks_inplace():
+    import pytest
+
+    df = _df()
+    recipe = [
+        {"fn": "transform", "cols": ["income"], "method": "log1p"},
+        {"fn": "cross", "pairs": [("income_log1p", "age")],
+         "method": "ratio"},
+    ]
+    with pytest.raises((KeyError, ValueError)) as ei:
+        dx.featpipe(df, steps=recipe, show=False, plot=False)
+    msg = str(ei.value)
+    if "not in df" in msg:
+        assert "inplace" in msg and "0.6.0" in msg, msg

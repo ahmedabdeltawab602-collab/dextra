@@ -356,6 +356,7 @@ def _featpipe_fit(df, steps, save_path, protect, show, plot, return_df,
     out.attrs = dict(df.attrs)
     input_cols = out.shape[1]
     step_params_list, summary_rows, step_summary = [], [], []
+    auto_inplace_steps = []
     prev_cols = list(out.columns)
 
     for idx, (fn_name, kwargs) in enumerate(clean):
@@ -366,12 +367,24 @@ def _featpipe_fit(df, steps, save_path, protect, show, plot, return_df,
         work = out.drop(columns=iso_cols) if iso_cols else out
         if fn_name in _FEATPIPE_INPLACE_FNS and "inplace" not in kwargs:
             kwargs = {**kwargs, "inplace": True}
+            auto_inplace_steps.append(idx)
         try:
             new_out, sp = fn(work, return_params=True, return_df=True,
                              show=False, plot=False, **kwargs)
         except Exception as exc:
+            hint = ""
+            earlier = [i for i in auto_inplace_steps if i < idx]
+            if earlier and "not in df" in str(exc):
+                hint = (
+                    " Note: since 0.6.0, featpipe steps default to "
+                    f"inplace=True -- earlier step(s) {earlier} "
+                    "overwrote their source columns instead of adding "
+                    "suffixed copies. Reference the original column "
+                    "name, or add 'inplace': False to the earlier step "
+                    "to keep both columns.")
             raise type(exc)(
-                f"featpipe step {idx} (fn={fn_name}, fit): {exc}") from exc
+                f"featpipe step {idx} (fn={fn_name}, fit): {exc}{hint}"
+            ) from exc
         if iso_cols:
             new_out = _featpipe_reattach(new_out, before, iso_cols,
                                          idx, fn_name)
