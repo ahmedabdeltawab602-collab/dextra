@@ -384,7 +384,7 @@ def _infer_column(name: str, s: pd.Series, parse_dates: bool,
             conf = (_HIGH_RISK if _HIGH_RISK_RE.search(str(name))
                     else _AMBIGUOUS)
             col_plan = {"dtype": "object", "coerced_from": "object",
-                        "parse_rate": 1.0, "n_failed": 0,
+                        "parse_rate": 1.0, "n_failed": 0, "n_blank": 0,
                         "confidence": conf,
                         "reason": "leading-zero identifier kept as text",
                         "suggest": None}
@@ -428,8 +428,11 @@ def _infer_column(name: str, s: pd.Series, parse_dates: bool,
     if all_nan:
         reason = "all values failed coercion -> all-NaN"
 
+    n_blank = (int((s.notna() & (s.astype(str).str.strip() == "")).sum())
+               if dtype != "object" else 0)
     col_plan = {"dtype": dtype, "coerced_from": "object",
                 "parse_rate": round(float(rate), 4), "n_failed": n_failed,
+                "n_blank": n_blank,
                 "confidence": conf, "reason": reason, "suggest": suggest}
     return typed, col_plan
 
@@ -505,6 +508,7 @@ def _decision_sentence(plan: dict) -> str:
                if cp["dtype"] != "object"]
     types = ", ".join(sorted({t for _, t in coerced})) or "none"
     n_failed = sum(cp["n_failed"] for cp in plan["columns"].values())
+    n_blank = sum(cp.get("n_blank", 0) for cp in plan["columns"].values())
     a = m["n_ambiguous"]
     hint = " - re-run with params= to confirm" if a > 0 else ""
     if plan["source"].get("kind") == "sql":
@@ -523,10 +527,11 @@ def _decision_sentence(plan: dict) -> str:
         bracket = (f"[encoding={d['encoding']['value']}, "
                    f"sep={d['delimiter']['value']!r}, "
                    f"header=row {d['header']['value']}]")
+    blank_clause = f"{n_blank} blank cell(s) coerced -> NaN; " if n_blank else ""
     return (f"Loaded {m['n_rows']:,} rows x {m['n_cols']} cols from "
             f"'{plan['source']['name']}' {bracket}; "
             f"coerced {len(coerced)} column(s) ({types}); {n_failed} cell(s) "
-            f"failed -> NaN; {a} ambiguous decision(s){hint}. "
+            f"failed -> NaN; {blank_clause}{a} ambiguous decision(s){hint}. "
             f"Next: dx.audit(df).")
 
 
