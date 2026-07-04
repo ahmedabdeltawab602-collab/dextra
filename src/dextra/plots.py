@@ -196,6 +196,11 @@ def plot_histograms(
     -------
     Figure, DataFrame, tuple of (Figure, DataFrame), or None
         Depends on ``return_fig`` and ``return_df``.
+
+    Examples
+    --------
+    >>> dx.plot_histograms(df)
+    >>> dx.hister(df, cols=["income"], bins=30)
     """
     if params is not None:
         _cfg = params.get("params", params)
@@ -457,6 +462,11 @@ def plot_boxplots(
     Returns
     -------
     Figure, DataFrame, tuple of (Figure, DataFrame), or None
+
+    Examples
+    --------
+    >>> dx.plot_boxplots(df)
+    >>> fig, stats = dx.boxpl(df, return_fig=True, return_df=True, show=False)
     """
     if params is not None:
         _cfg = params.get("params", params)

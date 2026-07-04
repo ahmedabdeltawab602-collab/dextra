@@ -170,6 +170,11 @@ def functions() -> None:
     A zero-dependency discoverability aid: ``import dextra as dx;
     dx.functions()`` lists the whole public API (functions and their short
     aliases) organised by phase, each with its one-line docstring summary.
+
+    Examples
+    --------
+    >>> import dextra as dx
+    >>> dx.functions()
     """
     import dextra as _dx
     groups: dict = {}

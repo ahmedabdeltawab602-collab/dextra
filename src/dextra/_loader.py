@@ -1779,6 +1779,11 @@ def peek(source, *, kind: str = "auto", on_ambiguous: str = "plan",
     not part of the recipe) and warns once about the origin.
     ``df_name=`` labels the source explicitly in the plan / audit (audit #11);
     when omitted it is inferred as a last resort.
+
+    Examples
+    --------
+    >>> plan = dx.peek("messy.csv")
+    >>> df = dx.load("messy.csv", params=plan)   # full load, all rows
     """
     load_kwargs.pop("return_params", None)
     load_kwargs.pop("max_rows", None)

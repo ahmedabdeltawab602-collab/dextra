@@ -167,6 +167,24 @@ def z_scores(
     """Compute Z-scores per column and report extreme-value counts.
 
     Z = (x - mu) / sigma   (source: F-M03-L05-02).
+
+    Parameters
+    ----------
+    df : pandas.DataFrame
+        Input data. Never mutated.
+    cols : sequence of str, optional
+        Numeric columns to score. Default: every numeric column.
+    threshold : float, default 3.0
+        |Z| above this counts as an extreme value.
+    return_zscores : bool, default False
+        Also return the full Z-score frame.
+    show, plot, return_df, return_fig, decimals, df_name : standard
+        dextra flags (print report / draw figure / return objects).
+
+    Examples
+    --------
+    >>> dx.z_scores(df)
+    >>> dx.zsc(df, threshold=2.5, return_df=True)
     """
     if threshold <= 0:
         raise ValueError(f"'threshold' must be > 0, got {threshold}")
@@ -334,7 +352,25 @@ def pearson_skewness(
     fig_row_height: float = 3.5,
     dpi: int = 110,
 ):
-    """Karl Pearson's skewness coefficient: 3*(mean - median)/sigma."""
+    """Karl Pearson's skewness coefficient: 3*(mean - median)/sigma.
+
+    Sign says direction (positive = right tail), magnitude says how far
+    mean and median disagree in sigma units. Source: F-M03-L06-01.
+
+    Parameters
+    ----------
+    df : pandas.DataFrame
+        Input data. Never mutated.
+    cols : sequence of str, optional
+        Numeric columns. Default: every numeric column.
+    show, plot, return_df, return_fig, decimals, df_name : standard
+        dextra flags (print report / draw figure / return objects).
+
+    Examples
+    --------
+    >>> dx.pearson_skewness(df)
+    >>> dx.pskew(df, cols=["income"], return_df=True)
+    """
     if decimals < 0:
         raise ValueError(f"'decimals' must be >= 0, got {decimals}")
     if df_name is None:
@@ -488,7 +524,28 @@ def empirical_rule_check(
     fig_row_height: float = 3.8,
     dpi: int = 110,
 ):
-    """Check actual vs theoretical 68/95/99.7 coverage."""
+    """Check actual vs theoretical 68/95/99.7 coverage.
+
+    Compares the share of values inside mean +/- 1/2/3 sigma with the
+    Normal expectation -- a quick empirical normality sanity check.
+
+    Parameters
+    ----------
+    df : pandas.DataFrame
+        Input data. Never mutated.
+    cols : sequence of str, optional
+        Numeric columns. Default: every numeric column.
+    tolerance : float, default 3.0
+        Allowed deviation (in percentage points) before a band is
+        flagged as off-Normal.
+    show, plot, return_df, return_fig, decimals, df_name : standard
+        dextra flags (print report / draw figure / return objects).
+
+    Examples
+    --------
+    >>> dx.empirical_rule_check(df)
+    >>> dx.emprule(df, return_df=True)
+    """
     if tolerance <= 0:
         raise ValueError(f"'tolerance' must be > 0, got {tolerance}")
     if df_name is None:
@@ -650,7 +707,28 @@ def outliers_report(
     fig_row_height: float = 3.5,
     dpi: int = 110,
 ):
-    """Detect outlier rows by IQR fence or Z-score."""
+    """Detect outlier rows by IQR fence or Z-score.
+
+    method='iqr' flags values outside Q1/Q3 -/+ multiplier*IQR;
+    method='zscore' flags |Z| > threshold. Report only -- nothing is
+    removed (use dx.clip_outliers to treat them).
+
+    Parameters
+    ----------
+    df : pandas.DataFrame
+        Input data. Never mutated.
+    cols : sequence of str, optional
+        Numeric columns. Default: every numeric column.
+    method : {'iqr', 'zscore'}, default 'iqr'
+        Detection rule (see above).
+    show, plot, return_df, return_fig, decimals, df_name : standard
+        dextra flags (print report / draw figure / return objects).
+
+    Examples
+    --------
+    >>> dx.outliers_report(df)
+    >>> dx.outrep(df, method="zscore", return_df=True)
+    """
     if method not in _VALID_OUTLIER_METHODS:
         raise ValueError(f"'method' must be one of {_VALID_OUTLIER_METHODS}, got {method!r}")
     if k <= 0: raise ValueError(f"'k' must be > 0, got {k}")
@@ -2071,6 +2149,11 @@ def confidence_interval_proportion(
     Methods:
         'wald'   - normal approximation, classical. Fails for small n / extreme p_hat.
         'wilson' - score interval. Recommended for small n or extreme p_hat.
+
+    Examples
+    --------
+    >>> dx.confidence_interval_proportion(successes=42, n=200)
+    >>> dx.cip(successes=3, n=25, method="wilson")
     """
     if not (0 < confidence < 1):
         raise ValueError(f"'confidence' must be in (0, 1), got {confidence}")
@@ -2195,6 +2278,22 @@ def sample_size_mean(
     """Required sample size to estimate a mean within +/- margin_error.
 
     Formula: n = (z_{alpha/2} * sigma / E)^2
+
+    Parameters
+    ----------
+    margin_error : float
+        Acceptable half-width E of the interval.
+    std : float
+        Population (or pilot) standard deviation.
+    confidence : float, default 0.95
+        Confidence level.
+    show, plot, return_df, return_fig, decimals, df_name : standard
+        dextra flags (print report / draw figure / return objects).
+
+    Examples
+    --------
+    >>> dx.sample_size_mean(margin_error=2.0, std=12.0)
+    >>> dx.ssm(margin_error=1.5, std=8.0, confidence=0.99)
     """
     if margin_error <= 0:
         raise ValueError(f"'margin_error' must be > 0, got {margin_error}")
@@ -2303,6 +2402,11 @@ def sample_size_proportion(
 
     Worst-case p = 0.5 gives the largest n. Always reported alongside the
     user-specified p so survey planners see both.
+
+    Examples
+    --------
+    >>> dx.sample_size_proportion(margin_error=0.03)
+    >>> dx.ssp(p=0.2, margin_error=0.05, confidence=0.99)
     """
     if margin_error <= 0:
         raise ValueError(f"'margin_error' must be > 0, got {margin_error}")
@@ -2485,6 +2589,11 @@ def normality_test(
         'shapiro'     : Shapiro-Wilk.
         'normaltest'  : D'Agostino-Pearson omnibus.
         'jarque_bera' : Jarque-Bera (based on skew/kurt).
+
+    Examples
+    --------
+    >>> dx.normality_test(df["income"])
+    >>> dx.normtest(df["income"], method="jarque_bera")
     """
     arr = _to_array(data)
     n = len(arr)
@@ -2614,7 +2723,28 @@ def t_test_one_sample(
     fig_height: float = 4.5,
     dpi: int = 110,
 ):
-    """One-sample t-test against a hypothesized population mean."""
+    """One-sample t-test against a hypothesized population mean.
+
+    H0: mu == popmean. p < alpha rejects H0. Source: F-M05-L05-01.
+
+    Parameters
+    ----------
+    data : array-like or pandas.Series
+        Sample observations.
+    popmean : float
+        Hypothesized population mean under H0.
+    alternative : {'two-sided', 'less', 'greater'}
+        Test direction.
+    alpha : float, default 0.05
+        Significance threshold.
+    show, plot, return_df, return_fig, decimals, df_name : standard
+        dextra flags (print report / draw figure / return objects).
+
+    Examples
+    --------
+    >>> dx.t_test_one_sample(df["weight"], popmean=70)
+    >>> dx.t1(df["weight"], 70, alternative="greater")
+    """
     if alternative not in _VALID_ALTERNATIVES:
         raise ValueError(f"'alternative' must be one of {_VALID_ALTERNATIVES}, got {alternative!r}")
     arr = _to_array(data)
@@ -2720,7 +2850,25 @@ def t_test_two_sample(
 ):
     """Independent two-sample t-test. Welch's (equal_var=False) by default.
 
-    Source: F-M05-L06-01.
+    Source: F-M05-L06-01. H0: mu_a == mu_b.
+
+    Parameters
+    ----------
+    group1, group2 : array-like or pandas.Series
+        The two independent samples.
+    equal_var : bool, default False
+        False = Welch's test (robust to unequal variances).
+    alternative : {'two-sided', 'less', 'greater'}
+        Test direction.
+    alpha : float, default 0.05
+        Significance threshold.
+    show, plot, return_df, return_fig, decimals, df_name : standard
+        dextra flags (print report / draw figure / return objects).
+
+    Examples
+    --------
+    >>> dx.t_test_two_sample(ctrl["y"], treat["y"])
+    >>> dx.t2(ctrl["y"], treat["y"], equal_var=True)
     """
     if alternative not in _VALID_ALTERNATIVES:
         raise ValueError(f"'alternative' must be one of {_VALID_ALTERNATIVES}, got {alternative!r}")
@@ -2869,7 +3017,27 @@ def t_test_paired(
     fig_height: float = 4.5,
     dpi: int = 110,
 ):
-    """Paired t-test (before vs after, matched pairs)."""
+    """Paired t-test (before vs after, matched pairs).
+
+    H0: mean difference == 0. Pairs with a missing side are dropped.
+    Source: F-M05-L07-01.
+
+    Parameters
+    ----------
+    before, after : array-like or pandas.Series
+        Matched measurements, same length and order.
+    alternative : {'two-sided', 'less', 'greater'}
+        Test direction.
+    alpha : float, default 0.05
+        Significance threshold.
+    show, plot, return_df, return_fig, decimals, df_name : standard
+        dextra flags (print report / draw figure / return objects).
+
+    Examples
+    --------
+    >>> dx.t_test_paired(df["before"], df["after"])
+    >>> dx.tpair(pre, post, alternative="less")
+    """
     if alternative not in _VALID_ALTERNATIVES:
         raise ValueError(f"'alternative' must be one of {_VALID_ALTERNATIVES}, got {alternative!r}")
     b = np.asarray(before, dtype=float)
@@ -3000,7 +3168,29 @@ def anova_oneway(
     fig_height: float = 4.8,
     dpi: int = 110,
 ):
-    """One-way ANOVA: compare means of >= 2 groups."""
+    """One-way ANOVA: compare means of >= 2 groups.
+
+    H0: all group means are equal. p < alpha => at least one differs.
+    Source: F-M05-L08-01.
+
+    Parameters
+    ----------
+    df : pandas.DataFrame
+        Tidy input data. Never mutated.
+    group_col : str
+        Categorical column defining the groups.
+    value_col : str
+        Numeric column whose means are compared.
+    alpha : float, default 0.05
+        Significance threshold.
+    show, plot, return_df, return_fig, decimals, df_name : standard
+        dextra flags (print report / draw figure / return objects).
+
+    Examples
+    --------
+    >>> dx.anova_oneway(df, "city", "income")
+    >>> dx.aov1(df, "plan", "monthly_charge")
+    """
     if group_col not in df.columns:
         raise KeyError(f"group_col not found: {group_col!r}")
     if value_col not in df.columns:
@@ -3155,7 +3345,27 @@ def chi_square_independence(
     fig_height: float = 4.8,
     dpi: int = 110,
 ):
-    """Chi-square test of independence between two categoricals."""
+    """Chi-square test of independence between two categoricals.
+
+    H0: the two variables are independent. Expected counts come from
+    the contingency table. Source: F-M05-L09-01.
+
+    Parameters
+    ----------
+    df : pandas.DataFrame
+        Input data. Never mutated.
+    row, col : str
+        The two categorical columns to cross-tabulate.
+    alpha : float, default 0.05
+        Significance threshold.
+    show, plot, return_df, return_fig, decimals, df_name : standard
+        dextra flags (print report / draw figure / return objects).
+
+    Examples
+    --------
+    >>> dx.chi_square_independence(df, "city", "churn")
+    >>> dx.chi2ind(df, "plan", "churn")
+    """
     if row not in df.columns:
         raise KeyError(f"row not found: {row!r}")
     if col not in df.columns:
