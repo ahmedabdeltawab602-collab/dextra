@@ -137,7 +137,7 @@ class DextraSelectPipeline(TransformerMixin, BaseEstimator):
     Examples
     --------
     >>> from dextra.compat import DextraSelectPipeline
-    >>> DextraSelectPipeline(steps=recipe, y="churn").fit_transform(X, y)
+    >>> DextraSelectPipeline(steps=recipe).fit_transform(X, y)
     """
 
     def __init__(self, steps: Optional[Sequence[dict]] = None):
