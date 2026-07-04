@@ -79,7 +79,7 @@ def _require_statsmodels(func_name: str):
     except ImportError as exc:  # pragma: no cover - exercised only without sm
         raise ImportError(
             f"{func_name}: this feature needs statsmodels. Install the extra "
-            f"with `pip install \"dextra[ts]\"` (or `pip install statsmodels`)."
+            f"with `pip install \"pydextra[ts]\"` (or `pip install statsmodels`)."
         ) from exc
     import statsmodels
     return statsmodels
