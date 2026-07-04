@@ -3482,7 +3482,7 @@ def class_imbalance(
         if col not in target.columns:
             raise KeyError(f"class_imbalance: column {col!r} is not in df.")
         if df_name is None and name is None:
-            name = col
+            df_name = col
         s = pd.Series(target[col]).dropna()
     else:
         if col is not None:

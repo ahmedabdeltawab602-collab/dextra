@@ -44,3 +44,16 @@ def test_issue_09_df_without_col_errors():
     df = _df()
     with pytest.raises((ValueError, KeyError)):
         dx.class_imbalance(df, show=False, plot=False, return_df=True)
+
+
+def test_issue_09_df_col_form_emits_no_deprecation():
+    import warnings
+
+    df = _df()
+    with warnings.catch_warnings(record=True) as rec:
+        warnings.simplefilter("always")
+        dx.class_imbalance(df, "churn", show=False, plot=False,
+                           return_df=True)
+    dep = [str(w.message) for w in rec
+           if issubclass(w.category, DeprecationWarning)]
+    assert not dep, dep
