@@ -877,6 +877,8 @@ def correlation_matrix(
     if len(cols_resolved) < 2:
         raise ValueError("Need at least 2 numeric columns to compute a correlation matrix.")
     num = to_numeric_frame(df[cols_resolved].copy())
+    const_cols = [c for c in cols_resolved
+                  if num[c].nunique(dropna=True) < 2]
 
     n = len(cols_resolved)
     r_mat = pd.DataFrame(np.eye(n), index=cols_resolved, columns=cols_resolved, dtype=float)
@@ -894,6 +896,13 @@ def correlation_matrix(
                 continue
             valid = num[[ci, cj]].dropna()
             if len(valid) < 3:
+                r_mat.iloc[i, j] = r_mat.iloc[j, i] = np.nan
+                p_mat.iloc[i, j] = p_mat.iloc[j, i] = np.nan
+                n_mat.iloc[i, j] = n_mat.iloc[j, i] = len(valid)
+                continue
+            if valid[ci].nunique() < 2 or valid[cj].nunique() < 2:
+                # constant input -> correlation undefined; skip the
+                # scipy call (no ConstantInputWarning) and mark NaN.
                 r_mat.iloc[i, j] = r_mat.iloc[j, i] = np.nan
                 p_mat.iloc[i, j] = p_mat.iloc[j, i] = np.nan
                 n_mat.iloc[i, j] = n_mat.iloc[j, i] = len(valid)
@@ -952,8 +961,10 @@ def correlation_matrix(
             top5["r"] = top5["r"].map(lambda x: f"{x:+.{decimals}f}")
             top5["p_value"] = top5["p_value"].map(lambda x: f"{x:.4f}")
             _display(top5)
+        const_note = (f"  Excluded {len(const_cols)} constant column(s) "
+                      f"from correlations: {const_cols}." if const_cols else "")
         print(f"\nDecision: {n_sig}/{n_pairs} pair(s) significant at alpha={alpha}.  "
-              f"Avg |r| = {avg_abs_r:.{decimals}f}.\n")
+              f"Avg |r| = {avg_abs_r:.{decimals}f}.{const_note}\n")
 
     fig = None
     if plot:
@@ -3434,6 +3445,7 @@ def _plot_vif(summary, threshold, fig_width, fig_height, dpi, decimals):
 
 def class_imbalance(
     target,
+    col: Optional[str] = None,
     decimals: int = 2,
     name: Optional[str] = None,
     df_name: Optional[str] = None,
@@ -3460,8 +3472,24 @@ def class_imbalance(
     Examples
     --------
     >>> dx.class_imbalance(df['target'])
+    >>> dx.class_imbalance(df, 'target')      # (df, col) form
     """
-    s = pd.Series(target).dropna()
+    if isinstance(target, pd.DataFrame):
+        if col is None:
+            raise ValueError(
+                "class_imbalance: when the first argument is a DataFrame, "
+                "pass the target column, e.g. class_imbalance(df, 'target').")
+        if col not in target.columns:
+            raise KeyError(f"class_imbalance: column {col!r} is not in df.")
+        if df_name is None and name is None:
+            name = col
+        s = pd.Series(target[col]).dropna()
+    else:
+        if col is not None:
+            raise ValueError(
+                "class_imbalance: col= applies only when the first "
+                "argument is a DataFrame; pass a Series without col=.")
+        s = pd.Series(target).dropna()
     if s.empty:
         raise ValueError("target is empty after dropping NaN.")
     counts = s.value_counts()
