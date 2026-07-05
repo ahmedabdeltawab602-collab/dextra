@@ -5,7 +5,10 @@
 `dextra` is a lightweight toolkit layered on top of pandas and scikit-learn. It
 turns the repetitive first steps of any data analysis — exploration, cleaning,
 feature engineering, feature selection and baseline modeling — into single,
-self-explaining calls. It ships **68 distinct public callables** — the `load` entry layer, nine analytical modules, and scikit-learn-compatible wrappers.
+self-explaining calls. It ships a vocabulary of **63 public functions** plus 5
+scikit-learn-compatible wrapper classes — **68 distinct public callables in
+all** (see the [API consistency table](api-consistency.md)) — organised as the
+`load` entry layer, nine analytical modules, and the `compat` wrappers.
 
 ## The design contract
 

@@ -4,13 +4,41 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Docs](https://img.shields.io/badge/%D8%A7%D9%84%D8%AA%D9%88%D8%AB%D9%8A%D9%82-%D9%85%D8%AA%D8%A7%D8%AD-brightgreen.svg)](https://ahmedabdeltawab602-collab.github.io/dextra/)
 
-> *مساعدات خفيفة لتحليل البيانات الاستكشافي، مبنية فوق pandas وseaborn وplotly.*
+**دوال بيانات تشرح نفسها بنفسها.** سطر واحد يدخل ← جدول مقاييس غني +
+رسم متعدّد اللوحات + جملة `Decision:` واحدة تقول ما الذي جرى ولماذا.
+والخطوات الحسّاسة للتسرّب تُرجع أيضاً خطة `params` قابلة لإعادة التطبيق —
+تعلُّم على بيانات التدريب وتطبيق حرفي على الاختبار — فيصبح تسرّب البيانات
+صعب الارتكاب سهواً.
 
-**🇬🇧 English:** [README.md](README.md)
+نداء حقيقي واحد، حرفياً من
+[دفتر خط الأنابيب الآمن ضد التسرّب](https://github.com/ahmedabdeltawab602-collab/dextra/blob/main/notebooks/02-leakage-safe-pipeline.ipynb):
 
-مكتبة `dextra` أداة شاملة للتحليل الاستكشافي قائمة على مبدأ واحد:
-**سطر واحد من الكود ← جدول رقمي غني + رسم متعدّد اللوحات + جملة `Decision:` واحدة.**
-تضمّ حالياً **68 كائناً عاماً متمايزاً** — اللودر (`load`) في الصدارة، وتسع وحدات تحليلية، وأغلفة متوافقة مع scikit-learn:
+```python
+train_fe, params = dx.featpipe(train, steps=steps, return_params=True)
+```
+
+```text
+Decision: Fitted a 3-step featpipe pipeline (handle_missing -> encode -> scale);
+33 new column(s) produced; combined params is a versioned, JSON-serialisable
+artifact. Apply to held-out data with featpipe(df_test, params=...).
+```
+
+```bash
+pip install pydextra
+```
+
+> **اسمان لمكتبة واحدة:** اسم `dextra` لم يكن متاحاً على PyPI، لذلك
+> **تُثبّت `pydextra`** و**تستورد `dextra`**. المستودع والتوثيق والاستيراد كلها `dextra`.
+
+[**التوثيق**](https://ahmedabdeltawab602-collab.github.io/dextra/) ·
+[**جرّب على Colab**](https://colab.research.google.com/github/ahmedabdeltawab602-collab/dextra/blob/main/notebooks/00-leakage-in-5-minutes.ipynb) ·
+[**🇬🇧 English**](https://github.com/ahmedabdeltawab602-collab/dextra/blob/main/README.md)
+
+مكتبة `dextra` أداة «الخيارات أولاً» لكامل سير العمل الاستكشافي — مفردات من
+**63 دالة عامة** زائد 5 أغلفة متوافقة مع scikit-learn، أي **68 كائناً عاماً
+قابلاً للنداء إجمالاً** (لكل اسم طويل اختصارُه؛ راجع
+[جدول اتساق الواجهة](https://ahmedabdeltawab602-collab.github.io/dextra/api-consistency/)):
+طبقة الدخول `load` في الصدارة، وتسع وحدات تحليلية، وأغلفة `compat`:
 
 | الوحدة | الدوال | ما تغطّيه |
 |---|---|---|
@@ -34,9 +62,27 @@
 
 ---
 
+## حالة المشروع
+
+**مكتملة الملامح ومستقرة الواجهة منذ 0.6.0 — مجمّدة عن سياسة، لا عن هجران.**
+
+- الواجهة العامة مقفلة: لا ميزات جديدة ولا تغيير تواقيع. ما تقيّمه اليوم هو
+  ما تشغّله بعد عام.
+- **بلاغات الأعطال تُقرأ ويُردّ عليها.** العطل المؤكَّد يُصلح باختبار أحمر
+  أولاً ثم يصدر في نسخة ترقيع — افتح بلاغاً عبر
+  [قوالب القضايا](https://github.com/ahmedabdeltawab602-collab/dextra/issues/new/choose).
+- قبل 0.6.0 خضعت المكتبة لتدقيق خارجي عدائي: أحد عشر عيباً مُثبَتاً بالدليل،
+  أُغلق كل منها أحمر←أخضر باختبار انحدارٍ مسمّى — راجع
+  [`AUDIT_REPORT.md`](https://github.com/ahmedabdeltawab602-collab/dextra/blob/main/AUDIT_REPORT.md)
+  و[سجل التغييرات](https://github.com/ahmedabdeltawab602-collab/dextra/blob/main/CHANGELOG.md).
+- الدَّين التقني المعلَن عمداً علني:
+  [‏#1 — تقييم relevance على الصفوف المكتملة لكل ميزة](https://github.com/ahmedabdeltawab602-collab/dextra/issues/1).
+
+---
+
 ## التثبيت
 
-من PyPI (بعد النشر):
+من PyPI:
 
 ```bash
 pip install pydextra   # اسم الاستيراد كما هو: import dextra as dx

@@ -6,17 +6,45 @@
 [![PyPI](https://img.shields.io/pypi/v/pydextra.svg)](https://pypi.org/project/pydextra/)
 [![Docs](https://img.shields.io/badge/docs-online-brightgreen.svg)](https://ahmedabdeltawab602-collab.github.io/dextra/)
 
-> *Lightweight exploratory-data-analysis helpers built on top of pandas,
-> seaborn and plotly.*
+**Data functions that explain themselves.** One line in → a rich metrics
+table, a multi-panel figure, and a one-sentence `Decision:` stating what was
+done and why. Leakage-sensitive steps also return a replayable `params`
+artifact — fit on train, replay verbatim on test — so train/test leakage
+becomes hard to commit by accident.
 
-**🇦🇷 العربية:** [README.ar.md](README.ar.md) — هذا الملف بالعربية.
+One real call, verbatim from the
+[leakage-safe pipeline notebook](https://github.com/ahmedabdeltawab602-collab/dextra/blob/main/notebooks/02-leakage-safe-pipeline.ipynb):
 
-`dextra` is a choice-first toolkit for the whole exploratory workflow. Every
-function follows one contract: **one line of code -> a rich numeric table + a
-multi-panel figure + a one-sentence `Decision:`**. It currently ships **68 distinct public callables** -- the `load` entry
-layer at the front, nine analytical modules (EDA, statistics, cleaning,
-features, selection, modeling, evaluation, time series and reporting), and
-scikit-learn-compatible wrappers:
+```python
+train_fe, params = dx.featpipe(train, steps=steps, return_params=True)
+```
+
+```text
+Decision: Fitted a 3-step featpipe pipeline (handle_missing -> encode -> scale);
+33 new column(s) produced; combined params is a versioned, JSON-serialisable
+artifact. Apply to held-out data with featpipe(df_test, params=...).
+```
+
+```bash
+pip install pydextra
+```
+
+> **Two names, one library:** the name `dextra` was unavailable on PyPI, so
+> you **install `pydextra`** and **import `dextra`**. Repo, docs and import
+> are all `dextra`.
+
+[**Documentation**](https://ahmedabdeltawab602-collab.github.io/dextra/) ·
+[**Open in Colab**](https://colab.research.google.com/github/ahmedabdeltawab602-collab/dextra/blob/main/notebooks/00-leakage-in-5-minutes.ipynb) ·
+[**🇪🇬 العربية**](https://github.com/ahmedabdeltawab602-collab/dextra/blob/main/README.ar.md)
+
+`dextra` is a choice-first toolkit for the whole exploratory workflow — a
+vocabulary of **63 public functions** plus 5 scikit-learn-compatible wrapper
+classes, **68 distinct public callables in all** (long names also ship short
+aliases; see the
+[API consistency table](https://ahmedabdeltawab602-collab.github.io/dextra/api-consistency/)):
+the `load` entry layer at the front, nine analytical modules (EDA, statistics,
+cleaning, features, selection, modeling, evaluation, time series and
+reporting), and the `compat` wrappers:
 
 | Module | Functions | What it covers |
 |---|---|---|
@@ -41,9 +69,28 @@ against data leakage.
 
 ---
 
+## Project status
+
+**Feature-complete and API-stable since 0.6.0 — frozen by policy, not abandoned.**
+
+- The public API is locked: no new features, no signature changes. What you
+  evaluate today is what you run next year.
+- **Bug reports are read and answered.** Confirmed defects are fixed
+  red-test-first and released as patch versions — open one via the
+  [issue templates](https://github.com/ahmedabdeltawab602-collab/dextra/issues/new/choose).
+- Before 0.6.0 the library went through an adversarial external audit:
+  eleven evidence-backed defects, each closed red→green with a named
+  regression test — see
+  [`AUDIT_REPORT.md`](https://github.com/ahmedabdeltawab602-collab/dextra/blob/main/AUDIT_REPORT.md)
+  and the [changelog](https://github.com/ahmedabdeltawab602-collab/dextra/blob/main/CHANGELOG.md).
+- Known, deliberately declared debt is public:
+  [#1 — relevance scoring over complete rows](https://github.com/ahmedabdeltawab602-collab/dextra/issues/1).
+
+---
+
 ## Installation
 
-From PyPI (once published):
+From PyPI:
 
 ```bash
 pip install pydextra   # import name is unchanged: import dextra as dx
