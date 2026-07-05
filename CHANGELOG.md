@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.6.1] — 2026-07-05 — docs/metadata only; no behavior change
+
+**No code behavior changed.** This release aligns the published metadata
+with the project's real state.
+
+### Changed
+- README (EN/AR): proof-first opening — a real `featpipe` call with its
+  verbatim `Decision:` line from notebook 02; explicit `pydextra`/`dextra`
+  naming note; new **Project status** section (freeze-by-policy, external
+  audit trail, declared debt #1); stale "once published" wording removed.
+- Unified public-API counting everywhere: **63 public functions + 5
+  scikit-learn-compat wrappers = 68 distinct public callables**.
+- New `notebooks/00-leakage-in-5-minutes.ipynb` — self-contained Colab
+  quickstart (`pip install pydextra` → leak demo over 10 splits) linked
+  from the README.
+- `.github/ISSUE_TEMPLATE/`: bug-report and question/feedback issue forms;
+  blank issues disabled.
+- `pyproject.toml`: `Documentation` URL now points to the docs site;
+  Development Status classifier raised to `5 - Production/Stable` — the
+  API freeze is a policy statement, not decay (see README Project status).
+- `CITATION.cff`: version and release date refreshed (were stale at 0.2.0
+  / 2026-06-01).
+
 ## [0.6.0] — 2026-07-04 — external-referee hardening
 
 One comprehensive hardening release: eleven defects proven during the
