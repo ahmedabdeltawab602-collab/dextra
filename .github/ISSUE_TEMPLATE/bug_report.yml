@@ -1,0 +1,65 @@
+name: Bug report
+description: Report a defect — an error, a wrong result, or behavior that contradicts the documentation.
+title: "bug: <one-line summary>"
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. A complete, reproducible report is answered fastest.
+  - type: textarea
+    id: repro
+    attributes:
+      label: Minimal reproducible example
+      description: The smallest self-contained code that reproduces the problem — imports included, runnable as-is on synthetic or public data.
+      render: python
+      placeholder: |
+        import pandas as pd
+        import dextra as dx
+
+        df = pd.DataFrame({"a": [1, 2, None]})
+        dx.<function>(df)   # <- what goes wrong here
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: Full output / traceback
+      description: Paste the complete output including the full traceback. Do not truncate.
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected instead
+    validations:
+      required: true
+  - type: input
+    id: pydextra-version
+    attributes:
+      label: pydextra version
+      description: 'python -c "import dextra; print(dextra.__version__)"'
+    validations:
+      required: true
+  - type: input
+    id: python-version
+    attributes:
+      label: Python version
+      description: python --version
+    validations:
+      required: true
+  - type: input
+    id: pandas-version
+    attributes:
+      label: pandas version
+      description: 'python -c "import pandas; print(pandas.__version__)"'
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: Operating system
+      placeholder: e.g. Windows 11 / Ubuntu 24.04 / macOS 15
+    validations:
+      required: false

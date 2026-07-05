@@ -1,0 +1,31 @@
+name: Question / Feedback
+description: Ask how to use pydextra, or tell us what worked and what didn't.
+title: "q: <your question in one line>"
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A note on scope: the public API is frozen — pydextra fixes bugs but does not add features.
+        Usage questions and honest feedback are very welcome.
+  - type: textarea
+    id: question
+    attributes:
+      label: Your question or feedback
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context (optional)
+      description: What are you trying to achieve? A short code sketch helps.
+      render: python
+    validations:
+      required: false
+  - type: input
+    id: docs-checked
+    attributes:
+      label: Docs page you already checked (optional)
+      placeholder: e.g. https://ahmedabdeltawab602-collab.github.io/dextra/getting-started/
+    validations:
+      required: false
