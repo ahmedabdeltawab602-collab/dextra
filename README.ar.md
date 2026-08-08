@@ -32,6 +32,7 @@ pip install pydextra
 
 [**التوثيق**](https://ahmedabdeltawab602-collab.github.io/dextra/) ·
 [**جرّب على Colab**](https://colab.research.google.com/github/ahmedabdeltawab602-collab/dextra/blob/main/notebooks/00-leakage-in-5-minutes.ipynb) ·
+[**دفاتر Kaggle**](https://www.kaggle.com/ahmedabdeltawab40/code) ·
 [**🇬🇧 English**](https://github.com/ahmedabdeltawab602-collab/dextra/blob/main/README.md)
 
 مكتبة `dextra` أداة «الخيارات أولاً» لكامل سير العمل الاستكشافي — مفردات من
@@ -59,6 +60,11 @@ pip install pydextra
 معظم الدوال توفّر نمط `method='compare'` يعرض كل الخيارات **دون أن يقرّر عنك**،
 ونمط fit/apply (عبر `params` dict) يتعلّم على التدريب ويُطبَّق حرفياً على بيانات
 الاختبار — الضمان ضد تسرّب البيانات.
+
+الدفاتر الثلاثة الكاملة منشورة مُنفَّذة على Kaggle:
+[إنقاذ 9,291 رقم فاتورة](https://www.kaggle.com/code/ahmedabdeltawab40/rescuing-9-291-invoices-from-coercion-pydextra) ·
+[بروتوكول كشف التسرّب](https://www.kaggle.com/code/ahmedabdeltawab40/two-pipelines-same-auc-0-8465-one-is-lying) ·
+[تحليل أسعار الغذاء في مصر بالعربية](https://www.kaggle.com/code/ahmedabdeltawab40/egypt-food-prices-2010-2026-arabic-eda-pydextra).
 
 ---
 

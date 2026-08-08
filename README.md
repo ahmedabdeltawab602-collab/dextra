@@ -35,6 +35,7 @@ pip install pydextra
 
 [**Documentation**](https://ahmedabdeltawab602-collab.github.io/dextra/) ·
 [**Open in Colab**](https://colab.research.google.com/github/ahmedabdeltawab602-collab/dextra/blob/main/notebooks/00-leakage-in-5-minutes.ipynb) ·
+[**Kaggle notebooks**](https://www.kaggle.com/ahmedabdeltawab40/code) ·
 [**🇪🇬 العربية**](https://github.com/ahmedabdeltawab602-collab/dextra/blob/main/README.ar.md)
 
 `dextra` is a choice-first toolkit for the whole exploratory workflow — a
@@ -216,6 +217,10 @@ For the full per-module API, see the philosophy documents in the repository
 and the three end-to-end notebooks indexed in
 [`notebooks/README.md`](notebooks/README.md) -- messy-CSV rescue,
 leakage-safe pipelines, and a full Arabic EDA on Egyptian food prices.
+The same three notebooks are also published, fully executed, on Kaggle:
+[the invoice rescue (9,291 invoice numbers)](https://www.kaggle.com/code/ahmedabdeltawab40/rescuing-9-291-invoices-from-coercion-pydextra),
+[the leakage protocol](https://www.kaggle.com/code/ahmedabdeltawab40/two-pipelines-same-auc-0-8465-one-is-lying) and
+[the Arabic food-prices EDA](https://www.kaggle.com/code/ahmedabdeltawab40/egypt-food-prices-2010-2026-arabic-eda-pydextra).
 
 ---
 
