@@ -6,11 +6,26 @@
 [![PyPI](https://img.shields.io/pypi/v/pydextra.svg)](https://pypi.org/project/pydextra/)
 [![Docs](https://img.shields.io/badge/docs-online-brightgreen.svg)](https://ahmedabdeltawab602-collab.github.io/dextra/)
 
-**Data functions that explain themselves.** One line in → a rich metrics
-table, a multi-panel figure, and a one-sentence `Decision:` stating what was
-done and why. Leakage-sensitive steps also return a replayable `params`
-artifact — fit on train, replay verbatim on test — so train/test leakage
-becomes hard to commit by accident.
+**I put this library in front of an adversarial review whose only job was to
+break it. It found 11 defects. This is the library that came out the other
+side.**
+
+Every one of the 11 was reproduced first by a *failing* test, then fixed until
+green — adding ~35 permanent regression tests behind zero-warning exit gates.
+The updated referee evaluation passed every agreed gate: 10/10 on a measurable
+definition fixed **before** the work started. The limits that remain are
+written down, not buried — see
+[`AUDIT_REPORT.md`](https://github.com/ahmedabdeltawab602-collab/dextra/blob/main/AUDIT_REPORT.md)
+and the one declared debt in
+[issue #1](https://github.com/ahmedabdeltawab602-collab/dextra/issues/1).
+
+That is the whole idea, applied twice: **a tool that discloses what it did, by
+an author who discloses what it got wrong.**
+
+**What it does.** One line in → a rich metrics table, a multi-panel figure, and
+a one-sentence `Decision:` stating what was done and why. Leakage-sensitive
+steps also return a replayable `params` artifact — fit on train, replay
+verbatim on test — so train/test leakage becomes hard to commit by accident.
 
 One real call, verbatim from the
 [leakage-safe pipeline notebook](https://github.com/ahmedabdeltawab602-collab/dextra/blob/main/notebooks/02-leakage-safe-pipeline.ipynb):
@@ -79,11 +94,11 @@ against data leakage.
 - **Bug reports are read and answered.** Confirmed defects are fixed
   red-test-first and released as patch versions — open one via the
   [issue templates](https://github.com/ahmedabdeltawab602-collab/dextra/issues/new/choose).
-- Before 0.6.0 the library went through an adversarial external audit:
-  eleven evidence-backed defects, each closed red→green with a named
-  regression test — see
+- The adversarial audit described at the top of this page is documented defect
+  by defect in
   [`AUDIT_REPORT.md`](https://github.com/ahmedabdeltawab602-collab/dextra/blob/main/AUDIT_REPORT.md)
-  and the [changelog](https://github.com/ahmedabdeltawab602-collab/dextra/blob/main/CHANGELOG.md).
+  and the [changelog](https://github.com/ahmedabdeltawab602-collab/dextra/blob/main/CHANGELOG.md),
+  each entry naming the regression test that now guards it.
 - Known, deliberately declared debt is public:
   [#1 — relevance scoring over complete rows](https://github.com/ahmedabdeltawab602-collab/dextra/issues/1).
 
